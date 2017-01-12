@@ -1,0 +1,155 @@
+<!doctype html>
+<html ng-app="softvApp">
+  <head>
+    <meta charset="utf-8">
+    <title ng-bind="$state.current.data.pageTitle">SOFTV WEB</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
+    <link rel="stylesheet" href="bower_components/ng-notify/src/styles/ng-notify.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+        <link type="text/css" rel="stylesheet" href="styles/main.css" />
+    <!-- endbuild -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,300,400,500,700,900' rel='stylesheet' type='text/css'/>
+    <link type="text/css" rel="stylesheet" href="libs/theme-default/materialadmin.css?1425466319" />
+    <link type="text/css" rel="stylesheet" href="libs/theme-default/font-awesome.min.css?1422529194" />
+    <link type="text/css" rel="stylesheet" href="libs/theme-default/material-design-iconic-font.min.css?1421434286" />
+    <link type="text/css" rel="stylesheet" href="libs/theme-default/libs/rickshaw/rickshaw.css?1422792967" />
+    <link type="text/css" rel="stylesheet" href="libs/theme-default/libs/morris/morris.core.css?1420463396" />
+  </head>
+  <body>
+      <div ng-controller="MainCtrl as $ctrl">
+          <!--[if lte IE 8]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+          <![endif]-->
+          <!-- BEGIN HEADER-->
+          <div ui-view="loginview"></div>
+          <header id="header" ng-show="$ctrl.showNavbar">
+            <div class="headerbar">
+              <!-- Brand and toggle get grouped for better mobile display -->
+              <div class="headerbar-left">
+                <ul class="header-nav header-nav-options">
+                  <li class="header-nav-brand" >
+                    <div class="brand-holder">
+                      <a>
+                        <img src="images/logo.png"><span class="text-lg text-bold text-primary">SOFTV WEB</span>
+                      </a>
+                    </div>
+                  </li>
+                  <li>
+                    <a class="btn btn-icon-toggle menubar-toggle" data-toggle="menubar" href="javascript:void(0);">
+                      <i class="fa fa-bars"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <!-- Collect the nav links, forms, and other content for toggling -->
+              <div class="headerbar-right">
+                <ul class="header-nav header-nav-profile">
+                  <li class="dropdown">
+                    <a href="javascript:void(0);" style="padding-left: 40px;" class="dropdown-toggle ink-reaction" data-toggle="dropdown">
+                      <strong>Bienvenido: Antonio</strong>
+                    </a>
+                    <ul class="dropdown-menu animation-dock">
+                      <li class="divider"></li>
+                      <li><a href="" ng-click="ctrl.logOut()"><i class="fa fa-fw fa-power-off text-danger"></i> Salir</a></li>
+                    </ul><!--end .dropdown-menu -->
+                  </li><!--end .dropdown -->
+                </ul><!--end .header-nav-profile -->
+              </div><!--end #header-navbar-collapse -->
+            </div>
+          </header>
+          <!-- END HEADER-->
+
+          <!-- BEGIN BASE-->
+          <div id="base" ng-show="$ctrl.showMenus" >
+            <div id="content">
+              <section>
+                <div ui-view="homeview"></div>
+              </section>
+            </div><!--end #content-->
+            <!-- END CONTENT -->
+            <!-- BEGIN MENUBAR-->
+            <div id="menubar" class="menubar-inverse">
+              <div class="menubar-fixed-panel">
+                <div>
+                  <a class="btn btn-icon-toggle btn-default menubar-toggle" data-toggle="menubar" href="javascript:void(0);">
+                    <i class="fa fa-bars"></i>
+                  </a>
+                </div>
+                <div class="expanded">
+                  <a ui-sref="dashboard" ui-sref-active="active">
+                    <span class="text-lg text-bold text-primary ">FACTURACIÓN WEB</span>
+                  </a>
+                </div>
+              </div>
+              <div class="menubar-scroll-panel">
+
+                <!-- BEGIN MAIN MENU -->
+                <ul id="main-menu" class="gui-controls">
+                  <li class="gui-folder expanded" ng-class="{active:$state.includes('home.*.*')}">
+                    <a>
+                      <div class="gui-icon"><i class="fa fa-tasks" aria-hidden="true"></i></div>
+                      <span class="title">Procesos</span>
+                    </a>
+                    <!--start submenu -->
+                    <ul style="overflow: hidden; height: 308px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
+                      <li><a ui-sref="home.atencion.todo" ui-sref-active="active"><span class="title">Atención Telefónica</span></a></li>
+                      <li><a ui-sref="home.ordenes" ui-sref-active="active"><span class="title">Ordenes de Servicio</span></a></li>
+                    </ul><!--end /submenu -->
+                  </li>
+                </ul><!--end .main-menu -->
+                <!-- END MAIN MENU -->
+
+                <div class="menubar-foot-panel">
+                  <small class="no-linebreak hidden-folded">
+                    <span class="opacity-75">Copyright &copy; 2017</span> <strong>SOFTV</strong>
+                  </small>
+                </div>
+              </div><!--end .menubar-scroll-panel-->
+            </div><!--end #menubar-->
+            <!-- END MENUBAR -->
+          </div><!--end #base-->
+      </div>
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+    <script src="bower_components/ng-notify/src/scripts/ng-notify.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/modules.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/home/home.js"></script>
+        <script src="scripts/controllers/login/login.js"></script>
+        <script src="scripts/controllers/procesos/modules.js"></script>
+        <script src="scripts/controllers/procesos/atencion/atencion.js"></script>
+        <script src="scripts/controllers/procesos/atencion/atencionDetalle.js"></script>
+        <script src="scripts/controllers/procesos/atencion/historialPagos.js"></script>
+        <script src="scripts/controllers/procesos/atencion/historialReportes.js"></script>
+        <!-- endbuild -->
+    <script src="libs/core/source/App.js"></script>
+    <script src="libs/core/source/AppNavigation.js"></script>
+    <script src="libs/core/source/AppOffcanvas.js"></script>
+    <script src="libs/core/source/AppCard.js"></script>
+    <script src="libs/core/source/AppForm.js"></script>
+    <script src="libs/core/source/AppNavSearch.js"></script>
+    <script src="libs/core/source/AppVendor.js"></script>
+    <script src="libs/core/demo/Demo.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+.custom-notif {
+  top: 80% !important;
+  left: 70% !important;
+  width: 30% !important;
+}
+.modal-backdrop {
+  bottom: 0;
+  height: 1319px;
+}
+.app-modal-window .modal-dialog {
+  width: 80%;
+}
+.app-modal-window-large .modal-dialog {
+  width: 80%;
+}
