@@ -1544,7 +1544,7 @@ a.text-success:hover {
 }
 body:not(.header-fixed) #menubar,
 .menubar-first #menubar {
-  top: 50px;
+  top: 0;
 }
 .menubar-fixed-panel {
   position: relative;

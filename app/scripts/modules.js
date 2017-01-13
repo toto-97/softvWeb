@@ -6,7 +6,6 @@ angular
         var states = [
             {
               name: 'home',
-              url: '/home',
               data: {
                   pageTitle: 'BIENVENIDO | SOFTV WEB'
               },
