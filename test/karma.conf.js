@@ -29,6 +29,7 @@ module.exports = function(config) {
       'bower_components/angular-loading-bar/build/loading-bar.js',
       'bower_components/ng-notify/src/scripts/ng-notify.js',
       'bower_components/angular-block-ui/dist/angular-block-ui.js',
+      'bower_components/ngstorage/ngStorage.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',
