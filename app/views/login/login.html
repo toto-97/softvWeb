@@ -1,25 +1,37 @@
-<div style="background-color:white; height:100vh;">
-	<div class="col-md-6 col-md-offset-3 text-center">
-	        <img src="images/logo.png" style="padding-left: 10px; width:300px; height:300px;" />
-	 		<h2 style="margin-top: -30px;">SOFTV WEB</h2>
-	 		<div class="col-md-6 col-md-offset-3">
-				<form class="form text-center" name="userForm">
-					<div class="form-group" ng-class="{ 'has-error': userForm.name.$touched && userForm.name.$invalid }">
-				      <label>Usuario</label>
-				      <input type="text" name="name" class="form-control"
-				        ng-model="$ctrl.login.name"
-				        required>
-				    </div>
-				    <div class="form-group" ng-class="{ 'has-error': userForm.pass.$touched && userForm.pass.$invalid }">
-				      <label>Contraseña</label>
-				      <input type="password" name="pass" class="form-control"
-				        ng-model="$ctrl.login.password"
-				        required>
-				    </div>
-				    <div class="form-group">
-				      <button type="submit" class="btn ink-reaction btn-lg btn-primary btn-block"> <i class="fa fa-sign-in" aria-hidden="true"></i> Accesar</button>
-				    </div>
-				</form>
-			</div>
-	</div>
-</div>
+<style media="screen">
+	html, body {
+	  height: 100%;
+	  background-color: white;
+	}
+
+  footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+  }
+
+.page-row-expanded { height: 100%; }
+</style>
+
+<section class="section-account">
+	<div class="card contain-xs style-transparent">
+		<div class="card-body">
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<img src="images/logo.png" style="margin-top:-20px;" width="350">
+					<h2 style="margin-top:-80px;"><span class="text-xxxl text-light">SOFTV WEB</span></h2>
+					<h4 class="text-light">Necesitas un token para acceder al sistema,
+						 <strong>ponte en contacto con el administrador del sistema.</strong>
+					 </h4>
+				</div><!--end .col -->
+			</div><!--end .row -->
+		</div><!--end .card-body -->
+	</div><!--end .card -->
+</section>
+<footer class="footer">
+  <div class="container-fluid">
+    <div class="copyright pull-right">
+     &copy; 2017 <a href="http://softv.mx" target="_blank">SISTEMAS ADMINISTRATIVOS</a>
+    </div>
+  </div>
+</footer>

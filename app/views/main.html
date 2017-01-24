@@ -1,0 +1,98 @@
+<header id="header">
+  <div class="headerbar">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="headerbar-left">
+      <ul class="header-nav header-nav-options">
+        <li class="header-nav-brand" >
+          <div class="brand-holder">
+            <a>
+              <img src="images/logo.png"><span class="text-lg text-bold text-primary">SOFTV WEB</span>
+            </a>
+          </div>
+        </li>
+        <li>
+          <a class="btn btn-icon-toggle menubar-toggle" data-toggle="menubar" href="javascript:void(0);">
+            <i class="fa fa-bars"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="headerbar-right">
+        <ul class="header-nav header-nav-profile">
+            <li class="dropdown">
+                <a href="javascript:void(0);" class="dropdown-toggle ink-reaction" data-toggle="dropdown">
+                    <img src="images/ninja.png" alt="" />
+                    <span class="profile-info">
+                        Israel Antonio
+                        <small>Administrator</small>
+                    </span>
+                </a>
+                <ul class="dropdown-menu animation-dock">
+                    <li><a href="#"><i class="fa fa-fw fa-power-off text-danger"></i> Logout</a></li>
+                </ul><!--end .dropdown-menu -->
+            </li><!--end .dropdown -->
+        </ul><!--end .header-nav-profile -->
+    </div><!--end #header-navbar-collapse -->
+  </div>
+</header>
+<!-- END HEADER-->
+
+<!-- BEGIN BASE-->
+<div id="base">
+  <div id="content">
+    <section>
+      <div ui-view></div>
+    </section>
+  </div><!--end #content-->
+  <!-- END CONTENT -->
+  <!-- BEGIN MENUBAR-->
+  <div id="menubar" class="menubar-inverse">
+    <div class="menubar-fixed-panel">
+      <div>
+        <a class="btn btn-icon-toggle btn-default menubar-toggle" data-toggle="menubar" href="javascript:void(0);">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
+      <div class="expanded">
+        <a ui-sref="dashboard" ui-sref-active="active">
+          <span class="text-lg text-bold text-primary ">FACTURACIÓN WEB</span>
+        </a>
+      </div>
+    </div>
+    <div class="menubar-scroll-panel">
+
+      <!-- BEGIN MAIN MENU -->
+      <ul id="main-menu" class="gui-controls">
+        <li class="gui-folder expanded" ng-class="{active:$state.includes('home.*.*')}">
+          <a>
+            <div class="gui-icon"><i class="fa fa-tasks" aria-hidden="true"></i></div>
+            <span class="title">Procesos</span>
+          </a>
+          <!--start submenu -->
+          <ul style="overflow: hidden; height: 308px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
+            <li><a ui-sref="home.atencion.todo" ui-sref-active="active"><span class="title">Atención Telefónica</span></a></li>
+            <li><a ui-sref="home.ordenes" ui-sref-active="active"><span class="title">Ordenes de Servicio</span></a></li>
+          </ul><!--end /submenu -->
+        </li>
+      </ul><!--end .main-menu -->
+      <!-- END MAIN MENU -->
+
+      <div class="menubar-foot-panel">
+        <small class="no-linebreak hidden-folded">
+          <span class="opacity-75">Copyright &copy; 2017</span> <strong>SOFTV</strong>
+        </small>
+      </div>
+    </div><!--end .menubar-scroll-panel-->
+  </div><!--end #menubar-->
+  <!-- END MENUBAR -->
+</div><!--end #base-->
+
+<script src="libs/core/source/App.js"></script>
+<script src="libs/core/source/AppNavigation.js"></script>
+<script src="libs/core/source/AppOffcanvas.js"></script>
+<script src="libs/core/source/AppCard.js"></script>
+<script src="libs/core/source/AppForm.js"></script>
+<script src="libs/core/source/AppNavSearch.js"></script>
+<script src="libs/core/source/AppVendor.js"></script>
+<script src="libs/core/demo/Demo.js"></script>
