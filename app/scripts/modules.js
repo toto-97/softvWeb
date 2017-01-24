@@ -1,5 +1,4 @@
 'use strict';
-
 angular
 	.module('softvApp')
 	.config(function($stateProvider) {

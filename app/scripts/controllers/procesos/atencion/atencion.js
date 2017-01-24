@@ -1,3 +1,4 @@
+'use strict';
 angular
 	.module('softvApp')
 	.controller('AtencionCtrl', function($state, ngNotify) {

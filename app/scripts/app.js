@@ -1,13 +1,4 @@
 'use strict';
-
-/**
- * @ngdoc overview
- * @name softvApp
- * @description
- * # softvApp
- *
- * Main module of the application.
- */
 angular
 	.module('softvApp', [
 		'angular-loading-bar',
