@@ -9,7 +9,7 @@ angular
 		'ngStorage'
 	])
 	.config(function($provide, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $qProvider) {
-		$urlRouterProvider.otherwise('/auth');
+		$urlRouterProvider.otherwise('/auth/');
 		cfpLoadingBarProvider.includeSpinner = false;
 		$qProvider.errorOnUnhandledRejections(true);
 		$provide.factory('ErrorHttpInterceptor', function($q, $injector) {
