@@ -373,7 +373,6 @@ angular
 		}
 
 		function buscarPorContrato() {
-			ngNotify.dismiss();
 			PNotify.removeAll();
 			vm.selectAparato = '';
 			vm.mostrarSuspencion = false;
@@ -492,7 +491,6 @@ angular
 		}
 
 		function buscarPorNombre() {
-			ngNotify.dismiss();
 			PNotify.removeAll();
 			vm.selectAparato = '';
 			vm.mostrarSuspencion = false;
@@ -512,7 +510,6 @@ angular
 		}
 
 		function selectCliente(x) {
-			ngNotify.dismiss();
 			PNotify.removeAll();
 			reset();
 			cajasFactory.buscarContrato(x).then(function(data) {
@@ -607,7 +604,6 @@ angular
 		}
 
 		function buscarPorDomicilio() {
-			ngNotify.dismiss();
 			PNotify.removeAll();
 			vm.selectAparato = '';
 			vm.mostrarSuspencion = false;

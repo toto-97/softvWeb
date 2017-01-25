@@ -3,7 +3,6 @@ angular
 	.module('softvApp')
 	.controller('HomeCtrl', function($localStorage, $location) {
 		function drawMenu() {
-			console.log($localStorage.currentUser.Menu);
 			vm.menus = $localStorage.currentUser.Menu;
 		}
 
