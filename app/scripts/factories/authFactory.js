@@ -22,9 +22,11 @@ angular.module('softvApp')
 				if (response.data.GetDameSessionWListResult[0].Codigo) {
 					$localStorage.currentUser = {
 						token: response.data.GetDameSessionWListResult[0].Codigo,
-						idSucursal: response.data.GetDameSessionWListResult[0].IdSucursal,
+						token1: token,
+						usuario: response.data.GetDameSessionWListResult[0].Usuario,
+						sucursal: response.data.GetDameSessionWListResult[0].IdSucursal,
 						idUsuario: response.data.GetDameSessionWListResult[0].IdUsuario,
-						ipMaquina: response.data.GetDameSessionWListResult[0].IpMaquina,
+						maquina: response.data.GetDameSessionWListResult[0].IpMaquina,
 						tipoUsuario: response.data.GetDameSessionWListResult[0].TipoUser,
 						Menu: response.data.GetDameSessionWListResult[0].Menu
 					};

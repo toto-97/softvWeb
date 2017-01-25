@@ -6,7 +6,8 @@ angular
 		'ui.router',
 		'ui.bootstrap',
 		'ngNotify',
-		'ngStorage'
+		'ngStorage',
+		'angularUtils.directives.dirPagination'
 	])
 	.config(function($provide, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $qProvider) {
 		$urlRouterProvider.otherwise('/auth/');

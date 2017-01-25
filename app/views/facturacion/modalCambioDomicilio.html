@@ -1,0 +1,58 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="ctrl.cancel()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title" id="modal-title">Cambio de Domicilio</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <div class="row">
+        <div class="col-md-12" style="padding-left:30px;">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Ciudad</label>
+                    <select class="form-control" ng-change="ctrl.changeCiudad()" ng-model="ctrl.selectedCiudad" ng-options="v.nombre for v in ctrl.ciudades track by v.Clv_Ciudad"></select>
+                </div>
+            </div>
+             <div class="row">
+                <div class="col-md-6">
+                    <label>Localidad</label>
+                    <select class="form-control" ng-change="ctrl.changeLocalidad()" ng-model="ctrl.selectedLocalidad" ng-options="v.Nombre for v in ctrl.localidades track by v.Clv_Localidad"></select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Colonia</label>
+                    <select class="form-control" ng-change="ctrl.changeColonia()" ng-model="ctrl.selectedColonia" ng-options="v.COLONIA for v in ctrl.colonias track by v.CLV_COLONIA"></select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Calle</label>
+                    <select class="form-control" ng-model="ctrl.selectedCalle" ng-options="v.Nombre for v in ctrl.calles track by v.Clv_calle"></select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Número</label>
+                    <input type="text" class="form-control" ng-model="ctrl.numero" />
+                </div>
+                <div class="col-md-4">
+                    <label>Número Interior</label>
+                    <input type="text" class="form-control" ng-model="ctrl.numeroInterior" />
+                </div>
+                <div class="col-md-4">
+                    <label>Teléfono</label>
+                    <input type="number" class="form-control" ng-model="ctrl.telefono" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <label>Entre calles</label>
+                    <input type="text" class="form-control" ng-model="ctrl.entreCalles" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" type="button" ng-click="ctrl.cancel()">Cancelar</button>
+    <button class="btn btn-primary" type="button" ng-click="ctrl.ok()">Aceptar</button>
+</div>
