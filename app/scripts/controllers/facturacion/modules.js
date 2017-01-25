@@ -16,6 +16,16 @@ angular
 				templateUrl: 'views/facturacion/facturacionCajas.html',
 				controller: 'FacturacionCajasCtrl',
 				controllerAs: 'ctrl'
+			},
+			{
+				name: 'home.facturacion.ventas',
+				data: {
+					pageTitle: 'SOFTV | VENTAS'
+				},
+				url: '/facturacion/ventas',
+				templateUrl: 'views/facturacion/facturacionVentas.html',
+				controller: 'FacturacionVentasCtrl',
+				controllerAs: 'ctrl'
 			}
 		];
 		states.forEach(function(state) {

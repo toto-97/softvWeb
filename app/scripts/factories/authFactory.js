@@ -30,7 +30,6 @@ angular.module('softvApp')
 						tipoUsuario: response.data.GetDameSessionWListResult[0].TipoUser,
 						Menu: response.data.GetDameSessionWListResult[0].Menu
 					};
-					console.log($localStorage.currentUser);
 					resp = true;
 				} else {
 					resp = false;
