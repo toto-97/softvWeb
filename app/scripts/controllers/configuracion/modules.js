@@ -26,16 +26,6 @@ angular
 				templateUrl: 'views/configuracion/roles.html',
 				controller: 'AtencionCtrl',
 				controllerAs: '$ctrl'
-			},
-			{
-				name: 'home.configuracion.modulos',
-				data: {
-					pageTitle: 'SOFTV | MODULOS'
-				},
-				url: '/configuracion/modulos',
-				templateUrl: 'views/configuracion/modulos.html',
-				controller: 'AtencionCtrl',
-				controllerAs: '$ctrl'
 			}
 		];
 		states.forEach(function(state) {

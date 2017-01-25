@@ -2,8 +2,10 @@
 angular
 	.module('softvApp')
 	.controller('HomeCtrl', function($localStorage, $location) {
-		function drawMenu() {
+		function initialData() {
 			vm.menus = $localStorage.currentUser.Menu;
+			vm.usuario = $localStorage.currentUser.usuario;
+			console.log(vm.menus);
 		}
 
 		function logout() {
@@ -13,5 +15,5 @@ angular
 
 		var vm = this;
 		vm.logout = logout;
-		drawMenu();
+		initialData();
 	});
