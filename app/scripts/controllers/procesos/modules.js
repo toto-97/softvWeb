@@ -3,12 +3,12 @@ angular
 	.module('softvApp')
 	.config(function($stateProvider) {
 		var states = [{
-				name: 'home.atencion',
+				name: 'home.procesos',
 				abstract: true,
 				template: '<div ui-view></div>'
 			},
 			{
-				name: 'home.atencion.todo',
+				name: 'home.procesos.atencion',
 				data: {
 					pageTitle: 'SOFTV | ATENCIÓN'
 				},
@@ -18,13 +18,23 @@ angular
 				controllerAs: '$ctrl'
 			},
 			{
-				name: 'home.atencion.detalle',
+				name: 'home.procesos.atencionDetalle',
 				data: {
 					pageTitle: 'SOFTV | ATENCIÓN'
 				},
 				url: '/atencion/detalle',
 				templateUrl: 'views/procesos/atencionDetalle.html',
 				controller: 'AtencionDetalleCtrl',
+				controllerAs: '$ctrl'
+			},
+			{
+				name: 'home.procesos.ordenes',
+				data: {
+					pageTitle: 'SOFTV | ORDENES DE SERVICIO'
+				},
+				url: '/ordenes',
+				templateUrl: 'views/procesos/ordenesServicio.html',
+				controller: 'OrdenesServicioCtrl',
 				controllerAs: '$ctrl'
 			}
 		];
