@@ -6,6 +6,7 @@
   "esnext": true,
   "jasmine": true,
   "latedef": true,
+  "camelcase": false,
   "noarg": true,
   "node": true,
   "strict": true,
