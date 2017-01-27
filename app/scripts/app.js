@@ -12,7 +12,7 @@ angular
 	.config(function($provide, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $qProvider) {
 		$urlRouterProvider.otherwise('/auth/');
 		cfpLoadingBarProvider.includeSpinner = false;
-		$qProvider.errorOnUnhandledRejections(true);
+		$qProvider.errorOnUnhandledRejections(false);
 		$provide.factory('ErrorHttpInterceptor', function($q, $injector) {
 			function notifyError(rejection) {
 				var notify = $injector.get('ngNotify');
