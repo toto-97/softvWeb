@@ -1,7 +1,11 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('FacturacionCajasCtrl', function($uibModal, $state, $rootScope, cajasFactory, ngNotify) {
+	.controller('FacturacionVentasCtrl', function($uibModal, $state, $rootScope, cajasFactory, ngNotify) {
+
+		function initialData() {
+			getVendedores();
+		}
 
 		function openEdoCuenta() {
 			vm.animationsEnabled = true;
@@ -24,13 +28,60 @@ angular
 			});
 		}
 
+		$rootScope.$on('getVendedores', function() {
+			getVendedores();
+		});
+
+		function getVendedores() {
+			cajasFactory.dameVendedores().then(function(data) {
+				data.GetVendedoresLListResult.unshift({
+					'Nombre': '----------------',
+					'Clv_Vendedor': 0
+				});
+				vm.vendedores = data.GetVendedoresLListResult;
+				vm.selectedVendedor = data.GetVendedoresLListResult[0];
+			});
+		}
+
+		function changeVendedor() {
+			if (vm.selectedVendedor.Clv_Vendedor == 0) {
+				ngNotify.set('Selecciona un vendedor.', 'error');
+			} else {
+				cajasFactory.ultimoFolio(vm.selectedVendedor.Clv_Vendedor).then(function(data) {
+					data.GetUltimoSerieYFolioListResult.unshift({
+						'SERIE': '----------------',
+						'ULTIMOFOLIO_USADO': 0
+					});
+					vm.series = data.GetUltimoSerieYFolioListResult;
+					vm.selectedSerie = data.GetUltimoSerieYFolioListResult[0];
+					vm.folios = '';
+				});
+			}
+		}
+
+		function changeSerie() {
+			if (vm.selectedSerie.ULTIMOFOLIO_USADO == 0) {
+				ngNotify.set('Selecciona una serie.', 'error');
+			} else {
+				cajasFactory.folioDisponible(vm.selectedVendedor.Clv_Vendedor, vm.selectedSerie.SERIE).then(function(data) {
+					if (data.GetFolioDisponibleListResult.length > 0) {
+						data.GetFolioDisponibleListResult.unshift({
+							'Folio': '----------------',
+						});
+						vm.folios = data.GetFolioDisponibleListResult;
+						vm.selectedFolio = data.GetFolioDisponibleListResult[0];
+					}
+				});
+			}
+		}
+
 		function openDeleteList() {
 			if (vm.selectAparato == undefined) {
 				ngNotify.set('Selecciona un concepto.', 'error');
 			} else if (vm.selectAparato.CLAVE == 1 || vm.selectAparato.CLAVE == 3) {
 				if (vm.selectAparato.Pagos_Adelantados != 'Ext. Adicionales') {
 					if (vm.selectAparato.CLAVE == 1) {
-						ngNotify.set('No se puede quitar la Contratación.', 'error');
+						ngNotify.set('No se puede quitar la Contratació.', 'error');
 					} else if (vm.selectAparato.CLAVE == 2) {
 						ngNotify.set('No se puede quitar la Reconexión.', 'error');
 					}
@@ -107,7 +158,6 @@ angular
 		}
 
 		function openSuspencion() {
-			vm.selectAparato = '';
 			cajasFactory.suspencionTemporal(vm.Cliente.Contrato, vm.session).then(function(data) {
 				vm.mostrarSuspencion = true;
 				if (data.GetSuspencionTemporalListResult.length == 0) {
@@ -190,73 +240,83 @@ angular
 		}
 
 		function openPay(tipo) {
-			cajasFactory.dameSucursalCompa(vm.Cliente.Contraton).then(function(data) {
-				if (data.GetDeepDameRelSucursalCompaResult.Id == 0) {
+			if (vm.selectedVendedor.Clv_Vendedor == 0 || vm.selectedVendedor.Clv_Vendedor == '' || vm.selectedVendedor.Clv_Vendedor == undefined) {
+				ngNotify.set('Selecciona un vendedor.', 'error');
+			} else if (vm.selectedSerie.ULTIMOFOLIO_USADO == 0 || vm.selectedSerie.ULTIMOFOLIO_USADO == '' || vm.selectedSerie.ULTIMOFOLIO_USADO == undefined) {
+				ngNotify.set('Selecciona una serie.', 'error');
+			} else {
+				if (vm.selectedFolio.Folio == 0 || vm.selectedFolio.Folio == '' || vm.selectedFolio.Folio == undefined || vm.selectedFolio.Folio == '----------------') {
 					ngNotify.set('La caja no tiene asignados folios para esta plaza.', 'error');
 				} else {
-					cajasFactory.dimeSiYaFact(vm.Cliente.Contrato).then(function(dataDime) {
-						if (dataDime.GetDeepDimeSiYaGrabeFacResult.Id == 0) {
-							cajasFactory.sumaTotalDetalle(vm.session).then(function(sumaTotal) {
-								var items = {
-									monto: sumaTotal.GetDeepSumaTotalDetalleResult.Monto,
-									IdSession: vm.session,
-									Contrato: vm.Cliente.Contrato,
-									Tipo: tipo,
-									Vendedor: 0,
-									Serie: 0,
-									Folio: 0
-								};
-								vm.animationsEnabled = true;
-								var modalInstance = $uibModal.open({
-									animation: vm.animationsEnabled,
-									ariaLabelledBy: 'modal-title',
-									ariaDescribedBy: 'modal-body',
-									templateUrl: 'views/facturacion//modalPagar.html',
-									controller: 'ModalPagarCtrl',
-									controllerAs: 'ctrl',
-									backdrop: 'static',
-									keyboard: false,
-									size: 'md',
-									resolve: {
-										items: function() {
-											return items;
-										}
-									}
-								});
-							});
+					cajasFactory.dameSucursalCompa(vm.Cliente.Contrato).then(function(data) {
+						if (data.GetDeepDameRelSucursalCompaResult.Id == 0) {
+							ngNotify.set('La caja no tiene asignados folios para esta plaza.', 'error');
 						} else {
-							cajasFactory.sumaTotalDetalle(vm.session).then(function(sumaTotal) {
-								var items = {
-									monto: sumaTotal.GetDeepSumaTotalDetalleResult.Monto,
-									IdSession: vm.session,
-									Contrato: vm.Cliente.Contrato,
-									Tipo: 'C',
-									Vendedor: 0,
-									Serie: 0,
-									Folio: 0
-								};
-								vm.animationsEnabled = true;
-								var modalInstance = $uibModal.open({
-									animation: vm.animationsEnabled,
-									ariaLabelledBy: 'modal-title',
-									ariaDescribedBy: 'modal-body',
-									templateUrl: 'views/facturacion//modalYaPago.html',
-									controller: 'ModalYaPagoCtrl',
-									controllerAs: 'ctrl',
-									backdrop: 'static',
-									keyboard: false,
-									size: 'md',
-									resolve: {
-										items: function() {
-											return items;
-										}
-									}
-								});
+							cajasFactory.dimeSiYaFact(vm.Cliente.Contrato).then(function(dataDime) {
+								if (dataDime.GetDeepDimeSiYaGrabeFacResult.Id == 0) {
+									cajasFactory.sumaTotalDetalle(vm.session).then(function(sumaTotal) {
+										var items = {
+											monto: sumaTotal.GetDeepSumaTotalDetalleResult.Monto,
+											IdSession: vm.session,
+											Contrato: vm.Cliente.Contrato,
+											Tipo: tipo,
+											Vendedor: vm.selectedVendedor.Clv_Vendedor,
+											Serie: vm.selectedSerie.ULTIMOFOLIO_USADO,
+											Folio: 0
+										};
+										vm.animationsEnabled = true;
+										var modalInstance = $uibModal.open({
+											animation: vm.animationsEnabled,
+											ariaLabelledBy: 'modal-title',
+											ariaDescribedBy: 'modal-body',
+											templateUrl: 'views/facturacion//modalPagar.html',
+											controller: 'ModalPagarCtrl',
+											controllerAs: 'ctrl',
+											backdrop: 'static',
+											keyboard: false,
+											size: 'md',
+											resolve: {
+												items: function() {
+													return items;
+												}
+											}
+										});
+									});
+								} else {
+									cajasFactory.sumaTotalDetalle(vm.session).then(function(sumaTotal) {
+										var items = {
+											monto: sumaTotal.GetDeepSumaTotalDetalleResult.Monto,
+											IdSession: vm.session,
+											Contrato: vm.Cliente.Contrato,
+											Tipo: 'C',
+											Vendedor: vm.selectedVendedor.Clv_Vendedor,
+											Serie: vm.selectedSerie.ULTIMOFOLIO_USADO,
+											Folio: 0
+										};
+										vm.animationsEnabled = true;
+										var modalInstance = $uibModal.open({
+											animation: vm.animationsEnabled,
+											ariaLabelledBy: 'modal-title',
+											ariaDescribedBy: 'modal-body',
+											templateUrl: 'views/facturacion//modalYaPago.html',
+											controller: 'ModalYaPagoCtrl',
+											controllerAs: 'ctrl',
+											backdrop: 'static',
+											keyboard: false,
+											size: 'md',
+											resolve: {
+												items: function() {
+													return items;
+												}
+											}
+										});
+									});
+								}
 							});
 						}
 					});
 				}
-			});
+			}
 		}
 
 		$rootScope.$on('ocultarPagar', function() {
@@ -269,77 +329,30 @@ angular
 			} else if (vm.selectAparato.CLAVE != 2) {
 				ngNotify.set('Solo se puede cobrar adeudos a conceptos de mensualidad.', 'error');
 			} else {
-				vm.elaparato = '';
-				if (vm.selectAparato.MacCableModem.length > 11) {
-					vm.elaparato = vm.selectAparato.MacCableModem.substr(0, 11)
-				} else {
-					vm.elaparato = vm.selectAparato.MacCableModem;
-				}
-				if (vm.selectAparato.CLAVE == 2 && vm.elaparato != 'Por Asignar') {
-					vm.labandera = true;
-				} else {
-					vm.labandera = false;
-				}
-				if (vm.labandera == false) {
-					ngNotify.set('Debe haber conceptos de Mensualidad con servicio Instalado por cobrar para aplicar cobro de adeudo.', 'error');
-				} else {
-					vm.items = {
-						CLV_DETALLE: vm.selectAparato.CLV_DETALLE,
-						Mac: vm.selectAparato.MacCableModem,
-						Contrato: vm.Cliente.Contrato,
-						Session: vm.session
-					};
-					cajasFactory.validaAparatos(vm.session, vm.selectAparato.CLV_DETALLE).then(function(data) {
-						if (data.GetValidaPideAparatosListResult[0].Valor == true) {
-							vm.animationsEnabled = true;
-							var modalInstance = $uibModal.open({
-								animation: vm.animationsEnabled,
-								ariaLabelledBy: 'modal-title',
-								ariaDescribedBy: 'modal-body',
-								templateUrl: 'views/facturacion/modalRegresar.html',
-								controller: 'ModalRegresarCtrl',
-								controllerAs: 'ctrl',
-								backdrop: 'static',
-								keyboard: false,
-								size: 'lg',
-								resolve: {
-									items: function() {
-										return vm.items;
-									}
-								}
-							});
-						} else {
-							abrirMotivoCancelacion(vm.items);
+				var items = {
+					CLV_DETALLE: vm.selectAparato.CLV_DETALLE,
+					Contrato: vm.Cliente.Contrato,
+					Session: vm.session
+				};
+				vm.animationsEnabled = true;
+				var modalInstance = $uibModal.open({
+					animation: vm.animationsEnabled,
+					ariaLabelledBy: 'modal-title',
+					ariaDescribedBy: 'modal-body',
+					templateUrl: 'views/facturacion/modalRegresar.html',
+					controller: 'ModalRegresarCtrl',
+					controllerAs: 'ctrl',
+					backdrop: 'static',
+					keyboard: false,
+					size: 'lg',
+					resolve: {
+						items: function() {
+							return items;
 						}
-					});
-				}
+					}
+				});
 			}
 
-		}
-
-		$rootScope.$on('openMotivo', function(e, items) {
-			abrirMotivoCancelacion(items);
-		});
-
-
-		function abrirMotivoCancelacion(items) {
-			vm.animationsEnabled = true;
-			var modalInstance = $uibModal.open({
-				animation: vm.animationsEnabled,
-				ariaLabelledBy: 'modal-title',
-				ariaDescribedBy: 'modal-body',
-				templateUrl: 'views/facturacion/modalMotivoCancelacion.html',
-				controller: 'ModalMotivoCancelacionCtrl',
-				controllerAs: 'ctrl',
-				backdrop: 'static',
-				keyboard: false,
-				size: 'sm',
-				resolve: {
-					items: function() {
-						return items;
-					}
-				}
-			});
 		}
 
 		function openClabe() {
@@ -347,12 +360,9 @@ angular
 				if (data.GetBotonClabeListResult[0].YaTiene == 0) {
 					ngNotify.set('El contrato no cuenta con Cuenta Clabe asignada.', 'info');
 				} else {
-					var items = {
-						contrato: vm.Cliente.Contrato,
-						clabe: data.GetBotonClabeListResult[0].Clabe
-					};
+					vm.animationsEnabled = true;
 					var modalInstance = $uibModal.open({
-						animation: true,
+						animation: vm.animationsEnabled,
 						ariaLabelledBy: 'modal-title',
 						ariaDescribedBy: 'modal-body',
 						templateUrl: 'views/facturacion/modalCalbe.html',
@@ -362,8 +372,8 @@ angular
 						keyboard: false,
 						size: 'sm',
 						resolve: {
-							items: function() {
-								return items;
+							clabe: function() {
+								return data.GetBotonClabeListResult[0].Clabe;
 							}
 						}
 					});
@@ -374,9 +384,8 @@ angular
 
 		function buscarPorContrato() {
 			PNotify.removeAll();
-			vm.selectAparato = '';
-			vm.mostrarSuspencion = false;
 			$('.buscarContrato').collapse('hide');
+			vm.mostrarSuspencion = false;
 			reset();
 			cajasFactory.buscarContrato(vm.data.contrato).then(function(data) {
 				if (data.GetBusCliPorContrato_FacListResult.length > 0) {
@@ -403,12 +412,11 @@ angular
 								abrirModalPregunta(900, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
 							}
 						});
-						cajasFactory.getObservaciones(vm.Cliente.Contrato).then(function(observa) {
-							if (observa.GetDeepConRelClienteObsResult.Obs) {
+						cajasFactory.checaRetiro(vm.Cliente.Contrato).then(function(retiro) {
+							if (retiro.GetChecaOrdenRetiroListResult[0].Resultado > 0) {
 								new PNotify({
-									title: 'Observaciones',
-									type: 'info',
-									text: observa.GetDeepConRelClienteObsResult.Obs,
+									title: 'Aviso',
+									text: retiro.GetChecaOrdenRetiroListResult[0].Msg,
 									hide: false
 								});
 							}
@@ -429,17 +437,11 @@ angular
 							});
 						}
 					});
-					cajasFactory.checaRetiro(vm.Cliente.Contrato).then(function(retiro) {
-						if (retiro.GetChecaOrdenRetiroListResult[0].Resultado > 0) {
-							new PNotify({
-								title: 'Aviso',
-								text: retiro.GetChecaOrdenRetiroListResult[0].Msg,
-								hide: false
-							});
-						}
-					});
 					cajasFactory.serviciosCliente(vm.Cliente.Contrato).then(function(servicios) {
-						vm.servicios = servicios.GetDameSerDelCliFacListResult;
+						var array = $.map(servicios, function(value, index) {
+							return [value];
+						});
+						vm.servicios = array[0];
 					});
 					cajasFactory.dameSuscriptor(vm.Cliente.Contrato).then(function(suscriptor) {
 						vm.Suscriptor = suscriptor.GetDameTiposClientesListResult[0];
@@ -492,7 +494,6 @@ angular
 
 		function buscarPorNombre() {
 			PNotify.removeAll();
-			vm.selectAparato = '';
 			vm.mostrarSuspencion = false;
 			reset();
 			$('.buscarContrato').collapse('hide');
@@ -553,7 +554,6 @@ angular
 							vm.colorServicios = '#E2EBEA';
 						} else {
 							reloadTables();
-
 							vm.mostrarSuspencion = true;
 							vm.color = '#D6D9D9';
 							vm.colorServicios = '#B8BABA';
@@ -564,13 +564,21 @@ angular
 						}
 					});
 					cajasFactory.serviciosCliente(vm.Cliente.Contrato).then(function(servicios) {
-						vm.servicios = servicios.GetDameSerDelCliFacListResult;
+						var array = $.map(servicios, function(value, index) {
+							return [value];
+						});
+						vm.servicios = array[0];
 					});
 					cajasFactory.dameSuscriptor(vm.Cliente.Contrato).then(function(suscriptor) {
 						vm.Suscriptor = suscriptor.GetDameTiposClientesListResult[0];
 					});
 					cajasFactory.damePeriodoCliente(vm.Cliente.Contrato).then(function(dataPeriodo) {
 						vm.periodo = dataPeriodo.GetPeriodoClienteResult[0].Periodo;
+						if (dataPeriodo.GetPeriodoClienteResult[0].Resultado == 0) {
+							vm.showFiscales = false;
+						} else {
+							vm.showFiscales = true;
+						}
 					});
 					vm.muestraCliente = true;
 				} else {
@@ -605,10 +613,8 @@ angular
 
 		function buscarPorDomicilio() {
 			PNotify.removeAll();
-			vm.selectAparato = '';
 			vm.mostrarSuspencion = false;
 			reset();
-			$('.buscarContrato').collapse('hide');
 			vm.muestraClientesTable = true;
 			vm.isCollapsed = !vm.isCollapsed;
 			cajasFactory.buscarPorDireccion(vm.data.calle, vm.data.numero).then(function(data) {
@@ -640,13 +646,14 @@ angular
 		}
 
 		var vm = this;
-		$('.buscarContrato').collapse();
 		vm.openHistorial = openHistorial;
 		vm.openInformation = openInformation;
+		$('.buscarContrato').collapse();
 		vm.openAddList = openAddList;
 		vm.openPay = openPay;
 		vm.openReturn = openReturn;
 		vm.openClabe = openClabe;
+		vm.isNavCollapsed = true;
 		vm.buscarPorContrato = buscarPorContrato;
 		vm.muestraCliente = false;
 		vm.buscarPorNombre = buscarPorNombre;
@@ -656,5 +663,8 @@ angular
 		vm.guardaconcepto = guardaconcepto;
 		vm.openDeleteList = openDeleteList;
 		vm.adelantaPagos = adelantaPagos;
+		vm.changeVendedor = changeVendedor;
+		vm.changeSerie = changeSerie;
 		vm.openEdoCuenta = openEdoCuenta;
+		initialData();
 	});
