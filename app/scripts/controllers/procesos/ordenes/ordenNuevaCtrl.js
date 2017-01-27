@@ -3,5 +3,5 @@ angular
 	.module('softvApp')
 	.controller('OrdenNuevaCtrl', function($state, ngNotify) {
 		var vm = this;
-		vm.showdatosPlaza = false;
+		vm.showDatosCliente = false;
 	});

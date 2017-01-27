@@ -1,33 +1,85 @@
 <style type="text/css">
 	.scrollDiv{
-	    height: 500px;
+	    height: 100px;
 	    overflow: auto;
 	    overflow-x: hidden;
 	}
 </style>
 <div class="row">
-    <div class="col-md-12">
+	<div class="col-md-12">
         <h3 class="text-center" style="color: #0aa89e; margin-top:5px;">Nueva Orden de Servicio</h3>
         <h3 style="color: #0aa89e;"><a ui-sref="home.procesos.ordenes"><i class="fa fa-chevron-left"></i> Atras</a></h3>
     </div>
-    <div class="col-md-12 card panel"  style="padding-top:15px;">
-        <div class="col-md-4">
-            <strong>Tipo de Servicios:</strong><br>
-            <div class="col-md-8 form-group">
-                <strong class="text-muted">Orden:</strong>
-                <input type="text" class="form-control">
-            </div>
-            <div class="col-md-8 form-group">
-                <strong class="text-muted">Contrato:</strong>
-                <input type="text" class="form-control">
-            </div>
-        </div>
-        <div class="col-md-4">
-            <strong class="text-muted">No. Folio de la Bitacora:</strong>
-            <input type="text" class="form-control">
-        </div>
-        <div class="col-md-4">
+</div>
+<div class="card panel"  style="padding-top:15px;">
+	<div class="row">
+	    <div class="col-md-4">
+	        <h5>Tipo de Servicios:</h5><br>
+	        <div class="col-md-8 form-group">
+	            <strong class="text-muted">Orden:</strong>
+	            <input type="text" class="form-control">
+	        </div>
+	        <div class="col-md-8 form-group">
+	            <strong class="text-muted">Contrato:</strong>
+	            <input type="text" class="form-control">
+	        </div>
+	    </div>
+	    <div class="col-md-4">
+	        <h5 class="text">No. Folio de la Bitacora:</h5>
+	        <input type="text" class="form-control">
+	    </div>
+	    <div class="col-md-4">
+			<h5>Status:</h5><br>
+			<div class="col-md-12">
+				<div class="col-md-4">
+					<label class="radio-inline radio-styled">
+						<input type="radio" name="inlineRadioOptions" ng-value="1" ng-model="ctrl.historial"><span>Pendientes</span>
+					</label>
+				</div>
+				<div class="col-md-4">
+					<label class="radio-inline radio-styled">
+						<input type="radio" name="inlineRadioOptions" ng-value="2" ng-model="ctrl.historial"><span>Ejecutadas</span>
+					</label>
+				</div>
+				<div class="col-md-4">
+					<label class="radio-inline radio-styled">
+						<input type="radio" name="inlineRadioOptions" ng-value="3" ng-model="ctrl.historial"><span>Visitas</span>
+					</label>
+				</div>
+			</div>
+	    </div>
+	</div>
 
-        </div>
-    </div>
+	<div class="row">
+		<div class="panel-group col-md-6" id="datosCliente">
+			<div class="card panel">
+				<div class="card-head card-head-xs collapsed" data-toggle="collapse" data-parent="#datosCliente" data-target="#datosCliente-1" aria-expanded="false" ng-click="ctrl.showDatosCliente = !ctrl.showDatosCliente">
+					<header ng-show="ctrl.showDatosCliente">Datos del Cliente</header>
+					<div class="tools">
+						<a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+					</div>
+				</div>
+				<div id="datosCliente-1" class="collapse datosCliente" aria-expanded="false" style="height: 0px;">
+					<div class="col-md-12">
+						<h4>Datos del Cliente</h4>
+						<strong>Distribuidor:</strong><br>
+						<p><strong>Nombre:</strong><br>
+						<strong>Dirección:</strong><br>
+						<strong class="col-md-4" style="margin-left: -15px;">Servicos Asignados:</strong>
+						<div class="form-group">
+							<div class="col-md-8 scrollDiv" style="background-color: #E2EBEA;">
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div><!--end .panel -->
+		</div>
+		<div class="col-md-3">
+
+		</div>
+		<div class="col-md-3">
+
+		</div>
+	</div>
 </div>
