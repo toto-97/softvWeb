@@ -7,12 +7,14 @@ angular
 		'ui.bootstrap',
 		'ngNotify',
 		'ngStorage',
-		'angularUtils.directives.dirPagination'
+		'angularUtils.directives.dirPagination',
+		'blockUI'
 	])
-	.config(function($provide, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $qProvider) {
+	.config(function($provide, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $qProvider, blockUIConfig) {
 		$urlRouterProvider.otherwise('/auth/');
 		cfpLoadingBarProvider.includeSpinner = false;
 		$qProvider.errorOnUnhandledRejections(false);
+		blockUIConfig.templateUrl = 'views/components/loading.html';
 		$provide.factory('ErrorHttpInterceptor', function($q, $injector) {
 			function notifyError(rejection) {
 				var notify = $injector.get('ngNotify');
