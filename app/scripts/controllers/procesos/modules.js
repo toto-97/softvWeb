@@ -36,6 +36,16 @@ angular
 				templateUrl: 'views/procesos/ordenesServicio.html',
 				controller: 'OrdenesServicioCtrl',
 				controllerAs: '$ctrl'
+			},
+			{
+				name: 'home.procesos.ordenNueva',
+				data: {
+					pageTitle: 'SOFTV | NUEVA ORDEN DE SERVICIO'
+				},
+				url: '/ordenNueva',
+				templateUrl: 'views/procesos/ordenNueva.html',
+				controller: 'OrdenNuevaCtrl',
+				controllerAs: '$ctrl'
 			}
 		];
 		states.forEach(function(state) {
