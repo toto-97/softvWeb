@@ -9,10 +9,15 @@ angular
 		'ngStorage',
 		'angularUtils.directives.dirPagination',
 		'blockUI',
-		'ngValidate'
+		'ngValidate',
+		'permission', 'permission.ui',
+
 	])
 	.config(function($provide, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $qProvider, blockUIConfig) {
-		$urlRouterProvider.otherwise('/auth/');
+		$urlRouterProvider.otherwise(function($injector) {
+			var $state = $injector.get("$state");
+			$state.go('auth');
+		});
 		cfpLoadingBarProvider.includeSpinner = false;
 		$qProvider.errorOnUnhandledRejections(false);
 		blockUIConfig.templateUrl = 'views/components/loading.html';
@@ -43,16 +48,22 @@ angular
 		delete $httpProvider.defaults.headers.common['X-Requested-With'];
 	})
 	.constant('APP_CONFIG', window.appConfig)
-	.run(function($rootScope, $state, $stateParams, $localStorage, $location) {
+	.run(function($rootScope, $state, $stateParams, $localStorage, $location, PermPermissionStore, PermRoleStore, inMenu) {
 		$rootScope.$state = $state;
 		$rootScope.$stateParams = $stateParams;
-		$rootScope.$on('$locationChangeStart', function(event, next, current) {
-			if ($location.path() != '/auth/') {
-				if (!$location.path().includes('/auth/')) {
-					if (!$localStorage.currentUser) {
-						$location.path('/auth/');
-					}
-				}
-			}
-		});
+		if ($localStorage.currentUser) {
+			$location.path('/home/');
+			PermPermissionStore.definePermission('anonymous', function() {
+				return false;
+			});
+			var permissions = inMenu.on();
+			PermPermissionStore.defineManyPermissions(permissions, function() {
+				return true;
+			});
+		} else {
+			$location.path('/auth/');
+			PermPermissionStore.definePermission('anonymous', function() {
+				return true;
+			});
+		}
 	});

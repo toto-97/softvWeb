@@ -1,6 +1,6 @@
 'use strict';
 angular.module('softvApp')
-	.factory('authFactory', function($http, $q, globalService, $localStorage) {
+	.factory('authFactory', function($http, $q, $window, globalService, $localStorage, PermPermissionStore, $location) {
 		var factory = {};
 		var paths = {
 			getAuthentication: '/DameSessionW/GetDameSessionWList'
@@ -18,7 +18,6 @@ angular.module('softvApp')
 				}
 			};
 			$http.post(globalService.getUrl() + paths.getAuthentication, JSON.stringify(Parametros), config).then(function(response) {
-				var resp = false;
 				if (response.data.GetDameSessionWListResult[0].Codigo) {
 					$localStorage.currentUser = {
 						token: response.data.GetDameSessionWListResult[0].Codigo,
@@ -41,12 +40,10 @@ angular.module('softvApp')
 							});
 						});
 					});
-					$localStorage.currentUser.myArray = myArray;
-					resp = true;
+					$window.location.reload();
 				} else {
-					resp = false;
+					$location.path('/auth/');
 				}
-				deferred.resolve(resp);
 			}).catch(function(data) {
 				deferred.reject(data);
 			});

@@ -631,12 +631,8 @@ angular
 			vm.data.amaterno = '';
 		}
 
-		function initData() {
-			inMenu.on($state.current.name);
-		}
 
 		var vm = this;
-		initData();
 		vm.openHistorial = openHistorial;
 		vm.openInformation = openInformation;
 		vm.openAddList = openAddList;

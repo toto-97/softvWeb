@@ -3,10 +3,10 @@ var menuItems = {
 	bindings: {
 		items: '=',
 	},
-	controller: function($localStorage, $location) {
+	controller: function($localStorage, $location, $window) {
 		function logout() {
 			delete $localStorage.currentUser;
-			$location.path('/auth/');
+			$window.location.reload();
 		}
 		if ($localStorage.currentUser) {
 			this.usuario = $localStorage.currentUser.usuario;
