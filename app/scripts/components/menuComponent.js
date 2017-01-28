@@ -8,7 +8,10 @@ var menuItems = {
 			delete $localStorage.currentUser;
 			$location.path('/auth/');
 		}
-		this.usuario = $localStorage.currentUser.usuario;
+		if ($localStorage.currentUser) {
+			this.usuario = $localStorage.currentUser.usuario;
+		}
+
 		this.logout = logout;
 	},
 	templateUrl: 'views/components/menu.html'

@@ -261,8 +261,8 @@ angular
 											Contrato: vm.Cliente.Contrato,
 											Tipo: tipo,
 											Vendedor: vm.selectedVendedor.Clv_Vendedor,
-											Serie: vm.selectedSerie.ULTIMOFOLIO_USADO,
-											Folio: 0
+											Serie: vm.selectedSerie.SERIE,
+											Folio: vm.selectedFolio.Folio
 										};
 										vm.animationsEnabled = true;
 										var modalInstance = $uibModal.open({
@@ -288,10 +288,10 @@ angular
 											monto: sumaTotal.GetDeepSumaTotalDetalleResult.Monto,
 											IdSession: vm.session,
 											Contrato: vm.Cliente.Contrato,
-											Tipo: 'C',
+											Tipo: tipo,
 											Vendedor: vm.selectedVendedor.Clv_Vendedor,
-											Serie: vm.selectedSerie.ULTIMOFOLIO_USADO,
-											Folio: 0
+											Serie: vm.selectedSerie.SERIE,
+											Folio: vm.selectedFolio.Folio
 										};
 										vm.animationsEnabled = true;
 										var modalInstance = $uibModal.open({
@@ -417,6 +417,16 @@ angular
 								new PNotify({
 									title: 'Aviso',
 									text: retiro.GetChecaOrdenRetiroListResult[0].Msg,
+									hide: false
+								});
+							}
+						});
+						cajasFactory.getObservaciones(vm.Cliente.Contrato).then(function(observa) {
+							if (observa.GetDeepConRelClienteObsResult.Obs) {
+								new PNotify({
+									title: 'Observaciones',
+									type: 'info',
+									text: observa.GetDeepConRelClienteObsResult.Obs,
 									hide: false
 								});
 							}

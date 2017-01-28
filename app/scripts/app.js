@@ -8,7 +8,8 @@ angular
 		'ngNotify',
 		'ngStorage',
 		'angularUtils.directives.dirPagination',
-		'blockUI'
+		'blockUI',
+		'ngValidate'
 	])
 	.config(function($provide, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $qProvider, blockUIConfig) {
 		$urlRouterProvider.otherwise('/auth/');
@@ -42,7 +43,16 @@ angular
 		delete $httpProvider.defaults.headers.common['X-Requested-With'];
 	})
 	.constant('APP_CONFIG', window.appConfig)
-	.run(function($rootScope, $state, $stateParams) {
+	.run(function($rootScope, $state, $stateParams, $localStorage, $location) {
 		$rootScope.$state = $state;
 		$rootScope.$stateParams = $stateParams;
+		$rootScope.$on('$locationChangeStart', function(event, next, current) {
+			if ($location.path() != '/auth/') {
+				if (!$location.path().includes('/auth/')) {
+					if (!$localStorage.currentUser) {
+						$location.path('/auth/');
+					}
+				}
+			}
+		});
 	});
