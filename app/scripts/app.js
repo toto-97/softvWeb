@@ -14,8 +14,8 @@ angular
 	.config(function($provide, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $qProvider, blockUIConfig) {
 		$urlRouterProvider.otherwise('/auth/');
 		cfpLoadingBarProvider.includeSpinner = false;
+		$qProvider.errorOnUnhandledRejections(false);
 		blockUIConfig.templateUrl = 'views/components/loading.html';
-		$qProvider.errorOnUnhandledRejections(true);
 		$provide.factory('ErrorHttpInterceptor', function($q, $injector) {
 			function notifyError(rejection) {
 				var notify = $injector.get('ngNotify');
