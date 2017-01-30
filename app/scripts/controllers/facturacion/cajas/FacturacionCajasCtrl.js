@@ -1,7 +1,7 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('FacturacionCajasCtrl', function($uibModal, $state, $rootScope, cajasFactory, ngNotify) {
+	.controller('FacturacionCajasCtrl', function($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu) {
 
 		function openEdoCuenta() {
 			vm.animationsEnabled = true;
@@ -309,37 +309,27 @@ angular
 								}
 							});
 						} else {
-							abrirMotivoCancelacion(vm.items);
+							var modalInstance = $uibModal.open({
+								animation: true,
+								ariaLabelledBy: 'modal-title',
+								ariaDescribedBy: 'modal-body',
+								templateUrl: 'views/facturacion/modalMotivoCancelacion.html',
+								controller: 'ModalMotivoCancelacionCtrl',
+								controllerAs: 'ctrl',
+								backdrop: 'static',
+								keyboard: false,
+								size: 'sm',
+								resolve: {
+									items: function() {
+										return vm.items;
+									}
+								}
+							});
 						}
 					});
 				}
 			}
 
-		}
-
-		$rootScope.$on('openMotivo', function(e, items) {
-			abrirMotivoCancelacion(items);
-		});
-
-
-		function abrirMotivoCancelacion(items) {
-			vm.animationsEnabled = true;
-			var modalInstance = $uibModal.open({
-				animation: vm.animationsEnabled,
-				ariaLabelledBy: 'modal-title',
-				ariaDescribedBy: 'modal-body',
-				templateUrl: 'views/facturacion/modalMotivoCancelacion.html',
-				controller: 'ModalMotivoCancelacionCtrl',
-				controllerAs: 'ctrl',
-				backdrop: 'static',
-				keyboard: false,
-				size: 'sm',
-				resolve: {
-					items: function() {
-						return items;
-					}
-				}
-			});
 		}
 
 		function openClabe() {
@@ -372,14 +362,15 @@ angular
 
 		}
 
-		function buscarPorContrato() {
+		function buscarPorContrato(contratoForm) {
+			console.log(contratoForm);
 			PNotify.removeAll();
 			vm.selectAparato = '';
 			vm.mostrarSuspencion = false;
-			$('.buscarContrato').collapse('hide');
 			reset();
 			cajasFactory.buscarContrato(vm.data.contrato).then(function(data) {
 				if (data.GetBusCliPorContrato_FacListResult.length > 0) {
+					$('.buscarContrato').collapse('hide');
 					vm.Cliente = data.GetBusCliPorContrato_FacListResult[0];
 					cajasFactory.dameSession(vm.Cliente.Contrato).then(function(session) {
 						vm.session = session.GetDeepDameClv_SessionResult.IdSession;
@@ -616,6 +607,7 @@ angular
 					ngNotify.set('No se encontro ninguna coincidencia.', 'error');
 					reset();
 				} else {
+					$('.buscarContrato').collapse();
 					vm.todosClientes = data.GetuspBusCliPorContratoSeparadoListResult;
 				}
 			});
@@ -639,8 +631,8 @@ angular
 			vm.data.amaterno = '';
 		}
 
+
 		var vm = this;
-		$('.buscarContrato').collapse();
 		vm.openHistorial = openHistorial;
 		vm.openInformation = openInformation;
 		vm.openAddList = openAddList;
@@ -657,4 +649,17 @@ angular
 		vm.openDeleteList = openDeleteList;
 		vm.adelantaPagos = adelantaPagos;
 		vm.openEdoCuenta = openEdoCuenta;
+		vm.validacionContrato = {
+			rules: {
+				contrato: {
+					required: true,
+					minlength: 3
+				},
+			},
+			messages: {
+				contrato: {
+					required: "Por favor ingresa el contrato del cliente a buscar.",
+				}
+			}
+		};
 	});

@@ -5,12 +5,16 @@ angular
 		var states = [{
 				name: 'home.procesos',
 				abstract: true,
+				data: {
+					arrayUrl: 'home.procesos'
+				},
 				template: '<div ui-view></div>'
 			},
 			{
 				name: 'home.procesos.atencion',
 				data: {
-					pageTitle: 'SOFTV | ATENCIÓN'
+					pageTitle: 'SOFTV | ATENCIÓN',
+					arrayUrl: 'home.procesos.atencion'
 				},
 				url: '/atencion',
 				templateUrl: 'views/procesos/atencion.html',
@@ -20,7 +24,8 @@ angular
 			{
 				name: 'home.procesos.atencionDetalle',
 				data: {
-					pageTitle: 'SOFTV | ATENCIÓN'
+					pageTitle: 'SOFTV | ATENCIÓN',
+					arrayUrl: 'home.procesos.atencionDetalle'
 				},
 				url: '/atencion/detalle',
 				templateUrl: 'views/procesos/atencionDetalle.html',
@@ -30,7 +35,8 @@ angular
 			{
 				name: 'home.procesos.ordenes',
 				data: {
-					pageTitle: 'SOFTV | ORDENES DE SERVICIO'
+					pageTitle: 'SOFTV | ORDENES DE SERVICIO',
+					arrayUrl: 'home.procesos.ordenes'
 				},
 				url: '/ordenes',
 				templateUrl: 'views/procesos/ordenesServicio.html',

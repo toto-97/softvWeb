@@ -3,12 +3,15 @@ var menuItems = {
 	bindings: {
 		items: '=',
 	},
-	controller: function($localStorage, $location) {
+	controller: function($localStorage, $location, $window) {
 		function logout() {
 			delete $localStorage.currentUser;
-			$location.path('/auth/');
+			$window.location.reload();
 		}
-		this.usuario = $localStorage.currentUser.usuario;
+		if ($localStorage.currentUser) {
+			this.usuario = $localStorage.currentUser.usuario;
+		}
+
 		this.logout = logout;
 	},
 	templateUrl: 'views/components/menu.html'
