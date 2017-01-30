@@ -42,7 +42,7 @@ angular
 				data: {
 					pageTitle: 'SOFTV | NUEVA ORDEN DE SERVICIO'
 				},
-				url: '/ordenNueva',
+				url: '/ordenNueva/:experience/:context',
 				templateUrl: 'views/procesos/ordenNueva.html',
 				controller: 'OrdenNuevaCtrl',
 				controllerAs: '$ctrl'

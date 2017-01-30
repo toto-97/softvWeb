@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <button class="close" aria-label="Close" type="button" ng-click="$ctrl.cancel()">×</button>
+    <h4 class="modal-title">Seleccione el Servicio al Cliente</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-1">
+            <strong style="font-size:18px;">Tipo de Servicios:</strong>
+            <select class="form-control"
+                ng-model="$ctrl.selectedMenu"
+                ng-change="$ctrl.menuChange()"
+                ng-options="v.Nombre for v in $ctrl.selectMenu track by v.Clv_Vendedor"></select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <strong>Trabajo:</strong>
+            <select class="form-control"
+                ng-model="$ctrl.selectedMenu"
+                ng-options="v.Nombre for v in $ctrl.selectMenu track by v.Clv_Vendedor"></select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <strong>Observaciones:</strong>
+            <textarea row="3" class="form-control"></textarea>
+        </div>
+        <label class="col-md-6 col-md-offset-2 checkbox-inline checkbox-styled">
+            <input type="checkbox" name="inlineRadioOptions" ng-value="2" ng-model="$ctrl.realizar"><span>¿Se realizó el trabajo?</span>
+        </label>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.aceptar()">Aceptar</button>
+    <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
+</div>

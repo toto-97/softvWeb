@@ -1,13 +1,12 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('OrdenesServicioCtrl', function($state, ngNotify) {
+	.controller('OrdenesServicioCtrl', function($state, ngNotify, $location) {
 		var vm = this;
 		vm.showdatosPlaza = false;
-		vm.nuevaOrden = nuevaOrden;
+		vm.seleccionar = seleccionar;
 
-		function nuevaOrden() {
-			console.log('jala');
-			$state.go('home.procesos.ordenNueva');
+		function seleccionar(id, selec) {
+			$state.go('home.procesos.ordenNueva',{ experience: id, context: selec });
 		}
 	});
