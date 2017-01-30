@@ -420,10 +420,27 @@ angular.module('softvApp')
 						} else {
 							report.MenuChild.forEach(function(reportChild) {
 								var reportSubTitle = removeDiacritics(reportChild.Title);
-								permisos.push(reportSubTitle.replace(/\s/g, '').toLowerCase());
+								permisos.push(reportSubTitle.replace(/\s/g, '').toLowerCase() + 'Select');
 							});
 						}
 
+					});
+				}
+				if (item.Title === 'Configuración') {
+					item.MenuChild.forEach(function(conf) {
+						var confTitle = removeDiacritics(conf.Title);
+						if (conf.OptAdd) {
+							permisos.push(confTitle.replace(/\s/g, '').toLowerCase() + 'Add');
+						}
+						if (conf.OptDelete) {
+							permisos.push(confTitle.replace(/\s/g, '').toLowerCase() + 'Delete');
+						}
+						if (conf.OptUpdate) {
+							permisos.push(confTitle.replace(/\s/g, '').toLowerCase() + 'Update');
+						}
+						if (conf.OptSelect) {
+							permisos.push(confTitle.replace(/\s/g, '').toLowerCase() + 'Select');
+						}
 					});
 				}
 			});

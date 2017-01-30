@@ -15,7 +15,7 @@ angular
 	])
 	.config(function($provide, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $qProvider, blockUIConfig) {
 		$urlRouterProvider.otherwise(function($injector) {
-			var $state = $injector.get("$state");
+			var $state = $injector.get('$state');
 			$state.go('auth');
 		});
 		cfpLoadingBarProvider.includeSpinner = false;

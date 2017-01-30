@@ -60,7 +60,7 @@ angular
 				data: {
 					pageTitle: 'SOFTV | ENTREGAS',
 					permissions: {
-						only: ['entregasparcialesAdd'],
+						only: ['entregasparcialesSelect'],
 						options: {
 							reload: false
 						}
@@ -76,7 +76,7 @@ angular
 				data: {
 					pageTitle: 'SOFTV | ARQUEOS',
 					permissions: {
-						only: ['arqueodecajasAdd'],
+						only: ['arqueodecajasSelect'],
 						options: {
 							reload: false
 						}
