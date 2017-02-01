@@ -7,11 +7,7 @@ angular
 				$location.path('/home');
 			} else {
 				if ($stateParams.token) {
-					authFactory.getAuthentication($stateParams.token).then(function(data) {
-						if (data == true) {
-							$location.path('/home');
-						}
-					});
+					authFactory.getAuthentication($stateParams.token);
 				}
 			}
 		}

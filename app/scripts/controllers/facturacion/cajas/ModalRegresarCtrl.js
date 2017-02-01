@@ -1,7 +1,7 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('ModalRegresarCtrl', function($uibModalInstance, cajasFactory, items, $rootScope, ngNotify) {
+	.controller('ModalRegresarCtrl', function($uibModalInstance, cajasFactory, items, $rootScope, ngNotify, $uibModal) {
 
 		function initialData() {
 			cajasFactory.dameAparatosAdeudo(items.Contrato, items.Session, items.CLV_DETALLE).then(function(data) {
@@ -117,7 +117,22 @@ angular
 
 				cajasFactory.cobrarAdeudo(lstDevolucionApa).then(function(data) {
 					$uibModalInstance.dismiss('cancel');
-					$rootScope.$emit('openMotivo', items);
+					var modalInstance = $uibModal.open({
+						animation: true,
+						ariaLabelledBy: 'modal-title',
+						ariaDescribedBy: 'modal-body',
+						templateUrl: 'views/facturacion/modalMotivoCancelacion.html',
+						controller: 'ModalMotivoCancelacionCtrl',
+						controllerAs: 'ctrl',
+						backdrop: 'static',
+						keyboard: false,
+						size: 'sm',
+						resolve: {
+							items: function() {
+								return items;
+							}
+						}
+					});
 				});
 
 			}

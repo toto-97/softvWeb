@@ -102,14 +102,14 @@ angular
 					case 1:
 						if (vm.efectivo >= vm.monto) {
 							var objPagar = {
-								'Contrato': items.Contrato,
-								'Clv_Session': items.IdSession,
-								'Tipo': 'C',
-								'Serie_V': items.Serie,
-								'Folio_V': items.Folio,
-								'Clv_Vendedor': items.Vendedor,
-								'Tipo1': 0,
-								'Monto1': vm.monto,
+								'contrato': items.Contrato,
+								'clv_session': items.IdSession,
+								'tipo': items.Tipo,
+								'serie_v': items.Serie,
+								'folio_v': items.Folio,
+								'clv_vendedor': items.Vendedor,
+								'tipo1': 0,
+								'monto1': vm.monto,
 								'GLOEFECTIVO2': vm.efectivo,
 								'GLOCHEQUE2': 0,
 								'GLOCLV_BANCOCHEQUE2': 0,
@@ -121,6 +121,7 @@ angular
 								'CLV_Nota3': 0,
 								'GLONOTA3': 0
 							};
+							console.log(objPagar);
 							cajasFactory.insertSeguridadToken(items.IdSession).then(function(dataToken) {
 								cajasFactory.nuevoPago(items.IdSession, vm.efectivo, vm.cambio).then(function(dataNuevo) {
 									cajasFactory.grabaPago(objPagar).then(function(dataGraba) {
@@ -159,14 +160,14 @@ angular
 						} else {
 							if (vm.dineroCheque == vm.monto) {
 								var objPagar = {
-									'Contrato': items.Contrato,
-									'Clv_Session': items.IdSession,
-									'Tipo': 'C',
-									'Serie_V': items.Serie,
-									'Folio_V': items.Folio,
-									'Clv_Vendedor': items.Vendedor,
-									'Tipo1': 0,
-									'Monto1': vm.monto,
+									'contrato': items.Contrato,
+									'clv_session': items.IdSession,
+									'tipo': items.Tipo,
+									'serie_v': items.Serie,
+									'folio_v': items.Folio,
+									'clv_vendedor': items.Vendedor,
+									'tipo1': 0,
+									'monto1': vm.monto,
 									'GLOEFECTIVO2': 0,
 									'GLOCHEQUE2': vm.dineroCheque,
 									'GLOCLV_BANCOCHEQUE2': vm.selectedBancoCheque.Clave,
@@ -217,14 +218,14 @@ angular
 						} else {
 							if (vm.dineroTransferencia == vm.monto) {
 								var objPagar = {
-									'Contrato': items.Contrato,
-									'Clv_Session': items.IdSession,
-									'Tipo': 'C',
-									'Serie_V': items.Serie,
-									'Folio_V': items.Folio,
-									'Clv_Vendedor': items.Vendedor,
-									'Tipo1': 0,
-									'Monto1': vm.monto,
+									'contrato': items.Contrato,
+									'clv_session': items.IdSession,
+									'tipo': items.Tipo,
+									'serie_v': items.Serie,
+									'folio_v': items.Folio,
+									'clv_vendedor': items.Vendedor,
+									'tipo1': 0,
+									'monto1': vm.monto,
 									'GLOEFECTIVO2': 0,
 									'GLOCHEQUE2': 0,
 									'GLOCLV_BANCOCHEQUE2': 0,
@@ -271,14 +272,14 @@ angular
 						} else {
 							if (vm.pagoNota >= vm.monto) {
 								var objPagar = {
-									'Contrato': items.Contrato,
-									'Clv_Session': items.IdSession,
-									'Tipo': 'C',
-									'Serie_V': items.Serie,
-									'Folio_V': items.Folio,
-									'Clv_Vendedor': items.Vendedor,
-									'Tipo1': 0,
-									'Monto1': vm.monto,
+									'contrato': items.Contrato,
+									'clv_session': items.IdSession,
+									'tipo': items.Tipo,
+									'serie_v': items.Serie,
+									'folio_v': items.Folio,
+									'clv_vendedor': items.Vendedor,
+									'tipo1': 0,
+									'monto1': vm.monto,
 									'GLOEFECTIVO2': 0,
 									'GLOCHEQUE2': 0,
 									'GLOCLV_BANCOCHEQUE2': 0,

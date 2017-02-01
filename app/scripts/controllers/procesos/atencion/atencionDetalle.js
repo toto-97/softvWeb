@@ -1,11 +1,12 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('AtencionDetalleCtrl', function($uibModal) {
+	.controller('AtencionDetalleCtrl', function($uibModal, inMenu, $state) {
 		var vm = this;
 		vm.abrirPagos = abrirPagos;
 		vm.abrirReportes = abrirReportes;
 		$('.datosCliente').collapse();
+		inMenu.on($state.current.name);
 
 
 		function abrirPagos() {

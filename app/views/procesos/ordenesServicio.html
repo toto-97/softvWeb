@@ -1,0 +1,168 @@
+<style type="text/css">
+	.scrollDiv{
+	    height: 500px;
+	    overflow: auto;
+	    overflow-x: hidden;
+	}
+</style>
+<h3 class="text-center" style="color: #0aa89e; margin-top:5px;">Ordenes de Servicio</h3>
+<div class="section-body">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card panel scrollDiv">
+                <h4 class="text-center">Buscar orden de servicio por:</h4>
+                <div class="row card wrapper" style="background:#E2EBEA">
+                    <strong style="padding-left:15px;">Ver por Status</strong><br>
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <label class="radio-inline radio-styled">
+                                <input type="radio" name="inlineRadioOptions" ng-value="1" ng-model="$ctrl.statu"><span>Pendientes</span>
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="radio-inline radio-styled">
+                                <input type="radio" name="inlineRadioOptions" ng-value="2" ng-model="$ctrl.statu"><span>Ejecutadas</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <label class="radio-inline radio-styled">
+                                <input type="radio" name="inlineRadioOptions" ng-value="3" ng-model="$ctrl.statu"><span>Con vista</span>
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="checkbox-inline checkbox-styled">
+                                <input type="checkbox" name="inlineRadioOptions" ng-value="4" ng-model="$ctrl.auto"><span>Proceso Automático</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+					<div class="col-md-10 col-md-offset-1">
+					    <strong>Plaza</strong>
+						<select class="form-control"
+							ng-model="$ctrl.selectedMenu"
+							ng-change="$ctrl.menuChange()"
+							ng-options="v.Nombre for v in $ctrl.selectMenu track by v.Clv_Vendedor"></select>
+					</div>
+				</div>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-1">
+                        <strong># Orden</strong>
+                        <input type="text" class="form-control" ng-model="$ctrl.orden" placeholder="Orden">
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Contrato</strong>
+                        <input type="text" class="form-control" ng-model="$ctrl.contrato" placeholder="Contrato">
+                    </div>
+                    <div class="col-md-10 col-md-offset-1">
+                        <p class="text-right">
+                            <button class="btn btn-primary btn-xs">Buscar</button>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <strong>Nombre</strong>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <strong>Apellido Paterno</strong>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <strong>Apellido Materno</strong>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="col-md-10 col-md-offset-1">
+                        <p class="text-right">
+                            <button class="btn btn-primary btn-xs">Buscar</button>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <strong>Colonia</strong>
+                        <select class="form-control"
+                            ng-model="$ctrl.selectedMenu"
+                            ng-change="$ctrl.menuChange()"
+                            ng-options="v.Nombre for v in $ctrl.selectMenu track by v.Clv_Vendedor"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <strong>Calle</strong>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <strong>Número</strong>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="col-md-10 col-md-offset-1">
+                        <p class="text-right">
+                            <button class="btn btn-primary btn-xs">Buscar</button>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <strong>Set Up Box</strong>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="col-md-10 col-md-offset-1">
+                        <p class="text-right">
+                            <button class="btn btn-primary btn-xs">Buscar</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 card panel scrollDiv">
+			<div class="col-md-12" style="padding-left: 25px; padding-right: 25px;">
+				<p class="text-right" style="margin-top: 10px;">
+					<button class="btn btn-success" ng-click="$ctrl.seleccionar(1,'nuevo')">Nuevo</button>
+				</p>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>#Orden</th>
+							<th>Status</th>
+							<th>Contrato</th>
+							<th>Nombre</th>
+							<th>Calle</th>
+							<th>Numero</th>
+                            <th>Acción</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>123</td>
+							<td>P</td>
+							<td>12-324</td>
+							<td>Juan Manuel Gonzalez</td>
+							<td>Trojes de Buena vista</td>
+                            <td> #45</td>
+							<td><button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.seleccionar(2,'consultar')"><i class="fa fa-eye"></i></button> <button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ng-click="$ctrl.seleccionar(3,'ejecutar')"><i class="fa fa-external-link"></i></button></td>
+						</tr>
+						<tr>
+							<td>124</td>
+							<td>E</td>
+							<td>12-354</td>
+							<td>Pedro Manuel Herrera</td>
+							<td>Lomas turbas</td>
+                            <td> #745</td>
+							<td><button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.detalleEntrada(x.Consecutivo)"><i class="fa fa-eye"></i></button> <button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ng-click="$ctrl.editarEntrada(x.Consecutivo)"><i class="fa fa-external-link"></i></button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+    </div>
+</div>

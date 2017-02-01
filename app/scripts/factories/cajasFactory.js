@@ -5,6 +5,7 @@ angular
 		var factory = {};
 		var paths = {
 			buscarContrato: '/BusCliPorContrato_Fac/GetBusCliPorContrato_FacList',
+			validarContrato: '/sp_dameContratoCompaniaAdic/Getsp_dameContratoCompaniaAdicList',
 			serviciosCliente: '/DameSerDelCliFac/GetDameSerDelCliFacList',
 			dameSession: '/DameClv_Session/GetDeepDameClv_Session',
 			dameDetallePago: '/DameDetalle/GetDameDetalleList',
@@ -64,6 +65,28 @@ angular
 			checaRetiro: '/ChecaOrdenRetiro/GetChecaOrdenRetiroList',
 			getObservaciones: '/ConRelClienteObs/GetDeepConRelClienteObs'
 		};
+
+		factory.validarContrato = function(contrato) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'ContratoCom': contrato,
+				'ClvUsuario': $localStorage.currentUser.idUsuario,
+				'Modulo': 'facturacion'
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.validarContrato, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
 
 		factory.buscarContrato = function(contrato) {
 			var deferred = $q.defer();
@@ -791,7 +814,7 @@ angular
 			var user = $localStorage.currentUser;
 			var Parametros = {
 				'objSeguridadToken': {
-					'Token1': user.token1,
+					'Token1': $localStorage.currentUser.token1,
 					'Token2': $localStorage.currentUser.token,
 					'IdUsuario': user.idUsuario,
 					'Usuario': user.usuario,
@@ -814,31 +837,31 @@ angular
 			return deferred.promise;
 		};
 
-		factory.grabaPago = function(objPagar) {
+		factory.grabaPago = function(objpagar) {
 			var deferred = $q.defer();
 			var user = $localStorage.currentUser;
 			var Parametros = {
-				'Contrato': objPagar.Contrato,
-				'Clv_Session': objPagar.Clv_Session,
+				'Contrato': objpagar.contrato,
+				'Clv_Session': objpagar.clv_session,
 				'Cajera': user.usuario,
 				'Sucursal': user.sucursal,
 				'IpMaquina': user.maquina,
-				'Tipo': objPagar.Tipo,
-				'Serie_V': objPagar.Serie_V,
-				'Folio_V': objPagar.Folio_V,
-				'Clv_Vendedor': objPagar.Clv_Vendedor,
+				'Tipo': objpagar.tipo,
+				'Serie_V': objpagar.serie_v,
+				'Folio_V': objpagar.folio_v,
+				'Clv_Vendedor': objpagar.clv_vendedor,
 				'Tipo1': 0,
-				'Monto1': objPagar.Monto1,
-				'GLOEFECTIVO2': objPagar.GLOEFECTIVO2,
-				'GLOCHEQUE2': objPagar.GLOCHEQUE2,
-				'GLOCLV_BANCOCHEQUE2': objPagar.GLOCLV_BANCOCHEQUE2,
-				'NUMEROCHEQUE2': objPagar.NUMEROCHEQUE2,
-				'GLOTARJETA2': objPagar.GLOTARJETA2,
-				'GLOCLV_BANCOTARJETA2': objPagar.GLOCLV_BANCOTARJETA2,
-				'NUMEROTARJETA2': objPagar.NUMEROTARJETA2,
-				'TARJETAAUTORIZACION2': objPagar.TARJETAAUTORIZACION2,
-				'CLV_Nota3': objPagar.CLV_Nota3,
-				'GLONOTA3': objPagar.GLONOTA3,
+				'Monto1': objpagar.monto1,
+				'GLOEFECTIVO2': objpagar.GLOEFECTIVO2,
+				'GLOCHEQUE2': objpagar.GLOCHEQUE2,
+				'GLOCLV_BANCOCHEQUE2': objpagar.GLOCLV_BANCOCHEQUE2,
+				'NUMEROCHEQUE2': objpagar.NUMEROCHEQUE2,
+				'GLOTARJETA2': objpagar.GLOTARJETA2,
+				'GLOCLV_BANCOTARJETA2': objpagar.GLOCLV_BANCOTARJETA2,
+				'NUMEROTARJETA2': objpagar.NUMEROTARJETA2,
+				'TARJETAAUTORIZACION2': objpagar.TARJETAAUTORIZACION2,
+				'CLV_Nota3': objpagar.CLV_Nota3,
+				'GLONOTA3': objpagar.GLONOTA3,
 				'Token': $localStorage.currentUser.token,
 				'Token1': user.token1
 
@@ -975,22 +998,22 @@ angular
 			return deferred.promise;
 		};
 
-		factory.addCamdo = function(objDomicilio) {
+		factory.addCamdo = function(objdomicilio) {
 			var deferred = $q.defer();
 			var Parametros = {
 				'objCAMDOFAC': {
-					'Clv_Sesion': objDomicilio.Clv_Sesion,
-					'CONTRATO': objDomicilio.CONTRATO,
-					'Clv_Calle': objDomicilio.Clv_Calle,
-					'NUMERO': objDomicilio.NUMERO,
-					'Num_int': objDomicilio.Num_int,
-					'ENTRECALLES': objDomicilio.ENTRECALLES,
-					'Clv_Colonia': objDomicilio.Clv_Colonia,
-					'Clv_Localidad': objDomicilio.Clv_Localidad,
-					'TELEFONO': objDomicilio.TELEFONO,
-					'ClvTecnica': objDomicilio.ClvTecnica,
-					'Clv_Ciudad': objDomicilio.Clv_Ciudad,
-					'Clv_Sector': objDomicilio.Clv_Sector,
+					'Clv_Sesion': objdomicilio.Clv_Sesion,
+					'CONTRATO': objdomicilio.CONTRATO,
+					'Clv_Calle': objdomicilio.Clv_Calle,
+					'NUMERO': objdomicilio.NUMERO,
+					'Num_int': objdomicilio.Num_int,
+					'ENTRECALLES': objdomicilio.ENTRECALLES,
+					'Clv_Colonia': objdomicilio.Clv_Colonia,
+					'Clv_Localidad': objdomicilio.Clv_Localidad,
+					'TELEFONO': objdomicilio.TELEFONO,
+					'ClvTecnica': objdomicilio.ClvTecnica,
+					'Clv_Ciudad': objdomicilio.Clv_Ciudad,
+					'Clv_Sector': objdomicilio.Clv_Sector,
 				}
 			};
 			var config = {

@@ -1,0 +1,65 @@
+<h3 class="text-center" style="color: #0aa89e; margin-top:5px;">Reporte Por Ciudad Y Cartera</h3>
+<div class="card" style="margin-top:20px; min-height:800px;">
+	<div class="card-body">
+		<div class="row">
+			<div class="col-md-3">
+				<!--  ng-options="item as item.Concepto for item in $ctrl.servicios track by item.Clv_TipSer" -->
+
+				<h4>Opciones</h4>
+				<hr>
+				<br>
+				<br>
+
+				<label><b>Selecciona servicio</b></label>
+				<select ng-model="$ctrl.servicio" class="form-control">
+           <option value="" > - Selecciona  - </option>
+           <option ng-repeat="a in $ctrl.servicios" value="{{a.Clv_TipSer}}" >{{a.Concepto}}  </option>
+         </select>
+				<br>
+				<label><b>Selecciona fecha</b></label>
+				<select ng-model="$ctrl.fecha" class="form-control">
+          <option value="" > - Selecciona  - </option>
+           <option ng-repeat="a in $ctrl.fechas" value="{{a}}" >{{a}}</option>
+         </select>
+				<br>
+				<br>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">Selecciona el tipo de reporte</label>
+					<div class="col-sm-9">
+						<div class="radio radio-styled radio-info">
+							<label>
+                              <input type="radio" ng-model="$ctrl.TipoReporte"  value="cartera">
+                              <span>Reporte de Cartera</span>
+                            </label>
+						</div>
+						<div class="radio radio-styled radio-info">
+							<label>
+                              <input type="radio" ng-model="$ctrl.TipoReporte" value="ciudad">
+                              <span>Reporte por Ciudad</span>
+                            </label>
+						</div>
+
+
+					</div>
+					<!--end .col -->
+				</div>
+				<br>
+				<br>
+				<br>
+				<button ng-click="$ctrl.ObtenReporte();" class="btn btn-block btn-warning">Obtener reporte</button>
+			</div>
+
+			<div class="col-md-9">
+				<iframe ng-src="{{$ctrl.carteraurl}}" style="position:absolute;top:0px;width:98%;height:100vh;" frameborder=0>
+
+          <!--content ng-src="{{$ctrl.carteraurl}}"-->
+        </iframe>
+			</div>
+
+			{{$ctrl.titulo}}
+		</div>
+
+
+	</div>
+
+</div>

@@ -12,6 +12,6 @@ angular
 		}
 
 		function goTO() {
-			$state.go('home.atencion.detalle');
+			$state.go('home.procesos.atencionDetalle');
 		}
 	});
