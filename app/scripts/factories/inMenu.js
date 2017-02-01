@@ -444,7 +444,6 @@ angular.module('softvApp')
 					});
 				}
 			});
-			console.log(permisos);
 			return permisos;
 		};
 

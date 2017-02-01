@@ -13,14 +13,14 @@
 				<h4 class="text-center">Busqueda</h4>
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1">
-						<strong>Plaza</strong>
-						<select class="form-control" ng-model="$ctrl.selectedMenu" ng-change="$ctrl.menuChange()" ng-options="v.Nombre for v in $ctrl.selectMenu track by v.Clv_Vendedor"></select>
+						<label class="form-control">Plaza</label>
+						<select id="idplaza" placeholder="Selecciona una Plaza" class="form-control" ng-model="$ctrl.selectedPlaza" ng-options="v.razon_social for v in $ctrl.plazas track by v.id_compania"></select>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1">
 						<strong>Tipo de Servicio</strong>
-						<select class="form-control" ng-model="$ctrl.selectedMenu" ng-change="$ctrl.menuChange()" ng-options="v.Nombre for v in $ctrl.selectMenu track by v.Clv_Vendedor"></select>
+						<select class="form-control" ng-model="$ctrl.selectedServicio" ng-options="v.Concepto for v in $ctrl.servicios track by v.Clv_TipSerPrincipal"></select>
 					</div>
 				</div>
 				<div class="row">
@@ -37,7 +37,7 @@
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1">
 						<strong>Usuario</strong>
-						<select class="form-control" ng-model="$ctrl.selectedMenu" ng-change="$ctrl.menuChange()" ng-options="v.Nombre for v in $ctrl.selectMenu track by v.Clv_Vendedor"></select>
+						<select class="form-control" id="idusuario" ng-model="$ctrl.selectedUsuario" ng-options="v.NOMBRE for v in $ctrl.usuarios track by v.Clave"></select>
 					</div>
 					<div class="col-md-10 col-md-offset-1">
 						<p class="text-right">

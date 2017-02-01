@@ -1,17 +1,31 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('AtencionCtrl', function($state, ngNotify) {
+	.controller('AtencionCtrl', function($state, ngNotify, atencionFactory) {
+		function initialData() {
+			atencionFactory.getPlazas().then(function(data) {
+				data.GetMuestra_Compania_RelUsuarioListResult.unshift({
+					'razon_social': '----------------',
+					'id_compania': 0
+				});
+				vm.plazas = data.GetMuestra_Compania_RelUsuarioListResult;
+				vm.selectedPlaza = vm.plazas[0];
+			});
+			atencionFactory.getServicios().then(function(data) {
+				vm.servicios = data.GetMuestraTipSerPrincipalListResult;
+				vm.selectedServicio = vm.servicios[0];
+			});
+			atencionFactory.getUsuarios().then(function(data) {
+				data.GetMUESTRAUSUARIOSListResult.unshift({
+					'NOMBRE': '----------------',
+					'Clave': 0
+				});
+				vm.usuarios = data.GetMUESTRAUSUARIOSListResult;
+				vm.selectedUsuario = vm.usuarios[0];
+			});
+		}
+
+
 		var vm = this;
-		vm.showdatosPlaza = false;
-		vm.goTO = goTO;
-		vm.nuevaEntrega = nuevaEntrega;
-
-		function nuevaEntrega() {
-			ngNotify.set('Your notification message goes here!');
-		}
-
-		function goTO() {
-			$state.go('home.procesos.atencionDetalle');
-		}
+		initialData();
 	});
