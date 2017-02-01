@@ -8,10 +8,16 @@ angular
 		'ngNotify',
 		'ngStorage',
 		'angularUtils.directives.dirPagination',
-		'blockUI'
+		'blockUI',
+		'ngValidate',
+		'permission', 'permission.ui',
+
 	])
-	.config(function($provide, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $qProvider, blockUIConfig) {
-		$urlRouterProvider.otherwise('/auth/');
+	.config(['$provide', '$urlRouterProvider', '$httpProvider', 'cfpLoadingBarProvider', '$qProvider', 'blockUIConfig', function($provide, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $qProvider, blockUIConfig) {
+		$urlRouterProvider.otherwise(function($injector) {
+			var $state = $injector.get('$state');
+			$state.go('auth');
+		});
 		cfpLoadingBarProvider.includeSpinner = false;
 		$qProvider.errorOnUnhandledRejections(false);
 		blockUIConfig.templateUrl = 'views/components/loading.html';
@@ -40,9 +46,24 @@ angular
 		$httpProvider.interceptors.push('ErrorHttpInterceptor');
 		$httpProvider.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
 		delete $httpProvider.defaults.headers.common['X-Requested-With'];
-	})
+	}])
 	.constant('APP_CONFIG', window.appConfig)
-	.run(function($rootScope, $state, $stateParams) {
+	.run(['$rootScope', '$state', '$stateParams', '$localStorage', '$location', 'PermPermissionStore', 'PermRoleStore', 'inMenu', function($rootScope, $state, $stateParams, $localStorage, $location, PermPermissionStore, PermRoleStore, inMenu) {
 		$rootScope.$state = $state;
 		$rootScope.$stateParams = $stateParams;
-	});
+		if ($localStorage.currentUser) {
+			$location.path('/home/');
+			PermPermissionStore.definePermission('anonymous', function() {
+				return false;
+			});
+			var permissions = inMenu.on();
+			PermPermissionStore.defineManyPermissions(permissions, function() {
+				return true;
+			});
+		} else {
+			$location.path('/auth/');
+			PermPermissionStore.definePermission('anonymous', function() {
+				return true;
+			});
+		}
+	}]);

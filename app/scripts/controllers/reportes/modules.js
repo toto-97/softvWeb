@@ -10,7 +10,13 @@ angular
 			{
 				name: 'home.reportes.ciudadcartera',
 				data: {
-					pageTitle: 'SOFTV | REPORTES POR CIDAD Y CARTERA'
+					pageTitle: 'SOFTV | REPORTES POR CIDAD Y CARTERA',
+					permissions: {
+						only: ['reporteporciudadycarteraSelect'],
+						options: {
+							reload: false
+						}
+					}
 				},
 				url: '/reporteciudadcartera',
 				templateUrl: 'views/reportes/reporteciudadcartera.html',
@@ -20,7 +26,13 @@ angular
 			{
 				name: 'home.reportes.cortes',
 				data: {
-					pageTitle: 'SOFTV | REPORTES DE CORTES'
+					pageTitle: 'SOFTV | REPORTES DE CORTES',
+					permissions: {
+						only: ['cortesSelect'],
+						options: {
+							reload: false
+						}
+					}
 				},
 				url: '/reportes/cortes',
 				templateUrl: 'views/reportes/ReporteCortes.html',
@@ -30,7 +42,13 @@ angular
 			{
 				name: 'home.reportes.especiales',
 				data: {
-					pageTitle: 'SOFTV | REPORTES DE CORTES ESPECIALES'
+					pageTitle: 'SOFTV | REPORTES DE CORTES ESPECIALES',
+					permissions: {
+						only: ['cortesespecialesSelect'],
+						options: {
+							reload: false
+						}
+					}
 				},
 				url: '/reportes/especiales',
 				templateUrl: 'views/reportes/ReporteSucursales.html',

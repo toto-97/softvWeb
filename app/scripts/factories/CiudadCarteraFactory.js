@@ -1,8 +1,6 @@
 'use strict';
 angular.module('softvApp')
 	.factory('CiudadCarteraFactory', function($http, $q, globalService, $localStorage) {
-
-		
 		var factory = {};
 		var paths = {
 			getTipoServicioList: '/VendedoresL/GetListTipServ',
@@ -10,8 +8,8 @@ angular.module('softvApp')
 			getDetalleCartera: '/VendedoresL/GetListDetalleCartera'
 		};
 
-        factory.GetServicios = function() {
-			var deferred = $q.defer();			
+		factory.GetServicios = function() {
+			var deferred = $q.defer();
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
@@ -27,7 +25,7 @@ angular.module('softvApp')
 
 
 		factory.GetFechas = function() {
-			var deferred = $q.defer();			
+			var deferred = $q.defer();
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
@@ -42,26 +40,28 @@ angular.module('softvApp')
 			return deferred.promise;
 		};
 
-        factory.GetDetalleCartera=function(servicio,fecha,TipoReporte){        	
-           var deferred = $q.defer();
-           var DetalleCarteraEntity = {
+		factory.GetDetalleCartera = function(servicio, fecha, TipoReporte) {
+			var deferred = $q.defer();
+			var DetalleCarteraEntity = {
 				'Tipservicio': servicio,
 				'Fecha': fecha,
-				'TipoReporte':TipoReporte
-			};		
-					
+				'TipoReporte': TipoReporte
+			};
+
 			var config = {
 				headers: {
-					'Authorization': $localStorage.currentUser.token,									
+					'Authorization': $localStorage.currentUser.token,
 				}
 			};
-			$http.post(globalService.getUrl() + paths.getDetalleCartera,JSON.stringify({ 'DetalleCartera': DetalleCarteraEntity }), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.getDetalleCartera, JSON.stringify({
+				'DetalleCartera': DetalleCarteraEntity
+			}), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response);
 			});
 			return deferred.promise;
-        }
+		};
 
 
 		return factory;
