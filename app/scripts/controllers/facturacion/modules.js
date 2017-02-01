@@ -10,7 +10,13 @@ angular
 			{
 				name: 'home.facturacion.cajas',
 				data: {
-					pageTitle: 'SOFTV | CAJAS'
+					pageTitle: 'SOFTV | CAJAS',
+					permissions: {
+						only: ['cajasSelect'],
+						options: {
+							reload: false
+						}
+					}
 				},
 				url: '/facturacion/cajas',
 				templateUrl: 'views/facturacion/facturacionCajas.html',
@@ -20,7 +26,13 @@ angular
 			{
 				name: 'home.facturacion.ventas',
 				data: {
-					pageTitle: 'SOFTV | VENTAS'
+					pageTitle: 'SOFTV | VENTAS',
+					permissions: {
+						only: ['ventasSelect'],
+						options: {
+							reload: false
+						}
+					}
 				},
 				url: '/facturacion/ventas',
 				templateUrl: 'views/facturacion/facturacionVentas.html',
@@ -30,7 +42,13 @@ angular
 			{
 				name: 'home.facturacion.desglose',
 				data: {
-					pageTitle: 'SOFTV | DESGLOSE'
+					pageTitle: 'SOFTV | DESGLOSE',
+					permissions: {
+						only: ['desglosedemonedaSelect'],
+						options: {
+							reload: false
+						}
+					}
 				},
 				url: '/facturacion/desglose',
 				templateUrl: 'views/facturacion/DesgloseMoneda.html',
@@ -40,7 +58,13 @@ angular
 			{
 				name: 'home.facturacion.entregas',
 				data: {
-					pageTitle: 'SOFTV | ENTREGAS'
+					pageTitle: 'SOFTV | ENTREGAS',
+					permissions: {
+						only: ['entregasparcialesSelect'],
+						options: {
+							reload: false
+						}
+					}
 				},
 				url: '/facturacion/entregas',
 				templateUrl: 'views/facturacion/EntregasParciales.html',
@@ -50,7 +74,13 @@ angular
 			{
 				name: 'home.facturacion.arqueo',
 				data: {
-					pageTitle: 'SOFTV | ARQUEOS'
+					pageTitle: 'SOFTV | ARQUEOS',
+					permissions: {
+						only: ['arqueodecajasSelect'],
+						options: {
+							reload: false
+						}
+					}
 				},
 				url: '/facturacion/arqueos',
 				templateUrl: 'views/facturacion/ArqueoCajas.html',

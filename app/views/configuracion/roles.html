@@ -4,12 +4,11 @@
             <header>
                 <div>
                     <strong style="font-weight:bold; border:none; color: #0aa89e; font-size: 20px;">Roles</strong>
-                    <br /><small class="text-muted" style="font-size:14px;"> <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a>><a href="#" class="paginaActiva">Seguridad</a></small>
                 </div>
             </header>
         </div>
         <div class="col-md-1 col-md-offset-5">
-            <div class="btn-group">
+            <div class="btn-group" permission permission-only="'rolesAdd'">
                 <button class="btn ink-reaction btn-success" type="button"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo</button>
             </div>
         </div>
@@ -33,7 +32,7 @@
                 <td>Almacen principal</td>
                 <td><label class="checkbox-inline checkbox-styled"><input type="checkbox"><span></span></label></td>
                 <td><label class="checkbox-inline checkbox-styled"><input type="checkbox"><span></span></label></td>
-                <td><button class="btn ink-reaction btn-floating-action btn-xs btn-warning" style="border-radius: 60px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
+                <td><button class="btn ink-reaction btn-floating-action btn-xs btn-warning"  permission permission-only="'rolesUpdate'" style="border-radius: 60px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
             </tr>
         </tbody>
         <tfoot>

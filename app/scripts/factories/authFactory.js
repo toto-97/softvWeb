@@ -1,6 +1,6 @@
 'use strict';
 angular.module('softvApp')
-	.factory('authFactory', function($http, $q, globalService, $localStorage) {
+	.factory('authFactory', function($http, $q, $window, globalService, $localStorage, PermPermissionStore, $location) {
 		var factory = {};
 		var paths = {
 			getAuthentication: '/DameSessionW/GetDameSessionWList'
@@ -18,7 +18,6 @@ angular.module('softvApp')
 				}
 			};
 			$http.post(globalService.getUrl() + paths.getAuthentication, JSON.stringify(Parametros), config).then(function(response) {
-				var resp = false;
 				if (response.data.GetDameSessionWListResult[0].Codigo) {
 					$localStorage.currentUser = {
 						token: response.data.GetDameSessionWListResult[0].Codigo,
@@ -30,11 +29,21 @@ angular.module('softvApp')
 						tipoUsuario: response.data.GetDameSessionWListResult[0].TipoUser,
 						Menu: response.data.GetDameSessionWListResult[0].Menu
 					};
-					resp = true;
+					var menu = $localStorage.currentUser.Menu;
+					var myArray = [];
+					menu.forEach(function(entry) {
+						myArray.push(entry.Class);
+						entry.MenuChild.forEach(function(hijo) {
+							myArray.push(hijo.Class);
+							hijo.MenuChild.forEach(function(nieto) {
+								myArray.push(nieto.Class);
+							});
+						});
+					});
+					$window.location.reload();
 				} else {
-					resp = false;
+					$location.path('/auth/');
 				}
-				deferred.resolve(resp);
 			}).catch(function(data) {
 				deferred.reject(data);
 			});

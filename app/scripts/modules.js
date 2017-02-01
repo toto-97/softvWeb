@@ -5,7 +5,13 @@ angular
 		var states = [{
 				name: 'home',
 				data: {
-					pageTitle: 'BIENVENIDO | SOFTV WEB'
+					pageTitle: 'BIENVENIDO | SOFTV WEB',
+					permissions: {
+						except: ['anonymous'],
+						options: {
+							reload: true
+						}
+					}
 				},
 				url: '/home',
 				views: {
