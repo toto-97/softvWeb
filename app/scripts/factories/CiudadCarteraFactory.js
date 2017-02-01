@@ -1,8 +1,6 @@
 'use strict';
 angular.module('softvApp')
 	.factory('CiudadCarteraFactory', function($http, $q, globalService, $localStorage) {
-
-
 		var factory = {};
 		var paths = {
 			getTipoServicioList: '/VendedoresL/GetListTipServ',

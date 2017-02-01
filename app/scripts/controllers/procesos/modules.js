@@ -10,7 +10,7 @@ angular
 			{
 				name: 'home.procesos.atencion',
 				data: {
-					pageTitle: 'SOFTV | ATENCIÓN',
+					pageTitle: 'SOFTV | ATENCIÓN TELEFÓNICA',
 					permissions: {
 						only: ['atenciontelefonicaSelect'],
 						options: {
