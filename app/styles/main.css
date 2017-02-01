@@ -28,19 +28,19 @@
   -ms-animation: cssload-animball_two 1.15s infinite;
   -webkit-animation: cssload-animball_two 1.15s infinite;
   -moz-animation: cssload-animball_two 1.15s infinite;
-  width: 105px;
-  height: 105px;
+  width: 50px;
+  height: 50px;
 }
 
 .cssload-internal {
-  width: 105px;
-  height: 105px;
+  width: 50px;
+  height: 50px;
   position: absolute;
 }
 
 .cssload-ballcolor {
-  width: 48px;
-  height: 48px;
+  width: 23px;
+  height: 23px;
   border-radius: 50%;
 }
 
@@ -62,31 +62,48 @@
 .cssload-ball_2 {
   background-color: rgb(248, 179, 52);
   top: 0;
-  left: 57px;
+  left: 27px;
 }
 
 .cssload-ball_3 {
   background-color: rgb(0, 160, 150);
-  top: 57px;
+  top: 27px;
   left: 0;
 }
 
 .cssload-ball_4 {
   background-color: rgb(151, 191, 13);
-  top: 57px;
-  left: 57px;
+  top: 27px;
+  left: 27px;
 }
 
 
+/*css loader bar*/
 
+#loading-bar .bar {
+  background: #0aa89e;
+  height: 2px;
+}
+
+#loading-bar-spinner .spinner-icon {
+  width: 18px;
+  height: 18px;
+  border: solid 4px transparent;
+  border-top-color: #0aa89e;
+  border-left-color: #0aa89e;
+  border-radius: 10px;
+}
+
+
+/*css of the loader */
 
 @keyframes cssload-animball_one {
   0% {
     position: absolute;
   }
   50% {
-    top: 29px;
-    left: 29px;
+    top: 14px;
+    left: 14px;
     position: absolute;
     opacity: 0.5;
   }
@@ -100,8 +117,8 @@
     position: absolute;
   }
   50% {
-    top: 29px;
-    left: 29px;
+    top: 14px;
+    left: 14px;
     position: absolute;
     opacity: 0.5;
   }
@@ -115,8 +132,8 @@
     position: absolute;
   }
   50% {
-    top: 29px;
-    left: 29px;
+    top: 14px;
+    left: 14px;
     position: absolute;
     opacity: 0.5;
   }
@@ -130,8 +147,8 @@
     position: absolute;
   }
   50% {
-    top: 29px;
-    left: 29px;
+    top: 14px;
+    left: 14px;
     position: absolute;
     opacity: 0.5;
   }
@@ -145,8 +162,8 @@
     position: absolute;
   }
   50% {
-    top: 29px;
-    left: 29px;
+    top: 14px;
+    left: 14px;
     position: absolute;
     opacity: 0.5;
   }

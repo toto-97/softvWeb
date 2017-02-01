@@ -5,6 +5,7 @@ angular
 		var factory = {};
 		var paths = {
 			buscarContrato: '/BusCliPorContrato_Fac/GetBusCliPorContrato_FacList',
+			validarContrato: '/sp_dameContratoCompaniaAdic/Getsp_dameContratoCompaniaAdicList',
 			serviciosCliente: '/DameSerDelCliFac/GetDameSerDelCliFacList',
 			dameSession: '/DameClv_Session/GetDeepDameClv_Session',
 			dameDetallePago: '/DameDetalle/GetDameDetalleList',
@@ -64,6 +65,28 @@ angular
 			checaRetiro: '/ChecaOrdenRetiro/GetChecaOrdenRetiroList',
 			getObservaciones: '/ConRelClienteObs/GetDeepConRelClienteObs'
 		};
+
+		factory.validarContrato = function(contrato) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'ContratoCom': contrato,
+				'ClvUsuario': $localStorage.currentUser.idUsuario,
+				'Modulo': 'facturacion'
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.validarContrato, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
 
 		factory.buscarContrato = function(contrato) {
 			var deferred = $q.defer();
