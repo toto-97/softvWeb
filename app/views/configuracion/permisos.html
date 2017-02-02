@@ -11,7 +11,7 @@
       <div class="col-md-4 col-md-offset-2">
         <div class="btn-group">
           Selecciona un rol para asignar permisos:
-          <select class="selectpicker form-control" ng-model="Rol" ng-options="option.Nombre for option in $ctrl.Roles track by option.IdRol">
+          <select class="selectpicker form-control" ng-model="$ctrl.Rol" ng-change="$ctrl.ObtenPermisos()" ng-options="option.Nombre for option in $ctrl.Roles track by option.IdRol">
                         <option value="">Selecciona Rol</option>
 
                     </select><br />

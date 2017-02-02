@@ -10,8 +10,9 @@ angular.module('softvApp')
 		};
 
 		factory.GetPermisoList = function(obj) {
+			console.log(obj);
 			var Parametros = {
-				'IdRol': 40
+				'IdRol': obj.IdRol
 			};
 			var deferred = $q.defer();
 			var config = {
@@ -29,7 +30,7 @@ angular.module('softvApp')
 			return deferred.promise;
 		};
 
-		factory.GetModuleList=function(){
+		factory.GetModuleList = function() {
 			var deferred = $q.defer();
 			var config = {
 				headers: {
@@ -37,7 +38,7 @@ angular.module('softvApp')
 				}
 			};
 
-			$http.get(globalService.getUrl() + paths.getModuleList,config).then(function(response) {
+			$http.get(globalService.getUrl() + paths.getModuleList, config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response);

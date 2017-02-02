@@ -7,15 +7,14 @@ angular
 		function GetRolList() {
 			rolFactory.GetRolList().then(function(data) {
 				vm.Roles = data.GetRolListResult;
-				GetModuleList();
+				GetModuleList(vm.Roles[0]);
 			});
 		}
 
-		function GetModuleList() {
+		function GetModuleList(obj) {
 			permisosFactory.GetModuleList().then(function(data) {
 				var modulos = data.GetModuleListResult;
-				console.log(modulos);
-				permisosFactory.GetPermisoList(vm.Roles[0]).then(function(data) {
+				permisosFactory.GetPermisoList(obj).then(function(data) {
 					var permisos = data.GetPermisoistResult;
 					vm.Modules = MergePermisos(modulos, permisos);
 				});
@@ -38,10 +37,12 @@ angular
 			return modulos;
 		}
 
-
-
 		function GuardaPermisos() {
-			console.log(vm.Modules);
+
+		}
+
+		function ObtenPermisos() {
+			GetModuleList(vm.Rol);
 		}
 
 
@@ -50,4 +51,5 @@ angular
 		vm.showPaginator = false;
 		GetRolList();
 		vm.GuardaPermisos = GuardaPermisos;
+		vm.ObtenPermisos = ObtenPermisos;
 	});
