@@ -111,7 +111,7 @@
 		<div class="col-md-9 card panel scrollDiv">
 			<div class="col-md-12" style="padding-left: 25px; padding-right: 25px;">
 				<p class="text-right" style="margin-top: 10px;">
-					 <button class="btn btn-success" ng-click="$ctrl.nuevo()"><i class="fa fa-plus" aria-hidden="true"></i> NUEVO</button>
+					 <a class="btn btn-success" ui-sref="home.procesos.atencionNueva"><i class="fa fa-plus" aria-hidden="true"></i> NUEVO</a>
 				</p>
 				<table class="table">
 					<thead>
@@ -139,7 +139,7 @@
 					</tbody>
 				</table>
 				<div style="margin-top:-40px;">
-		          <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true">
+		          <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ng-if="$ctrl.atenciones.length > 0">
 		          </dir-pagination-controls>
 		        </div>
 			</div>

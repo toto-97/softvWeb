@@ -24,6 +24,16 @@ angular
 				controllerAs: '$ctrl'
 			},
 			{
+				name: 'home.procesos.atencionNueva',
+				data: {
+					pageTitle: 'SOFTV | NUEVA ATENCIÓN TELEFÓNICA',
+				},
+				url: '/atencion/nueva',
+				templateUrl: 'views/procesos/atencionNueva.html',
+				controller: 'AtencionNuevaCtrl',
+				controllerAs: '$ctrl'
+			},
+			{
 				name: 'home.procesos.atencionDetalle',
 				data: {
 					pageTitle: 'SOFTV | ATENCIÓN',

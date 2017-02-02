@@ -7,7 +7,9 @@ angular
 			servicios: '/MuestraTipSerPrincipal/GetMuestraTipSerPrincipalList',
 			usuarios: '/MUESTRAUSUARIOS/GetMUESTRAUSUARIOSList',
 			buscarAtencion: '/uspBuscaLLamadasDeInternet/GetuspBuscaLLamadasDeInternetList',
-			colonias: '/uspConsultaColonias/GetuspConsultaColoniasList'
+			colonias: '/uspConsultaColonias/GetuspConsultaColoniasList',
+			serviciosNuevo: '/MuestraTipSerPrincipal2/GetMuestraTipSerPrincipal2List',
+			buscarCliente: '/uspBuscaContratoSeparado2/GetuspBuscaContratoSeparado2List'
 		};
 		var factory = {};
 
@@ -108,6 +110,53 @@ angular
 				}
 			};
 			$http.post(globalService.getUrl() + paths.colonias, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.serviciosNuevo = function() {
+			var deferred = $q.defer();
+			var Parametros = {};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.serviciosNuevo, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.buscarCliente = function(obje) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'ContratoCom': obje.contrato,
+				'Nombre': obje.nombre,
+				'Apellido_Paterno': obje.paterno,
+				'Apellido_Materno': obje.materno,
+				'CALLE': obje.calle,
+				'NUMERO': obje.numero,
+				'ClvColonia': obje.colonia,
+				'SetupBox': obje.setupbox,
+				'IdUsuario': obje.usuario,
+				'TipoSer': obje.servicio,
+				'Op': obje.op
+
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.buscarCliente, JSON.stringify(Parametros), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response.data);
