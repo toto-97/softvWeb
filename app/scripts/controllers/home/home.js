@@ -5,7 +5,6 @@ angular
 		function initialData() {
 			if ($localStorage.currentUser) {
 				vm.menus = $localStorage.currentUser.Menu;
-				console.log(vm.menus);
 				vm.usuario = $localStorage.currentUser.usuario;
 			} else {
 				location.href === '/auth/';
