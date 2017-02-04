@@ -25,8 +25,23 @@ angular.module('softvApp')
 			});
 		}
 
+		function cancelarTicket() {
+			var modalInstance = $uibModal.open({
+				animation: true,
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: 'views/facturacion/modalCancelarTicket.html',
+				controller: 'cancelarTicketCtrl',
+				controllerAs: '$ctrl',
+				backdrop: 'static',
+				keyboard: false,
+				size: 'md'
+			});
+		}
+
 		var vm = this;
 		vm.buscarSucursal = buscarSucursal;
 		vm.buscarEspecial = buscarEspecial;
 		vm.reimprimirTicket = reimprimirTicket;
+		vm.cancelarTicket = cancelarTicket;
 	});

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('softvApp')
-	.controller('ReimprimirCtrl', function($uibModalInstance, $rootScope, ngNotify) {
+	.controller('MotivoTicketCtrl', function($uibModalInstance, $rootScope, ngNotify) {
 		function cancel() {
 			$uibModalInstance.dismiss('cancel');
 		}
