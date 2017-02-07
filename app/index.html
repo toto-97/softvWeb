@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
     <link rel="stylesheet" href="bower_components/ng-notify/src/styles/ng-notify.css" />
     <link rel="stylesheet" href="bower_components/angular-block-ui/dist/angular-block-ui.css" />
-    <link rel="stylesheet" href="bower_components/pnotify/dist/pnotify.css" />
     <link rel="stylesheet" href="bower_components/pnotify/dist/pnotify.brighttheme.css" />
     <link rel="stylesheet" href="bower_components/pnotify/dist/pnotify.buttons.css" />
+    <link rel="stylesheet" href="bower_components/pnotify/dist/pnotify.css" />
     <link rel="stylesheet" href="bower_components/pnotify/dist/pnotify.history.css" />
     <link rel="stylesheet" href="bower_components/pnotify/dist/pnotify.mobile.css" />
     <!-- endbower -->
@@ -32,6 +32,7 @@
     <link type="text/css" rel="stylesheet" href="libs/theme-default/libs/morris/morris.core.css?1420463396" />
   </head>
 
+
   <body class="menubar-hoverable header-fixed" ng-controller="MainCtrl as $ctrl">
     <!--[if lte IE 8]>
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -39,6 +40,7 @@
     <!-- BEGIN HEADER-->
     <div ui-view="loginview"></div>
     <div ui-view="homeview"></div>
+
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -70,6 +72,7 @@
     <script src="bower_components/angular-permission/dist/angular-permission-ng.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
+
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
@@ -136,6 +139,8 @@
     <script src="scripts/controllers/procesos/atencion/ModalAgendaCtrl.js"></script>
     <!-- endbuild -->
   </body>
+
+
 
 
 </html>
