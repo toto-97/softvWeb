@@ -1,7 +1,7 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('AtencionCtrl', function($state, ngNotify, atencionFactory) {
+	.controller('AtencionCtrl', function($state, ngNotify, atencionFactory, $localStorage) {
 		function initialData() {
 			atencionFactory.getPlazas().then(function(data) {
 				data.GetMuestra_Compania_RelUsuarioListResult.unshift({
@@ -52,8 +52,9 @@ angular
 					numero: '',
 					colonia: 0,
 					setupbox: '',
-					usuario: '',
-					op: vm.op
+					op: vm.op,
+					compania:488,
+					clvUsuario:180
 				};
 				atencionFactory.buscarAtencion(obj).then(function(data) {
 					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
@@ -62,9 +63,9 @@ angular
 		}
 
 		function buscarNombres() {
-			if (vm.nombres == '' && vm.paterno == '' && vm.materno == '') {
+			if (vm.nombre == '' && vm.paterno == '' && vm.materno == '') {
 				ngNotify.set('Introduce un nombre válido.', 'error');
-			} else if (vm.nombres == undefined && vm.paterno == undefined && vm.materno == undefined) {
+			} else if (vm.nombre == undefined && vm.paterno == undefined && vm.materno == undefined) {
 				ngNotify.set('Introduce un nombre válido.', 'error');
 			} else {
 				var obj = {
@@ -78,8 +79,9 @@ angular
 					numero: '',
 					colonia: 0,
 					setupbox: '',
-					usuario: '',
-					op: 1
+					op: 1,
+					compania:0,
+					clvUsuario:0
 				};
 				atencionFactory.buscarAtencion(obj).then(function(data) {
 					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
@@ -90,6 +92,7 @@ angular
 		function cambioPlaza() {
 			if (vm.selectedPlaza.id_compania > 0) {
 				atencionFactory.getColonias(vm.selectedPlaza.id_compania).then(function(data) {
+					console.log(data);
 					vm.colonias = data.GetuspConsultaColoniasListResult;
 					vm.selectedColonia = vm.colonias[0];
 				});
@@ -113,8 +116,9 @@ angular
 					numero: vm.numero,
 					colonia: vm.selectedColonia.clvColonia,
 					setupbox: '',
-					usuario: '',
-					op: 2
+					op: 2,
+					compania:0,
+					clvUsuario:0
 				};
 				atencionFactory.buscarAtencion(obj).then(function(data) {
 					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
@@ -123,6 +127,7 @@ angular
 		}
 
 		function bucarUsuario() {
+			console.log('entra');
 			if (vm.selectedUsuario.Clave == 0) {
 				ngNotify.set('Por favor seleccione un usuario.', 'error');
 			} else {
@@ -137,8 +142,9 @@ angular
 					numero: '',
 					colonia: 0,
 					setupbox: '',
-					usuario: vm.selectedUsuario.Clave,
-					op: 11
+					op: 11,
+					compania:vm.selectedPlaza.id_compania,
+					clvUsuario:vm.selectedUsuario.Clave
 				};
 				atencionFactory.buscarAtencion(obj).then(function(data) {
 					console.log(data);
