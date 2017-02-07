@@ -12,7 +12,7 @@ angular
 			buscarCliente: '/uspBuscaContratoSeparado2/GetuspBuscaContratoSeparado2List'
 		};
 		var factory = {};
-
+		var usuarioAtencion = $localStorage.currentUser.idUsuario;
 		factory.getPlazas = function() {
 			var deferred = $q.defer();
 			var user = $localStorage.currentUser.idUsuario;
@@ -82,8 +82,10 @@ angular
 				'Numero': objAte.numero,
 				'clvColonia': objAte.colonia,
 				'SetUpBox': objAte.setupbox,
-				'IdUsuario': $localStorage.currentUser.idUsuario,
-				'Op': objAte.op
+				'IdUsuario': usuarioAtencion,
+				'Op': objAte.op,
+				'Id_Compania':objAte.compania,
+				'ClvUsuario':objAte.clvUsuario
 			};
 			var config = {
 				headers: {
