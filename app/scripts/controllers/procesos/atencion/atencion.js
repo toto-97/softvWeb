@@ -147,6 +147,8 @@ angular
 			}
 		}
 
+
+
 		var vm = this;
 		vm.cambioReporte = cambioReporte;
 		vm.buscarReporte = buscarReporte;
@@ -157,5 +159,6 @@ angular
 		vm.calle = '';
 		vm.numero = '';
 		vm.atenciones = [];
+
 		initialData();
 	});
