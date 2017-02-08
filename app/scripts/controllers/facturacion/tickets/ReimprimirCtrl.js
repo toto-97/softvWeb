@@ -1,6 +1,6 @@
 'use strict';
 angular.module('softvApp')
-	.controller('ReimprimirCtrl', function($uibModalInstance, ticketsFactory, $rootScope, ngNotify, item) {
+	.controller('ReimprimirCtrl', function($uibModalInstance, $uibModal, ticketsFactory, $rootScope, ngNotify, item) {
 		function initialData() {
 			ticketsFactory.getMotivo(1).then(function(data) {
 				vm.motivos = data.GetMUESTRAMOTIVOSListResult;
@@ -14,9 +14,24 @@ angular.module('softvApp')
 
 		function ok() {
 			ticketsFactory.guardaMotivo(item.clv_Factura, vm.selectedMotivo.Clv_Motivo).then(function(data) {
-				//NOTE: trabjando aqui, no funciona el servicio de bitacora
 				ticketsFactory.addBitacora(item.clv_Factura, item.cliente, 2).then(function(dataBit) {
 					$uibModalInstance.dismiss('cancel');
+					var modalInstance = $uibModal.open({
+						animation: true,
+						ariaLabelledBy: 'modal-title',
+						ariaDescribedBy: 'modal-body',
+						templateUrl: 'views/facturacion/modalSingleTicket.html',
+						controller: 'ModalSingleTicketCtrl',
+						controllerAs: 'ctrl',
+						backdrop: 'static',
+						keyboard: false,
+						size: 'sm',
+						resolve: {
+							factura: function() {
+								return item.clv_Factura;
+							}
+						}
+					});
 				});
 			});
 		}
