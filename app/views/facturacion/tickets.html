@@ -174,6 +174,7 @@
 								<button class="btn ink-reaction btn-floating-action btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Cancelar Ticket" ng-click="$ctrl.cancelarTicket(x)">
 									<i class="fa fa-ban" aria-hidden="true"></i>
 								</button>
+								<button class="btn ink-reaction btn-floating-action btn-xs btn-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Enviar Ticket"><i class="fa fa-envelope" aria-hidden="true"></i></button>
 							</td>
 						</tr>
 					</tbody>
@@ -209,7 +210,11 @@
 							<td>{{ x.Contrato }}</td>
 							<td>{{ x.Importe | currency }}</td>
 							<td>{{ x.Cliente }}</td>
-							<td><button class="btn ink-reaction btn-floating-action btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="" data-original-title="Reimprimir Ticket" ng-click="$ctrl.reimprimirTicket()"><i class="fa fa-print" aria-hidden="true"></i></button>								<button class="btn ink-reaction btn-floating-action btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Cancelar Ticket" ng-click="$ctrl.cancelarTicket()"><i class="fa fa-ban" aria-hidden="true"></i></button></td>
+							<td>
+								<button class="btn ink-reaction btn-floating-action btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="" data-original-title="Reimprimir Ticket" ng-click="$ctrl.reimprimirTicket(x)"><i class="fa fa-print" aria-hidden="true"></i></button>
+								<button class="btn ink-reaction btn-floating-action btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Cancelar Ticket" ng-click="$ctrl.cancelarTicket(x)"><i class="fa fa-ban" aria-hidden="true"></i></button>
+								<button class="btn ink-reaction btn-floating-action btn-xs btn-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Enviar Ticket"><i class="fa fa-envelope" aria-hidden="true"></i></button>
+							</td>
 						</tr>
 					</tbody>
 				</table>

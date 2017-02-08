@@ -239,7 +239,6 @@ angular.module('softvApp')
 		}
 
 		function reimprimirTicket(x) {
-			console.log(x);
 			var modalInstance = $uibModal.open({
 				animation: true,
 				ariaLabelledBy: 'modal-title',

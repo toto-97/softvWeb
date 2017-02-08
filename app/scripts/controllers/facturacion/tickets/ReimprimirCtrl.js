@@ -14,10 +14,10 @@ angular.module('softvApp')
 
 		function ok() {
 			ticketsFactory.guardaMotivo(item.clv_Factura, vm.selectedMotivo.Clv_Motivo).then(function(data) {
-				$uibModalInstance.dismiss('cancel');
-				// ticketsFactory.addBitacora(item.clv_Factura, item.cliente, 2).then(function(dataBit) {
-				// 	$uibModalInstance.dismiss('cancel');
-				// });
+				//NOTE: trabjando aqui, no funciona el servicio de bitacora
+				ticketsFactory.addBitacora(item.clv_Factura, item.cliente, 2).then(function(dataBit) {
+					$uibModalInstance.dismiss('cancel');
+				});
 			});
 		}
 
