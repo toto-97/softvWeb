@@ -8,7 +8,6 @@ angular
 				vm.datosTicket = data.GetCrearTicketTableListResult[0];
 			});
 			cajasFactory.dameDatosPago(factura).then(function(data) {
-				console.log(data);
 				vm.datosPago = data.GetConceptosTicketPagosListResult;
 			});
 		}
