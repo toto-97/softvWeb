@@ -86,7 +86,24 @@ angular
 				templateUrl: 'views/facturacion/ArqueoCajas.html',
 				controller: 'ArqueoCajasCtrl',
 				controllerAs: '$ctrl'
+			},
+			{
+				name: 'home.facturacion.tickets',
+				data: {
+					pageTitle: 'SOFTV | CANCELACIÓN Y REIMPRECIÓN DE TICKETS',
+					permissions: {
+						only: ['ticketsSelect'],
+						options: {
+							reload: false
+						}
+					}
+				},
+				url: '/facturacion/tickets',
+				templateUrl: 'views/facturacion/tickets.html',
+				controller: 'TicketsCtrl',
+				controllerAs: '$ctrl'
 			}
+
 		];
 		states.forEach(function(state) {
 			$stateProvider.state(state);
