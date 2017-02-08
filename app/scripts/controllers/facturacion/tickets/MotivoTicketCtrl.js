@@ -9,10 +9,24 @@ angular.module('softvApp')
 		}
 
 		function ok() {
-			ticketsFactory.guardaMotivo(item.clv_Factura, vm.selectedMotivo.Clv_Motivo).then(function(data) {
-				console.log(data);
-				$uibModalInstance.dismiss('cancel');
-			});
+			if (item.tipo == 'N') {
+				ticketsFactory.guardaMotivo(item.clv_Factura, vm.selectedMotivo.Clv_Motivo).then(function(data) {
+					ticketsFactory.addBitacora(item.clv_Factura, item.cliente, 1).then(function(dataBit) {
+						$uibModalInstance.dismiss('cancel');
+					});
+				});
+			} else {
+				ticketsFactory.guardaMotivo(item.Clv_Factura, vm.selectedMotivo.Clv_Motivo).then(function(data) {
+					ticketsFactory.canEspeceiales(item.Clv_Factura).then(function(dataCan) {
+						ticketsFactory.addBitacora(item.Clv_Factura, item.cliente, 3).then(function(dataBit) {
+							$uibModalInstance.dismiss('cancel');
+							ngNotify.set(dataCan.GetCANCELACIONFACTURASListResult.Msg, 'success');
+						});
+					});
+
+				});
+			}
+
 		}
 
 		var vm = this;

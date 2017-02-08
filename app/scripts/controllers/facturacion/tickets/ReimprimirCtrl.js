@@ -13,26 +13,59 @@ angular.module('softvApp')
 		}
 
 		function ok() {
-			ticketsFactory.guardaMotivo(item.clv_Factura, vm.selectedMotivo.Clv_Motivo).then(function(data) {
-				ticketsFactory.addBitacora(item.clv_Factura, item.cliente, 2).then(function(dataBit) {
-					$uibModalInstance.dismiss('cancel');
-					var modalInstance = $uibModal.open({
-						animation: true,
-						ariaLabelledBy: 'modal-title',
-						ariaDescribedBy: 'modal-body',
-						templateUrl: 'views/facturacion/modalSingleTicket.html',
-						controller: 'ModalSingleTicketCtrl',
-						controllerAs: 'ctrl',
-						backdrop: 'static',
-						keyboard: false,
-						size: 'sm',
-						resolve: {
-							factura: function() {
-								return item.clv_Factura;
+			if (item.tipo == 'N') {
+				vm.factura = item.clv_Factura;
+			} else {
+				vm.factura = item.Clv_Factura
+			}
+			ticketsFactory.guardaMotivo(vm.factura, vm.selectedMotivo.Clv_Motivo).then(function(data) {
+				if (item.tipo == 'N') {
+					ticketsFactory.addBitacora(item.clv_Factura, item.cliente, 2).then(function(dataBit) {
+						$uibModalInstance.dismiss('cancel');
+						var modalInstance = $uibModal.open({
+							animation: true,
+							ariaLabelledBy: 'modal-title',
+							ariaDescribedBy: 'modal-body',
+							templateUrl: 'views/facturacion/modalSingleTicket.html',
+							controller: 'ModalSingleTicketCtrl',
+							controllerAs: 'ctrl',
+							backdrop: 'static',
+							keyboard: false,
+							size: 'sm',
+							resolve: {
+								factura: function() {
+									return vm.factura;
+								}
 							}
+						});
+					});
+				} else {
+					ticketsFactory.addBitacora(vm.factura, item.cliente, 4).then(function(dataBit) {
+						$uibModalInstance.dismiss('cancel');
+					});
+					ticketsFactory.validaEspecial(vm.factura).then(function(dataValida) {
+						if (dataValida.GetValidaFacturaFiscalResult.fiscal == 0) {
+							var modalInstance = $uibModal.open({
+								animation: true,
+								ariaLabelledBy: 'modal-title',
+								ariaDescribedBy: 'modal-body',
+								templateUrl: 'views/facturacion/modalSingleTicket.html',
+								controller: 'ModalSingleTicketCtrl',
+								controllerAs: 'ctrl',
+								backdrop: 'static',
+								keyboard: false,
+								size: 'sm',
+								resolve: {
+									factura: function() {
+										return vm.factura;
+									}
+								}
+							});
+						} else {
+
 						}
 					});
-				});
+				}
 			});
 		}
 

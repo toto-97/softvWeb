@@ -238,7 +238,8 @@ angular.module('softvApp')
 			}
 		}
 
-		function reimprimirTicket(x) {
+		function reimprimirTicket(x, tipo) {
+			x.tipo = tipo;
 			var modalInstance = $uibModal.open({
 				animation: true,
 				ariaLabelledBy: 'modal-title',
@@ -257,8 +258,14 @@ angular.module('softvApp')
 			});
 		}
 
-		function cancelarTicket(x) {
-			ticketsFactory.validaCancela(x.clv_Factura).then(function(data) {
+		function cancelarTicket(x, tipo) {
+			x.tipo = tipo;
+			if (tipo == 'N') {
+				vm.factura = x.clv_Factura;
+			} else {
+				vm.factura = x.Clv_Factura;
+			}
+			ticketsFactory.validaCancela(vm.factura).then(function(data) {
 				if (data.GetValidaCancelacionFacturaListResult[0].Res == 1) {
 					ngNotify.set(data.GetValidaCancelacionFacturaListResult[0].Msg, 'error');
 				} else {

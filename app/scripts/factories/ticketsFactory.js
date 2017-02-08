@@ -12,7 +12,9 @@ angular.module('softvApp')
 			validaCancela: '/ValidaCancelacionFactura/GetValidaCancelacionFacturaList',
 			getMotivo: '/MUESTRAMOTIVOS/GetMUESTRAMOTIVOSList',
 			guardaMotivo: '/GuardaMotivos/GetGuardaMotivosList',
-			addBitacora: '/Bitacora/AddBitacoraTickets'
+			addBitacora: '/Bitacora/AddBitacoraTickets',
+			validaEspecial: '/ValidaFacturaFiscal/GetValidaFacturaFiscal',
+			canEspeceiales: '/CANCELACIONFACTURAS/GetCANCELACIONFACTURASList'
 		};
 
 		factory.getPlazas = function() {
@@ -200,6 +202,42 @@ angular.module('softvApp')
 				}
 			};
 			$http.post(globalService.getUrl() + paths.addBitacora, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+			return deferred.promise;
+		};
+
+		factory.validaEspecial = function(factura) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'ClvFactura': factura
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.validaEspecial, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+			return deferred.promise;
+		};
+
+		factory.canEspeceiales = function(factura) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'ClvFactura': factura
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.canEspeceiales, JSON.stringify(Parametros), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response);
