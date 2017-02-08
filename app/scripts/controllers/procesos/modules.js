@@ -34,6 +34,16 @@ angular
 				controllerAs: '$ctrl'
 			},
 			{
+				name: 'home.procesos.atencionEditar',
+				data: {
+					pageTitle: 'SOFTV | EDITAR ATENCIÓN TELEFÓNICA',
+				},
+				url: '/atencion/editar/:id',
+				templateUrl: 'views/procesos/atencionNueva.html',
+				controller: 'AtencionEditarCtrl',
+				controllerAs: '$ctrl'
+			},
+			{
 				name: 'home.procesos.atencionDetalle',
 				data: {
 					pageTitle: 'SOFTV | ATENCIÓN',

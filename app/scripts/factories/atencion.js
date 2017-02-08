@@ -13,7 +13,7 @@ angular
 			servicioCliente: '/DameSerDelCliFac/GetDameSerDelCliFacList',
 			clasificacionProblemas: '/uspConsultaTblClasificacionProblemas/GetuspConsultaTblClasificacionProblemasList',
 			MuestraTrabajos: '/MUESTRATRABAJOSQUEJAS/GetMUESTRATRABAJOSQUEJASList',
-			generaReporte: '/uspContratoServ/GetuspContratoServList',
+			ValidaContrato: '/uspContratoServ/GetuspContratoServList',
 			clasificacionQuejas: '/MUESTRACLASIFICACIONQUEJAS/GetMUESTRACLASIFICACIONQUEJASList',
 			prioridadQueja: '/Softv_GetPrioridadQueja/GetSoftv_GetPrioridadQuejaList',
 			AddLLamadasdeInternet: '/LLamadasdeInternet/AddLLamadasdeInternet',
@@ -22,11 +22,56 @@ angular
 			ConsultaTurnos: '/spConsultaTurnos/GetspConsultaTurnosList',
 			AgregaQueja: '/Quejas/AddQuejas',
 			ActualizaLlamada: '/LLamadasdeInternet/UpdateLLamadasdeInternet',
-			ActualizaQuejaCallCenter: '/Actualizar_quejasCallCenter/GetDeepActualizar_quejasCallCenter'
+			ActualizaQuejaCallCenter: '/Actualizar_quejasCallCenter/GetDeepActualizar_quejasCallCenter',
+			ConsultaColoniasPorUsuario: '/uspConsultaColoniasPorUsuario/GetuspConsultaColoniasPorUsuarioList',
+			ConsultaLLamada: '/LLamadasdeInternet/GetLLamadasdeInternetList'
 
 		};
 		var factory = {};
 		var usuarioAtencion = $localStorage.currentUser.idUsuario;
+
+		factory.ConsultaColoniasPorUsuario = function() {
+			var deferred = $q.defer();
+			var user = $localStorage.currentUser.idUsuario;
+			var Parametros = {
+				'IdUsuario': user,
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.ConsultaColoniasPorUsuario, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.ConsultaLLamada = function(llamada) {
+			console.log(llamada);
+			var deferred = $q.defer();
+			var user = $localStorage.currentUser.idUsuario;
+			var Parametros = {
+				'clv_llamada': llamada,
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.ConsultaLLamada, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
+
 		factory.getPlazas = function() {
 			var deferred = $q.defer();
 			var user = $localStorage.currentUser.idUsuario;
@@ -70,6 +115,7 @@ angular
 		factory.AddLLamadasdeInternet = function(param) {
 			var deferred = $q.defer();
 			var user = $localStorage.currentUser.idUsuario;
+			param.Clv_Usuario = user;
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
@@ -89,7 +135,7 @@ angular
 
 		}
 
-		factory.generaReporte = function(contrato, servicio) {
+		factory.ValidaContrato = function(contrato, servicio) {
 			var deferred = $q.defer();
 			var user = $localStorage.currentUser.idUsuario;
 			var Parametros = {
@@ -102,7 +148,7 @@ angular
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.post(globalService.getUrl() + paths.generaReporte, JSON.stringify(Parametros), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.ValidaContrato, JSON.stringify(Parametros), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response.data);
@@ -234,10 +280,10 @@ angular
 				'SetUpBox': objAte.setupbox,
 				'IdUsuario': usuarioAtencion,
 				'Op': objAte.op,
-				'Id_Compania':objAte.compania,
-				'ClvUsuario':objAte.clvUsuario
+				'Id_Compania': objAte.compania,
+				'ClvUsuario': objAte.clvUsuario
 			};
-			console.log(Parametros);
+
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
@@ -299,10 +345,12 @@ angular
 				'NUMERO': obje.numero,
 				'ClvColonia': obje.colonia,
 				'SetupBox': obje.setupbox,
-				'IdUsuario': obje.usuario,
+				'IdUsuario': $localStorage.currentUser.idUsuario,
 				'TipoSer': obje.servicio,
 				'Op': obje.op
 			};
+
+
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
@@ -423,9 +471,7 @@ angular
 				'CLV_TIPSER': objeto.CLV_TIPSER,
 				'Turno': objeto.Turno
 			}
-			console.log(JSON.stringify({
-				'objLLamadasdeInternet': parametros
-			}));
+
 
 			$http.post(globalService.getUrl() + paths.ActualizaLlamada, JSON.stringify({
 				'objLLamadasdeInternet': parametros

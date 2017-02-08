@@ -1,7 +1,7 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('AtencionNuevaCtrl', function($uibModal, atencionFactory, ngNotify) {
+	.controller('AtencionNuevaCtrl', function($uibModal, atencionFactory, ngNotify, $rootScope) {
 		function initialData() {
 			atencionFactory.serviciosNuevo().then(function(data) {
 				vm.servicios = data.GetMuestraTipSerPrincipal2ListResult;
@@ -40,6 +40,10 @@ angular
 		}
 
 		function abrirPagos() {
+			if (vm.GlobalContrato == null) {
+				ngNotify.set('Establezca el contrato del cliente para obtener información', 'error');
+				return;
+			}
 			var modalInstance = $uibModal.open({
 				animation: vm.animationsEnabled,
 				ariaLabelledBy: 'modal-title',
@@ -58,8 +62,31 @@ angular
 			});
 		}
 
+
+		function abrirDetalleCobro() {
+			if (vm.GlobalContrato == null) {
+				ngNotify.set('Establezca el contrato del cliente para obtener la información', 'error');
+				return;
+			}
+			var modalInstance = $uibModal.open({
+				animation: true,
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: 'views/procesos/ModalDetalleCobro.html',
+				controller: 'ModalDetalleCobroCtrl',
+				controllerAs: 'ctrl',
+				backdrop: 'static',
+				keyboard: false,
+				size: "lg",
+				resolve: {
+					contrato: function() {
+						return vm.GlobalContrato;
+					}
+				}
+			});
+		}
+
 		function abrirAgenda() {
-			alert('ok')
 			var options = {};
 			options.Contrato = vm.GlobalContrato;
 			options.Clv_TipSer = vm.selectedServicio.Clv_TipSerPrincipal;
@@ -107,41 +134,52 @@ angular
 			});
 		}
 
-		function abrirReportes() {
+		function openHistorial() {
+			if (vm.GlobalContrato == null) {
+				ngNotify.set('Establezca el contrato del cliente para Obtener información', 'error');
+				return;
+			}
 			var modalInstance = $uibModal.open({
-				animation: true,
+				animation: vm.animationsEnabled,
 				ariaLabelledBy: 'modal-title',
 				ariaDescribedBy: 'modal-body',
-				templateUrl: 'views/procesos/historialReportes.html',
-				controller: 'HistorialReportesCtrl',
-				controllerAs: '$ctrl',
+				templateUrl: 'views/facturacion/modalReportes.html',
+				controller: 'ModalReportesCtrl',
+				controllerAs: 'ctrl',
 				backdrop: 'static',
 				keyboard: false,
-				size: "lg",
-				// resolve: {
-				//     factura: function () {
-				//         return factura;
-				//     }
-				// }
+				size: 'lg',
+				resolve: {
+					contrato: function() {
+						return vm.GlobalContrato;;
+					}
+				}
 			});
 		}
 
 
-		function AddLLamadasdeInternet() {
-
+		function AddLLamadasdeInternet(showDetails) {
 			var atencion = (vm.tipoAtencion == 'telefonica') ? 'S' : 'T';
+			var trabajo = (vm.Trabajo == undefined) ? 0 : vm.Trabajo.CLV_TRABAJO;
+			var solucion = (vm.DescripcionSolucion == undefined) ? '' : vm.DescripcionSolucion;
 			var parametros = {
-				'Clv_Usuario:': 2,
 				'Contrato': vm.GlobalContrato,
 				'Descripcion': vm.DescripcionProblema,
-				'Solucion': vm.DescripcionSolucion,
-				'Clv_trabajo': vm.Trabajo.CLV_TRABAJO,
+				'Solucion': solucion,
+				'Clv_trabajo': trabajo,
 				'clv_queja': 0,
 				'CLV_TIPSER': vm.selectedServicio.Clv_TipSerPrincipal,
-				'TipoAtencion': atencion
+				'TipoAtencion': atencion,
+				'ClvProblema': vm.Problema.clvProblema
 			}
+			console.log(parametros);
+
 			atencionFactory.AddLLamadasdeInternet(parametros).then(function(data) {
 				vm.NumeroLlamada = data.AddLLamadasdeInternetResult;
+				if (showDetails == true) {
+					DetalleLlamada(vm.NumeroLlamada);
+				}
+
 			});
 
 		}
@@ -160,8 +198,8 @@ angular
 				servicio: vm.selectedServicio.Clv_TipSerPrincipal,
 				op: 0
 			};
-			atencionFactory.buscarCliente(param).then(function(data) {
-				console.log(data);
+			atencionFactory.buscarCliente(parametros).then(function(data) {
+
 				vm.atenciones = data.GetuspBuscaContratoSeparado2ListResult;
 			});
 		}
@@ -181,7 +219,7 @@ angular
 				op: 0
 			};
 			atencionFactory.buscarCliente(param).then(function(data) {
-				console.log(data);
+
 				vm.atenciones = data.GetuspBuscaContratoSeparado2ListResult;
 			});
 		}
@@ -200,49 +238,137 @@ angular
 				servicio: vm.selectedServicio.Clv_TipSerPrincipal,
 				op: 0
 			};
-			atencionFactory.buscarCliente(param).then(function(data) {
-				console.log(data);
+			atencionFactory.buscarCliente(parametros).then(function(data) {
+
 				vm.atenciones = data.GetuspBuscaContratoSeparado2ListResult;
 			});
 
 			//mandar llamar servicio buscarCliente
 		}
 
+		$rootScope.$on('cliente_seleccionado', function(e, detalle) {
+
+			var contrato = detalle.ContratoBueno;
+			vm.GlobalContrato = contrato;
+			vm.contrato = detalle.CONTRATO;
+			vm.NombreCliente = detalle.Nombre + detalle.Apellido_Paterno + " " + detalle.Apellido_Materno;
+			vm.DireccionCliente = "Calle: " + detalle.CALLE + " #" + detalle.NUMERO + " Colonia: " + detalle.COLONIA + " Ciudad:" + detalle.CIUDAD;
+			atencionFactory.getServiciosCliente(contrato).then(function(data) {
+				vm.ServiciosCliente = data.GetDameSerDelCliFacListResult;
+			});
+		})
+
+		function MuestraMensajeQueja() {
+			vm.MuestraMensajeQueja = true;
+			vm.MensajeQueja = "El cliente cuenta con una Queja pendiente"
+		}
+
 		function EnterContrato(event) {
+			if (vm.selectedServicio == null) {
+				ngNotify.set('Seleccione el servicio que tiene el cliente', 'error');
+				return;
+			}
 			if (event.keyCode == 13) {
+				if (vm.contrato == null || vm.contrato == '') {
+					ngNotify.set('Coloque un contrato válido', 'error');
+					return;
+				}
+				var res = vm.contrato.split("-");
+
+				if (res.length == 1) {
+					ngNotify.set('Coloque un contrato válido ej. 15-1', 'error');
+					return
+				}
+
+				vm.GlobalContrato = null;
+				vm.NombreCliente = 'No especificado';
+				vm.DireccionCliente = 'No especificado';
+				vm.ServiciosCliente = [];
 				var param = {};
 				param.contrato = vm.contrato;
 				param.servicio = vm.selectedServicio.Clv_TipSerPrincipal;
-				param.usuario = 2;
 				param.op = 0;
 				atencionFactory.buscarCliente(param).then(function(data) {
 					var detalle = data.GetuspBuscaContratoSeparado2ListResult[0];
 					var contrato = detalle.ContratoBueno;
 					vm.GlobalContrato = contrato;
-					vm.NombreCliente = detalle.Nombre + detalle.Apellido_Paterno + " " + detalle.Apellido_Materno;
-					vm.DireccionCliente = "Calle: " + detalle.CALLE + " #" + detalle.NUMERO + " Colonia: " + detalle.COLONIA + " Ciudad:" + detalle.CIUDAD;
-					atencionFactory.getServiciosCliente(contrato).then(function(data) {
-						vm.ServiciosCliente = data.GetDameSerDelCliFacListResult;
+					atencionFactory.ValidaContrato(vm.GlobalContrato, vm.selectedServicio.Clv_TipSerPrincipal).then(function(data) {
+						console.log(data);
+						if (data.GetuspContratoServListResult[0].Pasa == true) {
+							MuestraMensajeQueja();
+							vm.NombreCliente = detalle.Nombre + detalle.Apellido_Paterno + " " + detalle.Apellido_Materno;
+							vm.DireccionCliente = "Calle: " + detalle.CALLE + " #" + detalle.NUMERO + " Colonia: " + detalle.COLONIA + " Ciudad:" + detalle.CIUDAD;
+							atencionFactory.getServiciosCliente(contrato).then(function(data) {
+								vm.ServiciosCliente = data.GetDameSerDelCliFacListResult;
+
+							});
+						} else {
+							vm.GlobalContrato = null;
+							ngNotify.set('El cliente no tiene contratado el servicio, seleccione otro tipo por favor.', 'error');
+						}
 					});
+
+
 				});
 			}
 		}
 
+		function GuardarLlamada() {
+			if (vm.GlobalContrato == null) {
+				ngNotify.set('Establezca el contrato del cliente para generar un reporte .', 'error');
+				return;
+			}
+			if (vm.DescripcionProblema == null || vm.DescripcionProblema == '') {
+				ngNotify.set('Redacte la descripción del problema', 'error');
+				return;
+			}
+			if (vm.Problema == null) {
+				ngNotify.set('Seleccione la clasificación del problema', 'error');
+				return;
+			}
+			if (vm.Trabajo == null) {
+				ngNotify.set('Seleccione la solución  del problema', 'error');
+				return;
+			}
+			AddLLamadasdeInternet(true);
+		}
+
 		function generaReporte() {
-			atencionFactory.generaReporte(vm.GlobalContrato, vm.selectedServicio.Clv_TipSerPrincipal).then(function(data) {
-				if (data.GetuspContratoServListResult[0].Pasa == true) {
-					ngNotify.set('No se puede generar una  queja, ya el cliente cuenta con una pendiente.', 'error');
-				} else {
-					GetclasificacionQuejas();
-					GetprioridadQueja();
-					AddLLamadasdeInternet();
-				}
+			if (vm.GlobalContrato == null) {
+				ngNotify.set('Establezca el contrato del cliente para generar un reporte .', 'error');
+				return;
+			}
+			if (vm.DescripcionProblema == null || vm.DescripcionProblema == '') {
+				ngNotify.set('Redacte la descripción del problema', 'error');
+				return;
+			}
+			if (vm.Problema == null) {
+				ngNotify.set('Seleccione la clasificación del problema', 'error');
+				return;
+			}
+			if (vm.Trabajo == null) {
+				ngNotify.set('Seleccione la solución  del problema', 'error');
+				return;
+			}
+
+			vm.PanelCaptura = true;
+			GetclasificacionQuejas();
+			GetprioridadQueja();
+			AddLLamadasdeInternet(false);
+
+		}
+
+		function DetalleLlamada(llamada) {
+			console.log(llamada)
+			atencionFactory.ConsultaLLamada(llamada).then(function(data) {
+				console.log(data);
 			});
 		}
 
 		function ValidaOrdenQuejas() {
 			atencionFactory.ValidaOrdenQuejas(vm.GlobalContrato, vm.selectedServicio.Clv_TipSerPrincipal)
 				.then(function(data) {
+					console.log(data);
 					if (data.GetDeepVALIDAOrdenQuejaResult.Msg == 0) {
 						abrirAgenda();
 					} else {
@@ -254,7 +380,7 @@ angular
 		var vm = this;
 		initialData();
 		vm.abrirPagos = abrirPagos;
-		vm.abrirReportes = abrirReportes;
+
 		vm.tipoAtencion = 'telefonica';
 		vm.buscaContrato = buscaContrato;
 		vm.showDatosCliente = true;
@@ -263,6 +389,15 @@ angular
 		vm.CambioServicio = CambioServicio;
 		vm.generaReporte = generaReporte;
 		vm.ValidaOrdenQuejas = ValidaOrdenQuejas;
+		vm.BuscaCliente = abrirBusquedaCliente;
+		vm.openHistorial = openHistorial;
+		vm.abrirDetalleCobro = abrirDetalleCobro;
+		vm.PanelCaptura = false;
+		vm.MuestraMensajeQueja = false;
+		vm.GuardarLlamada = GuardarLlamada;
+		vm.DetalleLlamada = DetalleLlamada;
+		vm.titulo = "Nueva atención telefónica";
+		vm.bloquearContrato = false;
 		//$('.datosCliente').collapse(); desplegar hasta que se busque un cliente
 
 

@@ -1,7 +1,7 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('AtencionCtrl', function($state, ngNotify, atencionFactory, $localStorage) {
+	.controller('AtencionCtrl', function($state, ngNotify, atencionFactory, $localStorage, $uibModal) {
 		function initialData() {
 			atencionFactory.getPlazas().then(function(data) {
 				data.GetMuestra_Compania_RelUsuarioListResult.unshift({
@@ -53,8 +53,8 @@ angular
 					colonia: 0,
 					setupbox: '',
 					op: vm.op,
-					compania:488,
-					clvUsuario:180
+					compania: 488,
+					clvUsuario: 180
 				};
 				atencionFactory.buscarAtencion(obj).then(function(data) {
 					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
@@ -80,8 +80,8 @@ angular
 					colonia: 0,
 					setupbox: '',
 					op: 1,
-					compania:0,
-					clvUsuario:0
+					compania: 0,
+					clvUsuario: 0
 				};
 				atencionFactory.buscarAtencion(obj).then(function(data) {
 					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
@@ -117,8 +117,8 @@ angular
 					colonia: vm.selectedColonia.clvColonia,
 					setupbox: '',
 					op: 2,
-					compania:0,
-					clvUsuario:0
+					compania: 0,
+					clvUsuario: 0
 				};
 				atencionFactory.buscarAtencion(obj).then(function(data) {
 					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
@@ -143,14 +143,43 @@ angular
 					colonia: 0,
 					setupbox: '',
 					op: 11,
-					compania:vm.selectedPlaza.id_compania,
-					clvUsuario:vm.selectedUsuario.Clave
+					compania: vm.selectedPlaza.id_compania,
+					clvUsuario: vm.selectedUsuario.Clave
 				};
 				atencionFactory.buscarAtencion(obj).then(function(data) {
 					console.log(data);
 					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
 				});
 			}
+		}
+
+		function DetalleLlamada(obj) {
+			console.log(obj);
+			abrirDetalle(obj.Contrato, obj.llamada, obj.Clv_TipSer);
+		}
+
+		function abrirDetalle(contrato, llamada, servicio) {
+			var options = {};
+			options.contrato = contrato;
+			options.llamada = llamada;
+			options.servicio = servicio;
+			console.log(options);
+			var modalInstance = $uibModal.open({
+				animation: vm.animationsEnabled,
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: 'views/procesos/ModalDetalleLlamada.html',
+				controller: 'ModalDetalleLlamadaCtrl',
+				controllerAs: 'ctrl',
+				backdrop: 'static',
+				keyboard: false,
+				size: 'lg',
+				resolve: {
+					options: function() {
+						return options;
+					}
+				}
+			});
 		}
 
 
@@ -165,6 +194,7 @@ angular
 		vm.calle = '';
 		vm.numero = '';
 		vm.atenciones = [];
+		vm.DetalleLlamada = DetalleLlamada;
 
 		initialData();
 	});
