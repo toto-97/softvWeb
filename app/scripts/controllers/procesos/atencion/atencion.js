@@ -23,6 +23,25 @@ angular
 				vm.usuarios = data.GetMUESTRAUSUARIOSListResult;
 				vm.selectedUsuario = vm.usuarios[0];
 			});
+
+			var obj = {
+				servicio: 0,
+				reporte: 0,
+				contrato: 0,
+				nombre: '',
+				paterno: '',
+				materno: '',
+				calle: '',
+				numero: '',
+				colonia: 0,
+				setupbox: '',
+				op: 12,
+				compania: 0,
+				clvUsuario: 0
+			};
+			atencionFactory.buscarAtencion(obj).then(function(data) {
+				vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
+			});
 		}
 
 		function cambioReporte(x) {

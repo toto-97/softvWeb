@@ -51,7 +51,7 @@ angular
 		};
 
 		factory.ConsultaLLamada = function(llamada) {
-			console.log(llamada);
+
 			var deferred = $q.defer();
 			var user = $localStorage.currentUser.idUsuario;
 			var Parametros = {
@@ -456,6 +456,7 @@ angular
 		}
 
 		factory.ActualizaLlamada = function(objeto) {
+
 			var deferred = $q.defer();
 			var config = {
 				headers: {
@@ -466,13 +467,15 @@ angular
 				'clv_llamada': objeto.clv_llamada,
 				'Descripcion': objeto.Descripcion,
 				'Solucion': objeto.Solucion,
-				'Clv_Trabajo': objeto.Clv_Trabajo,
+				'Clv_trabajo': objeto.Clv_Trabajo,
 				'clv_queja': objeto.clv_queja,
 				'CLV_TIPSER': objeto.CLV_TIPSER,
 				'Turno': objeto.Turno
 			}
-
-
+			console.log(parametros);
+			console.log(JSON.stringify({
+				'objLLamadasdeInternet': parametros
+			}));
 			$http.post(globalService.getUrl() + paths.ActualizaLlamada, JSON.stringify({
 				'objLLamadasdeInternet': parametros
 			}), config).then(function(response) {
