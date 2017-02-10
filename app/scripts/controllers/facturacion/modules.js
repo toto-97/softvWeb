@@ -72,6 +72,54 @@ angular
 				controllerAs: '$ctrl'
 			},
 			{
+				name: 'home.facturacion.nuevaEntrega',
+				data: {
+					pageTitle: 'SOFTV | NUEVA ENTREGA',
+					permissions: {
+						only: ['entregasparcialesUpdate'],
+						options: {
+							reload: false
+						}
+					}
+				},
+				url: '/facturacion/entrega/nueva',
+				templateUrl: 'views/facturacion/nuevaEntrega.html',
+				controller: 'NuevaEntregaCtrl',
+				controllerAs: '$ctrl'
+			},
+			{
+				name: 'home.facturacion.detalleEntrega',
+				data: {
+					pageTitle: 'SOFTV | DETALLE DE ENTREGA',
+					permissions: {
+						only: ['entregasparcialesSelect'],
+						options: {
+							reload: false
+						}
+					}
+				},
+				url: '/facturacion/entrega/detalle/:id',
+				templateUrl: 'views/facturacion/detalleEntrega.html',
+				controller: 'DetalleEntregaCtrl',
+				controllerAs: '$ctrl'
+			},
+			{
+				name: 'home.facturacion.editarEntrega',
+				data: {
+					pageTitle: 'SOFTV | EDITAR ENTREGA',
+					permissions: {
+						only: ['entregasparcialesUpdate'],
+						options: {
+							reload: false
+						}
+					}
+				},
+				url: '/facturacion/entrega/editar/:id',
+				templateUrl: 'views/facturacion/editarEntrega.html',
+				controller: 'EditarEntregaCtrl',
+				controllerAs: '$ctrl'
+			},
+			{
 				name: 'home.facturacion.arqueo',
 				data: {
 					pageTitle: 'SOFTV | ARQUEOS',

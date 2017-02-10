@@ -5,18 +5,11 @@
       <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación>Entregas Parciales>Nueva</small>
     </header>
     <div class="tools">
-      <button class="btn btn-default btn-sm" type="button" ui-sref="home.facturacion.entregas">{{ $ctrl.buttonTitle }}</button>
+      <button class="btn btn-default btn-sm" type="button" ui-sref="home.facturacion.entregas">Cancelar</button>
       <button class="btn btn-primary btn-sm" type="button" ng-show="$ctrl.showGuardar" ng-click="$ctrl.guardarEntrega()" ng-show="$ctrl.showGuardar"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
     </div>
   </div>
   <div style="padding-top:20px;">
-      <div class="col-md-12">
-          <div class="col-md-8 col-md-offset-2">
-              <div ng-show="$ctrl.showReporte">
-                <iframe id="myReporte" src="" style="height: 600px; width: 100%;"></iframe>
-              </div>
-          </div>
-      </div>
     <div ng-show="$ctrl.showDatosInit">
       <div class="row">
         <div class="col-md-12">
