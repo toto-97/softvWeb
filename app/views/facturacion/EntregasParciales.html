@@ -3,8 +3,12 @@
 		<header>
 			<strong style="font-weight:bold; border:none; margin-left:10px;">Entregas Parciales</strong>
 			<br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación>Entregas Parciales</small>
-
 		</header>
+		<div class="tools">
+			<div class="btn-group">
+				<a class="btn btn-success" ui-sref="home.facturacion.nuevaEntrega"><i class="fa fa-plus" aria-hidden="true"></i> NUEVO</a>
+			</div>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-12">
@@ -39,11 +43,8 @@
 							</p>
 						</div>
 					</div>
-					<div class="col-md-9" style="padding-top: 30px;">
+					<div class="col-md-9" style="padding-top: 10px;">
 						<div class="col-md-12" style="padding-left: 25px; padding-right: 25px;">
-							<p class="text-right" permission permission-only="'entregasparcialesAdd'">
-								<button class="btn btn-success" ng-click="$ctrl.nuevaEntrega()"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo</button>
-							</p>
 							<table class="table">
 								<thead>
 									<tr>
@@ -68,8 +69,8 @@
 						                <td>{{ x.Recibio }}</td>
 						                <td>{{ x.NomRecibio }}</td>
 						                <td>
-											<button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.detalleEntrada(x.Consecutivo)"><i class="fa fa-eye"></i></button>
-											<button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ng-click="$ctrl.editarEntrada(x.Consecutivo)" permission permission-only="'entregasparcialesUpdate'"><i class="fa fa-edit"></i></button>
+											<button class="btn ink-reaction btn-floating-action btn-xs btn-info"  ui-sref="home.facturacion.detalleEntrega({id:x.Consecutivo})"><i class="fa fa-eye"></i></button>
+											<button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ui-sref="home.facturacion.editarEntrega({id:x.Consecutivo})" permission permission-only="'entregasparcialesUpdate'"><i class="fa fa-edit"></i></button>
 											<button class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-click="$ctrl.eliminarEntrada(x.Consecutivo)" permission permission-only="'entregasparcialesDelete'"><i class="fa fa-trash" aria-hidden="true"></i></button>
 										</td>
 						            </tr>
