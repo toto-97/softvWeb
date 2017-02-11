@@ -3,8 +3,12 @@
 		<header>
 			<strong style="font-weight:bold; border:none; margin-left:10px;">Desglose De Moneda</strong>
 			<br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación>Desglose De Moneda</small>
-
 		</header>
+		<div class="tools">
+			<div class="btn-group">
+				<a class="btn btn-success btn-sm" ng-click="$ctrl.nuevo()"><i class="fa fa-plus" aria-hidden="true"></i> NUEVO</a>
+			</div>
+		</div>
 	</div>
 	<div class="section-body">
 		<div ng-show="$ctrl.showPanel">
@@ -26,10 +30,7 @@
 					</div>
 				</div>
 				<div class="col-md-9">
-					<div align="right" style="padding-top: 10px; padding-right: 40px;" permission permission-only="'desglosedemonedaAdd'">
-						<button class="btn btn-success" ng-click="$ctrl.nuevo()"><i class="fa fa-plus" aria-hidden="true"></i> NUEVO</button><br><br>
-					</div>
-					<div class="table-responsive" style="padding-left: 8px; padding-top: 10px; width: 95%">
+					<div class="table-responsive" style="padding-top: 10px;">
 						<table class="table">
 							<thead>
 								<tr>

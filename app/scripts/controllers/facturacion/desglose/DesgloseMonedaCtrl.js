@@ -1,7 +1,7 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('DesgloseMonedaCtrl', function($rootScope, $uibModal, desgloseFactory, $filter, ngNotify, $localStorage) {
+	.controller('DesgloseMonedaCtrl', function($rootScope, $state, $uibModal, desgloseFactory, $filter, ngNotify, $localStorage) {
 
 		function initialData() {
 			desgloseFactory.busquedaDesglose(0, $localStorage.currentUser.usuario, vm.fecha).then(function(data) {
@@ -71,28 +71,7 @@ angular
 		function nuevo() {
 
 			if (vm.resultado == 0) {
-				var items = {
-					action: 'nuevo',
-					titulo: 'Nuevo Desglose',
-				};
-				vm.animationsEnabled = true;
-				var modalInstance = $uibModal.open({
-					animation: vm.animationsEnabled,
-					ariaLabelledBy: 'modal-title',
-					ariaDescribedBy: 'modal-body',
-					templateUrl: 'views/facturacion/modalNew.html',
-					controller: 'ModalNewCtrl',
-					controllerAs: '$ctrl',
-					backdrop: 'static',
-					keyboard: false,
-					size: 'lg',
-					windowClass: 'app-modal-window-large',
-					resolve: {
-						items: function() {
-							return items;
-						}
-					}
-				});
+				$state.go('home.facturacion.desgloseNuevo');
 			} else {
 				ngNotify.set('Ya existe desglose generado del día, proceda a eliminar el anterior para ingresar uno nuevo.', 'error');;
 			}
@@ -101,28 +80,8 @@ angular
 		// editar
 
 		function detalleDesglose(consecutivo) {
-			var items = {
-				action: 'ver',
-				titulo: 'Detalle de Desglose',
-				consecutivo: consecutivo,
-				fecha: vm.fecha
-			};
-			var modalInstance = $uibModal.open({
-				animation: true,
-				ariaLabelledBy: 'modal-title',
-				ariaDescribedBy: 'modal-body',
-				templateUrl: 'views/facturacion/modalNew.html',
-				controller: 'ModalNewCtrl',
-				controllerAs: '$ctrl',
-				backdrop: 'static',
-				keyboard: false,
-				size: 'lg',
-				windowClass: 'app-modal-window-large',
-				resolve: {
-					items: function() {
-						return items;
-					}
-				}
+			$state.go('home.facturacion.desgloseDetalle', {
+				id: consecutivo
 			});
 		}
 

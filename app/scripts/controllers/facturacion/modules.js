@@ -56,6 +56,54 @@ angular
 				controllerAs: '$ctrl'
 			},
 			{
+				name: 'home.facturacion.desgloseNuevo',
+				data: {
+					pageTitle: 'SOFTV | NUEVO DESGLOSE DE MONEDA',
+					permissions: {
+						only: ['desglosedemonedaUpdate'],
+						options: {
+							reload: false
+						}
+					}
+				},
+				url: '/facturacion/desglose/nuevo',
+				templateUrl: 'views/facturacion/nuevoDesgloseMoneda.html',
+				controller: 'NuevoDesgloseCtrl',
+				controllerAs: '$ctrl'
+			},
+			{
+				name: 'home.facturacion.desgloseDetalle',
+				data: {
+					pageTitle: 'SOFTV | DETALLE DESGLOSE DE MONEDA',
+					permissions: {
+						only: ['desglosedemonedaSelect'],
+						options: {
+							reload: false
+						}
+					}
+				},
+				url: '/facturacion/desglose/detalle/:id',
+				templateUrl: 'views/facturacion/detalleDesglose.html',
+				controller: 'DetalleDesgloseCtrl',
+				controllerAs: '$ctrl'
+			},
+			{
+				name: 'home.facturacion.desgloseEditar',
+				data: {
+					pageTitle: 'SOFTV | EDITAR DESGLOSE DE MONEDA',
+					permissions: {
+						only: ['desglosedemonedaUpdate'],
+						options: {
+							reload: false
+						}
+					}
+				},
+				url: '/facturacion/desglose/editar/:id',
+				templateUrl: 'views/facturacion/editarDesglose.html',
+				controller: 'EditarDesgloseCtrl',
+				controllerAs: '$ctrl'
+			},
+			{
 				name: 'home.facturacion.entregas',
 				data: {
 					pageTitle: 'SOFTV | ENTREGAS',
