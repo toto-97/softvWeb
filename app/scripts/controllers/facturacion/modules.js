@@ -92,7 +92,7 @@ angular
 				data: {
 					pageTitle: 'SOFTV | EDITAR DESGLOSE DE MONEDA',
 					permissions: {
-						only: ['desglosedemonedaUpdate'],
+						only: ['editarPermission'],
 						options: {
 							reload: false
 						}

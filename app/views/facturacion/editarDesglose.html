@@ -1,11 +1,11 @@
 <div class="card" style="margin-top:20px;">
   <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
     <header>
-      <strong style="font-weight:bold; border:none; margin-left:10px;">Nuevo Desglose De Moneda</strong>
-      <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación>Desglose De Moneda>Nuevo</small>
+      <strong style="font-weight:bold; border:none; margin-left:10px;">Editar Desglose De Moneda</strong>
+      <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación>Desglose De Moneda>Editar</small>
     </header>
     <div class="tools">
-      <button class="btn btn-default btn-sm" type="button" ui-sref="home.facturacion.desglose">{{ $ctrl.buttonTitle }}</button>
+      <button class="btn btn-default btn-sm" type="button" ng-click="$ctrl.regresarPantalla()">{{ $ctrl.buttonTitle }}</button>
       <button class="btn btn-primary btn-sm" type="button" ng-show="$ctrl.showGuardar" ng-click="$ctrl.guardarDesglose()" ng-show="$ctrl.showGuardar"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
     </div>
   </div>

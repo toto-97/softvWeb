@@ -44,11 +44,10 @@
 					<h4 class="text-center" style="color: #0aa89e; margin-top:5px;">{{ $ctrl.titulo }} <br> Plazas</h4>
 					<multi-select options="$ctrl.plazasObj"> </multi-select>
 					<br/>
-					<p>
-						<button class="btn btn-default pull-left" ng-click="$ctrl.backPlazas()">Atras</button>
-						<button class="btn btn-primary pull-right" ng-click="$ctrl.okPlazas()">Aceptar</button>
+					<p class="text-right">
+						<button class="btn btn-default btn-sm" ng-click="$ctrl.backPlazas()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Atras</button>
+						<button class="btn btn-primary btn-sm" ng-click="$ctrl.okPlazas()">Aceptar <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
 					</p>
-					<hr/>
 				</div>
 			</div>
 			<div class="row" ng-show="$ctrl.showDistribuidores">
@@ -56,11 +55,10 @@
 					<h4 class="text-center" style="color: #0aa89e; margin-top:5px;">{{ $ctrl.titulo }}<br> Distribuidores</h4>
 					<multi-select options="$ctrl.distribuidoresObj"> </multi-select>
 					<br/>
-					<p>
-						<button class="btn btn-default pull-left" ng-click="$ctrl.cancelarPanel()">Cancelar</button>
-						<button class="btn btn-primary pull-right" ng-click="$ctrl.okDistribuidores()">Aceptar</button>
+					<p class="text-right">
+						<button class="btn btn-default btn-sm" ng-click="$ctrl.cancelarPanel()">Cancelar</button>
+						<button class="btn btn-primary btn-sm" ng-click="$ctrl.okDistribuidores()">Aceptar <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
 					</p>
-					<hr/>
 				</div>
 			</div>
 			<div class="row" ng-show="$ctrl.showGeneralDate">
@@ -114,12 +112,12 @@
 						</div>
 					</div>
 					<div class="row">
-						<br><br><br>
-						<p style="padding-top: 40px; padding-left: 30px; padding-right: 30px;">
-							<button class="btn btn-default pull-left" ng-click="$ctrl.backFechaGeneral()">Atras</button>
-							<button class="btn btn-primary pull-right" ng-click="$ctrl.generarReporte()">Aceptar</button>
-						</p>
-						<hr/>
+						<div class="col-md-12" style="padding-right:30px; padding-top:30px;">
+							<p class="text-right" >
+								<button class="btn btn-default btn-sm" ng-click="$ctrl.backFechaGeneral()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Atras</button>
+								<button class="btn btn-primary btn-sm" ng-click="$ctrl.generarReporte()">Generar Reporte</button>
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('softvApp')
-	.controller('EditarDesgloseCtrl', function(desgloseFactory, $state, $stateParams, $filter, $rootScope, globalService, ngNotify, $localStorage) {
+	.controller('EditarDesgloseCtrl', function(desgloseFactory, PermPermissionStore, $state, $stateParams, $filter, $rootScope, globalService, ngNotify, $localStorage) {
 		function initialData() {
 			vm.showClave = true;
 			vm.showCajero = false;
@@ -139,9 +139,15 @@ angular.module('softvApp')
 				desgloseFactory.updateDesglose(objDesglose).then(function(data) {
 					ngNotify.set('Deslgose de Moneda Editado Correctamente', 'success');
 					$rootScope.$emit('updateDesglose', {});
+					PermPermissionStore.removePermissionDefinition('editarPermission');
 					$state.go('home.facturacion.desglose');
 				});
 			}
+		}
+
+		function regresarPantalla() {
+			PermPermissionStore.removePermissionDefinition('editarPermission');
+			$state.go('home.facturacion.desglose');
 		}
 
 		var vm = this;
@@ -155,5 +161,6 @@ angular.module('softvApp')
 		vm.importeBillete = 0;
 		vm.granTotal = 0;
 		vm.importeMoneda = 0;
+		vm.regresarPantalla = regresarPantalla;
 		initialData();
 	});
