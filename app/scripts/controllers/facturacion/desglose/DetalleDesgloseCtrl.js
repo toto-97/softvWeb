@@ -36,8 +36,8 @@ angular.module('softvApp')
 			vm.showNota2 = false;
 			desgloseFactory.consultaDesglose($stateParams.id).then(function(data) {
 				var objDesglose = data.GetDeepDesgloseDeMonedaResult;
-				vm.selectedCajero = objDesglose.Cajera,
-					vm.desglose.b1000 = objDesglose.B1000;
+				vm.selectedCajero = objDesglose.Cajera;
+				vm.desglose.b1000 = objDesglose.B1000;
 				vm.desglose.b500 = objDesglose.B500;
 				vm.desglose.b200 = objDesglose.B200;
 				vm.desglose.b100 = objDesglose.B100;
