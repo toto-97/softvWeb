@@ -24,7 +24,7 @@ angular
 			},
 			{
 				name: 'auth',
-				url: '/auth/{token}',
+				url: '/auth/?token',
 				data: {
 					pageTitle: 'BIENVENIDO | SOFTV WEB'
 				},
