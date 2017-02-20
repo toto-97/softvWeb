@@ -1486,9 +1486,7 @@ vm.seleccionarTodo = seleccionarTodo;
 			vm.showRangosFecha = showRangosFecha;
 
 			function showRangosFecha() {
-				//var Periodos = ["Saab", "Volvo"]; //---- llena arreglo
-				ngNotify.set('rangos de fecha');
-
+			
 
 				if (Periodos.length == 0) //Si el array Periodos está vacío, no pasar al siguiente modal
 				{
@@ -1601,7 +1599,7 @@ vm.seleccionarTodo = seleccionarTodo;
 			function showCalles() {
 
 				if ((reporteSeleccionado == 7)) {
-                            ngNotify.set('REPORTE 7, vm.ultimoMes.value'+vm.ultimoMes.value, {  type: 'error'  });
+                     
 					if (vm.anioC.value == 0) {
 						//alert("Escriba un año");
 						ngNotify.set('Escriba un año', {
