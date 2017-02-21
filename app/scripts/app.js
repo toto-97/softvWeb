@@ -56,6 +56,7 @@ angular
 				return false;
 			});
 			var permissions = inMenu.on();
+			console.log(permissions);
 			PermPermissionStore.defineManyPermissions(permissions, function() {
 				return true;
 			});
