@@ -18,8 +18,24 @@ function corporativaConf($stateProvider) {
 					}
 				}
 			},
-			url: '/facturacion/corporativa/contratoMaestro',
+			url: '/corporativa/contratoMaestro',
 			templateUrl: 'views/corporativa/contratoMaestro.html',
+			controller: 'AtencionCtrl',
+			controllerAs: '$ctrl'
+		},
+		{
+			name: 'home.corporativa.maestroNuevo',
+			data: {
+				pageTitle: 'SOFTV | NUEVO CONTRATO MAESTRO',
+				permissions: {
+					only: ['contratomaestroAdd'],
+					options: {
+						reload: false
+					}
+				}
+			},
+			url: '/corporativa/nuevo/contrato',
+			templateUrl: 'views/corporativa/nuevoContratoMaestro.html',
 			controller: 'AtencionCtrl',
 			controllerAs: '$ctrl'
 		}
