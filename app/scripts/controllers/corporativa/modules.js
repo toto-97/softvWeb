@@ -20,7 +20,7 @@ function corporativaConf($stateProvider) {
 			},
 			url: '/corporativa/contratoMaestro',
 			templateUrl: 'views/corporativa/contratoMaestro.html',
-			controller: 'AtencionCtrl',
+			controller: 'ContratoMaestroCtrl',
 			controllerAs: '$ctrl'
 		},
 		{
