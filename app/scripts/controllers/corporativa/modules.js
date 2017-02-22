@@ -36,7 +36,7 @@ function corporativaConf($stateProvider) {
 			},
 			url: '/corporativa/nuevo/contrato',
 			templateUrl: 'views/corporativa/nuevoContratoMaestro.html',
-			controller: 'AtencionCtrl',
+			controller: 'NuevoMaestroCtrl',
 			controllerAs: '$ctrl'
 		}
 	];

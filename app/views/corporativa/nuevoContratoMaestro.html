@@ -11,33 +11,165 @@
   </div>
   <div class="col-md-12">
     <div class="col-md-6">
+      <h4 class="text-center">Datos Contrato Maestro</h4>
+    </div>
+    <div class="col-md-6" style="padding-top:10px;">
+      <p class="text-right"><button class="btn btn-info btn-sm" ng-click="$ctrl.abrirContratos()">Contratos Ligados</button></p>
+    </div>
+    <div class="col-md-6">
       <div class="row">
-        <div class="col-md-9">
-          <label class="col-md-3 control-label">Razón Social:</label>
+        <div class="col-md-12">
+          <label class="col-md-2 control-label">Razón Social:</label>
           <div class="col-md-9" style="padding-left:-10px;">
             <input type="text" class="form-control input-sm" required="">
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-9">
-          <label class="col-md-3 control-label">Nombre Comercial:</label>
-          <div class="col-md-9" style="padding-left:-10px;">
-            <input type="text" class="form-control input-sm" required="">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-9">
-          <label class="col-md-3 control-label">Distribuidor:</label>
+        <div class="col-md-12">
+          <label class="col-md-2 control-label">Distribuidor:</label>
           <div class="col-md-7" style="padding-left:-10px;">
             <select class="form-control"></select>
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label class="col-md-2 control-label">Estado:</label>
+          <div class="col-md-7" style="padding-left:-10px;">
+            <select class="form-control"></select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label class="col-md-2 control-label">Ciudad:</label>
+          <div class="col-md-7" style="padding-left:-10px;">
+            <select class="form-control"></select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label class="col-md-2 control-label">Calle:</label>
+          <div class="col-md-7" style="padding-left:-10px;">
+            <select class="form-control"></select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-3">
+            Tipo:
+          </div>
+          <div class="col-md-3">
+            <label class="text-left checkbox-inline radio-styled"><input type="radio" name="prepago" value=""> PrePago</label>
+          </div>
+          <div class="col-md-3">
+            <label class="text-left checkbox-inline radio-styled"><input type="radio" name="prepago" value=""> PosPago</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label class="col-md-2 control-label">Días de Crédito:</label>
+          <div class="col-md-3" style="padding-left:-10px;">
+            <input type="text" class="form-control">
+          </div>
+          <label class="col-md-2 control-label">Días de Gracia:</label>
+          <div class="col-md-3" style="padding-left:-10px;">
+            <input type="text" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-3">
+            Reactivación:
+          </div>
+          <div class="col-md-3">
+            <label class="text-left checkbox-inline radio-styled"><input type="radio" name="cuenta" value="">Manual</label>
+          </div>
+          <div class="col-md-3">
+            <label class="text-left checkbox-inline radio-styled"><input type="radio" name="cuenta" value="">Pago Factura</label>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col-md-6">
-
+      <div class="row">
+        <div class="col-md-12">
+          <label class="col-md-2 control-label">Nombre Comercial:</label>
+          <div class="col-md-9" style="padding-left:-10px;">
+            <input type="text" class="form-control input-sm" required="">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label class="col-md-2 control-label">Número Interior:</label>
+          <div class="col-md-3" style="padding-left:-10px;">
+            <input type="text" class="form-control">
+          </div>
+          <label class="col-md-2 control-label">Número Exterior:</label>
+          <div class="col-md-3" style="padding-left:-10px;">
+            <input type="text" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label class="col-md-2 control-label">CP:</label>
+          <div class="col-md-3" style="padding-left:-10px;">
+            <input type="text" class="form-control">
+          </div>
+          <label class="col-md-2 control-label">RFC:</label>
+          <div class="col-md-3" style="padding-left:-10px;">
+            <input type="text" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label class="col-md-2 control-label">Limite Crédito:</label>
+          <div class="col-md-3" style="padding-left:-10px;">
+            <input type="text" class="form-control">
+          </div>
+          <label class="col-md-2 control-label">Fecha Facturación:</label>
+          <div class="col-md-4" style="padding-left:-10px;">
+            <input type="date" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-3">
+            Tipo de Pago:
+          </div>
+          <div class="col-md-3">
+            <label class="text-left checkbox-inline radio-styled"><input type="radio" name="cuenta" value="">Estado Cuenta</label>
+          </div>
+          <div class="col-md-3">
+            <label class="text-left checkbox-inline radio-styled"><input type="radio" name="cuenta" value="">Factura</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label class="col-md-2 control-label">Tipo de Corte:</label>
+          <div class="col-md-7" style="padding-left:-10px;">
+            <select class="form-control"></select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label class="col-md-2 control-label">Forma de Pago:</label>
+          <div class="col-md-7" style="padding-left:-10px;">
+            <select class="form-control"></select>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
