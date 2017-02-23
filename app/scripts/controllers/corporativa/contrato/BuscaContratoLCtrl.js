@@ -1,6 +1,6 @@
 'use strict';
 
-function BuscaContratoLCtrl($uibModalInstance, atencionFactory, $rootScope) {
+function BuscaContratoLCtrl($uibModalInstance, atencionFactory, $rootScope, corporativoFactory, ngNotify) {
 	function cancel() {
 		$uibModalInstance.dismiss('cancel');
 	}
@@ -11,7 +11,6 @@ function BuscaContratoLCtrl($uibModalInstance, atencionFactory, $rootScope) {
 		obje.colonia = 0;
 		atencionFactory.buscarCliente(obje).then(function(data) {
 			vm.Clientes = data.GetuspBuscaContratoSeparado2ListResult;
-			console.log(vm.Clientes);
 		});
 	}
 
@@ -41,8 +40,14 @@ function BuscaContratoLCtrl($uibModalInstance, atencionFactory, $rootScope) {
 
 
 	function Seleccionar(contrato) {
-		$uibModalInstance.dismiss('cancel');
-		$rootScope.$emit('agregar_contrato', contrato);
+		corporativoFactory.validaContrato(contrato.ContratoBueno).then(function(data) {
+			if (data.GetValidaSiContratoExiste_CMResult.Bandera) {
+				ngNotify.set(data.GetValidaSiContratoExiste_CMResult.Msg, 'error');
+			} else {
+				$uibModalInstance.dismiss('cancel');
+				$rootScope.$emit('agregar_contrato', contrato);
+			}
+		});
 	}
 
 	function cancel() {

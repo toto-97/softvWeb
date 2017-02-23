@@ -1,9 +1,6 @@
 'use strict';
 
-function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, contratos) {
-	this.$onInit = function() {
-		vm.contratos = contratos;
-	}
+function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporativoFactory, maestro, $state, ngNotify) {
 
 	function cancel() {
 		$uibModalInstance.dismiss('cancel');
@@ -42,8 +39,22 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, contrato
 	}
 
 	function ok() {
-		$uibModalInstance.dismiss('cancel');
-		$rootScope.$emit('contratos_ligados', vm.contratos);
+		if (vm.contratos.length > 0) {
+			var contratos = [];
+			vm.contratos.forEach(function(item) {
+				contratos.push({
+					Contrato: item.ContratoBueno
+				});
+			});
+			corporativoFactory.ligarContratos(maestro, contratos).then(function(data) {
+				ngNotify.set('Contratos ligados al contrato maestro.', 'success');
+				$state.go('home.corporativa.maestro');
+				$uibModalInstance.dismiss('cancel');
+			});
+		} else {
+			ngNotify.set('Introduce al menos un contrato.', 'error');
+		}
+
 	}
 
 	function eliminarContrato(index) {
@@ -55,5 +66,6 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, contrato
 	vm.ok = ok;
 	vm.clientesModal = clientesModal;
 	vm.eliminarContrato = eliminarContrato;
+	vm.contratos = [];
 }
 angular.module('softvApp').controller('ContratosLigadosCtrl', ContratosLigadosCtrl);
