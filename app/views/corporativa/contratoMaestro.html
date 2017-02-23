@@ -1,15 +1,15 @@
 <div class="row" style="margin-top:10px;">
 
-    <div class="card" style="margin-top:20px;">
-      <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
-        <header>
-          <strong style="font-weight:bold; border:none; margin-left:10px;">Contratos Maestros</strong>
-          <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Contratos Maestros</small>
-        </header>
-        <div class="tools">
-          <button class="btn btn-primary btn-sm" type="button"  ui-sref="home.corporativa.maestroNuevo"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo</button>
-        </div>
+  <div class="card" style="margin-top:20px;">
+    <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
+      <header>
+        <strong style="font-weight:bold; border:none; margin-left:10px;">Contratos Maestros</strong>
+        <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Contratos Maestros</small>
+      </header>
+      <div class="tools">
+        <button class="btn btn-primary btn-sm" type="button" ui-sref="home.corporativa.maestroNuevo"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo</button>
       </div>
+    </div>
 
     <div class="card-body">
       <div class="row">
@@ -23,52 +23,44 @@
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Contrato
                   </uib-tab-heading>
                   <div class="col-md-12 form-group">
-                    <div class="col-md-12">
-                      <b>Contrato :</b><input type="text" class="form-control" ng-model="$ctrl.Contrato">
+                    <div class="col-md-8">
+                      <b>Nombre Comercial :</b><br>
+                      <input type="text" class="form-control" ng-model="$ctrl.NombreComer">
+                    </div>
+                    <div class="col-md-4">
+                      <br>
+                      <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscarNombrec();"><i class="fa fa-search"></i> Buscar</button>
+                    </div>
+                    <div class="col-md-8">
+                      <b>Razón social :</b><br>
+                      <input type="text" class="form-control" ng-model="$ctrl.RazonS">
+                    </div>
+                    <div class="col-md-4">
+                      <br>
+                      <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscarRazonS();"><i class="fa fa-search"></i> Buscar</button>
                     </div>
                     <div class="col-md-12">
-                      <b><small>RFC :</small></b><input type="text" class="form-control" ng-model="$ctrl.Contrato">
+                      <b>Distribuidor:</b>
+                      <select ng-model="$ctrl.Distribuidor" ng-change="$ctrl.ObtenerCiudades($ctrl.Distribuidor);" class="form-control input-sm" ng-options="item as item.Nombre for item in $ctrl.Distribuidores track by item.Clv_Plaza">
+                          <option value="">Selecciona</option>
+                      </select>
                     </div>
                     <div class="col-md-12">
-                      <b>Razón social :</b><input type="text" class="form-control" ng-model="$ctrl.Contrato">
-                    </div>
-                    <div class="col-md-12">
-                      <b>Distribuidor:</b><input type="text" class="form-control" ng-model="$ctrl.Contrato">
+                      <b>Ciudad:</b>
+                      <select ng-model="$ctrl.Ciudad" class="form-control input-sm" ng-options="item as item.Nombre for item in $ctrl.Ciudades track by item.Clv_Ciudad">
+                           <option value="">Selecciona</option>
+                      </select>
                     </div>
                     <div class="col-md-12">
                       <br>
-                      <button class="btn btn-primary btn-sm"><i class="fa fa-search"></i> Buscar</button>
+                      <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscarCiudad();"><i class="fa fa-search"></i> Buscar</button>
                     </div>
 
                   </div>
 
                 </uib-tab>
 
-                <uib-tab index="3">
-                  <uib-tab-heading>
 
-
-                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span> Dirección
-                  </uib-tab-heading>
-                  <div class="row form-group">
-                    <div class="col-md-12">
-                      <b>Calle :</b><input type="text" class="form-control" ng-model="$ctrl.Contrato">
-                    </div>
-                    <div class="col-md-2">
-                      <b>Número :</b><input type="text" class="form-control" ng-model="$ctrl.Contrato">
-                    </div>
-                    <div class="col-md-12">
-                      <b>Ciudad :</b><input type="text" class="form-control" ng-model="$ctrl.Contrato">
-                    </div>
-                    <div class="col-md-12">
-                      <b>Codigo Postal :</b><input type="text" class="form-control" ng-model="$ctrl.Contrato">
-                    </div>
-                    <div class="col-md-12">
-                      <br>
-                      <button class="btn btn-primary btn-sm"><i class="fa fa-search"></i> Buscar</button>
-                    </div>
-                  </div>
-                </uib-tab>
               </uib-tabset>
             </div>
           </div>
@@ -88,31 +80,26 @@
                     <th>#contrato</th>
                     <th>Razón social</th>
                     <th>RFC</th>
-                    <th>Domicilio</th>
+                    <th>Nombre Comercial</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>123</td>
-                    <td>12/01/2017</td>
-                    <td>12-324</td>
+                  <tr dir-paginate="x in $ctrl.Contratos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:5">
+                    <td>{{x.IdContratoMaestro}}</td>
+                    <td>{{x.RazonSocial}}</td>
+                    <td>{{x.RFC}}</td>
 
-                    <td>Trojes de Buena vista #45</td>
-                    <td><button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.DetalleContrato();"><i class="fa fa-eye"></i></button> <button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ng-click="$ctrl.editarEntrada(x.Consecutivo)"><i class="fa fa-edit"></i></button>
-                      <button class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-click="$ctrl.eliminarEntrada(x.Consecutivo)"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-                  </tr>
-                  <tr>
-                    <td>124</td>
-                    <td>12/01/2017</td>
-                    <td>12-354</td>
-
-                    <td>Lomas turbas #745</td>
-                    <td><button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.detalleEntrada(x.Consecutivo)"><i class="fa fa-eye"></i></button> <button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ng-click="$ctrl.editarEntrada(x.Consecutivo)"><i class="fa fa-edit"></i></button>
+                    <td>{{x.NombreComercial}}</td>
+                    <td><button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.DetalleContrato(x);"><i class="fa fa-eye"></i></button> <button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ng-click="$ctrl.editarEntrada(x.Consecutivo)"><i class="fa fa-edit"></i></button>
                       <button class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-click="$ctrl.eliminarEntrada(x.Consecutivo)"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
                   </tr>
                 </tbody>
               </table>
+              <div style="padding-left: 20px;">
+                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                </dir-pagination-controls>
+              </div>
             </div>
 
 

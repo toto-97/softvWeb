@@ -1,12 +1,11 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('ModalDetalleContratoCtrl', function($uibModalInstance, $uibModal, ContratoMaestroFactory, $rootScope, ngNotify) {
+	.controller('ModalDetalleContratoCtrl', function($uibModalInstance, $uibModal, ContratoMaestroFactory, $rootScope, ngNotify, contrato) {
 
 		function initialData() {
-			ContratoMaestroFactory.GetContratoList().then(function(data) {
-				console.log(data);
-			});
+			vm.contrato = contrato;
+			console.log(contrato);
 		}
 
 		function ok() {

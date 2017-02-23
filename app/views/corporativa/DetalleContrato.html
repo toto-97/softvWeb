@@ -4,51 +4,47 @@
 </div>
 <div class="modal-body" style="padding-top:20px;">
   <div class="row form-group">
-    <div class="col-md-12">
+    <div class="col-md-6">
       <b>Razón Social</b>
+      <p>{{ctrl.contrato.RazonSocial}}</p>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-6">
       <b>Nombre comercial:</b>
-
+      <p>{{ctrl.contrato.NombreComercial}}</p>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-6">
       <b>Distribuidor:</b>
-
+      <p>{{ctrl.contrato.DistribuidorDes}}</p>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
       <b>RFC:</b>
-
+      <p>{{ctrl.contrato.RFC}}</p>
     </div>
   </div>
-  <br>
+  <hr>
   <div class="row form-group">
     <div class="col-md-12">
-      <b>Domicilio Fiscal:</b>
-
+      <b>Domicilio Fiscal:</b><br>
+      <p>Calle: {{ctrl.contrato.CalleDes}},no.{{ctrl.contrato.NumInt}}<br> colonia: {{ctrl.contrato.ColoniaDes}}.{{ctrl.contrato.CodigoPostal}},{{ctrl.contrato.CiudadDes}},{{ctrl.contrato.EstadoDes}}</p>
+      <p></p><br>
+      <div class="col-md-4">
+        <b>Días de crédito:</b>{{ctrl.contrato.DiasCredito}}<br>
+        <b>Días de gracia:</b>{{ctrl.contrato.DiasGracia}}<br>
+        <b>Limite de Crédito:</b>{{ctrl.contrato.LimiteCredito}}
+      </div>
+      <div class="col-md-4">
+        <p ng-if="ctrl.contrato.PagoEdoCuetna==true"> <b>Tipo de pago:</b> Pago con Edo.Cuenta</p>
+        <p ng-if="ctrl.contrato.PagoFac==true"> <b>Tipo de pago:</b> Pago Factura</p>
+        <p ng-if="ctrl.contrato.PostPago==true"><b>Forma de pago:</b> Postpago</p>
+        <p ng-if="ctrl.contrato.Prepago==true"><b>Forma de pago:</b> Prepago</p>
+      </div>
+      <div class="col-md-4">
+        <b>Fecha facturación:</b>{{ctrl.contrato.FechaFac}}
+      </div>
     </div>
   </div>
-  <div class="row form-group">
-    <div class="col-md-4">
-      <b>Días de crédito:</b>
 
-    </div>
-    <div class="col-md-4">
-      <b>Días de gracia:</b>
-
-    </div>
-    <div class="col-md-4">
-      <b>Limite de Crédito:</b>
-
-    </div>
-    <div class="col-md-4">
-      <b>Tipo de pago:</b>
-
-    </div>
-    <div class="col-md-4">
-      <b>Forma de pago de pago:</b>
-
-    </div>
-  </div>
+  <hr>
   <div class="row form-group">
     <div class="col-md-12">
       <b>Contratos Asignados</b>
