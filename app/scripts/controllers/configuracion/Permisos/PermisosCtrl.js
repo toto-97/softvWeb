@@ -25,11 +25,14 @@ angular
 			for (var a = 0; a < modulos.length; a++) {
 				for (var b = 0; b < permisos.length; b++) {
 					if (modulos[a].IdModule == permisos[b].IdModule) {
-						modulos[a].OptAdd = permisos[b].OptAdd;
-						modulos[a].OptDelete = permisos[b].OptDelete;
-						modulos[a].OptUpdate = permisos[b].OptUpdate;
-						modulos[a].OptSelect = permisos[b].OptSelect;
-
+						modulos[a].OptAdd = (permisos[b].OptAdd == null) ? false : permisos[b].OptAdd;
+						modulos[a].OptDelete = (permisos[b].OptDelete == null) ? false : permisos[b].OptDelete;
+						modulos[a].OptUpdate = (permisos[b].OptUpdate == null) ? false : permisos[b].OptUpdate;
+						modulos[a].OptSelect = (permisos[b].OptSelect == null) ? false : permisos[b].OptSelect;
+						modulos[a].OptAdd = (modulos[a].OptAdd == null) ? false : modulos[a].OptAdd;
+						modulos[a].OptDelete = (modulos[a].OptDelete == null) ? false : modulos[a].OptDelete;
+						modulos[a].OptUpdate = (modulos[a].OptUpdate == null) ? false : modulos[a].OptUpdate;
+						modulos[a].OptSelect = (modulos[a].OptSelect == null) ? false : modulos[a].OptSelect;
 					}
 				}
 
@@ -39,6 +42,9 @@ angular
 
 		function GuardaPermisos() {
 
+			console.log(JSON.stringify(
+				vm.Modules
+			));
 		}
 
 		function ObtenPermisos() {
