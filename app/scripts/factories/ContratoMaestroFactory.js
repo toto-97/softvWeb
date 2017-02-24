@@ -3,7 +3,7 @@ angular.module('softvApp')
 	.factory('ContratoMaestroFactory', function($http, $q, globalService, $localStorage) {
 		var factory = {};
 		var paths = {
-			GetContratoList: '/ContratoMaestroFac/GetContratoMaestroFacList',
+			GetContratoList: '/ContratoMaestroFac/GetContratos_CS',
 			BuscarContratos: '/ContratoMaestroFac/GetBusquedaContratoMaestroFac',
 			GetDistribuidores: '/DomicilioFiscal/GetDistribuidores',
 			GetCiudadList: '/DomicilioFiscal/GetListaCiudadesPorPlaza'
