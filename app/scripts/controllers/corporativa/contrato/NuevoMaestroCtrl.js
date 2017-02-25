@@ -2,8 +2,6 @@
 
 function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ngNotify, $state) {
 	this.$onInit = function() {
-		$('.maestro').collapse();
-		$('.contratosLigados').collapse();
 		corporativoFactory.getDistribuidores().then(function(data) {
 			vm.distribuidores = data.GetDistribuidoresResult;
 		});

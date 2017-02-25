@@ -13,7 +13,46 @@ angular.module('softvApp')
 			getTipoPagos: '/TipoPagosFacturas/GetTipoPagosFacturasList',
 			addMaestro: '/ContratoMaestroFac/AddContratoMaestroFac',
 			validaContrato: '/ValidaSiContratoExiste_CM/GetValidaSiContratoExiste_CM',
-			ligarContratos: '/ContratoMaestroFac/GetAddRelContratoMaestroContrato'
+			ligarContratos: '/ContratoMaestroFac/GetAddRelContratoMaestroContrato',
+			singleContrato: '/ContratoMaestroFac/GetRelContratos',
+			updateContrato: '/ContratoMaestroFac/UpdateContratoMaestroFac'
+		};
+
+		factory.updateContrato = function(contrato) {
+			var deferred = $q.defer();
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.updateContrato, JSON.stringify(contrato), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
+
+		factory.singleContrato = function(contrato) {
+			var deferred = $q.defer();
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			var Parametros = {
+				'IdContratoMaestro': contrato
+
+			};
+			$http.post(globalService.getUrl() + paths.singleContrato, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
 		};
 
 		factory.ligarContratos = function(contrato, lista) {

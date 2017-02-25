@@ -38,6 +38,22 @@ function corporativaConf($stateProvider) {
 			templateUrl: 'views/corporativa/nuevoContratoMaestro.html',
 			controller: 'NuevoMaestroCtrl',
 			controllerAs: '$ctrl'
+		},
+		{
+			name: 'home.corporativa.maestroEditar',
+			data: {
+				pageTitle: 'SOFTV | Editar CONTRATO MAESTRO',
+				permissions: {
+					only: ['contratomaestroUpdate'],
+					options: {
+						reload: false
+					}
+				}
+			},
+			url: '/corporativa/editar/contrato/:id',
+			templateUrl: 'views/corporativa/editarContratoMaestro.html',
+			controller: 'EditarMaestroCtrl',
+			controllerAs: '$ctrl'
 		}
 	];
 	states.forEach(function(state) {
