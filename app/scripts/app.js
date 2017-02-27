@@ -9,7 +9,7 @@ angular
 		'ngStorage',
 		'angularUtils.directives.dirPagination',
 		'blockUI',
-		'ngValidate',
+		'angularValidator',
 		'permission', 'permission.ui',
 
 	])

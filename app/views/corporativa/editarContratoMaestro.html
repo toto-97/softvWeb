@@ -19,7 +19,7 @@
             <h4 class="text-center">Datos Contrato Maestro</h4>
           </div>
           <div class="col-md-6" style="padding-top:10px;">
-            <p class="text-right"><a class="btn btn-info btn-sm" ng-disabled="$ctrl.ligados" ng-click="$ctrl.abrirContratos()">Contratos Ligados</a></p>
+            <p class="text-right"><a class="btn btn-info btn-sm" ng-click="$ctrl.abrirContratos()">Contratos Ligados</a></p>
           </div>
           <div class="col-md-6">
             <div class="row">
@@ -328,9 +328,6 @@
                 <div class="col-md-12" style="padding-top:40px;">
                     <p class="text-right">
                         <button class="btn btn-primary btn-sm" ng-disabled="$ctrl.guardarBtn" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                    </p>
-                    <p class="text-right" ng-show="$ctrl.helpSave" style="color:red;">
-                        <small>El contrato maestro fue guardado exitosamente, puedes ligar contratos ahora ó hacerlo después.</small>
                     </p>
                 </div>
             </div>

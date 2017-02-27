@@ -89,10 +89,11 @@
                     <td>{{x.IdContratoMaestro}}</td>
                     <td>{{x.RazonSocial}}</td>
                     <td>{{x.RFC}}</td>
-
                     <td>{{x.NombreComercial}}</td>
-                    <td><button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.DetalleContrato(x);"><i class="fa fa-eye"></i></button> <button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ng-click="$ctrl.editarEntrada(x.Consecutivo)"><i class="fa fa-edit"></i></button>
-                      <button class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-click="$ctrl.eliminarEntrada(x.Consecutivo)"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                    <td>
+                        <button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.DetalleContrato(x);"><i class="fa fa-eye"></i></button>
+                        <button class="btn ink-reaction btn-floating-action btn-xs btn-warning"  ui-sref="home.corporativa.maestroEditar({id:x.IdContratoMaestro})"><i class="fa fa-edit"></i></button>
+                        <button class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-click="$ctrl.eliminarEntrada(x.Consecutivo)"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
                   </tr>
                 </tbody>
               </table>

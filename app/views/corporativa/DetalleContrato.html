@@ -1,6 +1,14 @@
+<style type="text/css">
+	.scrollDiv{
+	    height: 300px;
+	    overflow: auto;
+	    overflow-x: hidden;
+	}
+
+</style>
 <div class="modal-header">
   <button class="close" aria-label="Close" type="button" ng-click="ctrl.cancel()">×</button>
-  <h4 class="modal-title">Detalle Contrato #</h4>
+  <h4 class="modal-title">Detalle Contrato #{{ ctrl.contrato.IdContratoMaestro }}</h4>
 </div>
 <div class="modal-body" style="padding-top:20px;">
   <div class="row form-group">
@@ -46,21 +54,25 @@
 
   <hr>
   <div class="row form-group">
-    <div class="col-md-12">
-      <b>Contratos Asignados</b>
+    <div class="col-md-12" ng-class="ctrl.contrato.lstCliS.length > 3 ? 'scrollDiv':''">
+      <h4 class="text-center">Contratos Asignados</h4>
       <table class="table">
         <thead>
           <th>Contrato</th>
           <th>Direccíon</th>
-          <th>Servicio</th>
-          <th>Estatus</th>
+          <th>Cliente</th>
         </thead>
-
+        <tbody>
+            <tr ng-repeat="x in ctrl.contrato.lstCliS">
+                <td>{{ x.ContratoCom }}</td>
+                <td>{{ x.Direccion }}</td>
+                <td>{{ x.NombreCli }}</td>
+            </tr>
+        </tbody>
       </table>
     </div>
   </div>
 </div>
 <div class="modal-footer">
   <button class="btn btn-default btn-sm" type="button" ng-click="ctrl.cancel()">Cancelar</button>
-  <button class="btn btn-primary btn-sm" type="button" ng-click="ctrl.ok()">Aceptar</button>
 </div>

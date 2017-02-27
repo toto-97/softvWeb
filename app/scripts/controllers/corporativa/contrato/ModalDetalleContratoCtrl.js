@@ -2,14 +2,8 @@
 angular
 	.module('softvApp')
 	.controller('ModalDetalleContratoCtrl', function($uibModalInstance, $uibModal, ContratoMaestroFactory, $rootScope, ngNotify, contrato) {
-
-		function initialData() {
+		this.$onInit = function() {
 			vm.contrato = contrato;
-			console.log(contrato);
-		}
-
-		function ok() {
-
 		}
 
 		function cancel() {
@@ -18,6 +12,4 @@ angular
 
 		var vm = this;
 		vm.cancel = cancel;
-		vm.ok = ok;
-		initialData();
 	});
