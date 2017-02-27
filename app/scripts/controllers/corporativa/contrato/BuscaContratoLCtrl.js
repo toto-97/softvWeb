@@ -15,6 +15,10 @@ function BuscaContratoLCtrl($uibModalInstance, atencionFactory, $rootScope, corp
 	}
 
 	function BusquedaporContrato() {
+		if (vm.BUcontrato == null) {
+			ngNotify.set('Ingresa un contrato válido', 'error');
+			return;
+		}
 		var obje = {};
 		obje.contrato = vm.BUcontrato;
 		obje.servicio = 3;
@@ -26,6 +30,10 @@ function BuscaContratoLCtrl($uibModalInstance, atencionFactory, $rootScope, corp
 	}
 
 	function BusquedaporNombre() {
+		if (vm.BUnombre == null && vm.BUapaterno == null && vm.BUamaterno == null) {
+			ngNotify.set('Ingresa por lo menos un parametro de búsqueda', 'error');
+			return;
+		}
 		var obje = {};
 		obje.nombre = vm.BUnombre;
 		obje.paterno = vm.BUapaterno;
