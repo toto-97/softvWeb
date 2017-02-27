@@ -22,27 +22,22 @@ angular.module('softvApp')
 				if (item.tipo == 'N') {
 					ticketsFactory.addBitacora(vm.factura, item.cliente, 2).then(function(dataBit) {
 						$uibModalInstance.dismiss('cancel');
-						var obj = {
-							factura: vm.factura,
-							reimprimir: 1,
-							cancelar: 0,
-							correo: 0
-						};
-						ticketsFactory.getOptionsTickets(obj).then(function(opt) {
-							var modalInstance = $uibModal.open({
-								animation: true,
-								ariaLabelledBy: 'modal-title',
-								ariaDescribedBy: 'modal-body',
-								templateUrl: 'views/facturacion/modalSingleTicket.html',
-								controller: 'ModalSingleTicketCtrl',
-								controllerAs: 'ctrl',
-								backdrop: 'static',
-								keyboard: false,
-								size: 'sm',
-								resolve: {
-									factura: function() {
-										return vm.factura;
-									}
+						var modalInstance = $uibModal.open({
+							animation: true,
+							ariaLabelledBy: 'modal-title',
+							ariaDescribedBy: 'modal-body',
+							templateUrl: 'views/facturacion/modalSingleTicket.html',
+							controller: 'ModalSingleTicketCtrl',
+							controllerAs: 'ctrl',
+							backdrop: 'static',
+							keyboard: false,
+							size: 'sm',
+							resolve: {
+								factura: function() {
+									return vm.factura;
+								},
+								imprimir: function() {
+									return true;
 								}
 							});
 						});
