@@ -43,8 +43,8 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory) {
 
 	function BuscarRazonS() {
 		var obj = {
-			'RazonSocial': '',
-			'NombreComercial': vm.RazonS,
+			'RazonSocial': vm.RazonS,
+			'NombreComercial': '',
 			'ClvCiudad': 0,
 			"Op": 1
 		};
