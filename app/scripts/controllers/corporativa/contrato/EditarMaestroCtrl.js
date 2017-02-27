@@ -101,7 +101,11 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
 	}
 
 	function abrirContratos() {
-		console.log(vm.contratoMaestro.lstCliS);
+
+		var detalle = {};
+		detalle.ContratosSoftv = vm.contratoMaestro.lstCliS;
+		detalle.IdContratoMaestro = vm.contratoMaestro.IdContratoMaestro;
+		detalle.Action = "EDIT";
 		var modalInstance = $uibModal.open({
 			animation: true,
 			ariaLabelledBy: 'modal-title',
@@ -113,8 +117,8 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
 			keyboard: false,
 			size: "md",
 			resolve: {
-				maestro: function() {
-					return vm.contratoMaestro.lstCliS;
+				detalle: function() {
+					return detalle;
 				}
 			}
 		});
