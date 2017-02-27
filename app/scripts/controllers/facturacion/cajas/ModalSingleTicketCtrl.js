@@ -1,7 +1,7 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('ModalSingleTicketCtrl', function($uibModalInstance, cajasFactory, factura) {
+	.controller('ModalSingleTicketCtrl', function($uibModalInstance, cajasFactory, factura, imprimir) {
 
 		function initialData() {
 			cajasFactory.dameTicket(factura).then(function(data) {
@@ -10,6 +10,7 @@ angular
 			cajasFactory.dameDatosPago(factura).then(function(data) {
 				vm.datosPago = data.GetConceptosTicketPagosListResult;
 			});
+			vm.mostrarImprimir = imprimir;
 		}
 
 		function cancel() {
@@ -27,5 +28,6 @@ angular
 		var vm = this;
 		vm.cancel = cancel;
 		vm.printDiv = printDiv;
+		vm.mostrarImprimir = true;
 		initialData();
 	});

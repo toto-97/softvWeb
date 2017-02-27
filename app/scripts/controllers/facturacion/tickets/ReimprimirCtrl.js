@@ -35,6 +35,9 @@ angular.module('softvApp')
 							resolve: {
 								factura: function() {
 									return vm.factura;
+								},
+								imprimir: function() {
+									return true;
 								}
 							}
 						});
