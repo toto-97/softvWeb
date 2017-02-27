@@ -39,7 +39,10 @@ angular
 		}
 
 		function GuardaPermisos() {
-			permisosFactory.GuardaPermisos(vm.Modules).then(function(data) {
+			for (var a = 0; a < vm.Modules.length; a++) {
+
+			}
+			permisosFactory.GuardaPermisos(null).then(function(data) {
 				console.log(data);
 			});
 
