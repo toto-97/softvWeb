@@ -5,7 +5,6 @@ angular.module('softvApp')
             var vm = this;
 
 			this.$onInit = function(){
-
                 
 				reportesVariosFactory.mostrarTipServ().then(function(data) {
                     vm.tipoServicios = data.GetTipServicioListResult;
@@ -27,12 +26,7 @@ angular.module('softvApp')
                 ListaDistribuidores();                
 			}
 
-			//-----------------------------------------------------------------
-		
-
-
-//------------------Agrega un distribuidor al array -------------------------------
-
+//------------------Distribuidores -------------------------------
 vm.ExisteDistribuidor = ExisteDistribuidor;
 function ExisteDistribuidor(id) {
 	var result = $.grep(Distribuidores, function (obj) { return obj.Clv_Plaza == id; });
@@ -59,8 +53,8 @@ function distribuidorPadre (){
     else if (banderas.banderaDistribuidor == 0) {
     	Distribuidores = [];//limpiar antes de llenar 
         reportesVariosFactory.mostrarDistribuidorByUsuario(vm.clv_usuario).then(function(data) {      
-        DistribuidoresTodos = data.GetDistribuidorByUsuarioResult; //array 
-        var i; 
+            DistribuidoresTodos = data.GetDistribuidorByUsuarioResult; //array 
+            var i; 
             for (i = 0; i < DistribuidoresTodos.length; i++) //cuántos distribuidores existen
                 {                    
                     vm.DistribuidoresTable[i].selected = true;          //de tabla
@@ -79,14 +73,13 @@ function distribuidorHijo(obj) {
         vm.distriTodo = false;//checkbox padre
         // si la bandera es 1, y selecciona un hijo, eliminar a ese hijo
         if (ExisteDistribuidor(obj.Clv_Plaza)) {
-        DeleteFromArray(Distribuidores, 'Clv_Plaza', obj.Clv_Plaza); //eliminar del arreglo    
+            DeleteFromArray(Distribuidores, 'Clv_Plaza', obj.Clv_Plaza); //eliminar del arreglo    
         }                                  
         banderas.banderaDistribuidor = 0;   
     }
     else {
-        AddDistribuidor(obj);
-        } 
-      //  console.log('restantes: '+Distribuidores.length);
+            AddDistribuidor(obj);
+        }       //  console.log('restantes: '+Distribuidores.length);
     }
 
 vm.AddDistribuidor = AddDistribuidor;
@@ -101,18 +94,16 @@ function AddDistribuidor (obj){
 
 var DistribuidoresTodos = [];
 
-
-
 vm.ListaDistribuidores = ListaDistribuidores;
-function ListaDistribuidores(){
-    
-    reportesVariosFactory.mostrarDistribuidorByUsuario(clv_usuario).then(function(data) {
-        vm.DistribuidoresTable = data.GetDistribuidorByUsuarioResult; //mostrar en tabla
-        DistribuidoresTodos = data.GetDistribuidorByUsuarioResult; //array        
+function ListaDistribuidores()
+    {   
+        reportesVariosFactory.mostrarDistribuidorByUsuario(clv_usuario).then(function(data) {
+            vm.DistribuidoresTable = data.GetDistribuidorByUsuarioResult; //mostrar en tabla
+            DistribuidoresTodos = data.GetDistribuidorByUsuarioResult; //array        
         });
     }
 
-//------------------Agrega Plaza al array -------------------------------
+//------------------ Plazas -------------------------------
 
 vm.ExistePlaza = ExistePlaza;
     function ExistePlaza(id) {
@@ -129,23 +120,22 @@ vm.plazaPadre = plazaPadre;
         if (pla == 1) {
             pla = 0;
             Plazas = []; //limpiar   
-
             for (var i = 0; i < vm.PlazasTable.length; i++) //todos los distribuidores de la tabla
             { 
                 vm.PlazasTable[i].selected = false;
             }      
         }
-        else if (pla == 0) {
+        else if (pla == 0) 
+        {
             Plazas = [];//limpiar antes de llenar   
             reportesVariosFactory.mostrarPlazaByDistribuidor(vm.clv_usuario, Distribuidores).then(function(data) {         
-            PlazasTodos = data.GetPlazasByDistribuidorResult; // array
+                PlazasTodos = data.GetPlazasByDistribuidorResult; // array
         
-            for (var i = 0; i < PlazasTodos.length; i++) //cuántos distribuidores existen
-            {
-                vm.PlazasTable[i].selected = true;
-                AddToArray(Plazas, PlazasTodos[i]); //array, objeto
-            }
-          
+                for (var i = 0; i < PlazasTodos.length; i++) //cuántos distribuidores existen
+                {
+                    vm.PlazasTable[i].selected = true;
+                    AddToArray(Plazas, PlazasTodos[i]); //array, objeto
+                }          
             });
             pla = 1;    
         }  //  console.log('las plazas elegidas: '+Plazas.length);
@@ -153,8 +143,8 @@ vm.plazaPadre = plazaPadre;
 
 vm.plazaHijo = plazaHijo;
     function plazaHijo(obj) {
-        if (pla == 1) {
-            // si es 1, está seleccionado, volver a NO SELECCIONADO
+        if (pla == 1) // si es 1, está seleccionado, volver a NO SELECCIONADO 
+        { 
             vm.plazaTodo = false;
             if (ExistePlaza(obj.id_compania)) {
                 DeleteFromArray(Plazas, 'id_compania', obj.id_compania);
@@ -162,7 +152,7 @@ vm.plazaHijo = plazaHijo;
             pla = 0;
         }
         else {
-            AddPlazas(obj);//$scope.AddPlazas(obj);
+            AddPlazas(obj);
         } //console.log('restantes: '+Plazas.length);
     }
 
@@ -910,14 +900,15 @@ vm.seleccionarTodo = seleccionarTodo;
         if (banderas.banderaTodoSeleccionado == 0) {
             banderas.banderaLocalidad = 2;
             banderas.banderaColonia = 2;
-            //alert('banderaTodoSeleccionado = 1');
+            banderas.banderaCalle = 2;
+   
             banderas.banderaTodoSeleccionado = 1;
         } else if (banderas.banderaTodoSeleccionado == 1) {
             banderas.banderaLocalidad = 0;
             banderas.banderaColonia = 0;
-            //alert('banderaTodoSeleccionado = 0');
-            banderas.banderaTodoSeleccionado = 0;
-            //    $scope.z = { checked: false }
+            anderas.banderaCalle = 0;
+          
+            banderas.banderaTodoSeleccionado = 0;        
         }
     }
 
@@ -997,6 +988,8 @@ vm.seleccionarTodo = seleccionarTodo;
 		vm.soloInternet_esconde = false; //se muestra
 		vm.principales = true; // NO se muestra, esconde botón del reporte 'contrataciones principales'  // NO BORRAR
 		}
+        cleanArray();//el servicio debe cambiar antes de mostrar modal de servicios
+        showOpcion();
 	}
 
  //--------------------------------------------------------------------------
@@ -1222,20 +1215,20 @@ vm.seleccionarTodo = seleccionarTodo;
 				vm.myButton9 = "btn-info active";
 				break;
 			case 10:
-						vm.myButton10 = "btn-info active";
-						break;
-					case 11:
-						vm.myButton11 = "btn-info active";
-						break;
-					case 12:
-						vm.myButton12 = "btn-info active";
-						break;
-					case 13:
-						vm.myButton13 = "btn-info active";
-						break;
-					case 14:
-						vm.myButton14 = "btn-info active";
-						break;
+			vm.myButton10 = "btn-info active";
+				break;
+			case 11:
+				vm.myButton11 = "btn-info active";
+				break;
+			case 12:
+				vm.myButton12 = "btn-info active";
+				break;
+			case 13:
+				vm.myButton13 = "btn-info active";
+				break;
+			case 14:
+				vm.myButton14 = "btn-info active";
+				break;
 				}
 
 				reporteSeleccionado = valReporte;
@@ -1333,8 +1326,7 @@ vm.seleccionarTodo = seleccionarTodo;
 					ngNotify.set('Seleccione al menos una ciudad', {
 						type: 'error'
 					});
-				} else {
-					//$scope.showLocalidades();
+				} else {				
 					vm.search = null; //limpia barra búsqueda
 					vm.pplazas = true;
 					vm.pestados = true;
@@ -1531,10 +1523,10 @@ vm.seleccionarTodo = seleccionarTodo;
 
 			//11
 			vm.showMesAnio = showMesAnio;
-
 			function showMesAnio() {
 
-				if ((reporteSeleccionado == 5) || (reporteSeleccionado == 6) || (reporteSeleccionado == 8) || (reporteSeleccionado == 9) || (reporteSeleccionado == 11)) {
+				if ((reporteSeleccionado == 5) || (reporteSeleccionado == 6) 
+                    || (reporteSeleccionado == 8) || (reporteSeleccionado == 9) || (reporteSeleccionado == 11)){
 
 					var D1 = vm.fechaInicial; // no se usa porque tiene formato con zona horaria
 					var month = D1.getUTCMonth() + 1; //months from 1-12
@@ -1548,8 +1540,8 @@ vm.seleccionarTodo = seleccionarTodo;
 					var year = D2.getUTCFullYear();
 					var fechaFinalYMD = year + "/" + month + "/" + day;
 
-					objPrincipal.fecha_ini = fechaInicialYMD; //$scope.fechaInicial;
-					objPrincipal.fecha_fin = fechaFinalYMD; //$scope.fechaFinal;
+					objPrincipal.fecha_ini = fechaInicialYMD; 
+					objPrincipal.fecha_fin = fechaFinalYMD; 
 
 					if (reporteSeleccionado == 9) //9.-Cancelaciones
 					{
@@ -1614,6 +1606,8 @@ vm.seleccionarTodo = seleccionarTodo;
 				} else {
 					if ((reporteSeleccionado == 13) || (reporteSeleccionado == 14)) //calles existe en estos reportes
 					{
+                        if (banderas.banderaTodoSeleccionado == 0) //SÍ muestra las calles 
+                        {
 						vm.search = null; //limpia barra búsqueda
 						vm.pplazas = true;
 						vm.pestados = true;
@@ -1628,6 +1622,11 @@ vm.seleccionarTodo = seleccionarTodo;
 						vm.pmesanio = true;
 						vm.pcalles = false;
 						ListaCalles();
+                        }
+                        else if (banderas.banderaTodoSeleccionado == 1)//NO muestra las calles
+                        {   
+                            showStatus(); //pasa al siguiente 
+                        }
 					}
 				}
 			}
@@ -1639,29 +1638,43 @@ vm.seleccionarTodo = seleccionarTodo;
 			function showStatus() {
 
 				if ((reporteSeleccionado == 13) || (reporteSeleccionado == 14)) { //Si el array Calles está vacío, no pasar al siguiente modal
-					if (Calles.length == 0) {
-						ngNotify.set('Seleccione al menos una calle', {
-							type: 'error'
-						});
-					} else {
-						vm.search = null; //limpia barra búsqueda
-						vm.pplazas = true;
-						vm.pestados = true;
-						vm.pciudades = true;
-						vm.plocalidades = true;
-						vm.pcolonias = true;
-						vm.pserviciosInternet = true;
-						vm.pserviciosDigital = true;
-						vm.ptipoclientes = true;
-						vm.pperiodos = true;
-						vm.prangosfecha = true;
-						vm.pmesanio = true;
-						vm.pcalles = true;
-						vm.pstatus = false; //muestra status de cliente
-						//   ListaMotcan2();                //ListaStatus();
-					}
+					
+                    if (banderas.banderaTodoSeleccionado == 0)
+                    {
+                        if (Calles.length == 0) {
+                            ngNotify.set('Seleccione al menos una calle', { type: 'error' });                        
+                        } 
+                        else {
+                            modalStatus();
+                        }
+                    } 
+                    else if (banderas.banderaTodoSeleccionado == 1)
+                    { 
+                        modalStatus();
+                    }                    
 				}
 			}
+
+
+            vm.modalStatus = modalStatus;
+            function modalStatus(){
+                vm.search = null; //limpia barra búsqueda
+                vm.pplazas = true;
+                vm.pestados = true;
+                vm.pciudades = true;
+                vm.plocalidades = true;
+                vm.pcolonias = true;
+                vm.pserviciosInternet = true;
+                vm.pserviciosDigital = true;
+                vm.ptipoclientes = true;
+                vm.pperiodos = true;
+                vm.prangosfecha = true;
+                vm.pmesanio = true;
+                vm.pcalles = true;
+                vm.pstatus = false; //muestra status de cliente
+            }
+
+
 
 
 			vm.divMotivoCancelacion2 = true; //se oculta
@@ -1723,13 +1736,10 @@ vm.seleccionarTodo = seleccionarTodo;
 						estatusCliente.buscarPor = 0; //<= ó =
 						estatusCliente.mes = 0;
 						estatusCliente.anio = 0;
-						//$scope.muestraDistribuidores(); //crea xml
 						//alert('PASA AL FINAL');
 						showReporte();
 					}
-					//selectMotcan2
 				}
-				//$scope.muestraDistribuidores(); //crea xml
 			}
 
 
@@ -1765,19 +1775,18 @@ vm.seleccionarTodo = seleccionarTodo;
 
     vm.ListaPlazas = ListaPlazas;
     function ListaPlazas() {  
-		reportesVariosFactory.mostrarPlazaByDistribuidor(vm.clv_usuario, Distribuidores).then(function(data) {	
-		  vm.PlazasTable = data.GetPlazasByDistribuidorResult; //mostrar en tabla
-		  PlazasTodos = data.GetPlazasByDistribuidorResult; // array
+	   reportesVariosFactory.mostrarPlazaByDistribuidor(vm.clv_usuario, Distribuidores).then(function(data) {	
+	       vm.PlazasTable = data.GetPlazasByDistribuidorResult; //mostrar en tabla
+		   PlazasTodos = data.GetPlazasByDistribuidorResult; // array
 		});
     }
 
     vm.ListaEstados = ListaEstados;
 	function ListaEstados() {
 		//enviar solo array Plazas
-	reportesVariosFactory.mostrarEstadoByPlaza(Plazas).then(function(data) {
-		//console.log(data); //Plazas array
-		vm.EstadosTable = data.GetEstadosByplazaResult; //las plazas que se eligen
-	//	EstadosTodos = data.GetEstadosByplazaResult; // todas las plazas que se muestran		
+	   reportesVariosFactory.mostrarEstadoByPlaza(Plazas).then(function(data) {	
+            vm.EstadosTable = data.GetEstadosByplazaResult; //las plazas que se eligen
+	       //EstadosTodos = data.GetEstadosByplazaResult; // todas las plazas que se muestran		
 		});
 	}
 
@@ -1785,33 +1794,30 @@ vm.seleccionarTodo = seleccionarTodo;
 	function ListaCiudades(){
 		//enviar array Plazas y Estados
 		reportesVariosFactory.mostrarCiudad(Plazas, Estados).then(function(data) {
-		//console.log(data);
-		vm.CiudadesTable = data.GetCiudadesBy_PlazasEstadoResult;
-	//	CiudadesTodos = data.GetCiudadesBy_PlazasEstadoResult;	
+		  vm.CiudadesTable = data.GetCiudadesBy_PlazasEstadoResult;
+	       //CiudadesTodos = data.GetCiudadesBy_PlazasEstadoResult;	
 		});
 	}
+
 	vm.ListaLocalidades = ListaLocalidades;
 	function ListaLocalidades(){
 		reportesVariosFactory.mostrarLocalidadByCiudad(clv_usuario, Ciudades).then(function(data) {
-		//console.log(data);
-		vm.LocalidadesTable = data.GetLocalidadesbyCiudadResult;
-	//	LocalidadesTodos = data.GetLocalidadesbyCiudadResult;	
+	       vm.LocalidadesTable = data.GetLocalidadesbyCiudadResult;
+	       //	LocalidadesTodos = data.GetLocalidadesbyCiudadResult;	
 		});
 	}
     vm.ListaColonias = ListaColonias;
     function ListaColonias (){
         reportesVariosFactory.mostrarColonia(clv_usuario, banderas.banderaLocalidad, Ciudades, Localidades).then(function(data) {
-    
-        vm.ColoniasTable = data.GetColoniasBy_Ciudad_LocalidadResult;
-     //   ColoniasTodos = data.GetColoniasBy_Ciudad_LocalidadResult; 
+            vm.ColoniasTable = data.GetColoniasBy_Ciudad_LocalidadResult;
+            //   ColoniasTodos = data.GetColoniasBy_Ciudad_LocalidadResult; 
         });
     }
     vm.ListaCalles = ListaCalles;
     function ListaCalles (){
-   
         reportesVariosFactory.mostrarCalle(clv_usuario, banderas.banderaLocalidad, banderas.banderaColonia, Distribuidores, Ciudades, Localidades, Colonias).then(function(data) {
             vm.CallesTable = data.GetCallesBy_Ciudad_Localidad_ColoniaResult;
-       //     CallesTodos = data.GetCallesBy_Ciudad_Localidad_ColoniaResult; 
+            //     CallesTodos = data.GetCallesBy_Ciudad_Localidad_ColoniaResult; 
         });
     }
 
@@ -1820,7 +1826,7 @@ vm.seleccionarTodo = seleccionarTodo;
     function ListaServiciosInternet (){
         reportesVariosFactory.mostrarServInternet().then(function(data) {
             vm.ServInternetTable = data.GetServInternetListResult; //array   
-          //  ServiciosInternetTodos = data.GetServInternetListResult;                 
+            //  ServiciosInternetTodos = data.GetServInternetListResult;                 
         });
     }
 
@@ -1828,7 +1834,7 @@ vm.seleccionarTodo = seleccionarTodo;
     function ListaServiciosDigital(){
         reportesVariosFactory.mostrarServDigital().then(function(data) { 
             vm.ServDigitalTable = data.GetServDigitalListResult; //array                        
-           // ServiciosDigitalTodos = data.GetServDigitalListResult;
+            // ServiciosDigitalTodos = data.GetServDigitalListResult;
         });
     }
 
@@ -1843,17 +1849,15 @@ vm.seleccionarTodo = seleccionarTodo;
     vm.ListaPeriodos = ListaPlazas;
     function ListaPeriodos() {
         reportesVariosFactory.mostrarPeriodo().then(function(data) {
-        vm.PeriodosTable = data.GetPeriodosRepVarListResult; //array
-        PeriodosTodos = data.GetPeriodosRepVarListResult;  
+            vm.PeriodosTable = data.GetPeriodosRepVarListResult; //array
+            PeriodosTodos = data.GetPeriodosRepVarListResult;  
         });
     }
 //------------------------------------------------------------------------------------------
 
 
-
 vm.crearObjParametros = crearObjParametros;
 function crearObjParametros() {
-
     //@clv_reporte=4 --Desconectados Temporales
     if ((reporteSeleccionado == 1) || (reporteSeleccionado == 4))//1 desconectados, 4  adelantados
     { 
@@ -1896,10 +1900,8 @@ function crearObjParametros() {
 
         objPrincipal.OrdenEjecutada = 2;
         objParametros.habilita = 0;
-
         objPrincipal.op = servicioSeleccionado;       
         objPrincipal.Orden = vm.ordenRadio; 
-
 
         if (objPrincipal.op == 3) // digital
         {
@@ -1953,14 +1955,12 @@ vm.status = status;
             if (objParametros.Desconect == 1) {
                 objParametros.Desconect = 0;
             } else { objParametros.Desconect = 1; }
-            //alert('ahora es ' + objParametros.Desconect);
         }
         if (id == 6) //tempo
         {
             if (objParametros.DescTmp == 1) {
                 objParametros.DescTmp = 0;
             } else { objParametros.DescTmp = 1; }
-            //alert('ahora es ' + objParametros.DescTmp);
         }
  
     }
@@ -1968,10 +1968,6 @@ vm.status = status;
 
 
 //----------- REPORTES EN PDF
-
-
-
-
 
 vm.muestraDistribuidores = muestraDistribuidores;
 
@@ -1993,6 +1989,7 @@ function muestraDistribuidores ()
         //  banderas.banderaCalle = 1  //no checado: algunas ciudades  banderas.banderaCalle = 0; 
         if (banderas.banderaCalle == 1) { Calles = []; }
 
+        
         crearXml(Servicios); 
 }
 
@@ -2004,11 +2001,10 @@ function muestraDistribuidores ()
 
 
 vm.crearXml = crearXml;
-    function crearXml(Servicios){      
-
+    function crearXml(Servicios){     
+       // console.log('Crear xml');
         reportesVariosFactory.getXml( objPrincipal, objParametros, objRangoFechas, estatusCliente, Distribuidores, Plazas, Estados,
-        Ciudades,   Localidades, Colonias, Servicios, TipoClientes, Periodos, Calles).then(function(data) {
-    
+        Ciudades,   Localidades, Colonias, Servicios, TipoClientes, Periodos, Calles).then(function(data) {    
 
         OtrosFiltrosXml = data.GetCreateXmlBeforeReportResult[0];// 
         distribuidoresXML = data.GetCreateXmlBeforeReportResult[1]; // 
@@ -2024,7 +2020,7 @@ vm.crearXml = crearXml;
         localidadF = data.GetCreateXmlBeforeReportResult[11];//     
         coloniaF = data.GetCreateXmlBeforeReportResult[12];//    
         calleF = data.GetCreateXmlBeforeReportResult[13];//   
-   
+
         realizaReporte();
 
     });  
@@ -2037,16 +2033,15 @@ vm.realizaReporte = realizaReporte;
 
         var elOrden = objPrincipal.Orden;
         var laBaja = objParametros.baja;
-        var servSelec = servicioSeleccionado;
+        var servSelec = servicioSeleccionado;   //  console.log('reporteSeleccionado '+reporteSeleccionado);
   
         reportesVariosFactory.creaReporte(reporteSeleccionado, servSelec, clv_usuario, elOrden, laBaja,
         OtrosFiltrosXml,  distribuidoresXML,  CompaniasXml,  CiudadesXml, CalleXml,
         LocalidadesXml,  ColoniaXml,  ServiciosXml,  PeriodosXml,  TipoClientesXml,  localidadF,  coloniaF, calleF ).then(function(data) { 
-      //  console.log(' nombre del reporte hecho :');
-      //  console.log(data);
-
+        
         var urlReporte ="";
-
+        console.log('urlReporte '+urlReporte);
+    
         if (reporteSeleccionado == 13)  // 13 ciudad
         {
             if (elOrden == 1) {
@@ -2094,9 +2089,18 @@ vm.realizaReporte = realizaReporte;
                     {    
                     urlReporte = data.GetReporteDig_3Result;//url = "ReportesVarios/Reporte_Digital_3"; 
                     }
-                    else if ((reporteSeleccionado == 5) || (reporteSeleccionado == 8) || (reporteSeleccionado == 9) || (reporteSeleccionado == 11))//5 contrataciones principales, 8 instalaciones, 9 cancelaciones, 11 fueras de área
-                    {    urlReporte = data.GetReporteDig_6Result; //url = "ReportesVarios/Reporte_Digital_6"; 
+                    
+                    else if (reporteSeleccionado == 9) //9 cancelaciones
+                    {    
+                    
+                        urlReporte = data.GetReporteDig_6Result; //url = "ReportesVarios/Reporte_Digital_6"; 
                     }
+                    else if ((reporteSeleccionado == 5) ||(reporteSeleccionado == 8) || (reporteSeleccionado == 11))//5 contrataciones principales8 instalaciones, 11 fueras de área
+                    {    
+                       
+                        urlReporte = data.GetReporteDig_16Result; //url = "ReportesVarios/Reporte_Digital_6"; 
+                    }
+
                     else if (reporteSeleccionado == 6)// 6 contrataciones
                     {    urlReporte = data.GetReporteDig_7Result; //url = "ReportesVarios/Reporte_Digital_7"; 
                     }
@@ -2153,10 +2157,5 @@ vm.realizaReporte = realizaReporte;
         vm.reporteUrl=$sce.trustAsResourceUrl(globalService.getUrlReportes()+'/reportes/'+ urlReporte);     
         });      
     }
-
-
-
-
-
 
 });

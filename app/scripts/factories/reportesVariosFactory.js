@@ -38,6 +38,7 @@ function reportesVariosFactory($http, $q, globalService, $localStorage ) { //, s
 		ReporteDig_13: "/compania/GetReporteDig_13",
 		ReporteDig_14: "/compania/GetReporteDig_14",
 		ReporteDig_15: "/compania/GetReporteDig_15",
+		ReporteDig_16: "/compania/GetReporteDig_16", 
 		ReporteInt_1: "/compania/GetReporteInt_1",
 		ReporteInt_2: "/compania/GetReporteInt_2",
 		ReporteInt_3: "/compania/GetReporteInt_3",
@@ -45,11 +46,10 @@ function reportesVariosFactory($http, $q, globalService, $localStorage ) { //, s
 		ReporteInt_5: "/compania/GetReporteInt_5",
 		ReporteInt_6: "/compania/GetReporteInt_6",
 		ReporteInt_7: "/compania/GetReporteInt_7"
-
 	};
 
 
-factory.getXml = function(objPrincipal, objParametros, objRangoFechas, estatusCliente,Distribuidores, 
+	factory.getXml = function(objPrincipal, objParametros, objRangoFechas, estatusCliente,Distribuidores, 
 	Plazas,	Estados, Ciudades, Localidades, Colonias, Servicios, TipoClientes, Periodos, Calles) {
 
 	var deferred = $q.defer();
@@ -110,17 +110,10 @@ factory.getXml = function(objPrincipal, objParametros, objRangoFechas, estatusCl
 	};
 
 
-
-
-
-
-
 	factory.creaReporte = function(reporteSeleccionado, servSelec, clv_usuario, elOrden, laBaja,
 	OtrosFiltrosXml,  distribuidoresXML,  CompaniasXml,  CiudadesXml, CalleXml,
     LocalidadesXml,  ColoniaXml,  ServiciosXml,  PeriodosXml,  TipoClientesXml,  localidadF,  coloniaF, calleF ) {
 	
-
-
         if (reporteSeleccionado == 13)  // 13 ciudad
         {
             if (elOrden == 1) {
@@ -168,9 +161,18 @@ factory.getXml = function(objPrincipal, objParametros, objRangoFechas, estatusCl
                     else if (reporteSeleccionado == 4) // 4 adelantados
                     {    rutaServicio = paths.ReporteDig_3; //url = "ReportesVarios/Reporte_Digital_3"; 
             		}
-                    else if ((reporteSeleccionado == 5) || (reporteSeleccionado == 8) || (reporteSeleccionado == 9) || (reporteSeleccionado == 11))//5 contrataciones principales, 8 instalaciones, 9 cancelaciones, 11 fueras de área
-                    {    rutaServicio = paths.ReporteDig_6; //url = "ReportesVarios/Reporte_Digital_6"; 
-            		}
+                    //else if ((reporteSeleccionado == 5) || (reporteSeleccionado == 8) || (reporteSeleccionado == 9) || (reporteSeleccionado == 11))//5 contrataciones principales, 8 instalaciones, 9 cancelaciones, 11 fueras de área
+                    //{    rutaServicio = paths.ReporteDig_6; //url = "ReportesVarios/Reporte_Digital_6"; 
+            		//}
+ 					else if (reporteSeleccionado == 9)// 9 cancelaciones
+                    {    
+                        rutaServicio = paths.ReporteDig_6;  //url = "ReportesVarios/Reporte_Digital_6"; 
+                    }
+                    else if ((reporteSeleccionado == 5) || (reporteSeleccionado == 8) || (reporteSeleccionado == 11))//5 contrataciones principales, 8 instalaciones, 11 fueras de área
+                    {    
+                        rutaServicio = paths.ReporteDig_16; //url = "ReportesVarios/Reporte_Digital_6"; 
+                    }
+
                     else if (reporteSeleccionado == 6)// 6 contrataciones
                     {    rutaServicio = paths.ReporteDig_7; //url = "ReportesVarios/Reporte_Digital_7"; 
             		}
@@ -222,8 +224,7 @@ factory.getXml = function(objPrincipal, objParametros, objRangoFechas, estatusCl
             		}
                 }
             }
-        }
-       
+        }       
 		//---------------------------------------------------
 		var deferred = $q.defer();	
 		var Parametros = {
@@ -248,131 +249,123 @@ factory.getXml = function(objPrincipal, objParametros, objRangoFechas, estatusCl
 		return deferred.promise;
 	};
 
-
-
-
-
 //-----------------------------------------------------------------------------
-
-
 	// Tipos de servicio
-		factory.mostrarTipServ=function(){
-			var deferred = $q.defer();
-			var config = {
-				headers: {
-					'Authorization': $localStorage.currentUser.token,
-				}
-			};
-
-			$http.get(globalService.getUrl() + paths.mostrarTipServ,config).then(function(response) {
-				deferred.resolve(response.data);
-			}).catch(function(response) {
-				deferred.reject(response);
-			});
-			return deferred.promise;
-		}
+	factory.mostrarTipServ=function(){
+		var deferred = $q.defer();
+		var config = {
+			headers: {
+				'Authorization': $localStorage.currentUser.token,
+			}
+		};
+		$http.get(globalService.getUrl() + paths.mostrarTipServ,config).then(function(response) {
+			deferred.resolve(response.data);
+		}).catch(function(response) {
+			deferred.reject(response);
+		});
+		return deferred.promise;
+	}
 
 		//mostrarMotivoCan
-		factory.mostrarMotivoCan=function(){
-			var deferred = $q.defer();
-			var config = {
-				headers: {
-					'Authorization': $localStorage.currentUser.token,
+	factory.mostrarMotivoCan=function(){
+		var deferred = $q.defer();
+		var config = {
+			headers: {
+				'Authorization': $localStorage.currentUser.token,
 				}
 			};
-
-			$http.get(globalService.getUrl() + paths.mostrarMotivoCan,config).then(function(response) {
-				deferred.resolve(response.data);
+		$http.get(globalService.getUrl() + paths.mostrarMotivoCan,config).then(function(response) {
+			deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response);
 			});
 			return deferred.promise;
 		}
+
 		//mostrar Periodo
-		factory.mostrarPeriodo=function(){
-			var deferred = $q.defer();
-			var config = {
-				headers: {
-					'Authorization': $localStorage.currentUser.token,
-				}
-			};
+	factory.mostrarPeriodo=function(){
+		var deferred = $q.defer();
+		var config = {
+			headers: {
+				'Authorization': $localStorage.currentUser.token,
+			}
+		};
 
-			$http.get(globalService.getUrl() + paths.mostrarPeriodo,config).then(function(response) {
-				deferred.resolve(response.data);
-			}).catch(function(response) {
-				deferred.reject(response);
-			});
-			return deferred.promise;
-		}
+		$http.get(globalService.getUrl() + paths.mostrarPeriodo,config).then(function(response) {
+			deferred.resolve(response.data);
+		}).catch(function(response) {
+			deferred.reject(response);
+		});
+		return deferred.promise;
+	}
 
 		//mostrar Serv Digital
-		factory.mostrarServDigital=function(){
-			var deferred = $q.defer();
-			var config = {
-				headers: {
-					'Authorization': $localStorage.currentUser.token,
-				}
-			};
+	factory.mostrarServDigital=function(){
+		var deferred = $q.defer();
+		var config = {
+			headers: {
+				'Authorization': $localStorage.currentUser.token,
+			}
+		};
 
-			$http.get(globalService.getUrl() + paths.mostrarServDigital,config).then(function(response) {
-				deferred.resolve(response.data);
-			}).catch(function(response) {
-				deferred.reject(response);
-			});
+		$http.get(globalService.getUrl() + paths.mostrarServDigital,config).then(function(response) {
+			deferred.resolve(response.data);
+		}).catch(function(response) {
+			deferred.reject(response);
+		});
 			return deferred.promise;
-		}
+	}
 		//mostrar Serv Internet
-		factory.mostrarServInternet=function(){
-			var deferred = $q.defer();
-			var config = {
-				headers: {
-					'Authorization': $localStorage.currentUser.token,
-				}
-			};
+	factory.mostrarServInternet=function(){
+		var deferred = $q.defer();
+		var config = {
+			headers: {
+				'Authorization': $localStorage.currentUser.token,
+			}
+		};
 
-			$http.get(globalService.getUrl() + paths.mostrarServInternet,config).then(function(response) {
-				deferred.resolve(response.data);
-			}).catch(function(response) {
-				deferred.reject(response);
-			});
-			return deferred.promise;
-		}
+		$http.get(globalService.getUrl() + paths.mostrarServInternet,config).then(function(response) {
+			deferred.resolve(response.data);
+		}).catch(function(response) {
+			deferred.reject(response);
+		});
+		return deferred.promise;
+	}
 
-		factory.mostrarTipoCliente=function(){
-			var deferred = $q.defer();
-			var config = {
-				headers: {
-					'Authorization': $localStorage.currentUser.token,
-				}
-			};
+	factory.mostrarTipoCliente=function(){
+		var deferred = $q.defer();
+		var config = {
+			headers: {
+				'Authorization': $localStorage.currentUser.token,
+			}
+		};
 
-			$http.get(globalService.getUrl() + paths.mostrarTipoCliente,config).then(function(response) {
-				deferred.resolve(response.data);
-			}).catch(function(response) {
-				deferred.reject(response);
-			});
-			return deferred.promise;
-		}
+		$http.get(globalService.getUrl() + paths.mostrarTipoCliente,config).then(function(response) {
+			deferred.resolve(response.data);
+		}).catch(function(response) {
+			deferred.reject(response);
+		});
+		return deferred.promise;
+	}
 
 
 	factory.mostrarDistribuidorByUsuario = function(clv_usuario) {
-			var deferred = $q.defer();	
-			var Parametros = {
-				'clv_usuario': clv_usuario
-			};
-			var config = {
-				headers: {
-					'Authorization': $localStorage.currentUser.token
-				}
-			};
-			$http.post(globalService.getUrl() + paths.mostrarDistribuidorByUsuario, JSON.stringify(Parametros), config).then(function(response) {
-				deferred.resolve(response.data);
-			}).catch(function(response) {
-				deferred.reject(response.data);
-			});
-
-			return deferred.promise;
+		var deferred = $q.defer();	
+		var Parametros = {
+			'clv_usuario': clv_usuario
 		};
+		var config = {
+			headers: {
+				'Authorization': $localStorage.currentUser.token
+			}
+		};
+		$http.post(globalService.getUrl() + paths.mostrarDistribuidorByUsuario, JSON.stringify(Parametros), config).then(function(response) {
+			deferred.resolve(response.data);
+		}).catch(function(response) {
+			deferred.reject(response.data);
+		});
+		return deferred.promise;
+	};
 
 	// banderas, Distribuidores <--- clv_usuario + plazas (o sea distribuidores)
 	factory.mostrarPlazaByDistribuidor = function(clv_usuario, Distribuidores) {
@@ -392,9 +385,7 @@ factory.getXml = function(objPrincipal, objParametros, objRangoFechas, estatusCl
 			deferred.reject(response.data);
 		});
 			return deferred.promise;
-		};
-
-
+	};
 
 	factory.mostrarEstadoByPlaza = function(Plazas) {
 		var deferred = $q.defer();	
@@ -412,7 +403,8 @@ factory.getXml = function(objPrincipal, objParametros, objRangoFechas, estatusCl
 			deferred.reject(response.data);
 		});
 			return deferred.promise;
-		};
+	};
+
 
 	factory.mostrarCiudad = function(Plazas, Estados) {
 		var deferred = $q.defer();	
@@ -431,7 +423,7 @@ factory.getXml = function(objPrincipal, objParametros, objRangoFechas, estatusCl
 			deferred.reject(response.data);
 		});
 			return deferred.promise;
-		};
+	};
 
 
 	factory.mostrarLocalidadByCiudad = function(clv_usuario, Ciudades) {
@@ -450,8 +442,8 @@ factory.getXml = function(objPrincipal, objParametros, objRangoFechas, estatusCl
 		}).catch(function(response) {
 			deferred.reject(response.data);
 		});
-			return deferred.promise;
-		};
+		return deferred.promise;
+	};
 
 	factory.mostrarColonia = function(clv_usuario, banderaLocalidad, Ciudades, Localidades) {
 		var deferred = $q.defer();	
@@ -472,7 +464,7 @@ factory.getXml = function(objPrincipal, objParametros, objRangoFechas, estatusCl
 			deferred.reject(response.data);
 		});
 			return deferred.promise;
-		};
+	};
 
 
 
@@ -499,9 +491,6 @@ factory.getXml = function(objPrincipal, objParametros, objRangoFechas, estatusCl
 		});
 		return deferred.promise;
 	};
-
-
-
 
 	return factory;
 }
