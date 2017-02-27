@@ -36,11 +36,18 @@
                 <uib-tabset active="active">
                   <uib-tab index="0" heading="Contrato">
                     <br/>
-                    <form ng-submit="ctrl.buscarPorContrato()">
-                      <div class="col-md-2">
-                        <div class="form-group">
-                          <input type="text" class="form-control" autocomplete="off" required="" placeholder="Contrato" ng-model="ctrl.data.contrato">
-                        </div>
+                    <form angular-validator-submit="ctrl.buscarPorContrato()" name="contratoForm" novalidate angular-validator>
+                      <div class="col-md-4">
+                         <input type="text" autocomplete="off"
+                              class="form-control"
+                              required=""
+                              name="contrato"
+                              validate-on="dirty"
+                              placeholder="Contrato"
+                              ng-pattern = "/^[0-9]{1,}[-]{1}[0-9]{1,}/"
+                              required-message="'Este campo es obligatorio.'"
+                              invalid-message = "'Formato de contrato inválido.'"
+                              ng-model="ctrl.data.contrato">
                       </div>
                       <br/>
                       <br/>
@@ -202,7 +209,7 @@
                       <p style="font-size: 11px;">
                         <strong>Contrato: </strong>{{ ctrl.Cliente.ContratoC }}<br/>
                         <strong>Nombre: </strong>{{ ctrl.Cliente.Nombre }}<br/>
-                        <strong>Dirección: </strong>{{ ctrl.Cliente.Calle }} {{ ctrl.Cliente.Colonia }} {{ ctrl.Cliente.Ciudad }}<br/>
+                        <strong>Dirección: </strong>{{ ctrl.Cliente.Calle }}<br/>
                         <strong>#: </strong>{{ ctrl.Cliente.Numero }}<br/>
                         <strong>Colonia: </strong>{{ ctrl.Cliente.Colonia }} <strong style="padding-left:50px;">Teléfono: </strong>{{ ctrl.Cliente.Telefono }}<br/>
                         <strong>Ciudad: </strong>{{ ctrl.Cliente.Ciudad }}<br/>
