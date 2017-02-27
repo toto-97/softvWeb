@@ -6,7 +6,8 @@ angular.module('softvApp')
 		var factory = {};
 		var paths = {
 			getPermisoList: '/Module/GetPermisoist',
-			getModuleList: '/Module/GetModuleList'
+			getModuleList: '/Module/GetModuleList',
+			GuardaPermisos: '/Permiso/GuardaPermisos'
 		};
 
 		factory.GetPermisoList = function(obj) {
@@ -29,6 +30,29 @@ angular.module('softvApp')
 			});
 			return deferred.promise;
 		};
+
+		factory.GuardaPermisos = function(array) {
+			console.log(array);
+			var deferred = $q.defer();
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token,
+				}
+			};
+			console.log(JSON.stringify({
+				'permisos': array
+			}));
+			$http.post(globalService.getUrl() + paths.GuardaPermisos, JSON.stringify({
+				'permisos': array
+			}), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+			return deferred.promise;
+		};
+
+
 
 		factory.GetModuleList = function() {
 			var deferred = $q.defer();
