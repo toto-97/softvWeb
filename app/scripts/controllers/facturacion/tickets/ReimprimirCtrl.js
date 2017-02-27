@@ -20,23 +20,31 @@ angular.module('softvApp')
 			}
 			ticketsFactory.guardaMotivo(vm.factura, vm.selectedMotivo.Clv_Motivo).then(function(data) {
 				if (item.tipo == 'N') {
-					ticketsFactory.addBitacora(item.clv_Factura, item.cliente, 2).then(function(dataBit) {
+					ticketsFactory.addBitacora(vm.factura, item.cliente, 2).then(function(dataBit) {
 						$uibModalInstance.dismiss('cancel');
-						var modalInstance = $uibModal.open({
-							animation: true,
-							ariaLabelledBy: 'modal-title',
-							ariaDescribedBy: 'modal-body',
-							templateUrl: 'views/facturacion/modalSingleTicket.html',
-							controller: 'ModalSingleTicketCtrl',
-							controllerAs: 'ctrl',
-							backdrop: 'static',
-							keyboard: false,
-							size: 'sm',
-							resolve: {
-								factura: function() {
-									return vm.factura;
+						var obj = {
+							factura: vm.factura,
+							reimprimir: 1,
+							cancelar: 0,
+							correo: 0
+						};
+						ticketsFactory.getOptionsTickets(obj).then(function(opt) {
+							var modalInstance = $uibModal.open({
+								animation: true,
+								ariaLabelledBy: 'modal-title',
+								ariaDescribedBy: 'modal-body',
+								templateUrl: 'views/facturacion/modalSingleTicket.html',
+								controller: 'ModalSingleTicketCtrl',
+								controllerAs: 'ctrl',
+								backdrop: 'static',
+								keyboard: false,
+								size: 'sm',
+								resolve: {
+									factura: function() {
+										return vm.factura;
+									}
 								}
-							}
+							});
 						});
 					});
 				} else {
@@ -61,9 +69,14 @@ angular.module('softvApp')
 									}
 								}
 							});
-						} else {
-
 						}
+						var obj = {
+							factura: vm.factura,
+							reimprimir: 1,
+							cancelar: 0,
+							correo: 0
+						};
+						ticketsFactory.getOptionsTickets(obj).then(function(opt) {});
 					});
 				}
 			});

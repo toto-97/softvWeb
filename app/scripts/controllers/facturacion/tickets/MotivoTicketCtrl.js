@@ -13,6 +13,13 @@ angular.module('softvApp')
 				ticketsFactory.guardaMotivo(item.clv_Factura, vm.selectedMotivo.Clv_Motivo).then(function(data) {
 					ticketsFactory.addBitacora(item.clv_Factura, item.cliente, 1).then(function(dataBit) {
 						$uibModalInstance.dismiss('cancel');
+						var obj = {
+							factura: item.clv_Factura,
+							reimprimir: 0,
+							cancelar: 1,
+							correo: 0
+						};
+						ticketsFactory.getOptionsTickets(obj).then(function(opt) {});
 					});
 				});
 			} else {
@@ -21,6 +28,13 @@ angular.module('softvApp')
 						ticketsFactory.addBitacora(item.Clv_Factura, item.cliente, 3).then(function(dataBit) {
 							$uibModalInstance.dismiss('cancel');
 							ngNotify.set(dataCan.GetCANCELACIONFACTURASListResult.Msg, 'success');
+							var obj = {
+								factura: item.Clv_Factura,
+								reimprimir: 0,
+								cancelar: 1,
+								correo: 0
+							};
+							ticketsFactory.getOptionsTickets(obj).then(function(opt) {});
 						});
 					});
 

@@ -368,6 +368,25 @@ angular.module('softvApp')
 			}
 		}
 
+		function enviarCorreo(x) {
+			var modalInstance = $uibModal.open({
+				animation: true,
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: 'views/facturacion/modalCorreo.html',
+				controller: 'CorreoCtrl',
+				controllerAs: '$ctrl',
+				backdrop: 'static',
+				keyboard: false,
+				size: 'md',
+				resolve: {
+					item: function() {
+						return x;
+					}
+				}
+			});
+		}
+
 		var vm = this;
 		initialData();
 		vm.buscarSucursal = buscarSucursal;
@@ -376,4 +395,5 @@ angular.module('softvApp')
 		vm.cancelarTicket = cancelarTicket;
 		vm.cambioBusqueda = cambioBusqueda;
 		vm.cambioEspecial = cambioEspecial;
+		vm.enviarCorreo = enviarCorreo;
 	});
