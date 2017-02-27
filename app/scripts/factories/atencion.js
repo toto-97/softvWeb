@@ -53,7 +53,6 @@ angular
 		factory.ConsultaLLamada = function(llamada) {
 
 			var deferred = $q.defer();
-			var user = $localStorage.currentUser.idUsuario;
 			var Parametros = {
 				'clv_llamada': llamada,
 			};
@@ -94,7 +93,6 @@ angular
 
 		factory.MuestraTrabajos = function(tipo) {
 			var deferred = $q.defer();
-			var user = $localStorage.currentUser.idUsuario;
 			var Parametros = {
 				'TipSer': tipo,
 			};
@@ -110,7 +108,7 @@ angular
 			});
 
 			return deferred.promise;
-		}
+		};
 
 		factory.AddLLamadasdeInternet = function(param) {
 			var deferred = $q.defer();
@@ -133,11 +131,10 @@ angular
 
 			return deferred.promise;
 
-		}
+		};
 
 		factory.ValidaContrato = function(contrato, servicio) {
 			var deferred = $q.defer();
-			var user = $localStorage.currentUser.idUsuario;
 			var Parametros = {
 				'Contrato': contrato,
 				'TipSer': servicio
@@ -155,11 +152,10 @@ angular
 			});
 
 			return deferred.promise;
-		}
+		};
 
 		factory.GetClasificacionProblemas = function() {
 			var deferred = $q.defer();
-			var user = $localStorage.currentUser.idUsuario;
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
@@ -172,11 +168,10 @@ angular
 			});
 
 			return deferred.promise;
-		}
+		};
 
 		factory.getclasificacionQuejas = function() {
 			var deferred = $q.defer();
-			var user = $localStorage.currentUser.idUsuario;
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
@@ -189,11 +184,10 @@ angular
 			});
 
 			return deferred.promise;
-		}
+		};
 
 		factory.GetprioridadQueja = function() {
 			var deferred = $q.defer();
-			var user = $localStorage.currentUser.idUsuario;
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
@@ -206,11 +200,10 @@ angular
 			});
 
 			return deferred.promise;
-		}
+		};
 
 		factory.getServiciosCliente = function(contrato) {
 			var deferred = $q.defer();
-			var user = $localStorage.currentUser.idUsuario;
 			var Parametros = {
 				'Contrato': contrato,
 			};
@@ -226,7 +219,7 @@ angular
 			});
 
 			return deferred.promise;
-		}
+		};
 
 		factory.getServicios = function() {
 			var deferred = $q.defer();
@@ -383,7 +376,7 @@ angular
 				deferred.reject(response.data);
 			});
 			return deferred.promise;
-		}
+		};
 
 
 		factory.MuestraTecnicosAlmacen = function(contrato) {
@@ -402,7 +395,7 @@ angular
 				deferred.reject(response.data);
 			});
 			return deferred.promise;
-		}
+		};
 
 
 		factory.ConsultaTurnos = function() {
@@ -418,7 +411,7 @@ angular
 				deferred.reject(response.data);
 			});
 			return deferred.promise;
-		}
+		};
 
 		factory.AgregaQueja = function(objeto) {
 			var deferred = $q.defer();
@@ -441,7 +434,7 @@ angular
 				'COMENTARIO': objeto.COMENTARIO,
 				'clv_llamada': objeto.clv_llamada,
 				'clvProblema': objeto.clvProblema
-			}
+			};
 
 
 			$http.post(globalService.getUrl() + paths.AgregaQueja, JSON.stringify({
@@ -453,7 +446,7 @@ angular
 			});
 			return deferred.promise;
 
-		}
+		};
 
 		factory.ActualizaLlamada = function(objeto) {
 
@@ -471,7 +464,7 @@ angular
 				'clv_queja': objeto.clv_queja,
 				'CLV_TIPSER': objeto.CLV_TIPSER,
 				'Turno': objeto.Turno
-			}
+			};
 			console.log(parametros);
 			console.log(JSON.stringify({
 				'objLLamadasdeInternet': parametros
@@ -484,7 +477,7 @@ angular
 				deferred.reject(response.data);
 			});
 			return deferred.promise;
-		}
+		};
 
 		factory.ActualizaQuejaCallCenter = function(objeto) {
 			var deferred = $q.defer();
@@ -496,7 +489,7 @@ angular
 			var parametros = {
 				'clv_queja': objeto.clv_queja,
 				'CallCenter': 1
-			}
+			};
 
 			$http.post(globalService.getUrl() + paths.ActualizaQuejaCallCenter, JSON.stringify(
 				parametros
@@ -506,7 +499,7 @@ angular
 				deferred.reject(response.data);
 			});
 			return deferred.promise;
-		}
+		};
 
 
 
