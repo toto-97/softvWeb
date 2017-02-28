@@ -142,6 +142,9 @@ angular
 											resolve: {
 												factura: function() {
 													return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
+												},
+												imprimir: function() {
+													return true;
 												}
 											}
 										});
@@ -198,6 +201,9 @@ angular
 											resolve: {
 												factura: function() {
 													return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
+												},
+												imprimir: function() {
+													return true;
 												}
 											}
 										});
@@ -256,6 +262,9 @@ angular
 											resolve: {
 												factura: function() {
 													return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
+												},
+												imprimir: function() {
+													return true;
 												}
 											}
 										});
@@ -310,6 +319,9 @@ angular
 											resolve: {
 												factura: function() {
 													return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
+												},
+												imprimir: function() {
+													return true;
 												}
 											}
 										});

@@ -10,7 +10,7 @@ angular
 			{
 				name: 'home.procesos.atencion',
 				data: {
-					pageTitle: 'SOFTV | ATENCIÓN TELEFÓNICA',
+					pageTitle: 'SAC | ATENCIÓN TELEFÓNICA',
 					permissions: {
 						only: ['atenciontelefonicaSelect'],
 						options: {
@@ -26,7 +26,7 @@ angular
 			{
 				name: 'home.procesos.atencionDetalle',
 				data: {
-					pageTitle: 'SOFTV | ATENCIÓN',
+					pageTitle: 'SAC | ATENCIÓN',
 				},
 				url: '/atencion/detalle',
 				templateUrl: 'views/procesos/atencionDetalle.html',
@@ -36,7 +36,7 @@ angular
 			{
 				name: 'home.procesos.ordenes',
 				data: {
-					pageTitle: 'SOFTV | ORDENES DE SERVICIO',
+					pageTitle: 'SAC | ORDENES DE SERVICIO',
 					permissions: {
 						only: ['ordenesservicioSelect'],
 						options: {
@@ -52,7 +52,7 @@ angular
 			{
 				name: 'home.procesos.ordenNueva',
 				data: {
-					pageTitle: 'SOFTV | NUEVA ORDEN DE SERVICIO'
+					pageTitle: 'SAC | NUEVA ORDEN DE SERVICIO'
 				},
 				url: '/ordenNueva/:experience/:context',
 				templateUrl: 'views/procesos/ordenNueva.html',

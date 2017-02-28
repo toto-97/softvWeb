@@ -1,7 +1,7 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('PermisosCtrl', function($state, rolFactory, permisosFactory, globalService, $uibModal) {
+	.controller('PermisosCtrl', function($state, rolFactory, permisosFactory, globalService, $uibModal, ngNotify) {
 
 
 		function GetRolList() {
@@ -73,7 +73,7 @@ angular
 
 
 			permisosFactory.UpdatePermiso(idRol, arrayPermiso).then(function(data) {
-				console.log(data);
+				ngNotify.set('Permisos actualizados correctamente.', 'success');
 			});
 
 

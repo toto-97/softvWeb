@@ -63,7 +63,7 @@ angular
 			preguntaCajas: '/uspHaz_Pregunta/GetDeepuspHaz_Pregunta',
 			afirmaPregunta: '/uspHaz_Pregunta/GetDeeAfirmacionPregunta',
 			checaRetiro: '/ChecaOrdenRetiro/GetChecaOrdenRetiroList',
-			getObservaciones: '/ConRelClienteObs/GetDeepConRelClienteObs'
+			getObservaciones: '/ConRelClienteObs/GetDeepConRelClienteObs',
 		};
 
 		factory.validarContrato = function(contrato) {
@@ -86,7 +86,6 @@ angular
 
 			return deferred.promise;
 		};
-
 
 		factory.buscarContrato = function(contrato) {
 			var deferred = $q.defer();

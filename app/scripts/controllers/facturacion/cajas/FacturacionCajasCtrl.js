@@ -662,17 +662,4 @@ angular
 		vm.openDeleteList = openDeleteList;
 		vm.adelantaPagos = adelantaPagos;
 		vm.openEdoCuenta = openEdoCuenta;
-		vm.validacionContrato = {
-			rules: {
-				contrato: {
-					required: true,
-					minlength: 3
-				},
-			},
-			messages: {
-				contrato: {
-					required: "Por favor ingresa el contrato del cliente a buscar.",
-				}
-			}
-		};
 	});

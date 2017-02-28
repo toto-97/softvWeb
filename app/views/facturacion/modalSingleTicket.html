@@ -1,6 +1,6 @@
 <div class="modal-header">
     <button class="close" aria-label="Close" type="button" ng-click="ctrl.cancel()">×</button>
-    <a href="" ng-click="ctrl.printDiv('printTicket')" style="color:#2196f3;"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</a>
+    <a href="" ng-click="ctrl.printDiv('printTicket')" style="color:#2196f3;" ng-show="ctrl.mostrarImprimir"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</a>
 </div>
 <div class="modal-body" style="padding-top:20px;">
 	<div class="row" id="printTicket">
@@ -53,5 +53,5 @@
 	</div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-default" type="button" ng-click="ctrl.cancel()">Cancelar</button>
+    <button class="btn btn-default btn-sm" type="button" ng-click="ctrl.cancel()">Cancelar</button>
 </div>

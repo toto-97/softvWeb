@@ -148,7 +148,7 @@ angular
 			});
 
 			return deferred.promise;
-		}
+		};
 
 		factory.ObtenColonias = function(compania) {
 			var deferred = $q.defer();

@@ -5,7 +5,6 @@ angular
 
 		function initialData() {
 			cajasFactory.dameHistorialServicios(contrato).then(function(data) {
-				console.log(data);
 				vm.tickets = data.GetBuscaFacturasHistorialListResult;
 			});
 		}
@@ -25,6 +24,9 @@ angular
 				resolve: {
 					factura: function() {
 						return factura;
+					},
+					imprimir: function() {
+						return false;
 					}
 				}
 			});

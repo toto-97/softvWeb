@@ -443,8 +443,32 @@ angular.module('softvApp')
 						}
 					});
 				}
+				if (item.Title === 'Facturación Corporativa') {
+					item.MenuChild.forEach(function(corp) {
+						var corporativaTitle = removeDiacritics(corp.Title);
+						if (corp.MenuChild.length === 0) {
+							if (corp.OptAdd) {
+								permisos.push(corporativaTitle.replace(/\s/g, '').toLowerCase() + 'Add');
+							}
+							if (corp.OptDelete) {
+								permisos.push(corporativaTitle.replace(/\s/g, '').toLowerCase() + 'Delete');
+							}
+							if (corp.OptUpdate) {
+								permisos.push(corporativaTitle.replace(/\s/g, '').toLowerCase() + 'Update');
+							}
+							if (corp.OptSelect) {
+								permisos.push(corporativaTitle.replace(/\s/g, '').toLowerCase() + 'Select');
+							}
+						} else {
+							corp.MenuChild.forEach(function(corpChild) {
+								var reportSubTitle = removeDiacritics(corpChild.Title);
+								permisos.push(reportSubTitle.replace(/\s/g, '').toLowerCase() + 'Select');
+							});
+						}
+
+					});
+				}
 			});
-			console.log(permisos);
 			return permisos;
 		};
 

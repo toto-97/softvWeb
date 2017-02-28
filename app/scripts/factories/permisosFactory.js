@@ -11,7 +11,6 @@ angular.module('softvApp')
 		};
 
 		factory.GetPermisoList = function(obj) {
-			console.log(obj);
 			var Parametros = {
 				'IdRol': obj.IdRol
 			};
@@ -58,8 +57,7 @@ angular.module('softvApp')
 				deferred.reject(response);
 			});
 			return deferred.promise;
-		}
-
+		};
 
 
 		factory.GetModuleList = function() {
@@ -76,7 +74,7 @@ angular.module('softvApp')
 				deferred.reject(response);
 			});
 			return deferred.promise;
-		}
+		};
 
 
 		return factory;

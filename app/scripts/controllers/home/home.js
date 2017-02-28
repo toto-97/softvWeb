@@ -1,12 +1,12 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('HomeCtrl', function($localStorage, $location, $window) {
+	.controller('HomeCtrl', function($localStorage, $location, $window, $state) {
 		function initialData() {
 			if ($localStorage.currentUser) {
 				vm.menus = $localStorage.currentUser.Menu;
-				console.log(vm.menus);
 				vm.usuario = $localStorage.currentUser.usuario;
+				//$state.go('home.dashboard');
 			} else {
 				location.href === '/auth/';
 			}
