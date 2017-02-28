@@ -36,7 +36,7 @@
                 <td>{{ x.Fecha }}</td>
                 <td>{{ x.Importe | currency }}</td>
                 <td>{{ x.Status }}</td>
-                <td class="text-center"><button class="btn btn-default btn-sm" ng-click="ctrl.dameFactura(x.Clv_Factura)">Ver</button></td>
+                <td class="text-center"><button class="btn btn-default btn-sm" ng-click="ctrl.dameFactura(x.Clv_Factura)"><i class="fa fa-eye" aria-hidden="true"></i> Ver</button></td>
             </tr>
         </tbody>
     </table>
@@ -49,5 +49,5 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-default" type="button" ng-click="ctrl.cancel()">Cancelar</button>
+    <button class="btn btn-default btn-sm" type="button" ng-click="ctrl.cancel()">Cancelar</button>
 </div>

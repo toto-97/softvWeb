@@ -54,6 +54,22 @@ angular
 				templateUrl: 'views/reportes/ReporteSucursales.html',
 				controller: 'ReporteSucursalesCtrl',
 				controllerAs: '$ctrl'
+			},
+			{
+				name: 'home.reportesVarios',
+				data: {
+					pageTitle: 'SOFTV | REPORTES VARIOS',
+					permissions: {
+						only: ['reportesvariosSelect'],
+						options: {
+							reload: false
+						}
+					}
+				},
+				url: '/reportes/varios',
+				templateUrl: 'views/reportes/reportesVarios.html',
+				controller: 'ReportesVariosCtrl',
+				controllerAs: '$ctrl'
 			}
 
 		];

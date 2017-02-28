@@ -43,6 +43,7 @@ angular
 			getDatosDistribuidores();
 			vm.secuencia = x;
 			ocultarPaneles();
+			vm.titulo = 'Seleccion ' + vm.secuencia;
 			switch (x) {
 				case 'General':
 					vm.showDistribuidores = true;

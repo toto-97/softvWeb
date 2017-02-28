@@ -1,5 +1,11 @@
-<h3 class="text-center" style="color: #0aa89e; margin-top:5px;">Reportes de Cortes de Tickets de General Especiales</h3>
-<div class="section-body">
+<div class="card" style="margin-top:20px;">
+	<div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
+		<header>
+			<strong style="font-weight:bold; border:none; margin-left:10px;">Reporte de Cortes Especiales</strong>
+			<br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación>Reporte de Cortes Especiales</small>
+
+		</header>
+	</div>
     <div class="row">
         <div class="col-md-4">
             <div class="card panel" style="height:90%;">
@@ -19,7 +25,7 @@
                     </div>
                 </div>
                 <div class="row" ng-show="$ctrl.showMenus">
-                    <div class="col-md-10 col-md-offset-1 card">
+                    <div class="col-md-10 col-md-offset-1 text-center">
                         <span>Ordenar Reporte Por:</span><br>
                         <label class="checkbox-inline checkbox-styled">
                             <input type="checkbox"  ng-model="$ctrl.ordenarStatus"><span>Status</span>
@@ -30,43 +36,40 @@
         </div>
         <div class="col-md-8">
             <div class="row" ng-show="$ctrl.showGeneral">
-                <div class="card" style="padding-left:20px; padding-right:20px;">
+                <div style="padding-left:20px; padding-right:20px;">
                     <h4 class="text-center" style="color: #0aa89e; margin-top:5px;">Selección General</h4>
                     <multi-select options="$ctrl.sucursalesObj"></multi-select>
                     <br/>
-                    <p>
-                        <button class="btn btn-default pull-left" ng-click="$ctrl.cancel()">Cancelar</button>
-                        <button class="btn btn-primary pull-right" ng-click="$ctrl.okSucursales()">Aceptar</button>
+                    <p class="text-right">
+                        <button class="btn btn-default btn-sm" ng-click="$ctrl.cancel()">Cancelar</button>
+                        <button class="btn btn-primary btn-sm" ng-click="$ctrl.okSucursales()">Aceptar <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
                     </p>
-                    <hr>
                 </div>
             </div>
             <div class="row" ng-show="$ctrl.showSucursales">
-                <div class="card" style="padding-left:20px; padding-right:20px;">
+                <div style="padding-left:20px; padding-right:20px;">
                     <h4 class="text-center" style="color: #0aa89e; margin-top:5px;">Selección por Sucursal</h4>
                     <multi-select options="$ctrl.sucursalesObj"></multi-select>
                     <br/>
-                    <p>
-                        <button class="btn btn-default pull-left" ng-click="$ctrl.cancel()">Cancelar</button>
-                        <button class="btn btn-primary pull-right" ng-click="$ctrl.okSucursales()">Aceptar</button>
+                    <p class="text-right">
+                        <button class="btn btn-default btn-sm" ng-click="$ctrl.cancel()">Cancelar</button>
+                        <button class="btn btn-primary btn-sm" ng-click="$ctrl.okSucursales()">Aceptar <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
                     </p>
-                    <hr>
                 </div>
             </div>
             <div class="row" ng-show="$ctrl.showGeneralFacturas">
-                <div class="card" style="padding-left:20px; padding-right:20px;">
+                <div style="padding-left:20px; padding-right:20px;">
                     <h4 class="text-center" style="color: #0aa89e; margin-top:5px;">Selección General de Facturas Fiscales</h4>
                     <multi-select options="$ctrl.sucursalesObj"> </multi-select>
                     <br/>
-                    <p>
-                        <button class="btn btn-default pull-left" ng-click="$ctrl.cancel()">Cancelar</button>
-                        <button class="btn btn-primary pull-right" ng-click="$ctrl.okSucursales()">Aceptar</button>
+                    <p class="text-right">
+                        <button class="btn btn-default btn-sm" ng-click="$ctrl.cancel()">Cancelar</button>
+                        <button class="btn btn-primary btn-sm" ng-click="$ctrl.okSucursales()">Aceptar <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
                     </p>
-                    <hr>
                 </div>
             </div>
             <div class="row" ng-show="$ctrl.showGeneralDate">
-                <div class="card" style="padding-left:20px; padding-right:20px;">
+                <div style="padding-left:20px; padding-right:20px;">
                     <h4 class="text-center" style="color: #0aa89e; margin-top:5px;">Fechas del Reporte</h4>
                     <div class="col-md-6 col-md-offset-1">
                         <div class="col-md-9">
@@ -89,11 +92,10 @@
                     </div>
                     <div class="row">
                         <br><br><br>
-                        <p style="padding-top: 40px; padding-left: 30px; padding-right: 30px;">
-                            <button class="btn btn-default pull-left" ng-click="$ctrl.backFechaGeneral()">Atras</button>
-                            <button class="btn btn-primary pull-right" ng-click="$ctrl.generarReporte($ctrl.secuencia, $ctrl.resumen)">Aceptar</button>
+                        <p class="text-right" style="padding-top: 40px; padding-left: 30px; padding-right: 30px;">
+                            <button class="btn btn-default btn-sm" ng-click="$ctrl.backFechaGeneral()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Atras</button>
+                            <button class="btn btn-primary btn-sm" ng-click="$ctrl.generarReporte($ctrl.secuencia, $ctrl.resumen)">Generar Reporte</button>
                         </p>
-                        <hr/>
                     </div>
                 </div>
             </div>
