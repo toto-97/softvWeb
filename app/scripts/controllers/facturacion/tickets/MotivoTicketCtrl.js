@@ -19,7 +19,10 @@ angular.module('softvApp')
 							cancelar: 1,
 							correo: 0
 						};
-						ticketsFactory.getOptionsTickets(obj).then(function(opt) {});
+						ticketsFactory.getOptionsTickets(obj).then(function(opt) {
+							$rootScope.$emit('actualiza_tickets', {});
+						});
+
 					});
 				});
 			} else {
@@ -34,7 +37,10 @@ angular.module('softvApp')
 								cancelar: 1,
 								correo: 0
 							};
-							ticketsFactory.getOptionsTickets(obj).then(function(opt) {});
+							ticketsFactory.getOptionsTickets(obj).then(function(opt) {
+								$rootScope.$emit('actualiza_tickets_especial', {});
+							});
+
 						});
 					});
 

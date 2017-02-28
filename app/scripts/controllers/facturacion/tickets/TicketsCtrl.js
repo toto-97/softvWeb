@@ -33,6 +33,14 @@ angular.module('softvApp')
 			});
 		}
 
+		$rootScope.$on('actualiza_tickets', function() {
+			buscarSucursal();
+		});
+
+		$rootScope.$on('actualiza_tickets_especial', function() {
+			buscarEspecial();
+		});
+
 		function buscarSucursal() {
 			if (vm.selectedPlaza.id_compania == 0) {
 				ngNotify.set('Selecione una plaza', 'error');
