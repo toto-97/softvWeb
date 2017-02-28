@@ -91,13 +91,13 @@
           <label class="col-md-3 control-label blod">Tipo:</label>
 
           <div class="col-md-9">
-            <label class="text-left radio-inline radio-styled"><input type="radio" name="prepago" ng-model ="$ctrl.prepago" value='prepago'><span>PrePago</span></label>
+            <label class="text-left radio-inline radio-styled"><input type="radio" name="prepago" ng-model ="$ctrl.prepago" ng-change="$ctrl.CambioTipoPago($ctrl.prepago)"  value='prepago'><span>PrePago</span></label>
           </div>
           <div class="col-md-3 blod">
 
           </div>
           <div class="col-md-9">
-            <label class="text-left radio-inline radio-styled"><input type="radio" name="prepago" ng-model ="$ctrl.prepago" value='postpago'><span>PostPago</span></label>
+            <label class="text-left radio-inline radio-styled"><input type="radio" name="prepago" ng-model ="$ctrl.prepago" value='postpago' ng-change="$ctrl.CambioTipoPago($ctrl.prepago)" ><span>PostPago</span></label>
           </div>
         </div>
 
@@ -108,13 +108,13 @@
               Generación de orden de servicio:
           </label>
           <div class="col-md-9">
-            <label class="text-left radio-inline radio-styled"><input type="radio" name="cuenta" ng-model="$ctrl.reactivacion" value="manual"><span>Manual</span></label>
+            <label class="text-left radio-inline radio-styled"><input type="radio" name="cuenta" ng-model="$ctrl.reactivacion" ng-disabled="$ctrl.DesReactiva" value="manual"><span>Manual</span></label>
           </div>
           <label class="col-md-3">
 
           </label>
           <div class="col-md-9">
-            <label class="text-left radio-inline radio-styled"><input type="radio" name="cuenta" ng-model="$ctrl.reactivacion" value="factura"><span>Por pago de factura</span></label>
+            <label class="text-left radio-inline radio-styled"><input type="radio" name="cuenta" ng-model="$ctrl.reactivacion" ng-disabled="$ctrl.DesReactiva" value="factura"><span>Por pago de factura</span></label>
           </div>
         </div>
 

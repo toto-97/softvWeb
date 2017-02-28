@@ -71,8 +71,12 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
 			});
 			if (vm.contratoMaestro.Prepago) {
 				vm.prepago = 'prepago';
+				vm.DesReactiva = true;
+				vm.reactivacion = 'manual';
 			} else {
 				vm.prepago = 'postpago';
+				vm.DesReactiva = false;
+				vm.reactivacion = 'manual';
 			}
 			if (vm.contratoMaestro.PagoFac) {
 				vm.tipopago = 'factura';
@@ -106,6 +110,11 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
 		detalle.ContratosSoftv = vm.contratoMaestro.lstCliS;
 		detalle.IdContratoMaestro = vm.contratoMaestro.IdContratoMaestro;
 		detalle.Action = "EDIT";
+		if (vm.distribuidor == null) {
+			ngNotify.set('Selecciona una distribuidor', 'error');
+			return;
+		}
+		detalle.Distribuidor = vm.distribuidor;
 		var modalInstance = $uibModal.open({
 			animation: true,
 			ariaLabelledBy: 'modal-title',
@@ -182,8 +191,20 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
 		});
 	}
 
+	function CambioTipoPago(x) {
+		if (x == 'postpago') {
+			vm.DesReactiva = false;
+			vm.reactivacion = 'manual';
+
+		} else {
+			vm.DesReactiva = true;
+			vm.reactivacion = 'manual';
+		}
+	}
+
 	var vm = this;
 	vm.abrirContratos = abrirContratos;
 	vm.guardarContrato = guardarContrato;
+	vm.CambioTipoPago = CambioTipoPago;
 }
 angular.module('softvApp').controller('EditarMaestroCtrl', EditarMaestroCtrl);
