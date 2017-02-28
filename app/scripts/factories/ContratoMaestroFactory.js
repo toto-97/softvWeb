@@ -33,8 +33,8 @@ angular.module('softvApp')
 			var parametros = {
 				'RazonSocial': objeto.RazonSocial,
 				'NombreComercial': objeto.NombreComercial,
-				"ClvCiudad": objeto.ClvCiudad,
-				"Op": objeto.Op
+				'ClvCiudad': objeto.ClvCiudad,
+				'Op': objeto.Op
 			};
 			$http.post(globalService.getUrl() + paths.BuscarContratos, JSON.stringify(parametros), config).then(function(response) {
 				deferred.resolve(response.data);
@@ -43,7 +43,7 @@ angular.module('softvApp')
 			});
 			return deferred.promise;
 
-		}
+		};
 
 		factory.GetDistribuidores = function() {
 			var deferred = $q.defer();
@@ -59,7 +59,7 @@ angular.module('softvApp')
 			});
 			return deferred.promise;
 
-		}
+		};
 
 		factory.GetCiudadList = function(Clv_Plaza) {
 
@@ -71,7 +71,7 @@ angular.module('softvApp')
 			};
 			var parametros = {
 				'Clv_Plaza': Clv_Plaza
-			}
+			};
 			$http.post(globalService.getUrl() + paths.GetCiudadList, JSON.stringify(parametros), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
@@ -79,7 +79,7 @@ angular.module('softvApp')
 			});
 			return deferred.promise;
 
-		}
+		};
 
 		return factory;
 
