@@ -14,8 +14,7 @@ angular
 		function GetModuleList() {
 			permisosFactory.GetModuleList().then(function(data) {
 				var modulos = data.GetModuleListResult;
-				console.log(modulos);
-				permisosFactory.GetPermisoList(vm.Roles[0]).then(function(data) {
+				permisosFactory.GetPermisoList(vm.Rol).then(function(data) {
 					var permisos = data.GetPermisoistResult;
 					vm.Modules = MergePermisos(modulos, permisos);
 				});
@@ -38,16 +37,51 @@ angular
 			return modulos;
 		}
 
-
-
-		function GuardaPermisos() {
-			console.log(vm.Modules);
+		function ObtenPermisos() {
+			GetModuleList();
 		}
 
+		function GuardaPermisos() {
+			var arrayPermiso = [];
+			var idRol = vm.Rol.IdRol;
+			for (var a = 0; a < vm.Modules.length; a++) {
+				var object = {};
+				object.IdModule = vm.Modules[a].IdModule;
+				if (vm.Modules[a].OptAdd == null) {
+					object.OptAdd = false;
+				} else {
+					object.OptAdd = vm.Modules[a].OptAdd;
+				}
+				if (vm.Modules[a].OptSelect == null) {
+					object.OptSelect = false;
+				} else {
+					object.OptSelect = vm.Modules[a].OptSelect;
+				}
+				if (vm.Modules[a].OptUpdate == null) {
+					object.OptUpdate = false;
+				} else {
+					object.OptUpdate = vm.Modules[a].OptUpdate;
+				}
+				if (vm.Modules[a].OptDelete == null) {
+					object.OptDelete = false;
+				} else {
+					object.OptDelete = vm.Modules[a].OptDelete;
+				}
+				arrayPermiso.push(object);
 
+			}
+
+
+			permisosFactory.UpdatePermiso(idRol, arrayPermiso).then(function(data) {
+				console.log(data);
+			});
+
+
+		}
 		var vm = this;
 		vm.sinDatos = false;
 		vm.showPaginator = false;
 		GetRolList();
 		vm.GuardaPermisos = GuardaPermisos;
+		vm.ObtenPermisos = ObtenPermisos;
 	});

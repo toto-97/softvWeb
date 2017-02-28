@@ -1,194 +1,250 @@
 <style type="text/css">
-	.scrollDiv{
-	    height: 400px;
-	    overflow: auto;
-	    overflow-x: hidden;
+	.scrollDiv {
+		height: 400px;
+		overflow: auto;
+		overflow-x: hidden;
 	}
-	.scrollDiv2{
-	    height: 100px;
-	    overflow: auto;
-	    overflow-x: hidden;
+
+	.scrollDiv2 {
+		height: 100px;
+		overflow: auto;
+		overflow-x: hidden;
 	}
-	.scrollDiv3{
-	    height: 300px;
-	    overflow: auto;
-	    overflow-x: hidden;
+
+	.scrollDiv3 {
+		height: 300px;
+		overflow: auto;
+		overflow-x: hidden;
 	}
 </style>
-<div class="row">
+<!-- <div class="row">
 	<div class="col-md-12">
-        <h3 class="text-center" style="color: #0aa89e; margin-top:5px;">Nueva Orden de Servicio</h3>
-        <h3 style="color: #0aa89e;"><a ui-sref="home.procesos.ordenes"><i class="fa fa-chevron-left"></i> Atras</a></h3>
-    </div>
-</div>
-<div class="card panel"  style="padding-top:15px;">
-	<div class="row">
-	    <div class="col-md-3 col-md-offset-1">
-	        <h5>Tipo de Servicios:</h5><br>
-	        <div class="col-md-8 form-group">
-	            <strong class="text-muted">Orden:</strong>
-	            <input type="text" class="form-control" ng-model="$ctrl.orden" ng-disabled="$ctrl.showOrden">
-	        </div>
-	        <div class="col-md-8 form-group">
-	            <strong class="text-muted">Contrato:</strong>
-	            <input type="text" class="form-control" ng-model="$ctrl.contrato" ng-disabled="$ctrl.showContrato">
-	        </div>
-	    </div>
-	    <div class="col-md-3">
-	        <h5 class="text">No. Folio de la Bitacora:</h5>
-	        <input type="text" class="form-control" ng-model="$ctrl.bitacora" ng-disabled="$ctrl.showBitacora">
-	    </div>
-	    <div class="col-md-4">
-			<h5>Status:</h5><br>
-			<div class="col-md-12">
-				<div class="col-md-4">
-					<label class="radio-inline radio-styled">
-						<input type="radio" name="inlineRadioOptions" ng-value="1" ng-model="$ctrl.statu" ng-disabled="$ctrl.showStatus"><span>Pendientes</span>
-					</label>
-				</div>
-				<div class="col-md-4">
-					<label class="radio-inline radio-styled">
-						<input type="radio" name="inlineRadioOptions" ng-value="2" ng-model="$ctrl.statu" ng-disabled="$ctrl.showStatus"><span>Ejecutadas</span>
-					</label>
-				</div>
-				<div class="col-md-4">
-					<label class="radio-inline radio-styled">
-						<input type="radio" name="inlineRadioOptions" ng-value="3" ng-model="$ctrl.statu" ng-disabled="$ctrl.showStatus"><span>Visitas</span>
-					</label>
-				</div>
-			</div>
-	    </div>
+		<h3 class="text-center" style="color: #0aa89e; margin-top:5px;"></h3>
+		<h3 style="color: #0aa89e;"><a ui-sref="home.procesos.ordenes"><i class="fa fa-chevron-left"></i> Atras</a></h3>
 	</div>
+</div> -->
+<div class="card">
+	<div class="card-head style-default-light" style=" padding-left:10px;">
+		<header>
+			<strong class="text-primary" style="font-weight:bold; font-size:16px; border:none;">Nueva Orden de Servicio</strong>
 
-	<div class="row">
-		<div class="panel-group col-md-5 col-md-offset-1" id="datosCliente">
-			<div class="card wrapper scrollDiv3" style="background:#E2EBEA">
-				<div style="height: 0px;">
-					<div class="col-md-12">
-						<h4>Datos del Cliente</h4>
-						<strong>Distribuidor:</strong><br>
-						<p><strong>Nombre:</strong><br>
-						<strong>Dirección:</strong><br>
-						<strong class="col-md-6" style="margin-left: -15px;">Servicos Asignados:</strong>
-						<label class="col-md-3 checkbox-inline checkbox-styled">
-							<input type="checkbox" name="inlineRadioOptions" ng-value="1" ng-model="$ctrl.internet" ng-disabled="$ctrl.showInternet"><span>Solo Internet:</span>
-						</label>
-						<label class="col-md-3 checkbox-inline checkbox-styled">
-							<input type="checkbox" name="inlineRadioOptions" ng-value="2" ng-model="$ctrl.hotel" ng-disabled="$ctrl.showHotel"><span>Es Hotel:</span>
-						</label><br>
-						<div class="form-group">
-							<div class="card panel col-md-12 scrollDiv2">
-
-							</div>
-						</div>
+		</header>
+		<div class="tools">
+			<div class="btn-group">
+				<button class="btn btn-default btn-sm">Guardar</button>
+				<a ui-sref="home.procesos.ordenes" class="btn btn-default btn-sm">Cancelar</a>
+			</div>
+		</div>
+	</div>
+	<div class="card-body">
+		<div class="row">
+			<div class="col-md-5">
+				<div class="col-md-12">
+					<div class="col-md-2">
+						<small><b>Servicios:</b></small>
+					</div>
+					<div class="col-md-4">
+						<input type="text" placeholder="# Orden" class="form-control input-sm" ng-model="$ctrl.orden" ng-disabled="$ctrl.showOrden">
+					</div>
+					<div class="col-md-4">
+						<input type="text" placeholder="Contrato" class="form-control input-sm" ng-model="$ctrl.contrato" ng-disabled="$ctrl.showContrato">
+					</div>
+					<div class="col-md-2">
+						<button class="btn btn-info btn-sm"><i class="fa fa-search"></i></button>
 					</div>
 				</div>
-			</div><!--end .panel -->
-			<div class="row">
-				<div class="form-group">
-				    <label class="col-lg-3 control-label">Técnico:</label>
-				    <div class="col-lg-9">
-				        <select class="form-control" ng-model="$ctrl.tecnico" ng-disabled="$ctrl.showTecnico">
-							<option value="">1</option>
-						</select>
-				    </div>
-				</div>
-				<div class="form-group">
-				    <label class="col-lg-3 control-label">Observaciones:</label>
-				    <div class="col-lg-9">
-				        <textarea class="form-control" ng-model="$ctrl.observaciones" ng-disabled="$ctrl.showObservaciones"></textarea>
-				    </div>
+			</div>
+			<div class="col-md-2">
+				<!-- <h5 class="text"><b>No. Folio de la Bitacora:</b></h5> -->
+				<input type="text" class="form-control input-sm" placeholder="# folio de bitácora" ng-model="$ctrl.bitacora" ng-disabled="$ctrl.showBitacora">
+			</div>
+			<div class="col-md-5">
+
+				<div class="col-md-12">
+					<div class="col-md-3">
+						<small><b>Status:</small></p>
+					</div>
+					<div class="col-md-3">
+						<label class="radio-inline radio-styled">
+						<input type="radio" name="inlineRadioOptions" ng-value="1" ng-model="$ctrl.statu" ng-disabled="$ctrl.showStatus"><span>Pendiente</span>
+					</label>
+					</div>
+					<div class="col-md-3">
+						<label class="radio-inline radio-styled">
+						<input type="radio" name="inlineRadioOptions" ng-value="2" ng-model="$ctrl.statu" ng-disabled="$ctrl.showStatus"><span>Ejecutada</span>
+					</label>
+					</div>
+					<div class="col-md-3">
+						<label class="radio-inline radio-styled">
+						<input type="radio" name="inlineRadioOptions" ng-value="3" ng-model="$ctrl.statu" ng-disabled="$ctrl.showStatus"><span>Visitada</span>
+					</label>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-md-3">
-			<div class="card wrapper scrollDiv3" style="background:#E2EBEA">
-				<h3 class="center">Fechas de:</h3>
-				<div class="form-group">
-				    <label class="col-lg-3 control-label">Solicitud:</label>
-				    <div class="col-lg-9">
-				        <input type="date" class="form-control" ng-model="$ctrl.solicitud" ng-disabled="$ctrl.showSolicitud">
-				    </div>
-				</div>
-				<div class="form-group">
-				    <label class="col-sm-3 control-label">Ejecución:</label>
-				    <div class="col-lg-9">
-				        <input type="date" class="form-control" ng-model="$ctrl.ejecucion" ng-disabled="$ctrl.showEjecucion">
-				    </div>
-				</div>
-				<div class="form-group">
-				    <label class="col-lg-3 control-label">Vista 1:</label>
-				    <div class="col-lg-9">
-				        <input type="date" class="form-control" ng-model="$ctrl.vista1" ng-disabled="$ctrl.showVista1">
-				    </div>
-				</div>
-				<div class="form-group">
-				    <label class="col-sm-3">Vista 2:</label>
-				    <div class="col-lg-9">
-				        <input type="date" class="form-control" ng-model="$ctrl.vista1" ng-disabled="$ctrl.showVista2">
-				    </div>
-				</div>
-				<div class="form-group">
-				    <label class="col-lg-3">Ejecución Real:</label>
-				    <div class="col-lg-9">
-				        <input type="date" class="form-control" ng-model="$ctrl.ejecReal" ng-disabled="$ctrl.showEjecReal">
-				    </div>
-				</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-4">
+				<b><i class="md md-perm-identity"></i> Información del Cliente</b><br>
+				<strong>Distribuidor:</strong><br>
+				<p><strong>Nombre:</strong><br>
+					<strong>Dirección:</strong><br>
+					<br>
+					<label class="col-md-3 checkbox-inline checkbox-styled checkbox-warning">
+							<input type="checkbox" name="inlineRadioOptions" ng-value="1" ng-model="$ctrl.internet" ng-disabled="$ctrl.showInternet"><span style="font-size: 10px;">Solo Internet:</span>
+						</label>
+					<label class="col-md-3 checkbox-inline checkbox-styled checkbox-warning">
+							<input type="checkbox" name="inlineRadioOptions" ng-value="2" ng-model="$ctrl.hotel" ng-disabled="$ctrl.showHotel"><span style="font-size: 10px;">Es Hotel:</span>
+							</label>
+
+			</div>
+			<div class="col-md-4">
+				<b><i class="md md-settings-remote"></i> Servicios asignados</b><br>
+				<textarea class="form-control"></textarea>
+			</div>
+			<div class="col-md-2">
+				<b><i class="md md-access-time"></i> Fechas</b><br>
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="regular13" class="col-sm-4 control-label">Solicitud</label>
+						<div class="col-sm-8">
+							<input type="date" class="form-control input-sm" style="font-size:10px;">
+							<div class="form-control-line"></div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="regular13" class="col-sm-4 control-label">Ejecución</label>
+						<div class="col-sm-8">
+							<input type="date" class="form-control input-sm" style="font-size:10px;">
+							<div class="form-control-line"></div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="regular13" class="col-sm-4 control-label">Visita 1</label>
+						<div class="col-sm-8">
+							<input type="date" class="form-control input-sm" style="font-size:10px;">
+							<div class="form-control-line"></div>
+						</div>
+					</div>
+
+				</form>
+			</div>
+			<div class="col-md-2">
+				<br>
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="regular13" class="col-sm-4 control-label">Visita 2</label>
+						<div class="col-sm-8">
+							<input type="date" class="form-control input-sm" style="font-size:10px;">
+							<div class="form-control-line"></div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="regular13" class="col-sm-4 control-label">Ejecución real</label>
+						<div class="col-sm-8">
+							<input type="date" class="form-control input-sm" style="font-size:10px;">
+							<div class="form-control-line"></div>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
-		<div class="col-md-2 card wrapper scrollDiv" style="background:#E2EBEA">
-			<h3>Agenda</h3>
-			<div class="form-group">
-				<label>Técnico</label>
-				<input type="text" class="form-control" ng-model="$ctrl.tecnico" ng-disabled="$ctrl.showTecnico">
+		<div class="row">
+			<div class="col-md-4">
+				<small>Técnico:</small>
+				<select class="form-control input sm">
+                <option value="">Selecciona</option>
+				</select>
 			</div>
-			<div class="form-group">
-				<label>Turno</label>
-				<input type="text" class="form-control" ng-model="$ctrl.turno" ng-disabled="$ctrl.showTurno">
+			<div class="col-md-4">
+				<small>Observaciones:</small>
+				<input type="text" class="form-control input sm">
 			</div>
-			<div class="form-group">
-				<label>Fecha</label>
-				<input type="date" class="form-control" ng-model="$ctrl.fecha" ng-disabled="$ctrl.showFecha">
+			<div class="col-md-4">
+				<br>
+				<button class="btn btn-success btn-xs">Agregar servicio</button>
 			</div>
-			<div class="form-group">
-				<label for="comment">Observaciones:</label>
-				<textarea class="form-control" rows="3" id="comment" ng-model="$ctrl.observacion2" ng-disabled="$ctrl.showObservacion2"></textarea>
-			</div>
+
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
-			<strong style="font-size:18px;">Detalle de la Orden de Servicio</strong>
-			<button class="btn btn-default btn-xs" ng-click="$ctrl.agregar()" ng-disabled="$ctrl.showAgregar">AGREGAR A LA LISTA</button>
-			<button class="btn btn-default btn-xs" ng-click="$ctrl.quitar()" ng-disabled="$ctrl.showQuitar">QUITAR DE LA LISTA</button>
-		</div>
-	</div>
-	<br>
-	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
-			<table class="table table-bordered">
-				<thead style="background-color: #B5B6B6;">
-					<tr>
-						<th>Descripción</th>
-						<th>Acción</th>
-						<th>Observaciones</th>
-						<th>Recibí</th>
-					</tr>
+		<div class="row">
+			<table class="table">
+				<thead>
+					<th>Descripción</th>
+					<th>Acción</th>
+					<th>Observacíones</th>
+					<th>Recibir</th>
+					<th>Eliminar</th>
 				</thead>
 				<tbody>
 					<tr>
-						<td>123</td>
-						<td>P</td>
-						<td>12-324</td>
-						<td><label class="col-md-3 checkbox-inline checkbox-styled"><input type="checkbox" name="inlineRadioOptions" ng-value="2"></label><br></td>
+						<td><b>INLNB-Instalacion de LNB</b></td>
+						<td><button class="btn btn-primary btn-xs"><i class="fa fa-exchange"></i> Asignación</button></td>
+						<td></td>
+						<td>
+
+							<label class="col-md-3 checkbox-inline checkbox-styled checkbox-warning">
+									<input type="checkbox" name="inlineRadioOptions" ng-value="1" ng-model="$ctrl.internet" ng-disabled="$ctrl.showInternet"><span style="font-size: 10px;"></span>
+								</label>
+						</td>
+						<td><button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Eliminar</button></td>
+					</tr>
+					<tr>
+						<td><b>INLNB-Instalacion de LNB</b></td>
+						<td><button class="btn btn-primary btn-xs"><i class="fa fa-exchange"></i> Asignación</button></td>
+						<td></td>
+						<td>
+
+							<label class="col-md-3 checkbox-inline checkbox-styled checkbox-warning">
+									<input type="checkbox" name="inlineRadioOptions" ng-value="1" ng-model="$ctrl.internet" ng-disabled="$ctrl.showInternet"><span style="font-size: 10px;"></span>
+								</label>
+						</td>
+						<td><button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Eliminar</button></td>
+					</tr>
+					<tr>
+						<td><b>INLNB-Instalacion de LNB</b></td>
+						<td><button class="btn btn-primary btn-xs"><i class="fa fa-exchange"></i> Asignación</button></td>
+						<td></td>
+						<td>
+
+							<label class="col-md-3 checkbox-inline checkbox-styled checkbox-warning">
+									<input type="checkbox" name="inlineRadioOptions" ng-value="1" ng-model="$ctrl.internet" ng-disabled="$ctrl.showInternet"><span style="font-size: 10px;"></span>
+								</label>
+						</td>
+						<td><button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Eliminar</button></td>
+					</tr>
+					<tr>
+						<td><b>INLNB-Instalacion de LNB</b></td>
+						<td><button class="btn btn-primary btn-xs"><i class="fa fa-exchange"></i> Asignación</button></td>
+						<td></td>
+						<td>
+
+							<label class="col-md-3 checkbox-inline checkbox-styled checkbox-warning">
+									<input type="checkbox" name="inlineRadioOptions" ng-value="1" ng-model="$ctrl.internet" ng-disabled="$ctrl.showInternet"><span style="font-size: 10px;"></span>
+								</label>
+						</td>
+						<td><button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Eliminar</button></td>
+					</tr>
+					<tr>
+						<td><b>INLNB-Instalacion de LNB</b></td>
+						<td><button class="btn btn-primary btn-xs"><i class="fa fa-exchange"></i> Asignación</button></td>
+						<td></td>
+						<td>
+
+							<label class="col-md-3 checkbox-inline checkbox-styled checkbox-warning">
+									<input type="checkbox" name="inlineRadioOptions" ng-value="1" ng-model="$ctrl.internet" ng-disabled="$ctrl.showInternet"><span style="font-size: 10px;"></span>
+								</label>
+						</td>
+						<td><button class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Eliminar</button></td>
 					</tr>
 				</tbody>
 			</table>
+
+
 		</div>
+
+
+
+
+
+
 	</div>
-	<div class="row">
-		<p class="text-right" style="margin-top: 10px; padding-right:30px;">
-			<button class="btn btn-primary" ng-click="$ctrl.nuevaOrden()" ng-show="$ctrl.showGuardar">Guardar</button>
-		</p>
-	</div>
-</div>
