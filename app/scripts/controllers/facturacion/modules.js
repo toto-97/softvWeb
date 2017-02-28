@@ -10,7 +10,7 @@ angular
 			{
 				name: 'home.facturacion.cajas',
 				data: {
-					pageTitle: 'SOFTV | CAJAS',
+					pageTitle: 'SAC | CAJAS',
 					permissions: {
 						only: ['cajasSelect'],
 						options: {
@@ -26,7 +26,7 @@ angular
 			{
 				name: 'home.facturacion.ventas',
 				data: {
-					pageTitle: 'SOFTV | VENTAS',
+					pageTitle: 'SAC | VENTAS',
 					permissions: {
 						only: ['ventasSelect'],
 						options: {
@@ -42,7 +42,7 @@ angular
 			{
 				name: 'home.facturacion.desglose',
 				data: {
-					pageTitle: 'SOFTV | DESGLOSE',
+					pageTitle: 'SAC | DESGLOSE',
 					permissions: {
 						only: ['desglosedemonedaSelect'],
 						options: {
@@ -58,7 +58,7 @@ angular
 			{
 				name: 'home.facturacion.desgloseNuevo',
 				data: {
-					pageTitle: 'SOFTV | NUEVO DESGLOSE DE MONEDA',
+					pageTitle: 'SAC | NUEVO DESGLOSE DE MONEDA',
 					permissions: {
 						only: ['desglosedemonedaUpdate'],
 						options: {
@@ -74,7 +74,7 @@ angular
 			{
 				name: 'home.facturacion.desgloseDetalle',
 				data: {
-					pageTitle: 'SOFTV | DETALLE DESGLOSE DE MONEDA',
+					pageTitle: 'SAC | DETALLE DESGLOSE DE MONEDA',
 					permissions: {
 						only: ['desglosedemonedaSelect'],
 						options: {
@@ -90,7 +90,7 @@ angular
 			{
 				name: 'home.facturacion.desgloseEditar',
 				data: {
-					pageTitle: 'SOFTV | EDITAR DESGLOSE DE MONEDA',
+					pageTitle: 'SAC | EDITAR DESGLOSE DE MONEDA',
 					permissions: {
 						only: ['editarPermission'],
 						options: {
@@ -106,7 +106,7 @@ angular
 			{
 				name: 'home.facturacion.entregas',
 				data: {
-					pageTitle: 'SOFTV | ENTREGAS',
+					pageTitle: 'SAC | ENTREGAS',
 					permissions: {
 						only: ['entregasparcialesSelect'],
 						options: {
@@ -122,7 +122,7 @@ angular
 			{
 				name: 'home.facturacion.nuevaEntrega',
 				data: {
-					pageTitle: 'SOFTV | NUEVA ENTREGA',
+					pageTitle: 'SAC | NUEVA ENTREGA',
 					permissions: {
 						only: ['entregasparcialesUpdate'],
 						options: {
@@ -138,7 +138,7 @@ angular
 			{
 				name: 'home.facturacion.detalleEntrega',
 				data: {
-					pageTitle: 'SOFTV | DETALLE DE ENTREGA',
+					pageTitle: 'SAC | DETALLE DE ENTREGA',
 					permissions: {
 						only: ['entregasparcialesSelect'],
 						options: {
@@ -154,7 +154,7 @@ angular
 			{
 				name: 'home.facturacion.editarEntrega',
 				data: {
-					pageTitle: 'SOFTV | EDITAR ENTREGA',
+					pageTitle: 'SAC | EDITAR ENTREGA',
 					permissions: {
 						only: ['entregasparcialesUpdate'],
 						options: {
@@ -170,7 +170,7 @@ angular
 			{
 				name: 'home.facturacion.arqueo',
 				data: {
-					pageTitle: 'SOFTV | ARQUEOS',
+					pageTitle: 'SAC | ARQUEOS',
 					permissions: {
 						only: ['arqueodecajasSelect'],
 						options: {
@@ -186,7 +186,7 @@ angular
 			{
 				name: 'home.facturacion.tickets',
 				data: {
-					pageTitle: 'SOFTV | CANCELACIÓN Y REIMPRECIÓN DE TICKETS',
+					pageTitle: 'SAC | CANCELACIÓN Y REIMPRECIÓN DE TICKETS',
 					permissions: {
 						only: ['ticketsSelect'],
 						options: {
