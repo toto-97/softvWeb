@@ -32,7 +32,7 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory) {
 			'RazonSocial': '',
 			'NombreComercial': vm.NombreComer,
 			'ClvCiudad': 0,
-			"Op": 1
+			"Op": 2
 		}
 		console.log(obj);
 		ContratoMaestroFactory.BuscarContratos(obj).then(function(data) {
@@ -43,10 +43,10 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory) {
 
 	function BuscarRazonS() {
 		var obj = {
-			'RazonSocial': '',
-			'NombreComercial': vm.RazonS,
+			'RazonSocial': vm.RazonS,
+			'NombreComercial': '',
 			'ClvCiudad': 0,
-			"Op": 2
+			"Op": 1
 		};
 		console.log(obj);
 		ContratoMaestroFactory.BuscarContratos(obj).then(function(data) {
