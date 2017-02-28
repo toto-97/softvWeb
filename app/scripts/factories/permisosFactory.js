@@ -7,6 +7,7 @@ angular.module('softvApp')
 		var paths = {
 			getPermisoList: '/Module/GetPermisoist',
 			getModuleList: '/Module/GetModuleList'
+
 		};
 
 		factory.GetPermisoList = function() {
@@ -44,6 +45,8 @@ angular.module('softvApp')
 			});
 			return deferred.promise;
 		};
+
+
 
 
 		return factory;
