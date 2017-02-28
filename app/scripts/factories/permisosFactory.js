@@ -7,7 +7,7 @@ angular.module('softvApp')
 		var paths = {
 			getPermisoList: '/Module/GetPermisoist',
 			getModuleList: '/Module/GetModuleList',
-			GuardaPermisos: '/Permiso/AddPermiso'
+			UpdatePermiso: '/Role/GetUpdatePermisoList'
 		};
 
 		factory.GetPermisoList = function(obj) {
@@ -31,33 +31,34 @@ angular.module('softvApp')
 			return deferred.promise;
 		};
 
-		factory.GuardaPermisos = function(array) {
-			var permiso = {
-				'permisos': {
-					'IdRol': 1,
-					'IdModule': 1,
-					'OptAdd': true,
-					'OptSelect': true,
-					'OptUpdate': true,
-					'OptDelete': true
-				}
+		factory.UpdatePermiso = function(id, array) {
+			console.log(id);
+			console.log(array);
+			var Parametros = {
+				'objRole': {
+					'IdRol': id
+				},
+				'LstPermiso': array
 			};
+			console.log(Parametros);
+			console.log(JSON.stringify(
+				Parametros
+			));
 			var deferred = $q.defer();
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token,
 				}
 			};
-			console.log(JSON.stringify(
-				permiso
-			));
-			$http.post(globalService.getUrl() + paths.GuardaPermisos, JSON.stringify(permiso), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.UpdatePermiso, JSON.stringify(
+				Parametros
+			), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response);
 			});
 			return deferred.promise;
-		};
+		}
 
 
 

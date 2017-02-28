@@ -37,7 +37,7 @@
           <td ng-if="x.ParentId != null && x.tipo==3"><i class="md-chevron-right"></i> <i>{{x.Description}}</i></td>
 
           <td>
-            <div ng-if="x.ParentId != null"><label class="checkbox-inline checkbox-styled"><input type="checkbox" ng-model="x.OptSelect"><span></span></label></div>
+            <div ng-if="x.ParentId != null|| x.tipo==1 "><label class="checkbox-inline checkbox-styled"><input type="checkbox" ng-model="x.OptSelect"><span></span></label></div>
           </td>
           <td>
             <div ng-if="x.ParentId != null"><label class="checkbox-inline checkbox-styled"><input type="checkbox"  ng-model="x.OptAdd"><span></span></label></div>
