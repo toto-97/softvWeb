@@ -15,7 +15,8 @@ angular.module('softvApp')
 			validaContrato: '/ValidaSiContratoExiste_CM/GetValidaSiContratoExiste_CM',
 			ligarContratos: '/ContratoMaestroFac/GetAddRelContratoMaestroContrato',
 			singleContrato: '/ContratoMaestroFac/GetRelContratos',
-			updateContrato: '/ContratoMaestroFac/UpdateContratoMaestroFac'
+			updateContrato: '/ContratoMaestroFac/UpdateContratoMaestroFac',
+			UpdateRelContrato: '/ContratoMaestroFac/GetRomperRelContratoMaestroContrato'
 		};
 
 		factory.updateContrato = function(contrato) {
@@ -54,6 +55,34 @@ angular.module('softvApp')
 
 			return deferred.promise;
 		};
+
+		factory.UpdateRelContrato = function(contrato, lista) {
+			console.log(contrato);
+			console.log(lista);
+			var deferred = $q.defer();
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			var Parametros = {
+				'objRep': {
+					'IdContratoMaestro': contrato
+				},
+				'lstRel': lista
+
+			};
+
+			console.log(Parametros);
+			$http.post(globalService.getUrl() + paths.UpdateRelContrato, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
 
 		factory.ligarContratos = function(contrato, lista) {
 			var deferred = $q.defer();

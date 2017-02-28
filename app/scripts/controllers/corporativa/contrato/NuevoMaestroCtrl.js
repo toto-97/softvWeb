@@ -17,6 +17,10 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ng
 	}
 
 	function abrirContratos() {
+		var detalle = {};
+		detalle.ContratosSoftv = vm.contratos;
+		detalle.IdContratoMaestro = vm.contratoMaestro;
+		detalle.Action = "ADD";
 		var modalInstance = $uibModal.open({
 			animation: true,
 			ariaLabelledBy: 'modal-title',
@@ -28,8 +32,8 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ng
 			keyboard: false,
 			size: "md",
 			resolve: {
-				maestro: function() {
-					return vm.contratoMaestro;
+				detalle: function() {
+					return detalle;
 				}
 			}
 		});
