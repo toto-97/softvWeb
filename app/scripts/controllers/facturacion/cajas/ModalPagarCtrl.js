@@ -110,7 +110,7 @@ angular
 								'clv_vendedor': items.Vendedor,
 								'tipo1': 0,
 								'monto1': vm.monto,
-								'GLOEFECTIVO2': vm.efectivo,
+								'GLOEFECTIVO2': vm.monto,
 								'GLOCHEQUE2': 0,
 								'GLOCLV_BANCOCHEQUE2': 0,
 								'NUMEROCHEQUE2': '',
@@ -121,7 +121,6 @@ angular
 								'CLV_Nota3': 0,
 								'GLONOTA3': 0
 							};
-							console.log(objPagar);
 							cajasFactory.insertSeguridadToken(items.IdSession).then(function(dataToken) {
 								cajasFactory.nuevoPago(items.IdSession, vm.efectivo, vm.cambio).then(function(dataNuevo) {
 									cajasFactory.grabaPago(objPagar).then(function(dataGraba) {

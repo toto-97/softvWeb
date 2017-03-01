@@ -34,7 +34,7 @@
         <div class="col-md-12 form-group">
           <label class="col-md-3 control-label blod">Distribuidor:</label>
           <div class="col-md-9" style="padding-left:-10px;">
-            <select class="form-control input-sm" name="distribuidor" validate-on="dirty" ng-model="$ctrl.distribuidor" ng-options="v.Nombre for v in $ctrl.distribuidores track by v.Clv_Plaza" required-message="'Este campo es obligatorio.'" required>
+            <select class="form-control input-sm" name="distribuidor" ng-disabled="true" validate-on="dirty" ng-model="$ctrl.distribuidor" ng-options="v.Nombre for v in $ctrl.distribuidores track by v.Clv_Plaza" required-message="'Este campo es obligatorio.'" required>
                   </select>
           </div>
         </div>

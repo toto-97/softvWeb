@@ -4,22 +4,28 @@ angular
 	.controller('FacturacionCajasCtrl', function($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu) {
 
 		function openEdoCuenta() {
-			vm.animationsEnabled = true;
-			var modalInstance = $uibModal.open({
-				animation: vm.animationsEnabled,
-				ariaLabelledBy: 'modal-title',
-				ariaDescribedBy: 'modal-body',
-				templateUrl: 'views/facturacion/modalEdoCuenta.html',
-				controller: 'ModalEdoCuentaCtrl',
-				controllerAs: 'ctrl',
-				backdrop: 'static',
-				keyboard: false,
-				size: 'lg',
-				windowClass: 'app-modal-window',
-				resolve: {
-					contrato: function() {
-						return vm.Cliente.Contrato;
-					}
+			console.log(vm.Cliente.Contrato);
+			cajasFactory.getEstadoCuenta(vm.Cliente.Contrato).then(function(data) {
+				if (data.GetDeeptieneEdoCuentaResult.tieneEdoCuenta) {
+					var modalInstance = $uibModal.open({
+						animation: true,
+						ariaLabelledBy: 'modal-title',
+						ariaDescribedBy: 'modal-body',
+						templateUrl: 'views/facturacion/modalEdoCuenta.html',
+						controller: 'ModalEdoCuentaCtrl',
+						controllerAs: 'ctrl',
+						backdrop: 'static',
+						keyboard: false,
+						size: 'lg',
+						windowClass: 'app-modal-window',
+						resolve: {
+							contrato: function() {
+								return vm.Cliente.Contrato;
+							}
+						}
+					});
+				} else {
+					ngNotify.set('El cliente no cuenta con estado de cuenta generado.', 'info');
 				}
 			});
 		}

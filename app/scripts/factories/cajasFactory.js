@@ -64,6 +64,26 @@ angular
 			afirmaPregunta: '/uspHaz_Pregunta/GetDeeAfirmacionPregunta',
 			checaRetiro: '/ChecaOrdenRetiro/GetChecaOrdenRetiroList',
 			getObservaciones: '/ConRelClienteObs/GetDeepConRelClienteObs',
+			getEstadoCuenta: '/tieneEdoCuenta/GetDeeptieneEdoCuenta'
+		};
+
+		factory.getEstadoCuenta = function(contrato) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Contrato': contrato
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.getEstadoCuenta, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
 		};
 
 		factory.validarContrato = function(contrato) {
