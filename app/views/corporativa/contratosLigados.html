@@ -5,7 +5,10 @@
 <div class="modal-body" id="modal-body">
   <div class="row">
     <div class="col-md-12">
-      <p class="text-right"><button class="btn btn-success btn-sm" ng-click="$ctrl.clientesModal()"><i class="fa fa-plus" aria-hidden="true"></i> Añadir</button></p>
+      <p class="text-right"><button class="btn btn-success btn-xs" ng-click="$ctrl.clientesModal()"><i class="fa fa-plus" aria-hidden="true"></i> Añadir</button>
+        <input type="file" id="inputFile2" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+        <button class="btn btn-success btn-xs" ng-click="$ctrl.ValidaArchivo();">Validar</button>
+      </p>
       <table class="table table-striped">
         <thead>
           <tr>

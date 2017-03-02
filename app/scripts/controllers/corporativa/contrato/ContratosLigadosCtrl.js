@@ -1,6 +1,6 @@
 'use strict';
 
-function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporativoFactory, detalle, $state, ngNotify) {
+function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporativoFactory, detalle, $state, ngNotify, ContratoMaestroFactory) {
 
 	function Init() {
 		vm.Distribuidor = detalle.Distribuidor;
@@ -120,6 +120,13 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 		vm.contratos.splice(index, 1);
 	}
 
+	function ValidaArchivo() {
+		var files = $("#inputFile2").get(0).files;
+		ContratoMaestroFactory.UpdateFile(files, vm.Distribuidor.Clv_Plaza).then(function(data) {
+			console.log(data);
+		});
+	}
+
 	var vm = this;
 	vm.cancel = cancel;
 	vm.ok = ok;
@@ -128,5 +135,6 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 	vm.contratos = [];
 	Init();
 	vm.edit = edit;
+	vm.ValidaArchivo = ValidaArchivo;
 }
 angular.module('softvApp').controller('ContratosLigadosCtrl', ContratosLigadosCtrl);
