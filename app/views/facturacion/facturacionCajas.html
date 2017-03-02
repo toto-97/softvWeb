@@ -7,6 +7,12 @@
   .esmeralda {
     background-color: #DDEAE9;
   }
+  .sizeTr{
+     height: 20px;
+  }
+  .sizeTd{
+     padding:5px !important;
+  }
 </style>
 <div class="card" style="margin-top:20px;">
 	<div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
@@ -242,29 +248,29 @@
                           <th style="font-size: 10px;">Importe</th>
                           <th style="font-size: 10px;" title="Periodo Pagado Inicial">Periodo PI</th>
                           <th style="font-size: 10px;" title="Periodo Pagado Final">Periodo PF</th>
-                          <th style="font-size: 10px;" title="Periodo Aplicados Por Pago Oportuno">Puntos APPO</th>
-                          <th style="font-size: 10px;" title="Periodo Aplicados Por Antiguedad">Puntos APA</th>
-                          <th style="font-size: 10px;" title="Periodo Aplicados Por Pagos Adelantados">Puntos APPA</th>
+                          <th style="font-size: 10px;" title="Puntos Aplicados Por Pago Oportuno">Puntos APPO</th>
+                          <th style="font-size: 10px;" title="Puntos Aplicados Por Antiguedad">Puntos APA</th>
+                          <th style="font-size: 10px;" title="Puntos Aplicados Por Pagos Adelantados">Puntos APPA</th>
                           <th style="font-size: 10px;">Puntos Combo</th>
                           <th style="font-size: 10px;">Importe a Bonificar</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr ng-repeat="x in ctrl.detallePago" ng-click="ctrl.guardaconcepto(x,$index)" ng-class="x.isChecked == true ? 'esmeralda':''">
-                          <td style="font-size: 9px;">{{ x.MacCableModem }}</td>
-                          <td style="font-size: 9px;">{{ x.DESCORTA }}</td>
-                          <td style="font-size: 9px;"><button class="btn btn-default btn-xs" ng-if="x.Pagos_Adelantados != null" ng-disabled="ctrl.blockBaja" ng-click="ctrl.adelantaPagos(x)">{{ x.Pagos_Adelantados }}</button></td>
-                          <td style="font-size: 9px;">{{ x.tvAdic }}</td>
-                          <td style="font-size: 9px;">{{ x.Meses_Cortesia }}</td>
-                          <td style="font-size: 9px;">{{ x.mesesApagar }}</td>
-                          <td style="font-size: 9px;">{{ x.importe | currency }}</td>
-                          <td style="font-size: 9px;">{{ x.periodoPagadoIni }}</td>
-                          <td style="font-size: 9px;">{{ x.periodoPagadoFin }}</td>
-                          <td style="font-size: 9px;">{{ x.PuntosAplicadosOtros }}</td>
-                          <td style="font-size: 9px;">{{ x.puntosAplicadosAnt }}</td>
-                          <td style="font-size: 9px;">{{ x.PuntosAplicadosPagoAdelantado }}</td>
-                          <td style="font-size: 9px;">{{ x.bonificacion }}</td>
-                          <td style="font-size: 9px;">{{ x.importeBonifica }}</td>
+                        <tr ng-repeat="x in ctrl.detallePago" class="sizeTr" ng-click="ctrl.guardaconcepto(x,$index)" ng-class="x.isChecked == true ? 'esmeralda':''">
+                          <td class="sizeTd" style="font-size: 9px; width:100px;">{{ x.MacCableModem }}</td>
+                          <td class="sizeTd" style="font-size: 9px; width:170px;">{{ x.DESCORTA }}</td>
+                          <td class="sizeTd" style="font-size: 9px;"><button class="btn btn-default btn-xs" ng-if="x.Pagos_Adelantados != null" ng-disabled="ctrl.blockBaja" ng-click="ctrl.adelantaPagos(x)">{{ x.Pagos_Adelantados }}</button></td>
+                          <td class="sizeTd" style="font-size: 9px;">{{ x.tvAdic }}</td>
+                          <td class="sizeTd" style="font-size: 9px;">{{ x.Meses_Cortesia }}</td>
+                          <td class="sizeTd" style="font-size: 9px;">{{ x.mesesApagar }}</td>
+                          <td class="sizeTd" style="font-size: 9px;">{{ x.importe | currency }}</td>
+                          <td class="sizeTd" style="font-size: 9px;">{{ x.periodoPagadoIni }}</td>
+                          <td class="sizeTd" style="font-size: 9px;">{{ x.periodoPagadoFin }}</td>
+                          <td class="sizeTd" style="font-size: 9px;">{{ x.PuntosAplicadosOtros }}</td>
+                          <td class="sizeTd" style="font-size: 9px;">{{ x.puntosAplicadosAnt }}</td>
+                          <td class="sizeTd" style="font-size: 9px;">{{ x.PuntosAplicadosPagoAdelantado }}</td>
+                          <td class="sizeTd" style="font-size: 9px;">{{ x.bonificacion }}</td>
+                          <td class="sizeTd" style="font-size: 9px;">{{ x.importeBonifica }}</td>
                         </tr>
                       </tbody>
                     </table>

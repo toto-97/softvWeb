@@ -105,7 +105,7 @@ angular
 								'contrato': items.Contrato,
 								'clv_session': items.IdSession,
 								'tipo': items.Tipo,
-								'serie_v': items.Serie,
+								'serie_v': '',
 								'folio_v': items.Folio,
 								'clv_vendedor': items.Vendedor,
 								'tipo1': 0,

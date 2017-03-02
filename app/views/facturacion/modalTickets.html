@@ -1,3 +1,11 @@
+<style>
+table tr{
+   height: 20px;
+}
+table tr td{
+   padding:5px !important;
+}
+</style>
 <div class="modal-header">
     <button class="close" aria-label="Close" type="button" ng-click="ctrl.cancel()">×</button>
     <h4 class="modal-title">Historial del Pagos</h4>
@@ -8,7 +16,7 @@
     </div>
     <br/>
     <br/>
-    <table id="tableHistorialPago" class="table table-bordered table-hover dataTable">
+    <table id="tableHistorialPago" class="table table-hover dataTable">
         <thead>
             <tr>
                 <th ng-click="ctrl.sort('Serie')">Serie
@@ -26,21 +34,22 @@
                 <th ng-click="ctrl.sort('Status')">Status
                     <span class="glyphicon sort-icon" ng-show="sortKey=='Status'" ng-class="{'glyphicon glyphicon-chevron-up':reverse,'glyphicon glyphicon-chevron-down':!reverse}"></span>
                 </th>
-                <th id="Status"><b>Consultar</b></th>
+                <th class="text-center"><b>Consultar</b></th>
             </tr>
         </thead>
         <tbody>
-            <tr dir-paginate="x in ctrl.tickets|orderBy:ctrl.sortKey:reverse|filter:ctrl.search|itemsPerPage:5">
-                <td>{{ x.Serie }}</td>
-                <td>{{ x.Folio }}</td>
-                <td>{{ x.Fecha }}</td>
-                <td>{{ x.Importe | currency }}</td>
-                <td>{{ x.Status }}</td>
-                <td class="text-center"><button class="btn btn-default btn-sm" ng-click="ctrl.dameFactura(x.Clv_Factura)"><i class="fa fa-eye" aria-hidden="true"></i> Ver</button></td>
+            <tr dir-paginate="x in ctrl.tickets|orderBy:ctrl.sortKey:reverse|filter:ctrl.search|itemsPerPage:10">
+                <td height="20">{{ x.Serie }}</td>
+                <td height="20">{{ x.Folio }}</td>
+                <td height="20">{{ x.Fecha }}</td>
+                <td height="20">{{ x.Importe | currency }}</td>
+                <td height="20">{{ x.Status }}</td>
+                <td height="20" class="text-center" ng-if="x.Tipo != 'N'"><a href="" ng-click="ctrl.dameFactura(x.Clv_Factura)"><i class="fa fa-eye" aria-hidden="true"></i> Ver</a></td>
+                <td height="20" class="text-center" ng-if="x.Tipo == 'N'"><a href="" ng-click="ctrl.dameNota(x.Clv_Factura)"><i class="fa fa-eye" aria-hidden="true"></i> Ver</a></td>
             </tr>
         </tbody>
     </table>
-    <div style="padding-left: 20px;">
+    <div style="padding-left: 10px; margin-top:-10px;">
         <dir-pagination-controls
             max-size="5"
             direction-links="true"
