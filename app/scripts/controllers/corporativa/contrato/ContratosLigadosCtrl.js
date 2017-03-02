@@ -4,7 +4,7 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 
 	function Init() {
 		vm.Distribuidor = detalle.Distribuidor;
-		console.log(detalle);
+		console.log(detalle.ContratosSoftv);
 		if (detalle.Action == "EDIT") {
 			vm.showokbtn = false;
 			vm.showeditbtn = true;
@@ -16,7 +16,9 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 		}
 		for (var a = 0; a < detalle.ContratosSoftv.length; a++) {
 			var contrato = {};
-			contrato.CONTRATO = detalle.ContratosSoftv[a].ContratoReal;
+			contrato.CONTRATO = detalle.ContratosSoftv[a].ContratoCom;
+			contrato.ContratoBueno = detalle.ContratosSoftv[a].ContratoReal;
+			//contrato.CONTRATO = detalle.ContratosSoftv[a].ContratoReal;
 			contrato.Nombre = detalle.ContratosSoftv[a].NombreCli;
 			contrato.Apellido_Materno = '';
 			contrato.Apellido_Paterno = '';
@@ -90,17 +92,19 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 	function edit() {
 		if (vm.contratos.length > 0) {
 			var contratos = [];
-			console.log(vm.contratos);
 			vm.contratos.forEach(function(item) {
-				if (item.ContratoBueno == undefined) {
-					contratos.push({
-						Contrato: item.CONTRATO
-					});
-				} else {
-					contratos.push({
-						Contrato: item.ContratoBueno
-					});
-				}
+				contratos.push({
+					Contrato: item.ContratoBueno
+				});
+				// if (item.ContratoBueno == undefined) {
+				// 	contratos.push({
+				// 		Contrato: item.CONTRATO
+				// 	});
+				// } else {
+				// 	contratos.push({
+				// 		Contrato: item.ContratoBueno
+				// 	});
+				// }
 
 			});
 

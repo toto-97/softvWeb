@@ -38,7 +38,6 @@
   <div class="row">
 
     <div class="col-md-12">
-
       <table class="table" style="    font-size: 10px;">
         <thead>
           <tr>
@@ -52,9 +51,9 @@
         </thead>
         <tbody>
           <tr ng-if="$ctrl.Cientes.length == 0">
-            <td class="text-center" colspan="6">SIN REGISTROS</td>
+            <td  class="text-center" colspan="6">SIN REGISTROS</td>
           </tr>
-          <tr dir-paginate="x in $ctrl.Clientes|itemsPerPage:8" ng-if="$ctrl.Clientes.length > 0">
+          <tr  dir-paginate="x in $ctrl.Clientes | itemsPerPage:5">
             <td>{{ x.CONTRATO }}</td>
             <td>{{ x.Nombre }}</td>
             <td>{{ x.Apellido_Paterno }}</td>
@@ -65,7 +64,7 @@
         </tbody>
       </table>
       <div style="margin-top:-40px;">
-        <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ng-if="$ctrl.Clientes.length > 0">
+        <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true">
         </dir-pagination-controls>
       </div>
 

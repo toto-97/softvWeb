@@ -64,6 +64,87 @@ angular
 			afirmaPregunta: '/uspHaz_Pregunta/GetDeeAfirmacionPregunta',
 			checaRetiro: '/ChecaOrdenRetiro/GetChecaOrdenRetiroList',
 			getObservaciones: '/ConRelClienteObs/GetDeepConRelClienteObs',
+			getEstadoCuenta: '/tieneEdoCuenta/GetDeeptieneEdoCuenta',
+			getNota: '/CrearNotaCredito/GetCrearNotaCreditoList',
+			getNotaconceptos: '/ConceptosTicketNotasCredito/GetConceptosTicketNotasCreditoList',
+			validaAdelantar: '/PagoAdelantado/GetAdelantaParcialidades'
+		};
+
+		factory.validaAdelantar = function(contrato, session, adelantados) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Contrato': contrato,
+				'Clv_Session': session,
+				'numeroAdelantar': adelantados
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.validaAdelantar, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+		factory.getNotaconceptos = function(factura) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Clv_Factura': factura
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.getNotaconceptos, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.getNota = function(factura) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Clv_Factura': factura
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.getNota, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.getEstadoCuenta = function(contrato) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Contrato': contrato
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.getEstadoCuenta, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
 		};
 
 		factory.validarContrato = function(contrato) {
@@ -861,10 +942,10 @@ angular
 				'TARJETAAUTORIZACION2': objpagar.TARJETAAUTORIZACION2,
 				'CLV_Nota3': objpagar.CLV_Nota3,
 				'GLONOTA3': objpagar.GLONOTA3,
-				'Token': $localStorage.currentUser.token,
-				'Token1': user.token1
+				'Token': $localStorage.currentUser.token
 
 			};
+			console.log(Parametros);
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token

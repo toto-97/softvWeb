@@ -6,6 +6,7 @@ angular
 		function initialData() {
 			cajasFactory.dameTicket(factura).then(function(data) {
 				vm.datosTicket = data.GetCrearTicketTableListResult[0];
+				console.log(vm.datosTicket);
 			});
 			cajasFactory.dameDatosPago(factura).then(function(data) {
 				vm.datosPago = data.GetConceptosTicketPagosListResult;

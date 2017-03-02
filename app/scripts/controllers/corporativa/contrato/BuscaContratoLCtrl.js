@@ -10,10 +10,10 @@ function BuscaContratoLCtrl($uibModalInstance, atencionFactory, $rootScope, corp
 		obje.op = 3;
 		obje.colonia = 0;
 		vm.distribuidor = contratos.Distribuidor.Clv_Plaza;
-		console.log(contratos.Distribuidor.Clv_Plaza);
 		obje.IdDistribuidor = contratos.Distribuidor.Clv_Plaza;
 		corporativoFactory.buscarCliente(obje).then(function(data) {
 			vm.Clientes = data.GetBuscaByIdDisListResult;
+			console.log(vm.Clientes);
 		});
 	}
 
@@ -28,9 +28,11 @@ function BuscaContratoLCtrl($uibModalInstance, atencionFactory, $rootScope, corp
 		obje.colonia = 0;
 		obje.op = 0;
 		obje.IdDistribuidor = vm.distribuidor;
-		console.log(obje);
 		corporativoFactory.buscarCliente(obje).then(function(data) {
 			vm.Clientes = data.GetBuscaByIdDisListResult;
+			if (vm.Clientes.length == 0) {
+				ngNotify.set('No se encontraron contratos que puedan ser ligados', 'grimace');
+			}
 		});
 	}
 
