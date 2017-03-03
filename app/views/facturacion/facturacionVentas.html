@@ -44,7 +44,7 @@
                               name="contrato"
                               validate-on="dirty"
                               placeholder="Contrato"
-                              ng-pattern = "/^[0-9]{1,}[-]{1}[0-9]{1,}/"
+                              ng-pattern = "/^\d*[0-9]\d*[-]\d*[0-9]\d*/"
                               required-message="'Este campo es obligatorio.'"
                               invalid-message = "'Formato de contrato inválido.'"
                               ng-model="ctrl.data.contrato">

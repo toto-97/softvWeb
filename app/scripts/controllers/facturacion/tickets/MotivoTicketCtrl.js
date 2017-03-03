@@ -21,6 +21,7 @@ angular.module('softvApp')
 						};
 						ticketsFactory.getOptionsTickets(obj).then(function(opt) {
 							$rootScope.$emit('actualiza_tickets', {});
+							ngNotify.set('El ticket se cancelo exitosamente', 'success');
 						});
 
 					});
@@ -39,6 +40,7 @@ angular.module('softvApp')
 							};
 							ticketsFactory.getOptionsTickets(obj).then(function(opt) {
 								$rootScope.$emit('actualiza_tickets_especial', {});
+								ngNotify.set('El ticket se cancelo exitosamente', 'success');
 							});
 
 						});

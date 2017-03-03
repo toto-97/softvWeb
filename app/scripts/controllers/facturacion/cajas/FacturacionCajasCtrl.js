@@ -4,7 +4,6 @@ angular
 	.controller('FacturacionCajasCtrl', function($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu) {
 
 		function openEdoCuenta() {
-			console.log(vm.Cliente.Contrato);
 			cajasFactory.getEstadoCuenta(vm.Cliente.Contrato).then(function(data) {
 				if (data.GetDeeptieneEdoCuentaResult.tieneEdoCuenta) {
 					var modalInstance = $uibModal.open({
