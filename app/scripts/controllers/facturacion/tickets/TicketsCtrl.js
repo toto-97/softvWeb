@@ -8,29 +8,43 @@ angular.module('softvApp')
 					'id_compania': 0
 				});
 				vm.plazas = data.GetMuestra_Compania_RelUsuarioListResult;
-				vm.selectedPlaza = vm.plazas[0];
+				vm.selectedPlaza = vm.plazas[1];
+
+				ticketsFactory.getTipoFactura().then(function(data) {
+					data.GetMUESTRATIPOFACTURAListResult.unshift({
+						'CONCEPTO': '----------------',
+						'CLAVE': "0"
+					});
+					vm.tipos = data.GetMUESTRATIPOFACTURAListResult;
+					vm.selectedTipo = vm.tipos[1];
+
+
+					ticketsFactory.getSucursales().then(function(data) {
+						vm.sucursales = data.GetObtieneSucursalesEspeciales_ReimpresionListResult;
+						vm.selectedSucursal = vm.sucursales[1];
+
+
+						ticketsFactory.getFacturas().then(function(data) {
+							data.GetMUESTRATIPOFACTURA_ReimpresionListResult.unshift({
+								'CONCEPTO': '----------------',
+								'CLAVE': "0"
+							});
+							vm.facturas = data.GetMUESTRATIPOFACTURA_ReimpresionListResult;
+							vm.selectedFactura = vm.facturas[1];
+							buscarSucursal();
+
+						});
+					});
+
+
+				});
+
 			});
 
-			ticketsFactory.getTipoFactura().then(function(data) {
-				data.GetMUESTRATIPOFACTURAListResult.unshift({
-					'CONCEPTO': '----------------',
-					'CLAVE': "0"
-				});
-				vm.tipos = data.GetMUESTRATIPOFACTURAListResult;
-				vm.selectedTipo = vm.tipos[0];
-			});
-			ticketsFactory.getSucursales().then(function(data) {
-				vm.sucursales = data.GetObtieneSucursalesEspeciales_ReimpresionListResult;
-				vm.selectedSucursal = vm.sucursales[0];
-			});
-			ticketsFactory.getFacturas().then(function(data) {
-				data.GetMUESTRATIPOFACTURA_ReimpresionListResult.unshift({
-					'CONCEPTO': '----------------',
-					'CLAVE': "0"
-				});
-				vm.facturas = data.GetMUESTRATIPOFACTURA_ReimpresionListResult;
-				vm.selectedFactura = vm.facturas[0];
-			});
+
+
+
+
 		}
 
 		$rootScope.$on('actualiza_tickets', function() {
@@ -42,9 +56,12 @@ angular.module('softvApp')
 		});
 
 		function buscarSucursal() {
-			if (vm.selectedPlaza.id_compania == 0) {
-				ngNotify.set('Selecione una plaza', 'error');
-			} else if (vm.selectedTipo.CLAVE == 0) {
+			// if (vm.selectedPlaza.id_compania == 0) {
+			// 	ngNotify.set('Selecione una plaza', 'error');
+			//	}
+			var plaza = (vm.selectedPlaza == null) ? 0 : vm.selectedPlaza.id_compania;
+
+			if (vm.selectedTipo.CLAVE == 0) {
 				ngNotify.set('Selecione un tipo de ticket', 'error');
 			} else {
 				if (vm.tipoBus == undefined || vm.tipoBus == 6) {
