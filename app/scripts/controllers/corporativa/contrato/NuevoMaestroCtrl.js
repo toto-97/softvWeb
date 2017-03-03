@@ -21,6 +21,13 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ng
 		detalle.ContratosSoftv = vm.contratos;
 		detalle.IdContratoMaestro = vm.contratoMaestro;
 		detalle.Action = "ADD";
+		if (vm.distribuidor == null) {
+			ngNotify.set('Selecciona una distribuidor', 'error');
+			return;
+		}
+		detalle.Distribuidor = vm.distribuidor;
+
+
 		var modalInstance = $uibModal.open({
 			animation: true,
 			ariaLabelledBy: 'modal-title',
@@ -127,6 +134,17 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ng
 		});
 	}
 
+	function CambioTipoPago(x) {
+		if (x == 'postpago') {
+			vm.DesReactiva = false;
+			vm.reactivacion = 'manual';
+
+		} else {
+			vm.DesReactiva = true;
+			vm.reactivacion = 'manual';
+		}
+	}
+
 
 	var vm = this;
 	vm.abrirContratos = abrirContratos;
@@ -143,5 +161,7 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ng
 	vm.ligados = true;
 	vm.guardarBtn = false;
 	vm.helpSave = false;
+	vm.CambioTipoPago = CambioTipoPago;
+	vm.DesReactiva = true;
 }
 angular.module('softvApp').controller('NuevoMaestroCtrl', NuevoMaestroCtrl);

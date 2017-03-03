@@ -3,6 +3,7 @@
 function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporativoFactory, detalle, $state, ngNotify) {
 
 	function Init() {
+		vm.Distribuidor = detalle.Distribuidor;
 		console.log(detalle);
 		if (detalle.Action == "EDIT") {
 			vm.showokbtn = false;
@@ -45,6 +46,9 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 	});
 
 	function clientesModal() {
+		var detalle = {};
+		detalle.contratos = vm.contratos;
+		detalle.Distribuidor = vm.Distribuidor;
 		var modalInstance = $uibModal.open({
 			animation: true,
 			ariaLabelledBy: 'modal-title',
@@ -58,7 +62,7 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 			size: "lg",
 			resolve: {
 				contratos: function() {
-					return vm.contratos;
+					return detalle;
 				}
 			}
 		});
