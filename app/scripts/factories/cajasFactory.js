@@ -67,7 +67,8 @@ angular
 			getEstadoCuenta: '/tieneEdoCuenta/GetDeeptieneEdoCuenta',
 			getNota: '/CrearNotaCredito/GetCrearNotaCreditoList',
 			getNotaconceptos: '/ConceptosTicketNotasCredito/GetConceptosTicketNotasCreditoList',
-			validaAdelantar: '/PagoAdelantado/GetAdelantaParcialidades'
+			validaAdelantar: '/PagoAdelantado/GetAdelantaParcialidades',
+			InformacionCobro: '/sp_dameInfodelCobro/Getsp_dameInfodelCobro'
 		};
 
 		factory.validaAdelantar = function(contrato, session, adelantados) {
@@ -1429,5 +1430,28 @@ angular
 
 			return deferred.promise;
 		};
+
+		factory.InformacionCobro = function(session, detalle) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'ClvSession': session,
+				'ClvDetalle': detalle
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.InformacionCobro, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+
+
 		return factory;
 	});

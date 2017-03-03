@@ -670,6 +670,31 @@ angular
 			vm.data.amaterno = '';
 		}
 
+		function InformacionCobro(detalle) {
+			console.log(detalle);
+			var items = {};
+			items.Clv_Session = detalle.Clv_Session;
+			items.CLV_DETALLE = detalle.CLV_DETALLE;
+
+			var modalInstance = $uibModal.open({
+				animation: true,
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: 'views/facturacion/modalInformacionCobro.html',
+				controller: 'ModalInformacionCobroCtrl',
+				controllerAs: 'ctrl',
+				backdrop: 'static',
+				keyboard: false,
+				class: 'modal-backdrop fade',
+				size: 'md',
+				resolve: {
+					items: function() {
+						return items;
+					}
+				}
+			});
+		}
+
 		var vm = this;
 		vm.openHistorial = openHistorial;
 		vm.openInformation = openInformation;
@@ -692,4 +717,5 @@ angular
 		vm.changeSerie = changeSerie;
 		vm.openEdoCuenta = openEdoCuenta;
 		initialData();
+		vm.InformacionCobro = InformacionCobro;
 	});
