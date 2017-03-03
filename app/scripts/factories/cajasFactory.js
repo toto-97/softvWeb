@@ -68,7 +68,81 @@ angular
 			getNota: '/CrearNotaCredito/GetCrearNotaCreditoList',
 			getNotaconceptos: '/ConceptosTicketNotasCredito/GetConceptosTicketNotasCreditoList',
 			validaAdelantar: '/PagoAdelantado/GetAdelantaParcialidades',
-			InformacionCobro: '/sp_dameInfodelCobro/Getsp_dameInfodelCobro'
+			InformacionCobro: '/sp_dameInfodelCobro/Getsp_dameInfodelCobro',
+			tieneFactura: '/DamelasOrdenesque_GeneroFacturaAgendaOrdser/GetValidaExistenciaOrdenPorFactura',
+			getTurnos: '/spConsultaTurnos/GetspConsultaTurnosList',
+			guardarAgenda: '/Genera_Cita_OrdserFac/AddGenera_Cita_OrdserFac',
+			getOrden: '/DamelasOrdenesque_GeneroFacturaAgendaOrdser/GetDamelasOrdenesque_GeneroFacturaAgendaOrdser'
+		};
+
+		factory.getOrden = function(factura) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'ClvFactura': factura
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.getOrden, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.guardarAgenda = function(obj) {
+			var deferred = $q.defer();
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.guardarAgenda, JSON.stringify(obj), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.getTurnos = function() {
+			var deferred = $q.defer();
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.get(globalService.getUrl() + paths.getTurnos, config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.tieneFactura = function(factura) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'ClvFactura': factura
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.tieneFactura, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
 		};
 
 		factory.validaAdelantar = function(contrato, session, adelantados) {
@@ -91,6 +165,7 @@ angular
 
 			return deferred.promise;
 		};
+
 		factory.getNotaconceptos = function(factura) {
 			var deferred = $q.defer();
 			var Parametros = {
@@ -816,7 +891,6 @@ angular
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			console.log(Parametros);
 			$http.post(globalService.getUrl() + paths.nuevoPago, JSON.stringify(Parametros), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
@@ -946,7 +1020,6 @@ angular
 				'Token': $localStorage.currentUser.token
 
 			};
-			console.log(Parametros);
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
