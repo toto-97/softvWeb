@@ -88,8 +88,9 @@ angular.module('softvApp')
 				'tipo': objeto.tipo,
 				'IdCompania': objeto.compania,
 				'NombreOp': objeto.nombre,
-				'IdUsuario':$localStorage.currentUser.idUsuario
+				'IdUsuario': $localStorage.currentUser.idUsuario
 			};
+			console.log(Parametros);
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
