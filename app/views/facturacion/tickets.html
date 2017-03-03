@@ -30,13 +30,13 @@
 							<div class="row">
 								<div class="col-md-10 col-md-offset-1">
 									<strong>Plaza</strong>
-									<select class="form-control" ng-model="$ctrl.selectedPlaza" ng-options="v.razon_social for v in $ctrl.plazas track by v.id_compania"></select>
+									<select class="form-control input-sm" ng-model="$ctrl.selectedPlaza" ng-options="v.razon_social for v in $ctrl.plazas track by v.id_compania"></select>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-10 col-md-offset-1">
 									<strong>Tipo de Tickets</strong>
-									<select class="form-control" ng-model="$ctrl.selectedTipo" ng-options="v.CONCEPTO for v in $ctrl.tipos track by v.CLAVE"></select>
+									<select class="form-control input-sm" ng-model="$ctrl.selectedTipo" ng-options="v.CONCEPTO for v in $ctrl.tipos track by v.CLAVE"></select>
 								</div>
 							</div>
 							<div class="row">
@@ -45,7 +45,7 @@
 								</div>
 								<div class="col-md-7 col-md-offset-1" style="margin-top:-15px;">
 									<strong>Serie</strong>
-									<input type="text" class="form-control" ng-model="$ctrl.serie" ng-change="$ctrl.cambioBusqueda(1)" />
+									<input type="text" class="form-control input-sm" ng-model="$ctrl.serie" ng-change="$ctrl.cambioBusqueda(1)" />
 								</div>
 							</div>
 							<div class="row">
@@ -57,19 +57,19 @@
 							<div class="row">
 								<div class="col-md-8 col-md-offset-1">
 									<strong>Fecha</strong>
-									<input type="date" class="form-control" ng-model="$ctrl.fecha" ng-change="$ctrl.cambioBusqueda(3)" />
+									<input type="date" class="form-control input-sm" ng-model="$ctrl.fecha" ng-change="$ctrl.cambioBusqueda(3)" />
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-6 col-md-offset-1">
 									<strong>Contrato</strong>
-									<input type="text" class="form-control" ng-model="$ctrl.contrato" ng-change="$ctrl.cambioBusqueda(4)" />
+									<input type="text" class="form-control input-sm" ng-model="$ctrl.contrato" ng-change="$ctrl.cambioBusqueda(4)" />
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-10 col-md-offset-1">
 									<strong>Nombre</strong>
-									<input type="text" class="form-control" ng-model="$ctrl.nombre" ng-change="$ctrl.cambioBusqueda(5)" />
+									<input type="text" class="form-control input-sm" ng-model="$ctrl.nombre" ng-change="$ctrl.cambioBusqueda(5)" />
 								</div>
 							</div>
 							<div class="row">
