@@ -7,7 +7,7 @@ angular.module('softvApp')
 			BuscarContratos: '/ContratoMaestroFac/GetBusquedaContratoMaestroFac',
 			GetDistribuidores: '/DomicilioFiscal/GetDistribuidores',
 			GetCiudadList: '/DomicilioFiscal/GetListaCiudadesPorPlaza',
-			UpdateFile: '/ContratoMaestroFac/GetBusquedaContratoMaestroFac',
+
 			UploadFile: '/ContratoMaestroFac/GetLayoutFac'
 		};
 		factory.GetContratoList = function() {
@@ -83,7 +83,7 @@ angular.module('softvApp')
 
 		}
 
-		factory.UpdateFile = function(file, Distribuidor) {
+		factory.UpdateFile = function(file, Distribuidor, contrato) {
 			var deferred = $q.defer();
 			var data = new FormData();
 			for (var i = 0; i < file.length; i++) {
@@ -91,6 +91,7 @@ angular.module('softvApp')
 				data.append("file" + i, file[i]);
 			}
 			data.append("Distribuidor", Distribuidor)
+			data.append("Contrato", contrato)
 
 			var config = {
 				headers: {
