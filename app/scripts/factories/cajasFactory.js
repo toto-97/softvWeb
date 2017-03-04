@@ -68,7 +68,9 @@ angular
 			getNota: '/CrearNotaCredito/GetCrearNotaCreditoList',
 			getNotaconceptos: '/ConceptosTicketNotasCredito/GetConceptosTicketNotasCreditoList',
 			validaAdelantar: '/PagoAdelantado/GetAdelantaParcialidades',
-			InformacionCobro: '/sp_dameInfodelCobro/Getsp_dameInfodelCobro'
+			InformacionCobro: '/sp_dameInfodelCobro/Getsp_dameInfodelCobro',
+			ValidaSaldoContrato: '/ValidaSaldoContrato/GetValidaSaldoContrato',
+			ObtieneEdoCuentaSinSaldar: '/ObtieneEdoCuentaSinSaldar/GetObtieneEdoCuentaSinSaldarList'
 		};
 
 		factory.validaAdelantar = function(contrato, session, adelantados) {
@@ -88,9 +90,9 @@ angular
 			}).catch(function(response) {
 				deferred.reject(response);
 			});
-
 			return deferred.promise;
 		};
+
 		factory.getNotaconceptos = function(factura) {
 			var deferred = $q.defer();
 			var Parametros = {
@@ -106,7 +108,6 @@ angular
 			}).catch(function(response) {
 				deferred.reject(response);
 			});
-
 			return deferred.promise;
 		};
 
@@ -125,7 +126,6 @@ angular
 			}).catch(function(response) {
 				deferred.reject(response);
 			});
-
 			return deferred.promise;
 		};
 
@@ -144,9 +144,9 @@ angular
 			}).catch(function(response) {
 				deferred.reject(response);
 			});
-
 			return deferred.promise;
 		};
+
 
 		factory.validarContrato = function(contrato) {
 			var deferred = $q.defer();
@@ -1430,6 +1430,49 @@ angular
 
 			return deferred.promise;
 		};
+
+		factory.ValidaSaldoContrato = function(Contrato, ClvSession) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Contrato': Contrato,
+				'ClvSession': ClvSession
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.ValidaSaldoContrato, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+
+		factory.ObtieneEdoCuentaSinSaldar = function(Contrato, ClvSession) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Contrato': Contrato,
+				'ClvSession': ClvSession
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.ObtieneEdoCuentaSinSaldar, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+
 
 		factory.InformacionCobro = function(session, detalle) {
 			var deferred = $q.defer();

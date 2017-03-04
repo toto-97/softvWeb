@@ -205,13 +205,28 @@
                       <button class="btn btn-primary btn-xs" ng-click="ctrl.openClabe()">CLABE</button>
                     </div>
                   </div>
-                  <div class="col-md-7">
+                  <div class="col-md-5">
                     <div class="col-md-10 col-md-offset-1" style="margin-top: -30px;">
                       <h5 class="text-left">Detalle de Servicios</h5>
                       <div class="card wrapper" ng-style="{'background-color': ctrl.colorServicios}">
                         <p style="font-size: 10px;" class="text-center"><span ng-repeat="x in ctrl.servicios">{{ x.Servicio }} <br></span></p>
                       </div>
                     </div>
+                  </div>
+                  <div class="col-md-2" ng-show="ctrl.ArrastraSaldo">
+                    <b>Descripción</b>
+                    <br>
+                    <b>Saldo ${{}}</b>
+                    <table class="table">
+                      <thead>
+                        <th>Fecha</th>
+                        <th>Importe</th>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+
+
                   </div>
                 </div>
               </div>

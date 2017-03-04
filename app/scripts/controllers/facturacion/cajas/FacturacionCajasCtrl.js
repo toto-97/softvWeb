@@ -374,14 +374,27 @@ angular
 			vm.mostrarSuspencion = false;
 			reset();
 			var contrato = vm.data.contrato;
+
 			cajasFactory.validarContrato(vm.data.contrato).then(function(datacontrato) {
+				console.log(datacontrato);
 				if (datacontrato.Getsp_dameContratoCompaniaAdicListResult[0].Contrato > 0) {
+
 					cajasFactory.buscarContrato(contrato).then(function(data) {
 						if (data.GetBusCliPorContrato_FacListResult.length > 0) {
 							$('.buscarContrato').collapse('hide');
 							vm.Cliente = data.GetBusCliPorContrato_FacListResult[0];
 							cajasFactory.dameSession(vm.Cliente.Contrato).then(function(session) {
 								vm.session = session.GetDeepDameClv_SessionResult.IdSession;
+								cajasFactory.ValidaSaldoContrato(vm.Cliente.Contrato, vm.session).then(function(data) {
+									if (data.GetValidaSaldoContratoResult.tieneSaldo > 0) {
+										vm.ArrastraSaldo = true;
+										cajasFactory.ObtieneEdoCuentaSinSaldar(vm.Cliente.Contrato, vm.session).then(function(det) {
+											console.log(det);
+										});
+
+									}
+
+								});
 								cajasFactory.preguntaCajas(vm.Cliente.Contrato, 0).then(function(op1) {
 									if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
 										abrirModalPregunta(0, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
@@ -520,6 +533,14 @@ angular
 							vm.Cliente = data.GetBusCliPorContrato_FacListResult[0];
 							cajasFactory.dameSession(vm.Cliente.Contrato).then(function(session) {
 								vm.session = session.GetDeepDameClv_SessionResult.IdSession;
+
+								cajasFactory.ValidaSaldoContrato(vm.Cliente.Contrato, vm.session).then(function(data) {
+									if (data.GetValidaSaldoContratoResult.tieneSaldo > 0) {
+										vm.ArrastraSaldo = true;
+									}
+								});
+
+
 								cajasFactory.preguntaCajas(vm.Cliente.Contrato, 0).then(function(op1) {
 									if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
 										abrirModalPregunta(0, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
@@ -694,4 +715,5 @@ angular
 		vm.adelantaPagos = adelantaPagos;
 		vm.openEdoCuenta = openEdoCuenta;
 		vm.InformacionCobro = InformacionCobro;
+		vm.ArrastraSaldo = false;
 	});
