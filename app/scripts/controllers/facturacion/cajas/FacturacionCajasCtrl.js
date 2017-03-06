@@ -721,7 +721,6 @@ angular
 		});
 
 		function reloadTables() {
-			alert('reload');
 			cajasFactory.dameDetallePago(vm.session).then(function(detallePago) {
 				if (detallePago.GetDameDetalleListResult.length == 0) {
 					vm.blockBaja = true;

@@ -40,6 +40,7 @@ angular
 		}
 
 		function changeVendedor() {
+			vm.folios = '';
 			if (vm.selectedVendedor != undefined) {
 				cajasFactory.getSerieByUser(vm.selectedVendedor.Clv_Vendedor, vm.Cliente.Contrato).then(function(data) {
 					vm.series = data.GetUltimoSerieYFolioListResult;
