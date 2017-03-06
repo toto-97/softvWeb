@@ -374,69 +374,129 @@ angular
 			$('.buscarContrato').collapse('hide');
 			vm.mostrarSuspencion = false;
 			reset();
+			vm.ArrastraSaldo = false;
 			var contrato = vm.data.contrato;
 			cajasFactory.validarContrato(vm.data.contrato).then(function(datacontrato) {
 				if (datacontrato.Getsp_dameContratoCompaniaAdicListResult[0].Contrato > 0) {
 					cajasFactory.buscarContrato(contrato).then(function(data) {
 						if (data.GetBusCliPorContrato_FacListResult.length > 0) {
 							vm.Cliente = data.GetBusCliPorContrato_FacListResult[0];
-							cajasFactory.dameSession(vm.Cliente.Contrato).then(function(session) {
-								vm.session = session.GetDeepDameClv_SessionResult.IdSession;
-								cajasFactory.preguntaCajas(vm.Cliente.Contrato, 0).then(function(op1) {
-									if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
-										abrirModalPregunta(0, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
-									}
-								});
-								cajasFactory.preguntaCajas(vm.Cliente.Contrato, 2).then(function(op1) {
-									if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
-										abrirModalPregunta(2, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
-									}
-								});
-								cajasFactory.preguntaCajas(vm.Cliente.Contrato, 3).then(function(op1) {
-									if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
-										abrirModalPregunta(3, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
-									}
-								});
-								cajasFactory.preguntaCajas(vm.Cliente.Contrato, 900).then(function(op1) {
-									if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
-										abrirModalPregunta(900, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
-									}
-								});
-								cajasFactory.checaRetiro(vm.Cliente.Contrato).then(function(retiro) {
-									if (retiro.GetChecaOrdenRetiroListResult[0].Resultado > 0) {
-										new PNotify({
-											title: 'Aviso',
-											text: retiro.GetChecaOrdenRetiroListResult[0].Msg,
-											hide: false
+
+							cajasFactory.ValidaSaldoContrato(vm.Cliente.Contrato).then(function(data) {
+								if (data.GetValidaSaldoContratoResult.tieneSaldo > 0) {
+									vm.ArrastraSaldo = true;
+									cajasFactory.CobraSaldo(vm.Cliente.Contrato).then(function(cobra) {
+										console.log(cobra);
+										vm.session = cobra.GetDeepCobraSaldoResult.ClvSession;
+										console.log(vm.session);
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 0).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(0, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
 										});
-									}
-								});
-								cajasFactory.getObservaciones(vm.Cliente.Contrato).then(function(observa) {
-									if (observa.GetDeepConRelClienteObsResult.Obs) {
-										new PNotify({
-											title: 'Observaciones',
-											type: 'info',
-											text: observa.GetDeepConRelClienteObsResult.Obs,
-											hide: false
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 2).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(2, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
 										});
-									}
-								});
-								if (session.GetDeepDameClv_SessionResult.Error == 0) {
-									reloadTables();
-									vm.mostrarSuspencion = false;
-									vm.color = '#ffffff'
-									vm.colorServicios = '#E2EBEA';
-								} else {
-									reloadTables();
-									vm.mostrarSuspencion = true;
-									vm.color = '#D6D9D9';
-									vm.colorServicios = '#B8BABA';
-									ngNotify.set(session.GetDeepDameClv_SessionResult.Msg, {
-										type: 'warn',
-										sticky: true
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 3).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(3, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 900).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(900, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.getObservaciones(vm.Cliente.Contrato).then(function(observa) {
+											console.log(observa);
+											if (observa.GetDeepConRelClienteObsResult.Obs) {
+												new PNotify({
+													title: 'Observaciones',
+													type: 'info',
+													text: observa.GetDeepConRelClienteObsResult.Obs,
+													hide: false
+												});
+											}
+										});
+										reloadTables();
+
+										cajasFactory.ObtieneEdoCuentaSinSaldar(vm.Cliente.Contrato, vm.session).then(function(detalleEdo) {
+											vm.detalleEdo = detalleEdo.GetObtieneEdoCuentaSinSaldarListResult;
+										});
+
+
 									});
+
+								} else {
+
+
+									cajasFactory.dameSession(vm.Cliente.Contrato).then(function(session) {
+										vm.session = session.GetDeepDameClv_SessionResult.IdSession;
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 0).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(0, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 2).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(2, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 3).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(3, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 900).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(900, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.checaRetiro(vm.Cliente.Contrato).then(function(retiro) {
+											if (retiro.GetChecaOrdenRetiroListResult[0].Resultado > 0) {
+												new PNotify({
+													title: 'Aviso',
+													text: retiro.GetChecaOrdenRetiroListResult[0].Msg,
+													hide: false
+												});
+											}
+										});
+										cajasFactory.getObservaciones(vm.Cliente.Contrato).then(function(observa) {
+											if (observa.GetDeepConRelClienteObsResult.Obs) {
+												new PNotify({
+													title: 'Observaciones',
+													type: 'info',
+													text: observa.GetDeepConRelClienteObsResult.Obs,
+													hide: false
+												});
+											}
+										});
+										if (session.GetDeepDameClv_SessionResult.Error == 0) {
+											reloadTables();
+											vm.mostrarSuspencion = false;
+											vm.color = '#ffffff'
+											vm.colorServicios = '#E2EBEA';
+										} else {
+											reloadTables();
+											vm.mostrarSuspencion = true;
+											vm.color = '#D6D9D9';
+											vm.colorServicios = '#B8BABA';
+											ngNotify.set(session.GetDeepDameClv_SessionResult.Msg, {
+												type: 'warn',
+												sticky: true
+											});
+										}
+									});
+
 								}
+
+
 							});
+
+
+
 							cajasFactory.serviciosCliente(vm.Cliente.Contrato).then(function(servicios) {
 								var array = $.map(servicios, function(value, index) {
 									return [value];
@@ -524,53 +584,106 @@ angular
 					cajasFactory.buscarContrato(x).then(function(data) {
 						if (data.GetBusCliPorContrato_FacListResult.length > 0) {
 							vm.Cliente = data.GetBusCliPorContrato_FacListResult[0];
-							cajasFactory.dameSession(vm.Cliente.Contrato).then(function(session) {
-								vm.session = session.GetDeepDameClv_SessionResult.IdSession;
-								cajasFactory.preguntaCajas(vm.Cliente.Contrato, 0).then(function(op1) {
-									if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
-										abrirModalPregunta(0, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
-									}
-								});
-								cajasFactory.preguntaCajas(vm.Cliente.Contrato, 2).then(function(op1) {
-									if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
-										abrirModalPregunta(2, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
-									}
-								});
-								cajasFactory.preguntaCajas(vm.Cliente.Contrato, 3).then(function(op1) {
-									if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
-										abrirModalPregunta(3, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
-									}
-								});
-								cajasFactory.preguntaCajas(vm.Cliente.Contrato, 900).then(function(op1) {
-									if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
-										abrirModalPregunta(900, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
-									}
-								});
-								cajasFactory.checaRetiro(vm.Cliente.Contrato).then(function(retiro) {
-									if (retiro.GetChecaOrdenRetiroListResult[0].Resultado > 0) {
-										new PNotify({
-											title: 'Aviso',
-											text: retiro.GetChecaOrdenRetiroListResult[0].Msg,
-											hide: false
+							cajasFactory.ValidaSaldoContrato(vm.Cliente.Contrato).then(function(data) {
+								if (data.GetValidaSaldoContratoResult.tieneSaldo > 0) {
+									vm.ArrastraSaldo = true;
+									cajasFactory.CobraSaldo(vm.Cliente.Contrato).then(function(cobra) {
+										console.log(cobra);
+										vm.session = cobra.GetDeepCobraSaldoResult.ClvSession;
+										console.log(vm.session);
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 0).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(0, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
 										});
-									}
-								});
-								if (session.GetDeepDameClv_SessionResult.Error == 0) {
-									reloadTables();
-									vm.mostrarSuspencion = false;
-									vm.color = '#ffffff'
-									vm.colorServicios = '#E2EBEA';
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 2).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(2, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 3).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(3, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 900).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(900, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.getObservaciones(vm.Cliente.Contrato).then(function(observa) {
+											console.log(observa);
+											if (observa.GetDeepConRelClienteObsResult.Obs) {
+												new PNotify({
+													title: 'Observaciones',
+													type: 'info',
+													text: observa.GetDeepConRelClienteObsResult.Obs,
+													hide: false
+												});
+											}
+										});
+										reloadTables();
+
+										cajasFactory.ObtieneEdoCuentaSinSaldar(vm.Cliente.Contrato, vm.session).then(function(detalleEdo) {
+											vm.detalleEdo = detalleEdo.GetObtieneEdoCuentaSinSaldarListResult;
+										});
+
+
+									});
+
 								} else {
-									reloadTables();
-									vm.mostrarSuspencion = true;
-									vm.color = '#D6D9D9';
-									vm.colorServicios = '#B8BABA';
-									ngNotify.set(session.GetDeepDameClv_SessionResult.Msg, {
-										type: 'warn',
-										sticky: true
+
+									cajasFactory.dameSession(vm.Cliente.Contrato).then(function(session) {
+										vm.session = session.GetDeepDameClv_SessionResult.IdSession;
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 0).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(0, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 2).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(2, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 3).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(3, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 900).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(900, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.checaRetiro(vm.Cliente.Contrato).then(function(retiro) {
+											if (retiro.GetChecaOrdenRetiroListResult[0].Resultado > 0) {
+												new PNotify({
+													title: 'Aviso',
+													text: retiro.GetChecaOrdenRetiroListResult[0].Msg,
+													hide: false
+												});
+											}
+										});
+										if (session.GetDeepDameClv_SessionResult.Error == 0) {
+											reloadTables();
+											vm.mostrarSuspencion = false;
+											vm.color = '#ffffff'
+											vm.colorServicios = '#E2EBEA';
+										} else {
+											reloadTables();
+											vm.mostrarSuspencion = true;
+											vm.color = '#D6D9D9';
+											vm.colorServicios = '#B8BABA';
+											ngNotify.set(session.GetDeepDameClv_SessionResult.Msg, {
+												type: 'warn',
+												sticky: true
+											});
+										}
 									});
 								}
 							});
+
+
 							cajasFactory.serviciosCliente(vm.Cliente.Contrato).then(function(servicios) {
 								var array = $.map(servicios, function(value, index) {
 									return [value];
