@@ -185,7 +185,7 @@
               </div>
               <div id="datosCliente-1" class="collapse datosCliente" aria-expanded="false" style="margin-top: -20px">
                 <div class="row" style="padding-left:10px;">
-                  <div class="col-md-3">
+                  <div class="col-md-2">
                     <h5 style="font-size: 12px;"><strong>Ventas</strong></h5>
                     <samll style="font-size: 11px;">Vendedor:</samll>
                     <select class="form-control input-sm" ng-model="ctrl.selectedVendedor" ng-change="ctrl.changeVendedor()" ng-options="v.Nombre for v in ctrl.vendedores track by v.Clv_Vendedor"></select>
@@ -214,13 +214,31 @@
                       <button class="btn btn-primary btn-xs" ng-click="ctrl.openClabe()">CLABE</button>
                     </div>
                   </div>
-                  <div class="col-md-5" style="marigin-top: -30px;">
+                  <div class="col-md-4" style="marigin-top: -30px;">
                     <div class="col-md-9 col-md-offset-2">
                       <h5 class="text-left">Detalle de Servicios</h5>
                       <div class="card wrapper" style="background-color: #E2EBEA;">
                         <p style="font-size: 10px;" class="text-center"><span ng-repeat="x in ctrl.servicios">{{ x.Servicio }} <br></span></p>
                       </div>
                     </div>
+                  </div>
+                  <div class="col-md-2" ng-show="ctrl.ArrastraSaldo" style="margin-top: -30px;">
+                    <b>Descripción</b>
+                    <br>
+                    <table class="table table-hover" style="font-size:10px;">
+                      <thead>
+                        <th>Fecha</th>
+                        <th>Importe</th>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="x in ctrl.detalleEdo">
+                          <td>{{x.Fecha}}</td>
+                          <td>{{x.TotalRegular | currency }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+
                   </div>
                 </div><br>
               </div>

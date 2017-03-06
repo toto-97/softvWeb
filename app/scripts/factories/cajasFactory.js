@@ -70,7 +70,8 @@ angular
 			validaAdelantar: '/PagoAdelantado/GetAdelantaParcialidades',
 			InformacionCobro: '/sp_dameInfodelCobro/Getsp_dameInfodelCobro',
 			ValidaSaldoContrato: '/ValidaSaldoContrato/GetValidaSaldoContrato',
-			ObtieneEdoCuentaSinSaldar: '/ObtieneEdoCuentaSinSaldar/GetObtieneEdoCuentaSinSaldarList'
+			ObtieneEdoCuentaSinSaldar: '/ObtieneEdoCuentaSinSaldar/GetObtieneEdoCuentaSinSaldarList',
+			CobraSaldo: '/CobraSaldo/GetDeepCobraSaldo'
 		};
 
 		factory.validaAdelantar = function(contrato, session, adelantados) {
@@ -1431,11 +1432,11 @@ angular
 			return deferred.promise;
 		};
 
-		factory.ValidaSaldoContrato = function(Contrato, ClvSession) {
+		factory.ValidaSaldoContrato = function(Contrato) {
 			var deferred = $q.defer();
 			var Parametros = {
 				'Contrato': Contrato,
-				'ClvSession': ClvSession
+
 			};
 			var config = {
 				headers: {
@@ -1443,6 +1444,27 @@ angular
 				}
 			};
 			$http.post(globalService.getUrl() + paths.ValidaSaldoContrato, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+
+		factory.CobraSaldo = function(Contrato) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Contrato': Contrato,
+
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.CobraSaldo, JSON.stringify(Parametros), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response);
