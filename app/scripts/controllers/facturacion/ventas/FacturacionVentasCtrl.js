@@ -40,9 +40,7 @@ angular
 		}
 
 		function changeVendedor() {
-			if (vm.selectedVendedor.Clv_Vendedor == 0) {
-				ngNotify.set('Selecciona un vendedor.', 'error');
-			} else {
+			if (vm.selectedVendedor != undefined) {
 				cajasFactory.getSerieByUser(vm.selectedVendedor.Clv_Vendedor, vm.Cliente.Contrato).then(function(data) {
 					vm.series = data.GetUltimoSerieYFolioListResult;
 					vm.folios = '';
@@ -51,9 +49,7 @@ angular
 		}
 
 		function changeSerie() {
-			if (vm.selectedSerie.ULTIMOFOLIO_USADO == 0) {
-				ngNotify.set('Selecciona una serie.', 'error');
-			} else {
+			if (vm.selectedSerie != undefined) {
 				cajasFactory.folioDisponible(vm.selectedVendedor.Clv_Vendedor, vm.selectedSerie.SERIE).then(function(data) {
 					if (data.GetFolioDisponibleListResult.length > 0) {
 						vm.folios = data.GetFolioDisponibleListResult;

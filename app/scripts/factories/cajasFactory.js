@@ -83,7 +83,7 @@ angular
 		factory.getSerieByUser = function(vendedor, contrato) {
 			var deferred = $q.defer();
 			var Parametros = {
-				'Clv_Vendedor': $localStorage.currentUser.idUsuario,
+				'Clv_Vendedor': vendedor,
 				'Contrato': contrato
 			};
 			var config = {
