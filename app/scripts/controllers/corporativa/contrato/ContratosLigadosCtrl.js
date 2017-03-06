@@ -4,7 +4,7 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 
 	function Init() {
 		vm.Distribuidor = detalle.Distribuidor;
-		console.log(detalle);
+
 		if (detalle.Action == "EDIT") {
 			vm.showokbtn = false;
 			vm.showeditbtn = true;
@@ -31,8 +31,6 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 	}
 
 	$rootScope.$on('agregar_contrato', function(e, contrato) {
-		console.log(contrato);
-		console.log(vm.contratos);
 		var aux = 0;
 		vm.contratos.forEach(function(item) {
 			if (contrato.CONTRATO == item.CONTRATO) {
@@ -76,7 +74,7 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 				});
 			});
 			corporativoFactory.ligarContratos(detalle.IdContratoMaestro, contratos).then(function(data) {
-				ngNotify.set('Contratos ligados al contrato maestro.', 'success');
+				ngNotify.set('Los Contratos fueron ligados correctamente al contrato maestro.', 'success');
 				$state.go('home.corporativa.maestro');
 				$uibModalInstance.dismiss('cancel');
 			});
@@ -89,14 +87,15 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 	function edit() {
 		if (vm.contratos.length > 0) {
 			var contratos = [];
-
+			console.log(vm.contratos);
 			vm.contratos.forEach(function(item) {
 				contratos.push({
-					Contrato: item.ContratoBueno
+					Contrato: item.CONTRATO
 				});
 			});
-			corporativoFactory.UpdateRelContrato(detalle.IdContratoMaestro, contratos).then(function(data) {
-				ngNotify.set('Contratos ligados al contrato maestro.', 'success');
+			corporativoFactory.UpdateRelContrato(detalle.IdContratoMaestro, contratos, vm.Distribuidor.Clv_Plaza).then(function(data) {
+				console.log(data);
+				ngNotify.set('Los Contratos fueron ligados correctamente al contrato maestro.', 'success');
 				$state.go('home.corporativa.maestro');
 				$uibModalInstance.dismiss('cancel');
 			});
@@ -113,7 +112,7 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 	function ValidaArchivo() {
 		var files = $("#inputFile2").get(0).files;
 		ContratoMaestroFactory.UpdateFile(files, vm.Distribuidor.Clv_Plaza, detalle.IdContratoMaestro).then(function(data) {
-			console.log(data);
+
 			if (data.ContratosValidos.length > 0) {
 				ngNotify.set('Se encontraron ' + data.ContratosValidos.length + ' contratos válidos', 'grimace');
 				vm.contratos = [];

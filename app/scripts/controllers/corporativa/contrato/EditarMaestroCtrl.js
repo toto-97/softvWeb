@@ -66,6 +66,11 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
 				vm.tipoPagos.forEach(function(entry, index) {
 					if (entry.Id == vm.contratoMaestro.TipoPago) {
 						vm.formapago = vm.tipoPagos[index];
+						if (vm.formapago.Cuenta == true) {
+							vm.MuestraReferencia = true;
+						} else {
+							vm.MuestraReferencia = false;
+						}
 					}
 				});
 			});
@@ -97,6 +102,7 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
 			vm.diascredito = vm.contratoMaestro.DiasCredito;
 			vm.diasgracia = vm.contratoMaestro.DiasGracia;
 			vm.limitecredito = parseInt(vm.contratoMaestro.LimiteCredito);
+			vm.Referencia = vm.contratoMaestro.Referencia;
 			var date = vm.contratoMaestro.FechaFac.replace(/[^0-9\.]+/g, '');
 			var pattern = /(\d{2})(\d{2})(\d{4})/;
 			date = new Date(date.replace(pattern, '$2/$1/$3'));
@@ -182,7 +188,8 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
 				'TipoCorteCli': vm.tipocorte.Id,
 				'ReactivarMan': vm.reacMan,
 				'ReactivarPagoFac': vm.reacPag,
-				'TipoPago': vm.formapago.Id
+				'TipoPago': vm.formapago.Id,
+				'Referencia': vm.Referencia
 			}
 		};
 		corporativoFactory.updateContrato(contrato).then(function(data) {
@@ -202,9 +209,20 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
 		}
 	}
 
+	function CambioTipo(x) {
+
+		if (x.Cuenta == true) {
+			vm.MuestraReferencia = true;
+		} else {
+			vm.MuestraReferencia = false;
+		}
+	}
+
 	var vm = this;
 	vm.abrirContratos = abrirContratos;
 	vm.guardarContrato = guardarContrato;
 	vm.CambioTipoPago = CambioTipoPago;
+	vm.MuestraReferencia = false;
+	vm.CambioTipo = CambioTipo;
 }
 angular.module('softvApp').controller('EditarMaestroCtrl', EditarMaestroCtrl);

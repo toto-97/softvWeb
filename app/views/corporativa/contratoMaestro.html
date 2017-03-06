@@ -81,11 +81,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-show="$ctrl.Contratos.length==0">
-                  <td colspan="5">
-                    <center>No se encontraron resultados</center>
-                  </td>
-                </tr>
+
                 <tr ng-show="$ctrl.Contratos.length>0" dir-paginate="x in $ctrl.Contratos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:5">
                   <td>{{x.IdContratoMaestro}}</td>
                   <td>{{x.RazonSocial}}</td>
