@@ -72,7 +72,49 @@ angular
 			tieneFactura: '/DamelasOrdenesque_GeneroFacturaAgendaOrdser/GetValidaExistenciaOrdenPorFactura',
 			getTurnos: '/spConsultaTurnos/GetspConsultaTurnosList',
 			guardarAgenda: '/Genera_Cita_OrdserFac/AddGenera_Cita_OrdserFac',
-			getOrden: '/DamelasOrdenesque_GeneroFacturaAgendaOrdser/GetDamelasOrdenesque_GeneroFacturaAgendaOrdser'
+			getOrden: '/DamelasOrdenesque_GeneroFacturaAgendaOrdser/GetDamelasOrdenesque_GeneroFacturaAgendaOrdser',
+			getVendedoresByUser: '/Muestra_VendedoresCortes/GetMuestraVendedores2List',
+			getSerieByUser: '/UltimoSerieYFolio/GetUltimoSerieYFolioList'
+		};
+
+		factory.getSerieByUser = function(vendedor, contrato) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Clv_Vendedor': $localStorage.currentUser.idUsuario,
+				'Contrato': contrato
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.getSerieByUser, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.getVendedoresByUser = function(contrato) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'IdUsuario': $localStorage.currentUser.idUsuario,
+				'Contrato': contrato
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.getVendedoresByUser, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
 		};
 
 		factory.getOrden = function(factura) {

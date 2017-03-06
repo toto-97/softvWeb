@@ -9,7 +9,7 @@ angular
 		};
 
 		svc.getUrlReportes = function() {
-			return 'http://localhost:64481';
+			return 'http://192.168.50.21:64481';
 		};
 
 		return svc;

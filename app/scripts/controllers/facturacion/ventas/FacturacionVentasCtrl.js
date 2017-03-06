@@ -2,11 +2,6 @@
 angular
 	.module('softvApp')
 	.controller('FacturacionVentasCtrl', function($uibModal, $state, $rootScope, cajasFactory, ngNotify) {
-
-		function initialData() {
-			getVendedores();
-		}
-
 		function openEdoCuenta() {
 			cajasFactory.getEstadoCuenta(vm.Cliente.Contrato).then(function(data) {
 				if (data.GetDeeptieneEdoCuentaResult.tieneEdoCuenta) {
@@ -38,13 +33,9 @@ angular
 		});
 
 		function getVendedores() {
-			cajasFactory.dameVendedores().then(function(data) {
-				data.GetVendedoresLListResult.unshift({
-					'Nombre': '----------------',
-					'Clv_Vendedor': 0
-				});
-				vm.vendedores = data.GetVendedoresLListResult;
-				vm.selectedVendedor = data.GetVendedoresLListResult[0];
+			vm.series = [];
+			cajasFactory.getVendedoresByUser(vm.Cliente.Contrato).then(function(data) {
+				vm.vendedores = data.GetMuestraVendedores2ListResult;
 			});
 		}
 
@@ -52,13 +43,8 @@ angular
 			if (vm.selectedVendedor.Clv_Vendedor == 0) {
 				ngNotify.set('Selecciona un vendedor.', 'error');
 			} else {
-				cajasFactory.ultimoFolio(vm.selectedVendedor.Clv_Vendedor).then(function(data) {
-					data.GetUltimoSerieYFolioListResult.unshift({
-						'SERIE': '----------------',
-						'ULTIMOFOLIO_USADO': 0
-					});
+				cajasFactory.getSerieByUser(vm.selectedVendedor.Clv_Vendedor, vm.Cliente.Contrato).then(function(data) {
 					vm.series = data.GetUltimoSerieYFolioListResult;
-					vm.selectedSerie = data.GetUltimoSerieYFolioListResult[0];
 					vm.folios = '';
 				});
 			}
@@ -70,11 +56,7 @@ angular
 			} else {
 				cajasFactory.folioDisponible(vm.selectedVendedor.Clv_Vendedor, vm.selectedSerie.SERIE).then(function(data) {
 					if (data.GetFolioDisponibleListResult.length > 0) {
-						data.GetFolioDisponibleListResult.unshift({
-							'Folio': '----------------',
-						});
 						vm.folios = data.GetFolioDisponibleListResult;
-						vm.selectedFolio = data.GetFolioDisponibleListResult[0];
 					}
 				});
 			}
@@ -250,7 +232,7 @@ angular
 			} else if (vm.selectedSerie.ULTIMOFOLIO_USADO == 0 || vm.selectedSerie.ULTIMOFOLIO_USADO == '' || vm.selectedSerie.ULTIMOFOLIO_USADO == undefined) {
 				ngNotify.set('Selecciona una serie.', 'error');
 			} else {
-				if (vm.selectedFolio.Folio == 0 || vm.selectedFolio.Folio == '' || vm.selectedFolio.Folio == undefined || vm.selectedFolio.Folio == '----------------') {
+				if (vm.selectedFolio.Folio == undefined || vm.selectedFolio.Folio == 0 || vm.selectedFolio.Folio == '' || vm.selectedFolio.Folio == '----------------') {
 					ngNotify.set('La caja no tiene asignados folios para esta plaza.', 'error');
 				} else {
 					cajasFactory.dameSucursalCompa(vm.Cliente.Contrato).then(function(data) {
@@ -473,6 +455,7 @@ angular
 								}
 							});
 							vm.muestraCliente = true;
+							getVendedores();
 						} else {
 							ngNotify.set('No se encontro ningun cliente con ese número de contrato.', 'error');
 							reset();
@@ -611,6 +594,7 @@ angular
 							reset();
 						}
 					});
+					getVendedores();
 				} else {
 					ngNotify.set('El usuario no tiene permisos para ver a este cliente.', 'error');
 					reset();
@@ -721,6 +705,5 @@ angular
 		vm.changeVendedor = changeVendedor;
 		vm.changeSerie = changeSerie;
 		vm.openEdoCuenta = openEdoCuenta;
-		initialData();
 		vm.InformacionCobro = InformacionCobro;
 	});

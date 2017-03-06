@@ -19,67 +19,57 @@
 
 			<div class="row">
 				<div class="panel-group col-md-12" id="normales">
-					<div class="card panel">
-						<div class="card-head card-head-xs collapsed" data-toggle="collapse" data-parent="#normales" data-target="#normales-1" aria-expanded="false">
-							<header>Sucursales</header>
-							<div class="tools">
-								<a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
-							</div>
+					<div class="row">
+						<div class="col-md-10 col-md-offset-1">
+							<strong>Plaza</strong>
+							<select class="form-control input-sm" ng-model="$ctrl.selectedPlaza" ng-options="v.razon_social for v in $ctrl.plazas track by v.id_compania"></select>
 						</div>
-						<div id="normales-1" class="collapse normales" aria-expanded="false" style="height: 0px;">
-							<div class="row">
-								<div class="col-md-10 col-md-offset-1">
-									<strong>Plaza</strong>
-									<select class="form-control input-sm" ng-model="$ctrl.selectedPlaza" ng-options="v.razon_social for v in $ctrl.plazas track by v.id_compania"></select>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-10 col-md-offset-1">
-									<strong>Tipo de Tickets</strong>
-									<select class="form-control input-sm" ng-model="$ctrl.selectedTipo" ng-options="v.CONCEPTO for v in $ctrl.tipos track by v.CLAVE"></select>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-10 col-md-offset-1">
-									<p class="text-center"><strong>Buscar Ticket Por:</strong></p>
-								</div>
-								<div class="col-md-7 col-md-offset-1" style="margin-top:-15px;">
-									<strong>Serie</strong>
-									<input type="text" class="form-control input-sm" ng-model="$ctrl.serie" ng-change="$ctrl.cambioBusqueda(1)" />
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-7 col-md-offset-1">
-									<strong>Folio</strong>
-									<input type="text" class="form-control" ng-model="$ctrl.folio" ng-change="$ctrl.cambioBusqueda(2)" />
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-8 col-md-offset-1">
-									<strong>Fecha</strong>
-									<input type="date" class="form-control input-sm" ng-model="$ctrl.fecha" ng-change="$ctrl.cambioBusqueda(3)" />
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-6 col-md-offset-1">
-									<strong>Contrato</strong>
-									<input type="text" class="form-control input-sm" ng-model="$ctrl.contrato" ng-change="$ctrl.cambioBusqueda(4)" />
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-10 col-md-offset-1">
-									<strong>Nombre</strong>
-									<input type="text" class="form-control input-sm" ng-model="$ctrl.nombre" ng-change="$ctrl.cambioBusqueda(5)" />
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-10 col-md-offset-1">
-									<br>
-									<p class="text-right">
-										<button class="btn btn-primary btn-xs" ng-click="$ctrl.buscarSucursal()"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
-									</p>
-								</div>
-							</div>
+					</div>
+					<div class="row">
+						<div class="col-md-10 col-md-offset-1">
+							<strong>Tipo de Tickets</strong>
+							<select class="form-control input-sm" ng-model="$ctrl.selectedTipo" ng-options="v.CONCEPTO for v in $ctrl.tipos track by v.CLAVE"></select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-10 col-md-offset-1">
+							<p class="text-center"><strong>Buscar Ticket Por:</strong></p>
+						</div>
+						<div class="col-md-7 col-md-offset-1" style="margin-top:-15px;">
+							<strong>Serie</strong>
+							<input type="text" class="form-control input-sm" ng-model="$ctrl.serie" ng-change="$ctrl.cambioBusqueda(1)" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-7 col-md-offset-1">
+							<strong>Folio</strong>
+							<input type="text" class="form-control" ng-model="$ctrl.folio" ng-change="$ctrl.cambioBusqueda(2)" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-8 col-md-offset-1">
+							<strong>Fecha</strong>
+							<input type="date" class="form-control input-sm" ng-model="$ctrl.fecha" ng-change="$ctrl.cambioBusqueda(3)" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 col-md-offset-1">
+							<strong>Contrato</strong>
+							<input type="text" class="form-control input-sm" ng-model="$ctrl.contrato" ng-change="$ctrl.cambioBusqueda(4)" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-10 col-md-offset-1">
+							<strong>Nombre</strong>
+							<input type="text" class="form-control input-sm" ng-model="$ctrl.nombre" ng-change="$ctrl.cambioBusqueda(5)" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-10 col-md-offset-1">
+							<br>
+							<p class="text-right">
+								<button class="btn btn-primary btn-xs" ng-click="$ctrl.buscarSucursal()"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+							</p>
 						</div>
 					</div>
 					<!--end .panel -->
