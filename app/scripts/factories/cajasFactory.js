@@ -71,7 +71,7 @@ angular
 			InformacionCobro: '/sp_dameInfodelCobro/Getsp_dameInfodelCobro',
 			ValidaSaldoContrato: '/ValidaSaldoContrato/GetValidaSaldoContrato',
 			ObtieneEdoCuentaSinSaldar: '/ObtieneEdoCuentaSinSaldar/GetObtieneEdoCuentaSinSaldarList',
-			CobraSaldo: '/CobraSaldo/GetDeepCobraSaldo'
+			CobraSaldo: '/CobraSaldo/GetDeepCobraSaldo',
 			tieneFactura: '/DamelasOrdenesque_GeneroFacturaAgendaOrdser/GetValidaExistenciaOrdenPorFactura',
 			getTurnos: '/spConsultaTurnos/GetspConsultaTurnosList',
 			guardarAgenda: '/Genera_Cita_OrdserFac/AddGenera_Cita_OrdserFac',
