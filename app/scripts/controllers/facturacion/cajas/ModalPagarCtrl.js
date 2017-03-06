@@ -105,7 +105,7 @@ angular
 								'contrato': items.Contrato,
 								'clv_session': items.IdSession,
 								'tipo': items.Tipo,
-								'serie_v': '',
+								'serie_v': items.Serie,
 								'folio_v': items.Folio,
 								'clv_vendedor': items.Vendedor,
 								'tipo1': 0,
@@ -128,23 +128,69 @@ angular
 										$rootScope.$emit('ocultarPagar', {});
 										$rootScope.$emit('getVendedores', {});
 										ngNotify.set('Pago Exitoso', 'success');
-										var modalInstance = $uibModal.open({
-											animation: true,
-											ariaLabelledBy: 'modal-title',
-											ariaDescribedBy: 'modal-body',
-											templateUrl: 'views/facturacion/modalSingleTicket.html',
-											controller: 'ModalSingleTicketCtrl',
-											controllerAs: 'ctrl',
-											backdrop: 'static',
-											keyboard: false,
-											size: 'sm',
-											resolve: {
-												factura: function() {
-													return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
-												},
-												imprimir: function() {
-													return true;
-												}
+										vm.Clv_Factura = dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
+										cajasFactory.getOrden(vm.Clv_Factura).then(function(orden) {
+											if (orden.GetDamelasOrdenesque_GeneroFacturaAgendaOrdserResult.Orden > 0) {
+												cajasFactory.tieneFactura(vm.Clv_Factura).then(function(dataTiene) {
+													var modalInstance = $uibModal.open({
+														animation: true,
+														ariaLabelledBy: 'modal-title',
+														ariaDescribedBy: 'modal-body',
+														templateUrl: 'views/facturacion/modalSingleTicket.html',
+														controller: 'ModalSingleTicketCtrl',
+														controllerAs: 'ctrl',
+														backdrop: 'static',
+														keyboard: false,
+														size: 'sm',
+														resolve: {
+															factura: function() {
+																return vm.Clv_Factura;
+															},
+															imprimir: function() {
+																return true;
+															}
+														}
+													});
+													if (dataTiene.GetValidaExistenciaOrdenPorFacturaResult.valida == 1) {
+														var modalInstance = $uibModal.open({
+															animation: true,
+															ariaLabelledBy: 'modal-title',
+															ariaDescribedBy: 'modal-body',
+															templateUrl: 'views/facturacion/modalAgenda.html',
+															controller: 'ModalAgendaVentasCtrl',
+															controllerAs: 'ctrl',
+															backdrop: 'static',
+															keyboard: false,
+															size: 'sm',
+															resolve: {
+																orden: function() {
+																	return orden.GetDamelasOrdenesque_GeneroFacturaAgendaOrdserResult.Orden;
+																}
+															}
+														});
+													}
+
+												});
+											} else {
+												var modalInstance = $uibModal.open({
+													animation: true,
+													ariaLabelledBy: 'modal-title',
+													ariaDescribedBy: 'modal-body',
+													templateUrl: 'views/facturacion/modalSingleTicket.html',
+													controller: 'ModalSingleTicketCtrl',
+													controllerAs: 'ctrl',
+													backdrop: 'static',
+													keyboard: false,
+													size: 'sm',
+													resolve: {
+														factura: function() {
+															return vm.Clv_Factura;
+														},
+														imprimir: function() {
+															return true;
+														}
+													}
+												});
 											}
 										});
 									});
@@ -187,23 +233,69 @@ angular
 										$rootScope.$emit('ocultarPagar', {});
 										$rootScope.$emit('getVendedores', {});
 										ngNotify.set('Pago Exitoso', 'success');
-										var modalInstance = $uibModal.open({
-											animation: true,
-											ariaLabelledBy: 'modal-title',
-											ariaDescribedBy: 'modal-body',
-											templateUrl: 'views/facturacion/modalSingleTicket.html',
-											controller: 'ModalSingleTicketCtrl',
-											controllerAs: 'ctrl',
-											backdrop: 'static',
-											keyboard: false,
-											size: 'sm',
-											resolve: {
-												factura: function() {
-													return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
-												},
-												imprimir: function() {
-													return true;
-												}
+										vm.Clv_Factura = dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
+										cajasFactory.getOrden(vm.Clv_Factura).then(function(orden) {
+											if (orden.GetDamelasOrdenesque_GeneroFacturaAgendaOrdserResult.Orden > 0) {
+												cajasFactory.tieneFactura(vm.Clv_Factura).then(function(dataTiene) {
+													var modalInstance = $uibModal.open({
+														animation: true,
+														ariaLabelledBy: 'modal-title',
+														ariaDescribedBy: 'modal-body',
+														templateUrl: 'views/facturacion/modalSingleTicket.html',
+														controller: 'ModalSingleTicketCtrl',
+														controllerAs: 'ctrl',
+														backdrop: 'static',
+														keyboard: false,
+														size: 'sm',
+														resolve: {
+															factura: function() {
+																return vm.Clv_Factura;
+															},
+															imprimir: function() {
+																return true;
+															}
+														}
+													});
+													if (dataTiene.GetValidaExistenciaOrdenPorFacturaResult.valida == 1) {
+														var modalInstance = $uibModal.open({
+															animation: true,
+															ariaLabelledBy: 'modal-title',
+															ariaDescribedBy: 'modal-body',
+															templateUrl: 'views/facturacion/modalAgenda.html',
+															controller: 'ModalAgendaVentasCtrl',
+															controllerAs: 'ctrl',
+															backdrop: 'static',
+															keyboard: false,
+															size: 'sm',
+															resolve: {
+																orden: function() {
+																	return orden.GetDamelasOrdenesque_GeneroFacturaAgendaOrdserResult.Orden;
+																}
+															}
+														});
+													}
+
+												});
+											} else {
+												var modalInstance = $uibModal.open({
+													animation: true,
+													ariaLabelledBy: 'modal-title',
+													ariaDescribedBy: 'modal-body',
+													templateUrl: 'views/facturacion/modalSingleTicket.html',
+													controller: 'ModalSingleTicketCtrl',
+													controllerAs: 'ctrl',
+													backdrop: 'static',
+													keyboard: false,
+													size: 'sm',
+													resolve: {
+														factura: function() {
+															return vm.Clv_Factura;
+														},
+														imprimir: function() {
+															return true;
+														}
+													}
+												});
 											}
 										});
 									});
@@ -248,23 +340,69 @@ angular
 										$rootScope.$emit('ocultarPagar', {});
 										$rootScope.$emit('getVendedores', {});
 										ngNotify.set('Pago Exitoso', 'success');
-										var modalInstance = $uibModal.open({
-											animation: true,
-											ariaLabelledBy: 'modal-title',
-											ariaDescribedBy: 'modal-body',
-											templateUrl: 'views/facturacion/modalSingleTicket.html',
-											controller: 'ModalSingleTicketCtrl',
-											controllerAs: 'ctrl',
-											backdrop: 'static',
-											keyboard: false,
-											size: 'sm',
-											resolve: {
-												factura: function() {
-													return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
-												},
-												imprimir: function() {
-													return true;
-												}
+										vm.Clv_Factura = dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
+										cajasFactory.getOrden(vm.Clv_Factura).then(function(orden) {
+											if (orden.GetDamelasOrdenesque_GeneroFacturaAgendaOrdserResult.Orden > 0) {
+												cajasFactory.tieneFactura(vm.Clv_Factura).then(function(dataTiene) {
+													var modalInstance = $uibModal.open({
+														animation: true,
+														ariaLabelledBy: 'modal-title',
+														ariaDescribedBy: 'modal-body',
+														templateUrl: 'views/facturacion/modalSingleTicket.html',
+														controller: 'ModalSingleTicketCtrl',
+														controllerAs: 'ctrl',
+														backdrop: 'static',
+														keyboard: false,
+														size: 'sm',
+														resolve: {
+															factura: function() {
+																return vm.Clv_Factura;
+															},
+															imprimir: function() {
+																return true;
+															}
+														}
+													});
+													if (dataTiene.GetValidaExistenciaOrdenPorFacturaResult.valida == 1) {
+														var modalInstance = $uibModal.open({
+															animation: true,
+															ariaLabelledBy: 'modal-title',
+															ariaDescribedBy: 'modal-body',
+															templateUrl: 'views/facturacion/modalAgenda.html',
+															controller: 'ModalAgendaVentasCtrl',
+															controllerAs: 'ctrl',
+															backdrop: 'static',
+															keyboard: false,
+															size: 'sm',
+															resolve: {
+																orden: function() {
+																	return orden.GetDamelasOrdenesque_GeneroFacturaAgendaOrdserResult.Orden;
+																}
+															}
+														});
+													}
+
+												});
+											} else {
+												var modalInstance = $uibModal.open({
+													animation: true,
+													ariaLabelledBy: 'modal-title',
+													ariaDescribedBy: 'modal-body',
+													templateUrl: 'views/facturacion/modalSingleTicket.html',
+													controller: 'ModalSingleTicketCtrl',
+													controllerAs: 'ctrl',
+													backdrop: 'static',
+													keyboard: false,
+													size: 'sm',
+													resolve: {
+														factura: function() {
+															return vm.Clv_Factura;
+														},
+														imprimir: function() {
+															return true;
+														}
+													}
+												});
 											}
 										});
 									});
@@ -305,23 +443,69 @@ angular
 										$rootScope.$emit('ocultarPagar', {});
 										$rootScope.$emit('getVendedores', {});
 										ngNotify.set('Pago Exitoso', 'success');
-										var modalInstance = $uibModal.open({
-											animation: true,
-											ariaLabelledBy: 'modal-title',
-											ariaDescribedBy: 'modal-body',
-											templateUrl: 'views/facturacion/modalSingleTicket.html',
-											controller: 'ModalSingleTicketCtrl',
-											controllerAs: 'ctrl',
-											backdrop: 'static',
-											keyboard: false,
-											size: 'sm',
-											resolve: {
-												factura: function() {
-													return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
-												},
-												imprimir: function() {
-													return true;
-												}
+										vm.Clv_Factura = dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
+										cajasFactory.getOrden(vm.Clv_Factura).then(function(orden) {
+											if (orden.GetDamelasOrdenesque_GeneroFacturaAgendaOrdserResult.Orden > 0) {
+												cajasFactory.tieneFactura(vm.Clv_Factura).then(function(dataTiene) {
+													var modalInstance = $uibModal.open({
+														animation: true,
+														ariaLabelledBy: 'modal-title',
+														ariaDescribedBy: 'modal-body',
+														templateUrl: 'views/facturacion/modalSingleTicket.html',
+														controller: 'ModalSingleTicketCtrl',
+														controllerAs: 'ctrl',
+														backdrop: 'static',
+														keyboard: false,
+														size: 'sm',
+														resolve: {
+															factura: function() {
+																return vm.Clv_Factura;
+															},
+															imprimir: function() {
+																return true;
+															}
+														}
+													});
+													if (dataTiene.GetValidaExistenciaOrdenPorFacturaResult.valida == 1) {
+														var modalInstance = $uibModal.open({
+															animation: true,
+															ariaLabelledBy: 'modal-title',
+															ariaDescribedBy: 'modal-body',
+															templateUrl: 'views/facturacion/modalAgenda.html',
+															controller: 'ModalAgendaVentasCtrl',
+															controllerAs: 'ctrl',
+															backdrop: 'static',
+															keyboard: false,
+															size: 'sm',
+															resolve: {
+																orden: function() {
+																	return orden.GetDamelasOrdenesque_GeneroFacturaAgendaOrdserResult.Orden;
+																}
+															}
+														});
+													}
+
+												});
+											} else {
+												var modalInstance = $uibModal.open({
+													animation: true,
+													ariaLabelledBy: 'modal-title',
+													ariaDescribedBy: 'modal-body',
+													templateUrl: 'views/facturacion/modalSingleTicket.html',
+													controller: 'ModalSingleTicketCtrl',
+													controllerAs: 'ctrl',
+													backdrop: 'static',
+													keyboard: false,
+													size: 'sm',
+													resolve: {
+														factura: function() {
+															return vm.Clv_Factura;
+														},
+														imprimir: function() {
+															return true;
+														}
+													}
+												});
 											}
 										});
 									});

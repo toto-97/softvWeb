@@ -40,12 +40,33 @@
               <uib-tabset active="active">
                 <uib-tab index="0" heading="Contrato">
                   <br/>
-                  <form angular-validator-submit="ctrl.buscarPorContrato()" name="contratoForm" novalidate angular-validator>
-                    <div class="col-md-4">
-                      <input type="text" autocomplete="off" class="form-control" required="" name="contrato" validate-on="dirty" placeholder="Contrato" ng-pattern="/^[0-9]{1,}[-]{1}[0-9]{1,}/" required-message="'Este campo es obligatorio.'" invalid-message="'Formato de contrato inválido.'"
-                          ng-model="ctrl.data.contrato">
-                    </div>
-                    <br/>
+                    <form angular-validator-submit="ctrl.buscarPorContrato()" name="contratoForm" novalidate angular-validator>
+                      <div class="col-md-4">
+                         <input type="text" autocomplete="off"
+                              class="form-control"
+                              required=""
+                              name="contrato"
+                              validate-on="dirty"
+                              placeholder="Contrato"
+                              ng-pattern = "/^[0-9]+([-][0-9]+)?$/"
+                              required-message="'Este campo es obligatorio.'"
+                              invalid-message = "'Formato de contrato inválido.'"
+                              ng-model="ctrl.data.contrato">
+                      </div>
+                      <br/>
+                      <br/>
+                      <br/>
+                      <div class="note">
+                        <strong>El número de contrato</strong> está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)
+                      </div>
+                      <footer>
+                        <p class="text-right">
+                          <button type="submit" class="btn btn-sm btn-info"><i class="fa fa-search"></i> Buscar</button>
+                        </p>
+                      </footer>
+                    </form>
+                  </uib-tab>
+                  <uib-tab index="1" heading="Dirección">
                     <br/>
                     <br/>
                     <div class="note">

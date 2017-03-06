@@ -4,7 +4,6 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 
 	function Init() {
 		vm.Distribuidor = detalle.Distribuidor;
-		console.log(detalle.ContratosSoftv);
 		if (detalle.Action == "EDIT") {
 			vm.showokbtn = false;
 			vm.showeditbtn = true;
