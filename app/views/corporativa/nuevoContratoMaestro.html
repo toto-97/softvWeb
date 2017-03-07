@@ -35,6 +35,8 @@
           <label class="col-md-3 control-label blod">Distribuidor:</label>
           <div class="col-md-9" style="padding-left:-10px;">
             <select class="form-control input-sm" name="distribuidor" validate-on="dirty" ng-model="$ctrl.distribuidor" ng-options="v.Nombre for v in $ctrl.distribuidores track by v.Clv_Plaza" required-message="'Este campo es obligatorio.'" required>
+   <option value="">selecciona</option>
+
                   </select>
           </div>
         </div>
@@ -45,6 +47,7 @@
           <div class="col-md-9" style="padding-left:-10px;">
             <select class="form-control input-sm" name="estado" validate-on="dirty" class="form-control imput-sm" ng-model="$ctrl.estado" ng-options="v.Nombre for v in $ctrl.estados track by v.Clv_Estado" ng-change="$ctrl.cambioEstado()" required-message="'Este campo es obligatorio.'"
                 required>
+              <option value="">selecciona</option>
               </select>
           </div>
         </div>
@@ -54,6 +57,7 @@
           <label class="col-md-3 control-label blod">Ciudad:</label>
           <div class="col-md-9" style="padding-left:-10px;">
             <select name="ciudad" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.ciudad" ng-change="$ctrl.cambioCiudad()" ng-options="v.Nombre for v in $ctrl.ciudades track by v.Clv_Ciudad" required-message="'Este campo es obligatorio.'" required>
+<option value="">selecciona</option>
                 </select>
           </div>
         </div>
@@ -64,6 +68,7 @@
           <div class="col-md-9" style="padding-left:-10px;">
             <select name="localidad" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.localidad" ng-change="$ctrl.cambioLocalidad()" ng-options="v.Nombre for v in $ctrl.localidades track by v.Clv_Localidad" required-message="'Este campo es obligatorio.'"
                 required>
+              <option value="">selecciona</option>
               </select>
           </div>
         </div>
@@ -73,6 +78,7 @@
           <label class="col-md-3 control-label blod">Colonia:</label>
           <div class="col-md-9" style="padding-left:-10px;">
             <select name="colonia" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.colonia" ng-change="$ctrl.cambioColonia()" ng-options="v.Nombre for v in $ctrl.colonias track by v.clv_colonia" required-message="'Este campo es obligatorio.'" required>
+<option value="">selecciona</option>
                 </select>
           </div>
         </div>
@@ -184,7 +190,16 @@
         <div class="col-md-12 form-group">
           <label class="col-md-3 control-label blod">Forma de Pago:</label>
           <div class="col-md-9" style="padding-left:-10px;">
-            <select name="formapago" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.formapago" ng-options="v.Descripcion for v in $ctrl.tipoPagos track by v.Id" required-message="'Este campo es obligatorio.'" required></select>
+            <select name="formapago" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.formapago" ng-change="$ctrl.CambioTipo($ctrl.formapago)" ng-options="v.Descripcion for v in $ctrl.tipoPagos track by v.Id" required-message="'Este campo es obligatorio.'"
+                required>
+              <option value="">Selecciona</option>
+              </select>
+          </div>
+        </div>
+        <div class="col-md-12 form-group" ng-show="$ctrl.MuestraReferencia">
+          <label class="col-md-3 control-label blod">Referencia</label>
+          <div class="col-md-9" style="padding-left:-10px;">
+            <input type="text" ng-model="$ctrl.Referencia" class="form-control input-sm" placeholder="Número de referencia">
           </div>
         </div>
 
