@@ -58,7 +58,7 @@ function corporativaConf($stateProvider) {
 		{
 			name: 'home.corporativa.pago',
 			data: {
-				pageTitle: 'SOFTV | Pago CONTRATO MAESTRO',
+				pageTitle: 'SOFTV | PAGO CONTRATO MAESTRO',
 				permissions: {
 					only: ['contratomaestroUpdate'],
 					options: {
