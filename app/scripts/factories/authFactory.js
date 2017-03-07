@@ -29,17 +29,6 @@ angular.module('softvApp')
 						tipoUsuario: response.data.GetDameSessionWListResult[0].TipoUser,
 						Menu: response.data.GetDameSessionWListResult[0].Menu
 					};
-					var menu = $localStorage.currentUser.Menu;
-					var myArray = [];
-					menu.forEach(function(entry) {
-						myArray.push(entry.Class);
-						entry.MenuChild.forEach(function(hijo) {
-							myArray.push(hijo.Class);
-							hijo.MenuChild.forEach(function(nieto) {
-								myArray.push(nieto.Class);
-							});
-						});
-					});
 					$window.location.reload();
 				} else {
 					$location.path('/auth/');

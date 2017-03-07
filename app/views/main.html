@@ -5,8 +5,8 @@
       <ul class="header-nav header-nav-options">
         <li class="header-nav-brand">
           <div class="brand-holder">
-            <a>
-              <img src="images/logo.png"><span class="text-lg text-bold text-primary">SOFTV WEB</span>
+            <a ui-sref="home.dashboard">
+              <img src="images/logo.png"><span class="text-lg text-bold text-primary">SAC WEB</span>
             </a>
           </div>
         </li>
@@ -23,10 +23,7 @@
         <li class="dropdown">
           <a href="javascript:void(0);" class="dropdown-toggle ink-reaction" data-toggle="dropdown">
             <img src="images/user.png" alt="" />
-            <span class="profile-info">
-                        {{ $ctrl.usuario }}
-                        <small>Administrator</small>
-                    </span>
+            <span class="profile-info">{{ $ctrl.usuario }}</span>
           </a>
           <ul class="dropdown-menu animation-dock">
             <li><a href="" ng-click="$ctrl.logout()"><i class="fa fa-fw fa-power-off text-danger"></i> Logout</a></li>
@@ -57,11 +54,6 @@
       <div>
         <a class="btn btn-icon-toggle btn-default menubar-toggle" data-toggle="menubar" href="javascript:void(0);">
           <i class="fa fa-bars"></i>
-        </a>
-      </div>
-      <div class="expanded">
-        <a ui-sref="dashboard" ui-sref-active="active">
-          <span class="text-lg text-bold text-primary ">FACTURACIÓN WEB</span>
         </a>
       </div>
     </div>
