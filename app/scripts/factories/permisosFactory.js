@@ -6,7 +6,8 @@ angular.module('softvApp')
 		var factory = {};
 		var paths = {
 			getPermisoList: '/Module/GetPermisoist',
-			UpdatePermiso: '/Role/GetUpdatePermisoList'
+			UpdatePermiso: '/Role/GetUpdatePermisoList',
+			getModuleList: '/Module/GetModuleList'
 		};
 
 		factory.GetPermisoList = function(obj) {
