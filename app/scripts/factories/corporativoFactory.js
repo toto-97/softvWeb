@@ -16,7 +16,8 @@ angular.module('softvApp')
 			ligarContratos: '/ContratoMaestroFac/GetAddRelContratoMaestroContrato',
 			singleContrato: '/ContratoMaestroFac/GetRelContratos',
 			updateContrato: '/ContratoMaestroFac/UpdateContratoMaestroFac',
-			UpdateRelContrato: '/ContratoMaestroFac/GetRomperRelContratoMaestroContrato'
+			UpdateRelContrato: '/ContratoMaestroFac/GetAddUpdate',
+			buscarCliente: '/uspBuscaContratoSeparado2/GetBuscaByIdDisList'
 		};
 
 		factory.updateContrato = function(contrato) {
@@ -56,9 +57,9 @@ angular.module('softvApp')
 			return deferred.promise;
 		};
 
-		factory.UpdateRelContrato = function(contrato, lista) {
+		factory.UpdateRelContrato = function(contrato, lista, distribuidor) {
 			console.log(contrato);
-			console.log(lista);
+			console.log(distribuidor);
 			var deferred = $q.defer();
 			var config = {
 				headers: {
@@ -66,10 +67,11 @@ angular.module('softvApp')
 				}
 			};
 			var Parametros = {
-				'objRep': {
-					'IdContratoMaestro': contrato
+				'objCM': {
+					'IdContratoMaestro': contrato,
+					'Distribuidor': distribuidor
 				},
-				'lstRel': lista
+				'Contratos': lista
 
 			};
 
@@ -276,6 +278,39 @@ angular.module('softvApp')
 				}
 			};
 			$http.get(globalService.getUrl() + paths.getEstados, config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
+
+		factory.buscarCliente = function(obje) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'ContratoCom': obje.contrato,
+				'Nombre': obje.nombre,
+				'Apellido_Paterno': obje.paterno,
+				'Apellido_Materno': obje.materno,
+				'CALLE': obje.calle,
+				'NUMERO': obje.numero,
+				'ClvColonia': obje.colonia,
+				'SetupBox': obje.setupbox,
+				'IdUsuario': $localStorage.currentUser.idUsuario,
+				'TipoSer': obje.servicio,
+				'Op': obje.op,
+				'IdDistribuidor': obje.IdDistribuidor
+			};
+
+			console.log(Parametros);
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.buscarCliente, JSON.stringify(Parametros), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response.data);

@@ -1,6 +1,6 @@
 'use strict';
 
-function BuscaContratoLCtrl($uibModalInstance, atencionFactory, $rootScope, corporativoFactory, ngNotify) {
+function BuscaContratoLCtrl($uibModalInstance, atencionFactory, $rootScope, corporativoFactory, ngNotify, contratos) {
 	function cancel() {
 		$uibModalInstance.dismiss('cancel');
 	}
@@ -9,8 +9,11 @@ function BuscaContratoLCtrl($uibModalInstance, atencionFactory, $rootScope, corp
 		obje.servicio = 3;
 		obje.op = 3;
 		obje.colonia = 0;
-		atencionFactory.buscarCliente(obje).then(function(data) {
-			vm.Clientes = data.GetuspBuscaContratoSeparado2ListResult;
+		vm.distribuidor = contratos.Distribuidor.Clv_Plaza;
+		console.log(contratos.Distribuidor.Clv_Plaza);
+		obje.IdDistribuidor = contratos.Distribuidor.Clv_Plaza;
+		corporativoFactory.buscarCliente(obje).then(function(data) {
+			vm.Clientes = data.GetBuscaByIdDisListResult;
 		});
 	}
 
@@ -24,8 +27,10 @@ function BuscaContratoLCtrl($uibModalInstance, atencionFactory, $rootScope, corp
 		obje.servicio = 3;
 		obje.colonia = 0;
 		obje.op = 0;
-		atencionFactory.buscarCliente(obje).then(function(data) {
-			vm.Clientes = data.GetuspBuscaContratoSeparado2ListResult;
+		obje.IdDistribuidor = vm.distribuidor;
+		console.log(obje);
+		corporativoFactory.buscarCliente(obje).then(function(data) {
+			vm.Clientes = data.GetBuscaByIdDisListResult;
 		});
 	}
 
@@ -41,8 +46,10 @@ function BuscaContratoLCtrl($uibModalInstance, atencionFactory, $rootScope, corp
 		obje.colonia = 0;
 		obje.servicio = 3;
 		obje.op = 1;
-		atencionFactory.buscarCliente(obje).then(function(data) {
-			vm.Clientes = data.GetuspBuscaContratoSeparado2ListResult;
+		obje.IdDistribuidor = vm.distribuidor;
+		corporativoFactory.buscarCliente(obje).then(function(data) {
+			vm.Clientes = data.GetBuscaByIdDisListResult;
+			console.log(vm.Clientes);
 		});
 	}
 
