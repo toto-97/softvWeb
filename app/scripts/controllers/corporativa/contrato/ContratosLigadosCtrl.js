@@ -1,10 +1,10 @@
 'use strict';
 
-function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporativoFactory, detalle, $state, ngNotify) {
+function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporativoFactory, detalle, $state, ngNotify, ContratoMaestroFactory) {
 
 	function Init() {
 		vm.Distribuidor = detalle.Distribuidor;
-		console.log(detalle);
+
 		if (detalle.Action == "EDIT") {
 			vm.showokbtn = false;
 			vm.showeditbtn = true;
@@ -16,16 +16,13 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 		}
 		for (var a = 0; a < detalle.ContratosSoftv.length; a++) {
 			var contrato = {};
-			contrato.CONTRATO = detalle.ContratosSoftv[a].ContratoReal;
+			contrato.CONTRATO = detalle.ContratosSoftv[a].ContratoCom;
 			contrato.Nombre = detalle.ContratosSoftv[a].NombreCli;
 			contrato.Apellido_Materno = '';
 			contrato.Apellido_Paterno = '';
+			contrato.ContratoBueno = detalle.ContratosSoftv[a].ContratoReal;
 			vm.contratos.push(contrato);
-
 		}
-
-
-
 	}
 
 
@@ -77,7 +74,7 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 				});
 			});
 			corporativoFactory.ligarContratos(detalle.IdContratoMaestro, contratos).then(function(data) {
-				ngNotify.set('Contratos ligados al contrato maestro.', 'success');
+				ngNotify.set('Los Contratos fueron ligados correctamente al contrato maestro.', 'success');
 				$state.go('home.corporativa.maestro');
 				$uibModalInstance.dismiss('cancel');
 			});
@@ -92,23 +89,15 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 			var contratos = [];
 			console.log(vm.contratos);
 			vm.contratos.forEach(function(item) {
-				if (item.ContratoBueno == undefined) {
-					contratos.push({
-						Contrato: item.CONTRATO
-					});
-				} else {
-					contratos.push({
-						Contrato: item.ContratoBueno
-					});
-				}
-
+				contratos.push({
+					Contrato: item.CONTRATO
+				});
 			});
-
-			corporativoFactory.UpdateRelContrato(detalle.IdContratoMaestro, contratos).then(function(data) {
-				ngNotify.set('Contratos ligados al contrato maestro.', 'success');
+			corporativoFactory.UpdateRelContrato(detalle.IdContratoMaestro, contratos, vm.Distribuidor.Clv_Plaza).then(function(data) {
+				console.log(data);
+				ngNotify.set('Los Contratos fueron ligados correctamente al contrato maestro.', 'success');
 				$state.go('home.corporativa.maestro');
 				$uibModalInstance.dismiss('cancel');
-
 			});
 		} else {
 			ngNotify.set('Introduce al menos un contrato.', 'error');
@@ -120,6 +109,28 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 		vm.contratos.splice(index, 1);
 	}
 
+	function ValidaArchivo() {
+		var files = $("#inputFile2").get(0).files;
+		ContratoMaestroFactory.UpdateFile(files, vm.Distribuidor.Clv_Plaza, detalle.IdContratoMaestro).then(function(data) {
+
+			if (data.ContratosValidos.length > 0) {
+				ngNotify.set('Se encontraron ' + data.ContratosValidos.length + ' contratos válidos', 'grimace');
+				vm.contratos = [];
+				for (var i = 0; i < data.ContratosValidos.length; i++) {
+					var contrato = {};
+					contrato.CONTRATO = data.ContratosValidos[i].ContratoCom;
+					contrato.Nombre = data.ContratosValidos[i].Nombre;
+					contrato.Apellido_Materno = '';
+					contrato.Apellido_Paterno = '';
+					contrato.ContratoBueno = data.ContratosValidos[i].ContratoReal;
+					vm.contratos.push(contrato);
+				}
+			}
+
+
+		});
+	}
+
 	var vm = this;
 	vm.cancel = cancel;
 	vm.ok = ok;
@@ -128,5 +139,6 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 	vm.contratos = [];
 	Init();
 	vm.edit = edit;
+	vm.ValidaArchivo = ValidaArchivo;
 }
 angular.module('softvApp').controller('ContratosLigadosCtrl', ContratosLigadosCtrl);
