@@ -77,7 +77,9 @@ angular
 			guardarAgenda: '/Genera_Cita_OrdserFac/AddGenera_Cita_OrdserFac',
 			getOrden: '/DamelasOrdenesque_GeneroFacturaAgendaOrdser/GetDamelasOrdenesque_GeneroFacturaAgendaOrdser',
 			getVendedoresByUser: '/Muestra_VendedoresCortes/GetMuestraVendedores2List',
-			getSerieByUser: '/UltimoSerieYFolio/GetUltimoSerieYFolioList'
+			getSerieByUser: '/UltimoSerieYFolio/GetUltimoSerieYFolioList',
+			ValidaHistorialContrato: '/ValidaHistorialContrato/GetDeepValidaHistorialContrato'
+
 		};
 
 		factory.getSerieByUser = function(vendedor, contrato) {
@@ -1607,6 +1609,28 @@ angular
 
 			return deferred.promise;
 		};
+
+		factory.ValidaHistorialContrato = function(Contrato) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Contrato': Contrato,
+
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.ValidaHistorialContrato, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+
 
 
 
