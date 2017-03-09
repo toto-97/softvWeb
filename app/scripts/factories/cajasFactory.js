@@ -78,7 +78,11 @@ angular
 			getOrden: '/DamelasOrdenesque_GeneroFacturaAgendaOrdser/GetDamelasOrdenesque_GeneroFacturaAgendaOrdser',
 			getVendedoresByUser: '/Muestra_VendedoresCortes/GetMuestraVendedores2List',
 			getSerieByUser: '/UltimoSerieYFolio/GetUltimoSerieYFolioList',
-			ValidaHistorialContrato: '/ValidaHistorialContrato/GetDeepValidaHistorialContrato'
+			ValidaHistorialContrato: '/ValidaHistorialContrato/GetDeepValidaHistorialContrato',
+			ObtieneEdoCuentaPorContrato: '/ObtieneEdoCuentaPorContrato/GetObtieneEdoCuentaPorContratoList',
+			ReenviaEstadosCuentaPorContrato: '/ReenviaEstadosCuentaPorContrato/GetDeepReenviaEstadosCuentaPorContrato',
+			ValidaReprocesoPorContrato: '/ValidaReprocesoPorContrato/GetDeepValidaReprocesoPorContrato',
+			ReprocesaEdoCuentaContrato: '/ReprocesaEdoCuentaContrato/GetReprocesaEdoCuentaContrato'
 
 		};
 
@@ -1653,6 +1657,92 @@ angular
 
 			return deferred.promise;
 		};
+
+		factory.ObtieneEdoCuentaPorContrato = function(contrato) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'ContratoBueno': contrato
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.ObtieneEdoCuentaPorContrato, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+
+		factory.ReenviaEstadosCuentaPorContrato = function(IdEstadoCuenta) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'IdEstadoCuenta': IdEstadoCuenta
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.ReenviaEstadosCuentaPorContrato, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+
+		factory.ReprocesaEdoCuentaContrato = function(IdEstadoCuenta, Contrato) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'IdEstadoCuenta': IdEstadoCuenta,
+				'Contrato': Contrato
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.ReprocesaEdoCuentaContrato, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.ValidaReprocesoPorContrato = function(IdEstadoCuenta) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'IdEdoCuenta': IdEstadoCuenta,
+
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.ValidaReprocesoPorContrato, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+
+
+
+
+
 
 
 
