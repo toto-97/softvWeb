@@ -47,9 +47,23 @@
 						</div>
 					</div>
 					<div class="row">
+						<div class="col-md-10 col-md-offset-1">
+							<p class="text-right">
+								<button class="btn btn-primary btn-xs" ng-click="$ctrl.buscarSucursal(1)"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+							</p>
+						</div>
+					</div>
+					<div class="row">
 						<div class="col-md-8 col-md-offset-1">
 							<strong>Fecha</strong>
 							<input type="date" class="form-control input-sm" ng-model="$ctrl.fecha" ng-change="$ctrl.cambioBusqueda(3)" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-10 col-md-offset-1">
+							<p class="text-right">
+								<button class="btn btn-primary btn-xs" ng-click="$ctrl.buscarSucursal(2)"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+							</p>
 						</div>
 					</div>
 					<div class="row">
@@ -60,15 +74,21 @@
 					</div>
 					<div class="row">
 						<div class="col-md-10 col-md-offset-1">
+							<p class="text-right">
+								<button class="btn btn-primary btn-xs" ng-click="$ctrl.buscarSucursal(3)"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-10 col-md-offset-1">
 							<strong>Nombre</strong>
 							<input type="text" class="form-control input-sm" ng-model="$ctrl.nombre" ng-change="$ctrl.cambioBusqueda(5)" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-10 col-md-offset-1">
-							<br>
 							<p class="text-right">
-								<button class="btn btn-primary btn-xs" ng-click="$ctrl.buscarSucursal()"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+								<button class="btn btn-primary btn-xs" ng-click="$ctrl.buscarSucursal(4)"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
 							</p>
 						</div>
 					</div>
@@ -140,7 +160,6 @@
 	</div>
 	<div class="col-md-9 " ng-show="$ctrl.showSucursales">
 		<div class="col-md-12">
-			<h4 class="text-center">Sucursales</h4>
 			<table class="table">
 				<thead>
 					<tr>

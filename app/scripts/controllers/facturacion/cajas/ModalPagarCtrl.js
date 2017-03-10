@@ -18,10 +18,6 @@ angular
 
 
 		function cambioEfectivo() {
-			vm.maxmonto = vm.monto * 10;
-			if (vm.efectivo > vm.maxmonto) {
-				vm.efectivo = vm.maxmonto;
-			}
 			vm.cambio = vm.efectivo - vm.monto;
 			if (vm.cambio < 0) {
 				vm.cambio = 0;

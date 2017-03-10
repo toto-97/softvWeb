@@ -146,6 +146,7 @@ angular
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
+			console.log(obj);
 			$http.post(globalService.getUrl() + paths.guardarAgenda, JSON.stringify(obj), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
