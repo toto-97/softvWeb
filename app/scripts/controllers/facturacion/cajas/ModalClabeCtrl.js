@@ -35,7 +35,7 @@ angular
 				'</table>';
 			var popupWin = window.open('', '_blank', 'width=1000,height=700');
 			popupWin.document.open();
-			popupWin.document.write('<html><head><link type="text/css" rel="stylesheet" href="assets/css/theme-default/bootstrap.css?1422792965" /><link type="text/css" rel="stylesheet" href="assets/css/theme-default/materialadmin.css?1425466319" /><link type="text/css" rel="stylesheet" href="assets/css/theme-default/font-awesome.min.css?1422529194" /><link type="text/css" rel="stylesheet" href="assets/css/theme-default/material-design-iconic-font.min.css?1421434286" /><link type="text/css" rel="stylesheet" href="assets/css/theme-default/libs/rickshaw/rickshaw.css?1422792967" /><link type="text/css" rel="stylesheet" href="assets/css/theme-default/libs/morris/morris.core.css?1420463396" /></head><body onload="window.print()">' + printContents + '</body></html>');
+			popupWin.document.write('<html><head><link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" /></head><body onload="window.print()">' + printContents + '</body></html>');
 			popupWin.document.close();
 		}
 
