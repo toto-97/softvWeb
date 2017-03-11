@@ -72,6 +72,7 @@
 											<button class="btn ink-reaction btn-floating-action btn-xs btn-info"  ui-sref="home.facturacion.detalleEntrega({id:x.Consecutivo})"><i class="fa fa-eye"></i></button>
 											<button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ui-sref="home.facturacion.editarEntrega({id:x.Consecutivo})" permission permission-only="'entregasparcialesUpdate'"><i class="fa fa-edit"></i></button>
 											<button class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-click="$ctrl.eliminarEntrada(x.Consecutivo)" permission permission-only="'entregasparcialesDelete'"><i class="fa fa-trash" aria-hidden="true"></i></button>
+												<button class="btn ink-reaction btn-floating-action btn-xs btn-default" ng-click="$ctrl.printEntrega(x.Consecutivo)"><i class="fa fa-print" aria-hidden="true"></i></button></td>
 										</td>
 						            </tr>
 								</tbody>

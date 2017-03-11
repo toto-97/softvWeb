@@ -1,7 +1,7 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('DesgloseMonedaCtrl', function($rootScope, $state, $uibModal, desgloseFactory, $filter, ngNotify, $localStorage) {
+	.controller('DesgloseMonedaCtrl', function($rootScope, $state, $uibModal, desgloseFactory, $filter, ngNotify, $localStorage, globalService) {
 
 		function initialData() {
 			desgloseFactory.busquedaDesglose(0, $localStorage.currentUser.usuario, vm.fecha).then(function(data) {
@@ -85,6 +85,33 @@ angular
 			});
 		}
 
+		function printDesglose(x) {
+			desgloseFactory.printDesglose(x).then(function(data) {
+				var url = globalService.getUrlReportes() + '/Reportes/' + data.GetReporteDesgloseMonedaResult[0].Cajera;
+				var obj = {
+					url: url,
+					titulo: 'Imprimir Desglose De Mondeda'
+				};
+				var modalInstance = $uibModal.open({
+					animation: true,
+					ariaLabelledBy: 'modal-title',
+					ariaDescribedBy: 'modal-body',
+					templateUrl: 'views/facturacion/printArchivos.html',
+					controller: 'PrintArchivosCtrl',
+					controllerAs: '$ctrl',
+					backdrop: 'static',
+					keyboard: false,
+					windowClass: 'app-modal-window',
+					size: 'lg',
+					resolve: {
+						items: function() {
+							return obj;
+						}
+					}
+				});
+			});
+		}
+
 		var vm = this;
 		vm.showPanel = true;
 		vm.nuevo = nuevo;
@@ -95,5 +122,6 @@ angular
 		vm.buscarPorFecha = buscarPorFecha;
 		vm.validar = validar;
 		vm.verTodo = verTodo;
+		vm.printDesglose = printDesglose;
 		initialData();
 	});

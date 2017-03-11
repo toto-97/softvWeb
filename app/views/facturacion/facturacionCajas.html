@@ -40,37 +40,32 @@
               <uib-tabset active="active">
                 <uib-tab index="0" heading="Contrato">
                   <br/>
-                  <form angular-validator-submit="ctrl.buscarPorContrato()" name="contratoForm" novalidate angular-validator>
-                    <div class="col-md-4">
-                      <input type="text" autocomplete="off" class="form-control" required="" name="contrato" validate-on="dirty" placeholder="Contrato" ng-pattern="/^[0-9]+([-][0-9]+)?$/" required-message="'Este campo es obligatorio.'" invalid-message="'Formato de contrato inválido.'"
-                          ng-model="ctrl.data.contrato">
-                    </div>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <div class="note">
-                      <strong>El número de contrato</strong> está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)
-                    </div>
-                    <footer>
-                      <p class="text-right">
-                        <button type="submit" class="btn btn-sm btn-info"><i class="fa fa-search"></i> Buscar</button>
-                      </p>
-                    </footer>
-                  </form>
-                </uib-tab>
-                <uib-tab index="1" heading="Dirección">
-                  <br/>
-                  <br/>
-                  <div class="note">
-                    <strong>El número de contrato</strong> está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)
-                  </div>
-                  <footer>
-                    <p class="text-right">
-                      <button type="submit" class="btn btn-sm btn-info"><i class="fa fa-search"></i> Buscar</button>
-                    </p>
-                  </footer>
-                  </form>
-                </uib-tab>
+                    <form angular-validator-submit="ctrl.buscarPorContrato()" name="contratoForm" novalidate angular-validator>
+                      <div class="col-md-4">
+                         <input type="text" autocomplete="off"
+                              class="form-control"
+                              required=""
+                              name="contrato"
+                              validate-on="dirty"
+                              placeholder="Contrato"
+                              ng-pattern = "/^[0-9]+([-][0-9]+)?$/"
+                              required-message="'Este campo es obligatorio.'"
+                              invalid-message = "'Formato de contrato inválido.'"
+                              ng-model="ctrl.data.contrato">
+                      </div>
+                      <br/>
+                      <br/>
+                      <br/>
+                      <div class="note">
+                        <strong>El número de contrato</strong> está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)
+                      </div>
+                      <footer>
+                        <p class="text-right">
+                          <button type="submit" class="btn btn-sm btn-info"><i class="fa fa-search"></i> Buscar</button>
+                        </p>
+                      </footer>
+                    </form>
+                  </uib-tab>
                 <uib-tab index="1" heading="Dirección">
                   <br/>
                   <form ng-submit="ctrl.buscarPorDomicilio()">
@@ -219,34 +214,28 @@
                     </div>
                   </div>
                   <div class="col-md-4">
-                    <div class="col-md-12" style="margin-top: -30px;">
+                    <div class="col-md-10 col-md-offset-1" style="margin-top: -30px;">
                       <h5 class="text-left">Detalle de Servicios</h5>
                       <div class="card wrapper" ng-style="{'background-color': ctrl.colorServicios}">
                         <p style="font-size: 10px;" class="text-center"><span ng-repeat="x in ctrl.servicios">{{ x.Servicio }} <br></span></p>
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-3 " ng-show="ctrl.ArrastraSaldo" style="margin-top: -30px;">
-                    <b class="text-danger">Estados de cuenta por saldar</b>
+                  <div class="col-md-3" ng-show="ctrl.ArrastraSaldo" style="margin-top: -30px;">
+                    <b>Descripción</b>
                     <br>
-                    <div class="card wrapper">
-                      <table class="table table-hover" style="font-size:10px;">
-                        <thead>
-                          <th>Fecha</th>
-                          <th>Importe</th>
-                          <th>Detalle</th>
-                        </thead>
-                        <tbody>
-                          <tr ng-repeat="x in ctrl.detalleEdo">
-                            <td>{{x.Fecha}}</td>
-                            <td><b>{{x.TotalRegular | currency }}</b></td>
-                            <td><button type="button" class="btn ink-reaction btn-icon-toggle btn-primary btn-xs " ng-click="ctrl.MuestraEdoCuenta(x)"><i class="md md-search
-            "></i></button></td>
-                          </tr>
-                        </tbody>
-                      </table>
-
-                    </div>
+                    <table class="table table-hover" style="font-size:10px;">
+                      <thead>
+                        <th>Fecha</th>
+                        <th>Importe</th>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="x in ctrl.detalleEdo">
+                          <td>{{x.Fecha}}</td>
+                          <td>{{x.TotalRegular | currency }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
 
 
                   </div>
