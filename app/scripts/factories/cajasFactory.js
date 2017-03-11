@@ -84,7 +84,8 @@ angular
 			ValidaReprocesoPorContrato: '/ValidaReprocesoPorContrato/GetDeepValidaReprocesoPorContrato',
 			ReprocesaEdoCuentaContrato: '/ReprocesaEdoCuentaContrato/GetReprocesaEdoCuentaContrato',
 			ReporteEstadoCuentaNuevo: '/ReporteEstadoCuentaNuevo/GetReporteEstadoCuentaNuevoList',
-			EnviaCorreoEstadoCuenta: '/ObtieneInformacionEnvioCorreo/GetObtieneInformacionEnvioCorreoList'
+			EnviaCorreoEstadoCuenta: '/ObtieneInformacionEnvioCorreo/GetObtieneInformacionEnvioCorreoList',
+			btnconsultaReporte: '/ReporteEstadoCuentaNuevo/GetReporteEstadoCuentaNuevo2List'
 
 		};
 
@@ -1779,6 +1780,25 @@ angular
 				}
 			};
 			$http.post(globalService.getUrl() + paths.EnviaCorreoEstadoCuenta, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+			return deferred.promise;
+		}
+
+		factory.btnconsultaReporte = function(IdEstadoCuenta, Contrato) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'IdEstadoCuenta': IdEstadoCuenta,
+				'Contrato': Contrato
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.btnconsultaReporte, JSON.stringify(Parametros), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response);
