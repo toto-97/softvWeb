@@ -374,11 +374,8 @@ angular
 			vm.mostrarSuspencion = false;
 			reset();
 			var contrato = vm.data.contrato;
-
 			cajasFactory.validarContrato(vm.data.contrato).then(function(datacontrato) {
-				console.log(datacontrato);
 				if (datacontrato.Getsp_dameContratoCompaniaAdicListResult[0].Contrato > 0) {
-
 					cajasFactory.buscarContrato(contrato).then(function(data) {
 						if (data.GetBusCliPorContrato_FacListResult.length > 0) {
 							$('.buscarContrato').collapse('hide');
@@ -414,7 +411,7 @@ angular
 											}
 										});
 										cajasFactory.getObservaciones(vm.Cliente.Contrato).then(function(observa) {
-											console.log(observa);
+
 											if (observa.GetDeepConRelClienteObsResult.Obs) {
 												new PNotify({
 													title: 'Observaciones',
@@ -425,12 +422,10 @@ angular
 											}
 										});
 										reloadTables();
-
 										cajasFactory.ObtieneEdoCuentaSinSaldar(vm.Cliente.Contrato, vm.session).then(function(detalleEdo) {
+											console.log(detalleEdo);
 											vm.detalleEdo = detalleEdo.GetObtieneEdoCuentaSinSaldarListResult;
 										});
-
-
 									});
 
 								} else {
@@ -608,7 +603,7 @@ angular
 											}
 										});
 										cajasFactory.getObservaciones(vm.Cliente.Contrato).then(function(observa) {
-											console.log(observa);
+
 											if (observa.GetDeepConRelClienteObsResult.Obs) {
 												new PNotify({
 													title: 'Observaciones',
@@ -621,6 +616,7 @@ angular
 										reloadTables();
 
 										cajasFactory.ObtieneEdoCuentaSinSaldar(vm.Cliente.Contrato, vm.session).then(function(detalleEdo) {
+											console.log(detalleEdo);
 											vm.detalleEdo = detalleEdo.GetObtieneEdoCuentaSinSaldarListResult;
 										});
 
@@ -775,7 +771,7 @@ angular
 		}
 
 		function InformacionCobro(detalle) {
-			console.log(detalle);
+
 			var items = {};
 			items.Clv_Session = detalle.Clv_Session;
 			items.CLV_DETALLE = detalle.CLV_DETALLE;
@@ -799,6 +795,32 @@ angular
 			});
 		}
 
+		function MuestraEdoCuenta(detalle) {
+			console.log(detalle);
+			console.log(vm.Cliente);
+			var options = {};
+			options.Tipo = 1;
+			options.IdEstadoCuenta = detalle.IdEstadoCuenta;
+			options.Contrato = vm.Cliente.ContratoC;
+			// var modalInstance = $uibModal.open({
+			// 	animation: true,
+			// 	ariaLabelledBy: 'modal-title',
+			// 	ariaDescribedBy: 'modal-body',
+			// 	templateUrl: 'views/facturacion/ModalEdoCuenta.html',
+			// 	controller: 'ModalNuevoEdoctaCtrl',
+			// 	controllerAs: 'ctrl',
+			// 	backdrop: 'static',
+			// 	keyboard: false,
+			// 	size: 'lg',
+			// 	resolve: {
+			// 		options: function() {
+			// 			return options;
+			// 		}
+			// 	}
+			// });
+
+		}
+
 
 		var vm = this;
 		vm.openHistorial = openHistorial;
@@ -820,4 +842,5 @@ angular
 		vm.openEdoCuenta = openEdoCuenta;
 		vm.InformacionCobro = InformacionCobro;
 		vm.ArrastraSaldo = false;
+		vm.MuestraEdoCuenta = MuestraEdoCuenta;
 	});

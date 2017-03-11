@@ -32,19 +32,48 @@ angular
 
 		}
 
-		function Reenviar(IdEstadoCuenta) {
+		function Reenviar(detalle) {
+			var IdEstadoCuenta = detalle.IdEstadoCuenta;
+			var contrato = detalle.ContratoBueno;
+			var id = detalle.Id;
+			var contratocomp = detalle.Contrato;
+
 			cajasFactory.ReenviaEstadosCuentaPorContrato(IdEstadoCuenta).then(function(data) {
 				var reenvia = data.GetDeepReenviaEstadosCuentaPorContratoResult.reenvia;
 				if (reenvia > 0) {
-					ngNotify.set('El estado de cuenta se reenvió correctamente.');
+					cajasFactory.EnviaCorreoEstadoCuenta(contrato, id, contratocomp, IdEstadoCuenta).then(function(data) {
+						ngNotify.set('El estado de cuenta se reenvió correctamente.');
+					});
+
 				} else {
 					ngNotify.set('solo es posible reenviar el estado de cuenta actual', 'error');
 				}
 			});
 		}
 
-		function Imprimir(IdEstadoCuenta) {
-
+		function Imprimir(detalle) {
+			console.log(detalle);
+			var options = {};
+			options.Id = detalle.Id;
+			options.IdEstadoCuenta = detalle.IdEstadoCuenta;
+			options.Contrato = detalle.Contrato;
+			options.Tipo = 2;
+			var modalInstance = $uibModal.open({
+				animation: true,
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: 'views/facturacion/ModalEdoCuenta.html',
+				controller: 'ModalNuevoEdoctaCtrl',
+				controllerAs: 'ctrl',
+				backdrop: 'static',
+				keyboard: false,
+				size: 'lg',
+				resolve: {
+					options: function() {
+						return options;
+					}
+				}
+			});
 		}
 
 		var vm = this;

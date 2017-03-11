@@ -82,7 +82,9 @@ angular
 			ObtieneEdoCuentaPorContrato: '/ObtieneEdoCuentaPorContrato/GetObtieneEdoCuentaPorContratoList',
 			ReenviaEstadosCuentaPorContrato: '/ReenviaEstadosCuentaPorContrato/GetDeepReenviaEstadosCuentaPorContrato',
 			ValidaReprocesoPorContrato: '/ValidaReprocesoPorContrato/GetDeepValidaReprocesoPorContrato',
-			ReprocesaEdoCuentaContrato: '/ReprocesaEdoCuentaContrato/GetReprocesaEdoCuentaContrato'
+			ReprocesaEdoCuentaContrato: '/ReprocesaEdoCuentaContrato/GetReprocesaEdoCuentaContrato',
+			ReporteEstadoCuentaNuevo: '/ReporteEstadoCuentaNuevo/GetReporteEstadoCuentaNuevoList',
+			EnviaCorreoEstadoCuenta: '/ObtieneInformacionEnvioCorreo/GetObtieneInformacionEnvioCorreoList'
 
 		};
 
@@ -1737,6 +1739,51 @@ angular
 
 			return deferred.promise;
 		};
+
+
+		factory.ReporteEstadoCuentaNuevo = function(Id, Contrato, IdEstadoCuenta) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Id': Id,
+				'Contrato': Contrato,
+				'IdEstadoCuenta': IdEstadoCuenta
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.ReporteEstadoCuentaNuevo, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.EnviaCorreoEstadoCuenta = function(Contrato, Id, ContratoCom, IdEstadoCuenta) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Contrato': Contrato,
+				'Id': Id,
+				'ContratoCom': ContratoCom,
+				'IdEstadoCuenta': IdEstadoCuenta
+			};
+			console.log(JSON.stringify(Parametros));
+			console.log(JSON.stringify($localStorage.currentUser.token));
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.EnviaCorreoEstadoCuenta, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+			return deferred.promise;
+		}
 
 
 
