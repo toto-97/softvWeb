@@ -11,79 +11,97 @@
     </div>
   </div>
   <div class="card-body">
-    <div class="row">
+    <div class="panel-group" id="accordion3">
+      <div class="card panel">
+        <div class="card-head card-head-xs collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1" aria-expanded="false">
+          <header>Buscar atención</header>
+          <div class="tools">
+            <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+          </div>
+        </div>
+        <div id="accordion3-1" class="collapse buscarContrato" aria-expanded="false" style="height: 0px;">
+          <div class="panel-body">
+            <uib-tabset active="active">
+              <uib-tab index="0" heading="Detalle">
+                <br/>
+                <div class="col-md-6">
 
-      <div class="col-md-3">
-        <div class="panel-group" id="accordion2">
-          <div class="card panel">
-            <div class="card-head card-head-xs " data-toggle="collapse" data-parent="#accordion2" data-target="#accordion2-1" aria-expanded="true">
-              <header><i class="fa fa-filter"> </i>Filtros</header>
-              <div class="tools">
-                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
-              </div>
-            </div>
-            <div id="accordion2-1" class="collapse in" aria-expanded="true" style="height: 0px;">
-              <div class="card-body">
-                <div class="form-group">
-                  <div class="col-md-12">
-                    <b>Plaza:</b>
-                    <select class="form-control input-sm" ng-options=" item.razon_social for item in $ctrl.Plazas track by item.id_compania" ng-model="$ctrl.Plaza" ng-change="$ctrl.CambioPlaza($ctrl.Plaza);">
-                       <option value="">Selecciona plaza</option>
-                        </select>
-                  </div>
-                  <div class="col-md-12">
-                    <b>Servicio:</b>
-                    <select class="form-control input-sm" ng-model="$ctrl.Servicio" ng-change="$ctrl.CambioServicio();" ng-options=" item.Concepto for item in $ctrl.Servicios track by item.Clv_TipSerPrincipal">
-                       <option value="">Selecciona servicio</option>
-                        </select>
-                  </div>
-                  <div class="col-md-8">
-                    <b>Status:</b>
-                    <select class="form-control input-sm" ng-model="$ctrl.Status" ng-change="$ctrl.CambioStatus();" ng-options=" item.Nombre for item in $ctrl.LosStatus track by item.Clave">
-                        <option value="">Selecciona</option>
-
-                        </select>
-                  </div>
-
-                  <div class="col-md-4">
-                    <label class="checkbox-inline checkbox-styled checkbox-info">
-                                                                      <input ng-model="$ctrl.Nivel2.isChecked" type="checkbox" value="option3" checked="" ng-change="$ctrl.CambioNivel()"><span>solo nivel 2</span>
-                                                                  </label>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="col-md-6">
-                      <b># Reporte:</b>
-                      <input type="text" class="form-control input-sm" ng-model="$ctrl.Reporte">
-                      <button class="btn btn-primary btn-xs" ng-click="$ctrl.BuscaReporte()">Buscar</button>
-                      <br>
+                  <div class="form-group">
+                    <div class="col-md-12">
+                      <b>Plaza:</b>
+                      <select class="form-control input-sm" ng-options=" item.razon_social for item in $ctrl.Plazas track by item.id_compania" ng-model="$ctrl.Plaza" ng-change="$ctrl.CambioPlaza($ctrl.Plaza);">
+                                              <option value="">Selecciona plaza</option>
+                                               </select>
                     </div>
-                    <div class="col-md-6">
-                      <b>Contrato:</b>
-                      <input type="text" class="form-control input-sm" ng-model="$ctrl.Contrato">
-                      <button class="btn btn-primary btn-xs" ng-click="$ctrl.BuscaContrato()">Buscar</button>
+                    <div class="col-md-12">
+                      <b>Servicio:</b>
+                      <select class="form-control input-sm" ng-model="$ctrl.Servicio" ng-change="$ctrl.CambioServicio();" ng-options=" item.Concepto for item in $ctrl.Servicios track by item.Clv_TipSerPrincipal">
+                                              <option value="">Selecciona servicio</option>
+                                               </select>
+                    </div>
+                    <div class="col-md-8">
+                      <b>Status:</b>
+                      <select class="form-control input-sm" ng-model="$ctrl.Status" ng-change="$ctrl.CambioStatus();" ng-options=" item.Nombre for item in $ctrl.LosStatus track by item.Clave">
+                                               <option value="">Selecciona</option>
+
+                                               </select>
+                    </div>
+
+                    <div class="col-md-4">
                       <br>
+                      <label class="checkbox-inline checkbox-styled checkbox-info">
+                                                                                             <input ng-model="$ctrl.Nivel2.isChecked" type="checkbox" value="option3" checked="" ng-change="$ctrl.CambioNivel()"><span>solo nivel 2</span>
+                                                                                         </label>
                     </div>
                   </div>
 
 
                 </div>
 
-              </div>
-            </div>
-          </div>
-          <!--end .panel -->
-          <div class="card panel">
-            <div class="card-head card-head-xs collapsed" data-toggle="collapse" data-parent="#accordion2" data-target="#accordion2-3" aria-expanded="false">
-              <header><i class="md md-account-box"></i> Filtar por cliente</header>
-              <div class="tools">
-                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
-              </div>
-            </div>
-            <div id="accordion2-3" class="collapse" aria-expanded="false">
-              <div class="card-body">
-                <div class="form-group">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="col-md-12">
+                      <div class="col-md-6">
+                        <b># Reporte:</b>
+                        <input type="text" class="form-control input-sm" ng-model="$ctrl.Reporte">
+                        <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaReporte()">Buscar</button>
+                        <br>
+                      </div>
+                      <div class="col-md-6">
+                        <b>Contrato:</b>
+                        <input type="text" class="form-control input-sm" ng-model="$ctrl.Contrato">
+                        <button class="btn btn-info btn-xs text-left" ng-click="$ctrl.BuscaContrato()">Buscar</button>
+                        <br>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <b>SetTopBox:</b>
+                      <input class="form-control input-sm" placeholder="Serie de STB" ng-model="$ctrl.STB">
+                      <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaporSTB()">Buscar</button>
+                    </div>
+                    <div class="col-md-6">
+                      <b>Ticket:</b>
+                      <input class="form-control input-sm" placeholder="# de ticket" ng-model="$ctrl.Ticket">
+                      <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaporTicket()">Buscar</button>
+                    </div>
+                  </div>
 
-                  <div class="col-md-12">
+                </div>
+
+
+
+
+
+
+              </uib-tab>
+
+
+              <uib-tab index="1" heading="Contrato">
+                <br/>
+
+                <div class="ro">
+
+                  <div class="col-md-3">
                     <b>Nombre:</b>
                     <input class="form-control input-sm" placeholder="nombre del cliente" ng-model="$ctrl.Nombre">
                   </div>
@@ -94,23 +112,15 @@
                   <div class="col-md-6">
                     <b>Apellido Materno:</b>
                     <input class="form-control input-sm" placeholder="" ng-model="$ctrl.AMaterno">
-                    <button class="btn btn-primary btn-xs" ng-click="$ctrl.BuscaporNombre()">Buscar</button>
+                    <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaporNombre()">Buscar</button>
                   </div>
 
                 </div>
-              </div>
-            </div>
-          </div>
-          <!--end .panel -->
-          <div class="card panel">
-            <div class="card-head card-head-xs collapsed" data-toggle="collapse" data-parent="#accordion2" data-target="#accordion2-2" aria-expanded="false">
-              <header><i class="fa fa-globe"></i> Filtrar por dirección</header>
-              <div class="tools">
-                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
-              </div>
-            </div>
-            <div id="accordion2-2" class="collapse" aria-expanded="false" style="height: 0px;">
-              <div class="card-body">
+
+              </uib-tab>
+
+              <uib-tab index="2" heading="Dirección">
+                <br/>
                 <div class="form-group">
 
                   <div class="col-md-6">
@@ -124,87 +134,82 @@
                   <div class="col-md-8">
                     <b>Colonia</b>
                     <select class="form-control input-sm" placeholder ng-model="$ctrl.Colonia" ng-options=" item.nombre for item in $ctrl.Colonias track by item.clvColonia">
-                       <option value="">Selecciona colonia</option>
-                      </select>
+                                     <option value="">Selecciona colonia</option>
+                                    </select>
                   </div>
                   <div class="col-md-4">
                     <br>
-                    <button class="btn btn-primary btn-xs" ng-click="$ctrl.BuscaporDireccion()">Buscar</button>
+                    <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaporDireccion()">Buscar</button>
                   </div>
-                  <div class="col-md-6">
-                    <b>SetTopBox:</b>
-                    <input class="form-control input-sm" placeholder="Serie de STB" ng-model="$ctrl.STB">
-                    <button class="btn btn-primary btn-xs" ng-click="$ctrl.BuscaporSTB()">Buscar</button>
-                  </div>
-                  <div class="col-md-6">
-                    <b>Ticket:</b>
-                    <input class="form-control input-sm" placeholder="# de ticket" ng-model="$ctrl.Ticket">
-                    <button class="btn btn-primary btn-xs" ng-click="$ctrl.BuscaporTicket()">Buscar</button>
-                  </div>
+
                 </div>
-              </div>
-            </div>
+              </uib-tab>
+
+            </uib-tabset>
           </div>
-          <!--end .panel -->
+          <!-- panel body -->
         </div>
-
-
-
-
       </div>
-      <div class="col-md-9">
-        <div class="col-md-12" style="padding-left: 25px; padding-right: 25px;">
-          <p class="text-right" style="margin-top: 10px;">
-            <!-- <a class="btn btn-success" ui-sref="home.procesos.atencionNueva"><i class="fa fa-plus" aria-hidden="true"></i> NUEVO</a> -->
-          </p>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>#Reporte</th>
-                <th>Status</th>
-                <th>Contrato</th>
-                <th>Nombre</th>
-                <th>No.Ticket</th>
-                <th>Bonificación</th>
-                <th>Ejecutar</th>
-                <th>Opciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-if="$ctrl.ListaQuejas.length == 0">
-                <td class="text-center" colspan="6">SIN REGISTROS</td>
-              </tr>
-              <tr ng-if="$ctrl.ListaQuejas.length > 0" dir-paginate="x in $ctrl.ListaQuejas|itemsPerPage:7">
-                <td>{{x.Clv_Queja}}</td>
-                <td>{{x.Contrato}}</td>
-                <td>{{x.Status}}</td>
-                <td>{{x.Contrato}}</td>
-                <td>{{x.NOMBRE}}</td>
-                <td>{{x.NoTicket}}</td>
-                <td>
-                  <button class="btn btn-info btn-xs" ng-click="$ctrl.abrirBonificacion()"><i class="fa fa-money"></i> Bonifica</button>
-                </td>
-                <td>
-                  <a ng-click="$ctrl.EjecutaQueja(x.Clv_Queja,x.Contrato,x.Clv_TipSer)" class="btn ink-reaction btn-xs btn-success"><i class="md md-launch"></i> Ejecutar</a>
-                </td>
-                <td>
-                  <button type="button" class="btn ink-reaction btn-xs btn-floating-action btn-primary" data-toggle="tooltip" data-placement="top" ng-click="$ctrl.abrirDetalleQueja(x.Clv_Queja);" title="" data-original-title="Detalle de queja"><i class="md md-content-paste"></i></button>
-                  <button type="button" class="btn ink-reaction btn-xs btn-floating-action btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Elimina queja"><i class="md md-delete"></i></button>
-                </td>
+      <!--end .panel -->
+    </div>
 
 
-              </tr>
-            </tbody>
-          </table>
-          <div style="margin-top:-40px;">
-            <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ng-if="$ctrl.ListaQuejas.length > 0">
-            </dir-pagination-controls>
-          </div>
+
+    <div class="row">
+
+
+
+      <div class="col-md-12" style="padding-left: 25px; padding-right: 25px;">
+        <p class="text-right" style="margin-top: 10px;">
+          <!-- <a class="btn btn-success" ui-sref="home.procesos.atencionNueva"><i class="fa fa-plus" aria-hidden="true"></i> NUEVO</a> -->
+        </p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#Reporte</th>
+              <th>Status</th>
+              <th>Contrato</th>
+              <th>Nombre</th>
+              <th>No.Ticket</th>
+              <th>Bonificación</th>
+              <th>Ejecutar</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-if="$ctrl.ListaQuejas.length == 0">
+              <td class="text-center" colspan="6">SIN REGISTROS</td>
+            </tr>
+            <tr ng-if="$ctrl.ListaQuejas.length > 0" dir-paginate="x in $ctrl.ListaQuejas|itemsPerPage:7">
+              <td>{{x.Clv_Queja}}</td>
+              <td>{{x.Contrato}}</td>
+              <td>{{x.Status}}</td>
+              <td>{{x.Contrato}}</td>
+              <td>{{x.NOMBRE}}</td>
+              <td>{{x.NoTicket}}</td>
+              <td>
+                <button class="btn btn-info btn-xs" ng-click="$ctrl.abrirBonificacion()"><i class="fa fa-money"></i> Bonifica</button>
+              </td>
+              <td>
+                <a ng-click="$ctrl.EjecutaQueja(x.Clv_Queja,x.Contrato,x.Clv_TipSer)" class="btn ink-reaction btn-xs btn-success"><i class="md md-launch"></i> Ejecutar</a>
+              </td>
+              <td>
+                <button type="button" class="btn ink-reaction btn-xs btn-floating-action btn-primary" data-toggle="tooltip" data-placement="top" ng-click="$ctrl.abrirDetalleQueja(x.Clv_Queja);" title="" data-original-title="Detalle de queja"><i class="md md-content-paste"></i></button>
+                <button type="button" class="btn ink-reaction btn-xs btn-floating-action btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Elimina queja"><i class="md md-delete"></i></button>
+              </td>
+
+
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top:-40px;">
+          <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ng-if="$ctrl.ListaQuejas.length > 0">
+          </dir-pagination-controls>
         </div>
-
-
-
       </div>
+
+
+
     </div>
   </div>
 </div>
