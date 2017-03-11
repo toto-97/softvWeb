@@ -84,8 +84,29 @@ angular
 			ValidaReprocesoPorContrato: '/ValidaReprocesoPorContrato/GetDeepValidaReprocesoPorContrato',
 			ReprocesaEdoCuentaContrato: '/ReprocesaEdoCuentaContrato/GetReprocesaEdoCuentaContrato',
 			ReporteEstadoCuentaNuevo: '/ReporteEstadoCuentaNuevo/GetReporteEstadoCuentaNuevoList',
-			EnviaCorreoEstadoCuenta: '/ObtieneInformacionEnvioCorreo/GetObtieneInformacionEnvioCorreoList'
+			EnviaCorreoEstadoCuenta: '/ObtieneInformacionEnvioCorreo/GetObtieneInformacionEnvioCorreoList',
+			singleEstadoCuenta: '/ReporteEstadoCuentaNuevo/GetReporteEstadoCuentaNuevo2List'
 
+		};
+
+		factory.singleEstadoCuenta = function(id, contrato) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'IdEstadoCuenta': id,
+				'Contrato': contrato
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.singleEstadoCuenta, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
 		};
 
 		factory.getSerieByUser = function(vendedor, contrato) {
@@ -1784,15 +1805,7 @@ angular
 				deferred.reject(response);
 			});
 			return deferred.promise;
-		}
-
-
-
-
-
-
-
-
+		};
 
 		return factory;
 	});
