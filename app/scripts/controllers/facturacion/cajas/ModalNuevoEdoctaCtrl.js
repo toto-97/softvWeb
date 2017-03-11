@@ -9,6 +9,13 @@ angular
 					vm.url = globalService.getUrlReportes() + '/Reportes/' + id;
 					vm.urlReal = $sce.trustAsResourceUrl(vm.url);
 				});
+			} else if (options.Tipo == 1) {
+				cajasFactory.btnconsultaReporte(options.IdEstadoCuenta, options.Contrato).then(function(data) {
+					console.log(data);
+					var id = data.GetReporteEstadoCuentaNuevo2ListResult[0].lineaTR;
+					vm.url = globalService.getUrlReportes() + '/Reportes/' + id;
+					vm.urlReal = $sce.trustAsResourceUrl(vm.url);
+				});
 			}
 
 		}

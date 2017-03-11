@@ -794,30 +794,26 @@ angular
 			});
 		}
 
-		function MuestraEdoCuenta(x) {
-			cajasFactory.singleEstadoCuenta(x.IdEstadoCuenta, vm.Cliente.ContratoC).then(function(data) {
-				var url = globalService.getUrlReportes() + '/Reportes/' + data.GetReporteEstadoCuentaNuevo2ListResult[0].lineaTR;
-				var obj = {
-					url: url,
-					titulo: 'Estado De Cuenta'
-				};
-				var modalInstance = $uibModal.open({
-					animation: true,
-					ariaLabelledBy: 'modal-title',
-					ariaDescribedBy: 'modal-body',
-					templateUrl: 'views/facturacion/printArchivos.html',
-					controller: 'PrintArchivosCtrl',
-					controllerAs: '$ctrl',
-					backdrop: 'static',
-					keyboard: false,
-					windowClass: 'app-modal-window',
-					size: 'lg',
-					resolve: {
-						items: function() {
-							return obj;
-						}
+		function MuestraEdoCuenta(detalle) {
+			var options = {};
+			options.Tipo = 1;
+			options.IdEstadoCuenta = detalle.IdEstadoCuenta;
+			options.Contrato = vm.Cliente.ContratoC;
+			var modalInstance = $uibModal.open({
+				animation: true,
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: 'views/facturacion/ModalEdoCuenta.html',
+				controller: 'ModalNuevoEdoctaCtrl',
+				controllerAs: 'ctrl',
+				backdrop: 'static',
+				keyboard: false,
+				size: 'lg',
+				resolve: {
+					options: function() {
+						return options;
 					}
-				});
+				}
 			});
 
 
