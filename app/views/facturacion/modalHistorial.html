@@ -20,6 +20,11 @@
             <input type="radio" name="inlineRadioOptions" ng-value="3" ng-model="ctrl.historial"><span>Historial de Reportes</span>
         </label>
     </div>
+    <div class="col-md-12" ng-if="ctrl.tieneSaldo==true">
+        <label class="radio-inline radio-styled col-md-12">
+            <input type="radio" name="inlineRadioOptions" ng-value="4" ng-model="ctrl.historial"><span>Historial de Estados de cuenta</span>
+        </label>
+    </div>
   </div>
 </div>
 <div class="modal-footer">
