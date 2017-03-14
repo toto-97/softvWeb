@@ -1824,15 +1824,7 @@ angular
 				deferred.reject(response);
 			});
 			return deferred.promise;
-		}
-
-
-
-
-
-
-
-
+		};
 
 		return factory;
 	});

@@ -787,12 +787,11 @@ angular
 		}
 
 		function MuestraEdoCuenta(detalle) {
-			console.log(detalle);
-			console.log(vm.Cliente);
-			var options = {};
-			options.Tipo = 1;
-			options.IdEstadoCuenta = detalle.IdEstadoCuenta;
-			options.Contrato = vm.Cliente.ContratoC;
+			var options = {
+				Tipo: 1,
+				IdEstadoCuenta: detalle.IdEstadoCuenta,
+				Contrato: vm.Cliente.ContratoC
+			};
 			var modalInstance = $uibModal.open({
 				animation: true,
 				ariaLabelledBy: 'modal-title',
