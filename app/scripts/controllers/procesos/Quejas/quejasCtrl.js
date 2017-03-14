@@ -190,7 +190,7 @@ angular
 			quejasFactory.ObtenColonias(x.id_compania).then(function(data) {
 				vm.Colonias = data.GetuspConsultaColoniasListResult;
 				var Parametros = {
-					'Clv_TipSer': 0,
+					'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
 					'Clv_Queja': 0,
 					'Contrato': 0,
 					'NOMBRE': '',
@@ -199,7 +199,7 @@ angular
 					'CALLE': '',
 					'NUMERO': '',
 					'SetupBox': '',
-					'Status': '',
+					'Status': vm.Status.Clave,
 					'Op': 45,
 					'ClvColonia': 0,
 					'IdCompania': x.id_compania,
@@ -373,7 +373,7 @@ angular
 		vm.abrirBonificacion = abrirBonificacion;
 		vm.abrirDetalleQueja = abrirDetalleQueja;
 		vm.EjecutaQueja = EjecutaQueja;
-		vm.Status = [{
+		vm.LosStatus = [{
 				'Clave': 'P',
 				'Nombre': 'Pendiente'
 			},

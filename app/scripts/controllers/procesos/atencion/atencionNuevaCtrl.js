@@ -198,7 +198,11 @@ angular
 			vm.GlobalContrato = contrato;
 			vm.contrato = detalle.CONTRATO;
 			vm.NombreCliente = detalle.Nombre + detalle.Apellido_Paterno + " " + detalle.Apellido_Materno;
-			vm.DireccionCliente = "Calle: " + detalle.CALLE + " #" + detalle.NUMERO + " Colonia: " + detalle.COLONIA + " Ciudad:" + detalle.CIUDAD;
+			vm.Calle = detalle.CALLE;
+			vm.Numero = detalle.NUMERO;
+			vm.Colonia = detalle.COLONIA;
+			vm.Ciudad = detalle.CIUDAD
+			//vm.DireccionCliente = "Calle:" + detalle.CALLE + " #" + detalle.NUMERO + " Colonia: " + detalle.COLONIA + " Ciudad:" + detalle.CIUDAD;
 			atencionFactory.getServiciosCliente(contrato).then(function(data) {
 				vm.ServiciosCliente = data.GetDameSerDelCliFacListResult;
 			});
@@ -244,7 +248,12 @@ angular
 						if (data.GetuspContratoServListResult[0].Pasa == true) {
 							MuestraMensajeQueja();
 							vm.NombreCliente = detalle.Nombre + detalle.Apellido_Paterno + " " + detalle.Apellido_Materno;
-							vm.DireccionCliente = "Calle: " + detalle.CALLE + " #" + detalle.NUMERO + " Colonia: " + detalle.COLONIA + " Ciudad:" + detalle.CIUDAD;
+
+							vm.Calle = detalle.CALLE;
+							vm.Numero = detalle.NUMERO;
+							vm.Colonia = detalle.COLONIA;
+							vm.Ciudad = detalle.CIUDAD
+							// vm.DireccionCliente = "Calle: " + detalle.CALLE + " #" + detalle.NUMERO + " Colonia: " + detalle.COLONIA + " Ciudad:" + detalle.CIUDAD;
 							atencionFactory.getServiciosCliente(contrato).then(function(data) {
 								vm.ServiciosCliente = data.GetDameSerDelCliFacListResult;
 

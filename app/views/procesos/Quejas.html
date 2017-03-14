@@ -60,20 +60,20 @@
 
                 <div class="col-md-6">
                   <div class="form-group">
-                    <div class="col-md-12">
-                      <div class="col-md-6">
-                        <b># Reporte:</b>
-                        <input type="text" class="form-control input-sm" ng-model="$ctrl.Reporte">
-                        <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaReporte()">Buscar</button>
-                        <br>
-                      </div>
-                      <div class="col-md-6">
-                        <b>Contrato:</b>
-                        <input type="text" class="form-control input-sm" ng-model="$ctrl.Contrato">
-                        <button class="btn btn-info btn-xs text-left" ng-click="$ctrl.BuscaContrato()">Buscar</button>
-                        <br>
-                      </div>
+
+                    <div class="col-md-6">
+                      <b># Reporte:</b>
+                      <input type="text" class="form-control input-sm" ng-model="$ctrl.Reporte">
+                      <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaReporte()">Buscar</button>
+                      <br>
                     </div>
+                    <div class="col-md-6">
+                      <b>Contrato:</b>
+                      <input type="text" class="form-control input-sm" ng-model="$ctrl.Contrato">
+                      <button class="btn btn-info btn-xs text-left" ng-click="$ctrl.BuscaContrato()">Buscar</button>
+                      <br>
+                    </div>
+
                     <div class="col-md-6">
                       <b>SetTopBox:</b>
                       <input class="form-control input-sm" placeholder="Serie de STB" ng-model="$ctrl.STB">
@@ -99,7 +99,7 @@
               <uib-tab index="1" heading="Contrato">
                 <br/>
 
-                <div class="ro">
+                <div class="row">
 
                   <div class="col-md-3">
                     <b>Nombre:</b>
@@ -177,10 +177,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-if="$ctrl.ListaQuejas.length == 0">
-              <td class="text-center" colspan="6">SIN REGISTROS</td>
-            </tr>
-            <tr ng-if="$ctrl.ListaQuejas.length > 0" dir-paginate="x in $ctrl.ListaQuejas|itemsPerPage:7">
+            <tr dir-paginate="x in $ctrl.ListaQuejas|itemsPerPage:7">
               <td>{{x.Clv_Queja}}</td>
               <td>{{x.Contrato}}</td>
               <td>{{x.Status}}</td>
