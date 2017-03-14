@@ -1,3 +1,16 @@
+<style>
+  .input-yellow {
+    border-bottom-color: #ff9800 !important;
+    background: rgba(255, 152, 0, 0.18);
+  }
+
+  .input-normal {
+    background: rgba(255, 152, 0, 0.39);
+    background-color: #f2f3f3;
+  }
+</style>
+
+
 <div class="card" style="margin-top:20px;">
   <div class="style-default-light card-head" style=" padding-left:5px;">
     <header>
@@ -6,8 +19,8 @@
 
     </header>
     <div class="tools">
-      <div class="btn-group">
-      </div>
+      <button type="button" ng-show="$ctrl.BtnGuarda" class="btn btn-success btn-sm" name="button">Guardar</button>
+      <button type="button" ng-show="$ctrl.BtnCancela" class="btn btn-default-bright btn-sm" name="button">Cancelar</button>
     </div>
   </div>
   <div class="card-body">
@@ -87,7 +100,7 @@
               <b>Observaciones</b>
             </div>
             <div class="col-md-9">
-              <input type="text" class="form-control input-sm" ng-model="$ctrl.ComentarioAgenda">
+              <input type="text" class="form-control input-sm " ng-model="$ctrl.ComentarioAgenda">
             </div>
           </div>
 
@@ -117,8 +130,8 @@
           <div class="col-md-4"><b>Generó</b> {{$ctrl.UsuarioGenero}} </div>
           <div class="col-md-4 ">
 
-            <select class="form-control input-sm" ng-model="$ctrl.Estatus" ng-options="item as item.Nombre for item in $ctrl.Status track by item.Clave" ng-disabled="true">
-                        <option value=""  >Selecciona estatus</option>
+            <select class="form-control input-sm" ng-disabled="$ctrl.IEstatus" ng-model="$ctrl.Estatus" ng-change="$ctrl.CambiaEstatus()" ng-options="item as item.Nombre for item in $ctrl.Status track by item.Clave">
+                        <option value="">Selecciona estatus</option>
                        </select>
           </div>
 
@@ -129,33 +142,33 @@
 
           <div class="row">
             <div class="col-md-8 form-group">
-              <div class="col-md-6"><b>Fecha solicitud</b></div>
+              <div class="col-md-6 "><b>Fecha solicitud</b></div>
               <div class="col-md-6">
-                <input type="text" class="form-control input-sm " ng-model="$ctrl.FechaSolicitud" placeholder="DD/MM/YYYY hh:mm" mask="99/99/9999 99:99" mask-validate="true" clean="true" ng-model="$ctrl.Fsolicitud">
+                <input type="text" class="form-control input-sm" ng-model="$ctrl.FechaSolicitud" placeholder="DD/MM/YYYY hh:mm AA" ng-disabled="true" ui-mask="99/99/9999 99:99 AA" model-view-value="true" ng-model="$ctrl.Fsolicitud">
               </div>
               <div class="col-md-6"><b>Ejecución</b></div>
               <div class="col-md-6">
-                <input type="text" class="form-control input-sm " ng-model="$ctrl.FechaEjecucion" placeholder="DD/MM/YYYY hh:mm" mask="99/99/9999 99:99" mask-validate="true" clean="true">
+                <input type="text" class="form-control input-sm" ng-class="$ctrl.Iejecucion" ng-model="$ctrl.FechaEjecucion" placeholder="DD/MM/YYYY hh:mm AA" ui-mask="99/99/9999 99:99 AA" model-view-value="true" ng-disabled="$ctrl.FEjecucion">
               </div>
               <div class="col-md-6"><b>Visita1</b></div>
               <div class="col-md-6">
-                <input type="text" class="form-control input-sm" placeholder="DD/MM/YYYY hh:mm" mask="99/99/9999 99:99" mask-validate="true" clean="true">
+                <input type="text" class="form-control input-sm" ng-model="$ctrl.visita1" ng-class="$ctrl.Ivisita1" placeholder="DD/MM/YYYY hh:mm AA" ui-mask="99/99/9999 99:99 AA" model-view-value="true" ng-disabled="$ctrl.FVisita1">
               </div>
               <div class="col-md-6"><b>Visita2</b></div>
               <div class="col-md-6">
-                <input type="text" class="form-control input-sm" placeholder="DD/MM/YYYY hh:mm" mask="99/99/9999 99:99" mask-validate="true" clean="true">
+                <input type="text" class="form-control input-sm" ng-model="$ctrl.visita2" ng-class="$ctrl.Ivisita2" placeholder="DD/MM/YYYY hh:mm AA" ui-mask="99/99/9999 99:99 AA" model-view-value="true" ng-disabled="$ctrl.FVisita2">
               </div>
               <div class="col-md-6"><b>Visita3</b></div>
               <div class="col-md-6">
-                <input type="text" class="form-control input-sm" placeholder="DD/MM/YYYY hh:mm" mask="99/99/9999 99:99" mask-validate="true" clean="true">
+                <input type="text" class="form-control input-sm" ng-model="$ctrl.visita3" ng-class="$ctrl.Ivisita3" placeholder="DD/MM/YYYY hh:mm AA" ui-mask="99/99/9999 99:99 AA" model-view-value="true" ng-disabled="$ctrl.FVisita3">
               </div>
               <div class="col-md-6"><b>En proceso</b></div>
               <div class="col-md-6">
-                <input type="text" class="form-control input-sm" placeholder="DD/MM/YYYY hh:mm" mask="99/99/9999 99:99" mask-validate="true" clean="true">
+                <input type="text" class="form-control input-sm" ng-model="$ctrl.FechaProceso" ng-class="$ctrl.Iproceso" placeholder="DD/MM/YYYY hh:mm AA" ui-mask="99/99/9999 99:99 AA" model-view-value="true" ng-disabled="$ctrl.FProceso">
               </div>
               <div class="col-md-6">Ejecución real</div>
               <div class="col-md-6">
-                <input type="text" class="form-control input-sm" placeholder="DD/MM/YYYY hh:mm" mask="99/99/9999 99:99" mask-validate="true" clean="true">
+                <input type="text" class="form-control input-sm" ng-model="$ctrl.FechaEReal" placeholder="DD/MM/YYYY hh:mm AA" ui-mask="99/99/9999 99:99 AA" model-view-value="true" ng-disabled="true">
               </div>
 
             </div>
@@ -200,35 +213,35 @@
             </div> -->
             <div class="col-md-6">
               <b>Tipo solución</b>
-              <select class="form-control input-sm" ng-model="$ctrl.Trabajo" ng-options="item as item.DESCRIPCION for item in $ctrl.Trabajos track by item.CLV_TRABAJO">
+              <select class="form-control input-sm" ng-disabled="$ctrl.Itrabajo" ng-model="$ctrl.Trabajo" ng-options="item as item.DESCRIPCION for item in $ctrl.Trabajos track by item.CLV_TRABAJO">
                     <option value="">selecciona</option>
                       </select>
             </div>
             <div class="col-md-6">
               <b> Prioridad</b>
-              <select class="form-control input-sm" ng-model="$ctrl.Prioridad" ng-options="item as item.Descripcion for item in $ctrl.Prioridades track by item.clvPrioridadQueja">
+              <select class="form-control input-sm" ng-disabled="$ctrl.Iprioridad" ng-model="$ctrl.Prioridad" ng-options="item as item.Descripcion for item in $ctrl.Prioridades track by item.clvPrioridadQueja">
             <option value="">selecciona</option>
                       </select>
             </div>
             <div class="col-md-6">
               <b>Reporte del cliente</b>
-              <textarea class="form-control input-sm" ng-model="$ctrl.DetalleProblema">
+              <textarea class="form-control input-sm" ng-disabled="$ctrl.IDetProblema" ng-model="$ctrl.DetalleProblema">
                       </textarea>
             </div>
             <div class="col-md-6">
 
               <b>Clasificación del problema</b>
-              <select class="form-control input-sm" ng-model="$ctrl.Problema" ng-options="item as item.descripcion for item in $ctrl.Problemas track by item.clvProblema"></select>
+              <select class="form-control input-sm" ng-disabled="$ctrl.IClasproblema" ng-model="$ctrl.Problema" ng-options="item as item.descripcion for item in $ctrl.Problemas track by item.clvProblema"></select>
             </div>
             <div class="col-md-12">
               <b> Problema real:</b>
-              <textarea class="form-control input-sm" ng-model="$ctrl.ProblemaReal">
+              <textarea class="form-control input-sm" ng-disabled="$ctrl.Iprobreal" ng-model="$ctrl.ProblemaReal">
 
                       </textarea>
             </div>
             <div class="col-md-12">
               <b> Observaciones</b>
-              <textarea class="form-control input-sm" ng-model="$ctrl.Observaciones">
+              <textarea class="form-control input-sm" ng-model="$ctrl.Observaciones" ng-disabled="$ctrl.Iobser">
 
                       </textarea>
             </div>

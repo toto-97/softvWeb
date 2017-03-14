@@ -26,6 +26,7 @@ angular
 
 							quejasFactory.ConsultaQueja($stateParams.id).then(function(data) {
 								var detqueja = data.GetQuejasListResult[0];
+								console.log(detqueja);
 								vm.UsuarioGenero = detqueja.UsuarioGenero;
 								vm.TecnicoAgenda = detqueja.NombreTecAge;
 								vm.TurnoAgenda = detqueja.TurnoAge;
@@ -36,6 +37,7 @@ angular
 								vm.DetalleSolucion = detqueja.Solucion;
 								vm.FechaSolicitud = detqueja.Fecha_Soliciutud;
 								vm.FechaEjecucion = detqueja.Fecha_Ejecucion;
+								vm.FechaProceso = detqueja.FechaProceso;
 								vm.FechaVisita1 = detqueja.HV1;
 								vm.FechaVisita2 = detqueja.HV2;
 								vm.FechaVisita3 = detqueja.HV3;
@@ -48,12 +50,9 @@ angular
 								for (var t = 0; t < vm.Status.length; t++) {
 									if (vm.Status[t].Clave == vm.Clv_status) {
 										vm.Estatus = vm.Status[t];
+										Bloqueo();
 									}
 								}
-
-
-
-
 
 
 								quejasFactory.ObtenTecnicos(vm.GlobalContrato).then(function(data) {
@@ -145,6 +144,91 @@ angular
 		// });
 
 
+		function Bloqueo() {
+			console.log(vm.Status);
+			if (vm.Estatus.Clave == 'E') {
+				vm.BtnGuarda = false;
+				vm.FEjecucion = true;
+				vm.FVisita1 = true;
+				vm.FVisita2 = true;
+				vm.FVisita3 = true;
+				vm.FProceso = true;
+				vm.Itrabajo = true
+				vm.Iprioridad = true;
+				vm.IDetProblema = true;
+				vm.IClasproblema = true;
+				vm.Iprobreal = true;
+				vm.Iobser = true;
+				vm.IEstatus = true;
+				vm.Iejecucion = 'input-yellow';
+				vm.Ivisita = 'input-normal';
+				vm.Iproceso = 'input-normal';
+			} else if (vm.Estatus.Clave == 'P') {
+				vm.BtnGuarda = true;
+				vm.FEjecucion = false;
+				vm.FVisita1 = true;
+				vm.FVisita2 = true;
+				vm.FVisita3 = true;
+				vm.FProceso = true;
+				vm.Itrabajo = false
+				vm.Iprioridad = false;
+				vm.IDetProblema = false;
+				vm.IClasproblema = true;
+				vm.Iprobreal = false;
+				vm.Iobser = false;
+				vm.IEstatus = false;
+				vm.Iejecucion = 'input-yellow';
+				vm.Ivisita = 'input-normal';
+				vm.Iproceso = 'input-normal';
+			} else if (vm.Estatus.Clave == 'V') {
+				vm.BtnGuarda = true;
+				vm.FEjecucion = true;
+				vm.FVisita1 = (vm.visita1 == '') ? true : false;
+				vm.FVisita2 = (vm.visita2 == '') ? true : false;
+				vm.FVisita3 = (vm.visita3 == '') ? true : false;
+				vm.FProceso = true;
+				vm.Itrabajo = false
+				vm.Iprioridad = false;
+				vm.IDetProblema = false;
+				vm.IClasproblema = true;
+				vm.Iprobreal = false;
+				vm.Iobser = false;
+				vm.IEstatus = false;
+				vm.Iejecucion = 'input-normal';
+				vm.Ivisita1 = 'input-yellow';
+				vm.Ivisita2 = 'input-yellow';
+				vm.Ivisita3 = 'input-yellow';
+				vm.Iproceso = 'input-normal';
+			} else if (vm.Estatus.Clave == 'S') {
+				vm.BtnGuarda = true;
+				vm.FEjecucion = true;
+				vm.FVisita1 = true;
+				vm.FVisita2 = true;
+				vm.FVisita3 = true;
+				vm.FProceso = false;
+				vm.Itrabajo = false
+				vm.Iprioridad = false;
+				vm.IDetProblema = false;
+				vm.IClasproblema = true;
+				vm.Iprobreal = false;
+				vm.Iobser = false;
+				vm.IEstatus = false;
+				vm.Iejecucion = 'input-normal';
+				vm.Ivisita1 = 'input-normal';
+				vm.Ivisita2 = 'input-normal';
+				vm.Ivisita3 = 'input-normal';
+				vm.Iproceso = 'input-yellow';
+			} else {
+				alert('Ninguna');
+			}
+		}
+
+		function CambiaEstatus() {
+			Bloqueo();
+		}
+
+
+
 		var vm = this;
 		vm.Status = [{
 				'Clave': 'P',
@@ -156,10 +240,10 @@ angular
 			},
 			{
 				'Clave': 'E',
-				'Nombre': 'Ejecutadas'
+				'Nombre': 'Ejecutada'
 			},
 			{
-				'Clave': 'pr',
+				'Clave': 'S',
 				'Nombre': 'En Proceso'
 			}
 		];
@@ -167,5 +251,7 @@ angular
 		InitalData();
 		vm.Titulo = 'Ejecutar Queja'
 		vm.abrirBonificacion = abrirBonificacion;
+		vm.CambiaEstatus = CambiaEstatus;
+
 
 	});

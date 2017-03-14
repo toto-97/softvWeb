@@ -22,6 +22,10 @@ angular
 						var contrato = detalle.ContratoBueno;
 						vm.GlobalContrato = detalle.ContratoBueno;
 						vm.NombreCliente = detalle.Nombre + detalle.Apellido_Paterno + " " + detalle.Apellido_Materno;
+						vm.Calle = detalle.CALLE;
+						vm.Numero = detalle.NUMERO;
+						vm.Colonia = detalle.COLONIA;
+						vm.Ciudad = detalle.CIUDAD
 						vm.contrato = datos.ContratoCom;
 						vm.DescripcionProblema = datos.Descripcion;
 						vm.DescripcionSolucion = datos.Solucion;
@@ -29,6 +33,7 @@ angular
 						vm.Hora = datos.HoraInicial;
 						vm.clv_queja = datos.clv_queja;
 						vm.Turno = datos.Turno;
+						vm.UsuarioGenero = datos.UsuarioGenero;
 						for (var a = 0; a < vm.Trabajos.length; a++) {
 							if (vm.Trabajos[a].CLV_TRABAJO == datos.Clv_trabajo) {
 								vm.Trabajo = vm.Trabajos[a];

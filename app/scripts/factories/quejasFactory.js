@@ -136,6 +136,7 @@ angular
 				'SoloNivel2': object.SoloNivel2,
 				'NoTicket': object.NoTicket
 			};
+			console.log(Parametros);
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
