@@ -37,6 +37,7 @@ angular
 								vm.DetalleSolucion = detqueja.Solucion;
 								vm.FechaSolicitud = detqueja.Fecha_Soliciutud;
 								vm.FechaEjecucion = detqueja.Fecha_Ejecucion;
+								vm.FechaProceso = detqueja.FechaProceso;
 								vm.FechaVisita1 = detqueja.HV1;
 								vm.FechaVisita2 = detqueja.HV2;
 								vm.FechaVisita3 = detqueja.HV3;
@@ -239,7 +240,7 @@ angular
 			},
 			{
 				'Clave': 'E',
-				'Nombre': 'Ejecutadas'
+				'Nombre': 'Ejecutada'
 			},
 			{
 				'Clave': 'S',

@@ -164,11 +164,11 @@
               </div>
               <div class="col-md-6"><b>En proceso</b></div>
               <div class="col-md-6">
-                <input type="text" class="form-control input-sm" ng-class="$ctrl.Iproceso" placeholder="DD/MM/YYYY hh:mm AA" ui-mask="99/99/9999 99:99 AA" model-view-value="true" ng-disabled="$ctrl.FProceso">
+                <input type="text" class="form-control input-sm" ng-model="$ctrl.FechaProceso" ng-class="$ctrl.Iproceso" placeholder="DD/MM/YYYY hh:mm AA" ui-mask="99/99/9999 99:99 AA" model-view-value="true" ng-disabled="$ctrl.FProceso">
               </div>
               <div class="col-md-6">Ejecución real</div>
               <div class="col-md-6">
-                <input type="text" class="form-control input-sm" placeholder="DD/MM/YYYY hh:mm AA" ui-mask="99/99/9999 99:99 AA" model-view-value="true" ng-disabled="true">
+                <input type="text" class="form-control input-sm" ng-model="$ctrl.FechaEReal" placeholder="DD/MM/YYYY hh:mm AA" ui-mask="99/99/9999 99:99 AA" model-view-value="true" ng-disabled="true">
               </div>
 
             </div>
