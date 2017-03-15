@@ -13,7 +13,6 @@ angular
 			ConsultaQueja: '/Quejas/GetQuejasList',
 			ObtenTecnicos: '/Muestra_Tecnicos_Almacen/GetMuestra_Tecnicos_AlmacenList',
 			ObtenPrioridad: '/Softv_GetPrioridadQueja/GetSoftv_GetPrioridadQuejaList',
-			BuscaBloqueado: '/BuscaBloqueado/GetDeepBuscaBloqueado',
 			UpdateQuejas: '/Quejas/UpdateQuejas'
 		};
 
