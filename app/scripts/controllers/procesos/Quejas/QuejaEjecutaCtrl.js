@@ -20,7 +20,12 @@ angular
 						var contrato = detalle.ContratoBueno;
 						vm.GlobalContrato = contrato;
 						vm.NombreCliente = detalle.Nombre + detalle.Apellido_Paterno + " " + detalle.Apellido_Materno;
-						vm.DireccionCliente = "Calle: " + detalle.CALLE + " #" + detalle.NUMERO + " Colonia: " + detalle.COLONIA + " Ciudad:" + detalle.CIUDAD;
+						vm.Calle = detalle.CALLE;
+						vm.Numero = detalle.NUMERO;
+						vm.Colonia = detalle.COLONIA;
+						vm.Ciudad = detalle.CIUDAD;
+
+
 						atencionFactory.getServiciosCliente(contrato).then(function(data) {
 							vm.ServiciosCliente = data.GetDameSerDelCliFacListResult;
 
@@ -28,6 +33,7 @@ angular
 								var detqueja = data.GetQuejasListResult[0];
 								console.log(detqueja);
 								vm.UsuarioGenero = detqueja.UsuarioGenero;
+								vm.UsuarioEjecuto = detqueja.UsuarioEjecuto;
 								vm.TecnicoAgenda = detqueja.NombreTecAge;
 								vm.TurnoAgenda = detqueja.TurnoAge;
 								vm.FechaAgenda = detqueja.FechaAge;
@@ -45,7 +51,9 @@ angular
 								vm.Clv_trabajo = detqueja.Clv_Trabajo;
 								vm.Clv_prioridad = detqueja.clvPrioridadQueja;
 								vm.Clv_problema = detqueja.clvProblema;
-								vm.VisitaC = detqueja.Visita;
+								vm.ProblemaReal = detqueja.Solucion;
+								//detqueja.Visita
+								vm.Visita = true;
 								vm.Clv_status = detqueja.Status;
 								for (var t = 0; t < vm.Status.length; t++) {
 									if (vm.Status[t].Clave == vm.Clv_status) {
@@ -133,15 +141,7 @@ angular
 			});
 		}
 
-		// quejasFactory.ValidaQueja(id).then(function(data) {
-		// 	if (data.GetDeepValidaQuejaCompaniaAdicResult.Valida == 0) {
-		// 		alert('si');
-		// 		$state.go('home.procesos.ejecutaqueja:'+data);
-		// 	} else {
-		// 		alert('no');
-		// 		ngNotify.set('La Queja pertenece  a un contrato de plazas adicionales al usuario, no puede ejecutarla', 'error');
-		// 	}
-		// });
+
 
 
 		function Bloqueo() {
@@ -227,6 +227,43 @@ angular
 			Bloqueo();
 		}
 
+		function Ejecutaqueja() {
+			quejasFactory.ValidaQueja(vm.clv_queja).then(function(data) {
+				console.log(data);
+				if (data.GetDeepValidaQuejaCompaniaAdicResult.Valida == 0) {
+					quejasFactory.BuscaBloqueado(vm.GlobalContrato).then(function(bloqueado) {
+						if (bloqueado.GetDeepBuscaBloqueadoResult.Bloqueado == 0) {
+							obj = {};
+							obj.Clv_Queja = vm.clv_queja;
+							obj.Status = vm.Estatus.Clave;
+							obj.Fecha_Ejecucion = vm.FechaEjecucion;
+							obj.Visita1 = vm.visita1;
+							obj.Visita2 = vm.visita2;
+							obj.Visita3 = vm.visita3;
+							obj.HV1 =
+								obj.HV2 =
+								obj.HV3 =
+								obj.FechaProceso = vm.FechaProceso;
+							obj.HP =
+								obj.Visita = vm.Visita;
+							obj.Clv_Tecnico = vm.Tecnico.clv_Tecnico;
+							obj.clvProblema = vm.Problema.clvProblema;
+							obj.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;
+							obj.Solucion = ProblemaReal;
+
+
+						} else {
+							ngNotify.set('El cliente, ha sido bloqueado, por lo que no se podrá ejecutar la orden', 'error');
+						}
+					});
+
+				} else {
+
+					ngNotify.set('La Queja pertenece  a un contrato de plazas adicionales al usuario, no puede ejecutarla', 'error');
+				}
+			});
+		}
+
 
 
 		var vm = this;
@@ -252,6 +289,7 @@ angular
 		vm.Titulo = 'Ejecutar Queja'
 		vm.abrirBonificacion = abrirBonificacion;
 		vm.CambiaEstatus = CambiaEstatus;
+		vm.Ejecutaqueja = Ejecutaqueja;
 
 
 	});
