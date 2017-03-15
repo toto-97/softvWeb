@@ -201,7 +201,7 @@ angular
 			vm.Calle = detalle.CALLE;
 			vm.Numero = detalle.NUMERO;
 			vm.Colonia = detalle.COLONIA;
-			vm.Ciudad = detalle.CIUDAD
+			vm.Ciudad = detalle.CIUDAD;
 			//vm.DireccionCliente = "Calle:" + detalle.CALLE + " #" + detalle.NUMERO + " Colonia: " + detalle.COLONIA + " Ciudad:" + detalle.CIUDAD;
 			atencionFactory.getServiciosCliente(contrato).then(function(data) {
 				vm.ServiciosCliente = data.GetDameSerDelCliFacListResult;

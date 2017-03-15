@@ -12,7 +12,9 @@ angular
 			BuscaBloqueado: '/BuscaBloqueado/GetDeepBuscaBloqueado',
 			ConsultaQueja: '/Quejas/GetQuejasList',
 			ObtenTecnicos: '/Muestra_Tecnicos_Almacen/GetMuestra_Tecnicos_AlmacenList',
-			ObtenPrioridad: '/Softv_GetPrioridadQueja/GetSoftv_GetPrioridadQuejaList'
+			ObtenPrioridad: '/Softv_GetPrioridadQueja/GetSoftv_GetPrioridadQuejaList',
+			BuscaBloqueado: '/BuscaBloqueado/GetDeepBuscaBloqueado',
+			UpdateQuejas: '/Quejas/UpdateQuejas'
 		};
 
 		factory.ObtenPrioridad = function() {
@@ -204,6 +206,64 @@ angular
 
 			return deferred.promise;
 		};
+
+		factory.BuscaBloqueado = function(contrato) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Contrato': contrato
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.BuscaBloqueado, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.UpdateQuejas = function(data) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'objQuejas': {
+					'Clv_Queja': data.Clv_Queja,
+					'Status': data.Status,
+					'Fecha_Ejecucion': data.Fecha_Ejecucion,
+					'Visita1': data.Visita1,
+					'Visita2': data.Visita2,
+					'Visita3': data.Visita3,
+					'HV1': data.HV1,
+					'HV2': data.HV2,
+					'HV3': data.HV3,
+					'FechaProceso': data.FechaProceso,
+					'HP': data.HP,
+					'Visita': data.Visita,
+					'Clv_Tecnico': data.Clv_Tecnico,
+					'clvProblema': data.clvProblema,
+					'clvPrioridadQueja': data.clvPrioridadQueja,
+					'Solucion': data.Solucion,
+					'IdUsuario': $localStorage.currentUser.idUsuario
+				}
+
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.UpdateQuejas, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
 
 
 
