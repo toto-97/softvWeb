@@ -5,18 +5,18 @@
 		<!-- Text input-->
 		<div class="form-group">
 			<div class="row">
-				<label class="col-md-5 control-label" for="textinput">Pago en Efectivo</label>  
+				<label class="col-md-5 control-label" for="textinput">Pago en Efectivo</label>
 				<div class="col-md-3">
 					<input type="number" step="any" class="form-control input-sm" ng-model="ctrl.efectivo" ng-change="ctrl.cambioEfectivo()">
 				</div>
 		    </div>
 		    <legend></legend>
 		 	<div class="row">
-		 		<label class="col-md-5 control-label" for="textinput">Pago en Cheque</label>  
+		 		<label class="col-md-5 control-label" for="textinput">Pago en Cheque</label>
 				<div class="col-md-3">
 				  <input type="number" step="any" min="0" class="form-control input-sm" ng-change="ctrl.cambioCheque()" ng-model="ctrl.dineroCheque">
 				</div>
-		 	</div> 
+		 	</div>
 		 	<div class="row">
 		 		<label class="col-md-5 control-label" for="">Banco</label>
 			    <div class="col-md-5" >
@@ -25,14 +25,14 @@
 			    </div>
 		 	</div>
 		 	<div class="row">
-		 		<label class="col-md-5 control-label" for="">Número de Cheque</label>  
+		 		<label class="col-md-5 control-label" for="">Número de Cheque</label>
 			    <div class="col-md-4" >
 			       <input type="number" class="form-control input-sm" ng-model="ctrl.numeroCheque"  ng-change="ctrl.cambioCheque()">
 			    </div>
 		 	</div>
 		 	<legend></legend>
 		 	<div class="row">
-		 		<label class="col-md-5 control-label" for="">Pago con Transferencia Bancaria </label>  
+		 		<label class="col-md-5 control-label" for="">Pago con Transferencia Bancaria </label>
 			    <div class="col-md-3">
 			        <input type="number" step="any" min="0" ng-model="ctrl.dineroTransferencia"  ng-change="ctrl.cambioTransferencia()" class="form-control input-sm">
 			    </div>
@@ -45,26 +45,26 @@
 			    </div>
 		 	</div>
 		 	<div class="row">
-		 		<label class="col-md-5 control-label" for="">Número de Cuenta</label>  
+		 		<label class="col-md-5 control-label" for="">Número de Cuenta</label>
 			    <div class="col-md-4" >
 			   		<input type="number" ng-model="ctrl.cuentaTransferencia" ng-change="ctrl.cambioTransferencia()" class="form-control input-sm">
 			    </div>
 		 	</div>
 		 	<div class="row">
-		 		<label class="col-md-5 control-label" for="">Autorización</label>  
+		 		<label class="col-md-5 control-label" for="">Autorización</label>
 			    <div class="col-md-3" >
 			  		<input type="number" ng-model="ctrl.autorizacionTransferencia" ng-change="ctrl.cambioTransferencia()" class="form-control input-sm">
 			    </div>
 		 	</div>
 		 	<legend></legend>
 		 	<div class="row">
-		 		<label class="col-md-5 control-label" for="">No. Nota de Crédito</label>  
+		 		<label class="col-md-5 control-label" for="">No. Nota de Crédito</label>
 			    <div class="col-md-3">
 			  		<input type="number" step="any" ng-model="ctrl.dineroCredito" ng-change="ctrl.cambioCredito()" class="form-control input-sm">
 			    </div>
 		 	</div>
 		 	<div class="row">
-		 		<label class="col-md-5 control-label" for="">Pago en Nota de Crédito</label>  
+		 		<label class="col-md-5 control-label" for="">Pago en Nota de Crédito</label>
 			    <div class="col-md-3" >
 			  		<input type="number" step="any" ng-model="ctrl.pagoNota" ng-change="ctrl.cambioCredito()" class="form-control input-sm">
 			    </div>
@@ -81,6 +81,6 @@
 	</form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-default" type="button" ng-click="ctrl.cancel()">Cancelar</button>
-    <button class="btn btn-primary" type="button" ng-click="ctrl.ok()">Aceptar</button>
+    <button class="btn btn-default btn-sm" type="button" ng-click="ctrl.cancel()">Cancelar</button>
+    <button class="btn btn-primary btn-sm" type="button" ng-click="ctrl.ok()">Aceptar</button>
 </div>

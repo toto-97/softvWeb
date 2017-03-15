@@ -11,7 +11,7 @@
       <div class="col-md-4 col-md-offset-2">
         <div class="btn-group">
           Selecciona un rol para asignar permisos:
-          <select class="selectpicker form-control" ng-model="Rol" ng-options="option.Nombre for option in $ctrl.Roles track by option.IdRol">
+          <select class="selectpicker form-control" ng-model="$ctrl.Rol" ng-change="$ctrl.ObtenPermisos()" ng-options="option.Nombre for option in $ctrl.Roles track by option.IdRol">
                         <option value="">Selecciona Rol</option>
 
                     </select><br />
@@ -37,7 +37,7 @@
           <td ng-if="x.ParentId != null && x.tipo==3"><i class="md-chevron-right"></i> <i>{{x.Description}}</i></td>
 
           <td>
-            <div ng-if="x.ParentId != null"><label class="checkbox-inline checkbox-styled"><input type="checkbox" ng-model="x.OptSelect"><span></span></label></div>
+            <div ng-if="x.ParentId != null|| x.tipo==1 "><label class="checkbox-inline checkbox-styled"><input type="checkbox" ng-model="x.OptSelect"><span></span></label></div>
           </td>
           <td>
             <div ng-if="x.ParentId != null"><label class="checkbox-inline checkbox-styled"><input type="checkbox"  ng-model="x.OptAdd"><span></span></label></div>

@@ -63,11 +63,11 @@
     <script src="bower_components/pnotify/dist/pnotify.mobile.js"></script>
     <script src="bower_components/pnotify/dist/pnotify.nonblock.js"></script>
     <script src="bower_components/nodep-date-input-polyfill/nodep-date-input-polyfill.dist.js"></script>
-    <script src="bower_components/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="bower_components/jpkleemans-angular-validate/dist/angular-validate.min.js"></script>
     <script src="bower_components/angular-permission/dist/angular-permission.js"></script>
     <script src="bower_components/angular-permission/dist/angular-permission-ui.js"></script>
     <script src="bower_components/angular-permission/dist/angular-permission-ng.js"></script>
+    <script src="bower_components/tg-angular-validator/dist/angular-validator.js"></script>
+    <script src="bower_components/angular-ui-mask/dist/mask.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -81,12 +81,25 @@
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/home/home.js"></script>
     <script src="scripts/controllers/login/login.js"></script>
+    <script src="scripts/controllers/dashboard/module.js"></script>
+    <script src="scripts/controllers/dashboard/dashboardCtrl.js"></script>
     <script src="scripts/factories/authFactory.js"></script>
     <script src="scripts/controllers/procesos/modules.js"></script>
     <script src="scripts/controllers/procesos/atencion/atencion.js"></script>
     <script src="scripts/controllers/procesos/atencion/atencionDetalle.js"></script>
-    <script src="scripts/controllers/procesos/atencion/historialPagos.js"></script>
-    <script src="scripts/controllers/procesos/atencion/historialReportes.js"></script>
+    <script src="scripts/controllers/procesos/atencion/AtencionEditarCtrl.js"></script>
+    <script src="scripts/controllers/procesos/atencion/AtencionNuevaCtrl.js"></script>
+    <script src="scripts/controllers/procesos/atencion/ModalAgendaCtrl.js"></script>
+    <script src="scripts/controllers/procesos/atencion/ModalBuscaClienteCtrl.js"></script>
+    <script src="scripts/controllers/procesos/atencion/ModalDetalleCobroCtrl.js"></script>
+    <script src="scripts/controllers/procesos/atencion/ModalDetalleLlamadaCtrl.js"></script>
+    <!--quejas-->
+    <script src="scripts/controllers/procesos/Quejas/ModalBonificacionCtrl.js"></script>
+    <script src="scripts/controllers/procesos/Quejas/ModalConsultaQuejaCtrl.js"></script>
+    <script src="scripts/controllers/procesos/Quejas/QuejaEjecutaCtrl.js"></script>
+    <script src="scripts/controllers/procesos/Quejas/quejasCtrl.js"></script>
+    <script src="scripts/factories/quejasFactory.js"></script>
+    <!---->
     <script src="scripts/controllers/configuracion/modules.js"></script>
     <script src="scripts/factories/cajasFactory.js"></script>
     <script src="scripts/controllers/facturacion/modules.js"></script>
@@ -107,8 +120,11 @@
     <script src="scripts/controllers/facturacion/cajas/ModalSingleOrdenCtrl.js"></script>
     <script src="scripts/controllers/facturacion/cajas/ModalEdoCuentaCtrl.js"></script>
     <script src="scripts/controllers/facturacion/cajas/ModalSingleQuejaCtrl.js"></script>
+    <script src="scripts/controllers/facturacion/cajas/ModalSingleNotaCtrl.js"></script>
     <script src="scripts/controllers/facturacion/cajas/ModalMotivoCancelacionCtrl.js"></script>
     <script src="scripts/controllers/facturacion/cajas/ModalPreguntaCtrl.js"></script>
+    <script src="scripts/controllers/facturacion/cajas/ModalHistorialEdoctaCtrl.js"></script>
+    <script src="scripts/controllers/facturacion/cajas/ModalNuevoEdoctaCtrl.js"></script>
     <script src="scripts/controllers/reportes/ReporteCiudadCartera/CiudadCarteraCtrl.js"></script>
     <script src="scripts/controllers/reportes/modules.js"></script>
     <script src="scripts/factories/reportesFactory.js"></script>
@@ -120,12 +136,16 @@
     <script src="scripts/factories/desgloseFactory.js"></script>
     <script src="scripts/controllers/facturacion/desglose/DesgloseMonedaCtrl.js"></script>
     <script src="scripts/controllers/facturacion/desglose/ModalEliminarCtrl.js"></script>
-    <script src="scripts/controllers/facturacion/desglose/ModalNewCtrl.js"></script>
+    <script src="scripts/controllers/facturacion/desglose/NuevoDesgloseCtrl.js"></script>
+    <script src="scripts/controllers/facturacion/desglose/DetalleDesgloseCtrl.js"></script>
+    <script src="scripts/controllers/facturacion/desglose/EditarDesgloseCtrl.js"></script>
     <script src="scripts/controllers/facturacion/desglose/ModalValidarCtrl.js"></script>
     <script src="scripts/factories/entregasFactory.js"></script>
     <script src="scripts/controllers/facturacion/entregas/EntregasParcialesCtrl.js"></script>
     <script src="scripts/controllers/facturacion/entregas/EliminarEntregaCtrl.js"></script>
     <script src="scripts/controllers/facturacion/entregas/NuevaEntregaCtrl.js"></script>
+    <script src="scripts/controllers/facturacion/entregas/DetalleEntregaCtrl.js"></script>
+    <script src="scripts/controllers/facturacion/entregas/EditarEntregaCtrl.js"></script>
     <script src="scripts/factories/arqueoFactory.js"></script>
     <script src="scripts/controllers/facturacion/arqueo/ArqueoCajasCtrl.js"></script>
     <script src="scripts/controllers/reportes/ReporteCiudadCartera/CiudadCarteraCtrl.js"></script>
@@ -134,7 +154,6 @@
     <script src="scripts/controllers/configuracion/Permisos/PermisosCtrl.js"></script>
     <script src="scripts/controllers/configuracion/Roles/RolCtrl.js"></script>
     <script src="scripts/controllers/configuracion/Roles/ModalAddRolCtrl.js"></script>
-    <script src="scripts/controllers/configuracion/Roles/ModalAddRolCtrl.js"></script>
     <script src="scripts/factories/rolFactory.js"></script>
     <script src="scripts/factories/permisosFactory.js"></script>
     <script src="scripts/factories/ticketsFactory.js"></script>
@@ -142,8 +161,21 @@
     <script src="scripts/controllers/facturacion/tickets/ReimprimirCtrl.js"></script>
     <script src="scripts/controllers/facturacion/tickets/cancelarTicketCtrl.js"></script>
     <script src="scripts/controllers/facturacion/tickets/MotivoTicketCtrl.js"></script>
-    <script src="scripts/factories/reportesVariosFactory.js"></script>
-    <script src="scripts/controllers/reportes/reportesvarios/ReportesVariosCtrl.js"></script>
+    <script src="scripts/controllers/facturacion/tickets/CorreoCtrl.js"></script>
+    <script src="scripts/controllers/corporativa/modules.js"></script>
+    <script src="scripts/controllers/corporativa/contrato/ContratoMaestroCtrl.js"></script>
+    <script src="scripts/controllers/corporativa/contrato/NuevoMaestroCtrl.js"></script>
+    <script src="scripts/controllers/corporativa/contrato/EditarMaestroCtrl.js"></script>
+    <script src="scripts/controllers/corporativa/contrato/ContratosLigadosCtrl.js"></script>
+    <script src="scripts/controllers/corporativa/contrato/BuscaContratoLCtrl.js"></script>
+    <script src="scripts/factories/atencion.js"></script>
+    <script src="scripts/controllers/corporativa/contrato/ModalDetalleContratoCtrl.js"></script>
+    <script src="scripts/factories/ContratoMaestroFactory.js"></script>
+    <script src="scripts/factories/corporativoFactory.js"></script>
+    <script src="scripts/controllers/facturacion/cajas/ModalInformacionCobroCtrl.js"></script>
+    <script src="scripts/controllers/facturacion/cajas/ModalAgendaVentasCtrl.js"></script>
+    <script src="scripts/directives/UploadFile.js"></script>
+    <script src="scripts/controllers/facturacion/desglose/PrintArchivosCtrl.js"></script>
     <!-- endbuild -->
   </body>
 

@@ -19,5 +19,6 @@ angular.module('softvApp')
 			});
 			return deferred.promise;
 		};
+
 		return factory;
 	});

@@ -12,7 +12,11 @@ angular.module('softvApp')
 			validaCancela: '/ValidaCancelacionFactura/GetValidaCancelacionFacturaList',
 			getMotivo: '/MUESTRAMOTIVOS/GetMUESTRAMOTIVOSList',
 			guardaMotivo: '/GuardaMotivos/GetGuardaMotivosList',
-			addBitacora: '/Bitacora/AddBitacoraTickets'
+			addBitacora: '/Bitacora/AddBitacoraTickets',
+			validaEspecial: '/ValidaFacturaFiscal/GetValidaFacturaFiscal',
+			canEspeceiales: '/CANCELACIONFACTURAS/GetCANCELACIONFACTURASList',
+			getOptionsTickets: '/TblFacturasOpciones/AddTblFacturasOpciones'
+
 		};
 
 		factory.getPlazas = function() {
@@ -30,6 +34,31 @@ angular.module('softvApp')
 			}).catch(function(response) {
 				deferred.reject(response);
 			});
+			return deferred.promise;
+		};
+
+		factory.getOptionsTickets = function(obj) {
+			console.log(obj);
+			var deferred = $q.defer();
+			var Parametros = {
+				'objTblFacturasOpciones': {
+					'Clv_Factura': obj.factura,
+					'OpCancelar': obj.cancelar,
+					'OpReimprimir': obj.reimprimir,
+					'OpCorreo': obj.correo
+				}
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.getOptionsTickets, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
 			return deferred.promise;
 		};
 
@@ -58,8 +87,10 @@ angular.module('softvApp')
 				'ContratoCom': objeto.contrato,
 				'tipo': objeto.tipo,
 				'IdCompania': objeto.compania,
-				'NombreOp': objeto.nombre
+				'NombreOp': objeto.nombre,
+				'IdUsuario': $localStorage.currentUser.idUsuario
 			};
+			console.log(Parametros);
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
@@ -200,6 +231,42 @@ angular.module('softvApp')
 				}
 			};
 			$http.post(globalService.getUrl() + paths.addBitacora, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+			return deferred.promise;
+		};
+
+		factory.validaEspecial = function(factura) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'ClvFactura': factura
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.validaEspecial, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+			return deferred.promise;
+		};
+
+		factory.canEspeceiales = function(factura) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'ClvFactura': factura
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.canEspeceiales, JSON.stringify(Parametros), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response);

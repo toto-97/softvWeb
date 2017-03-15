@@ -1,15 +1,12 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('EntregasParcialesCtrl', function($state, $uibModal, $rootScope, entregasFactory, $filter, ngNotify) {
+	.controller('EntregasParcialesCtrl', function($state, $uibModal, globalService, $rootScope, entregasFactory, $filter, ngNotify) {
 		function initialData() {
 			entregasFactory.getPlazas().then(function(data) {
-				data.GetMuestraPlazasProcesosListResult.unshift({
-					'razon_social': '----------------',
-					'id_compania': 0
-				});
 				vm.plazas = data.GetMuestraPlazasProcesosListResult;
 				vm.selectedPlaza = data.GetMuestraPlazasProcesosListResult[0];
+				changePlaza();
 			});
 		}
 
@@ -120,55 +117,6 @@ angular
 			}
 		}
 
-		function editarEntrada(consecutivo) {
-			var items = {
-				action: 'editar',
-				titulo: 'Editar Entrega Parcial',
-				consecutivo: consecutivo
-			};
-			var modalInstance = $uibModal.open({
-				animation: true,
-				ariaLabelledBy: 'modal-title',
-				ariaDescribedBy: 'modal-body',
-				templateUrl: 'views/facturacion/nuevaEntrega.html',
-				controller: 'NuevaEntregaCtrl',
-				controllerAs: '$ctrl',
-				backdrop: 'static',
-				keyboard: false,
-				size: 'lg',
-				windowClass: 'app-modal-window-large ',
-				resolve: {
-					items: function() {
-						return items;
-					}
-				}
-			});
-		}
-
-		function nuevaEntrega() {
-			var items = {
-				action: 'nuevo',
-				titulo: 'Nueva Entrega Parcial'
-			};
-			var modalInstance = $uibModal.open({
-				animation: true,
-				ariaLabelledBy: 'modal-title',
-				ariaDescribedBy: 'modal-body',
-				templateUrl: 'views/facturacion/nuevaEntrega.html',
-				controller: 'NuevaEntregaCtrl',
-				controllerAs: '$ctrl',
-				backdrop: 'static',
-				keyboard: false,
-				size: 'lg',
-				windowClass: 'app-modal-window-large ',
-				resolve: {
-					items: function() {
-						return items;
-					}
-				}
-			});
-		}
-
 		$rootScope.$on('updateEntrada', function() {
 			changePlaza();
 		});
@@ -190,40 +138,40 @@ angular
 			}
 		}
 
-		function detalleEntrada(consecutivo) {
-			var items = {
-				action: 'ver',
-				titulo: 'Detalle de Entrega Parcial',
-				consecutivo: consecutivo
-			};
-			var modalInstance = $uibModal.open({
-				animation: true,
-				ariaLabelledBy: 'modal-title',
-				ariaDescribedBy: 'modal-body',
-				templateUrl: 'views/facturacion/nuevaEntrega.html',
-				controller: 'NuevaEntregaCtrl',
-				controllerAs: '$ctrl',
-				backdrop: 'static',
-				keyboard: false,
-				size: 'lg',
-				windowClass: 'app-modal-window-large',
-				resolve: {
-					items: function() {
-						return items;
+		function printEntrega(x) {
+			entregasFactory.printEntrega(x).then(function(data) {
+				var url = globalService.getUrlReportes() + '/Reportes/' + data.GetReporteEntregasParcialesResult[0].NombreCajera;
+				var obj = {
+					url: url,
+					titulo: 'Imprimir Entrega Parcial'
+				};
+				var modalInstance = $uibModal.open({
+					animation: true,
+					ariaLabelledBy: 'modal-title',
+					ariaDescribedBy: 'modal-body',
+					templateUrl: 'views/facturacion/printArchivos.html',
+					controller: 'PrintArchivosCtrl',
+					controllerAs: '$ctrl',
+					backdrop: 'static',
+					keyboard: false,
+					windowClass: 'app-modal-window',
+					size: 'lg',
+					resolve: {
+						items: function() {
+							return obj;
+						}
 					}
-				}
+				});
 			});
 		}
 
 		var vm = this;
-		vm.nuevaEntrega = nuevaEntrega;
 		vm.changePlaza = changePlaza;
-		vm.detalleEntrada = detalleEntrada;
-		vm.editarEntrada = editarEntrada;
 		vm.eliminarEntrada = eliminarEntrada;
 		vm.cambiarBusqueda = cambiarBusqueda;
 		vm.buscarEntrada = buscarEntrada;
 		vm.showPaginator = false;
+		vm.printEntrega = printEntrega;
 		initialData();
 
 	});

@@ -3,7 +3,6 @@ angular
 	.module('softvApp')
 	.controller('RolCtrl', function($state, rolFactory, globalService, $uibModal) {
 		function openEditRol(x) {
-			alert('fakiu');
 			var modalInstance = $uibModal.open({
 				animation: true,
 				ariaLabelledBy: 'modal-title',

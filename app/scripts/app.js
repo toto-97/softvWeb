@@ -9,8 +9,9 @@ angular
 		'ngStorage',
 		'angularUtils.directives.dirPagination',
 		'blockUI',
-		'ngValidate',
+		'angularValidator',
 		'permission', 'permission.ui',
+		'ui.mask'
 
 	])
 	.config(['$provide', '$urlRouterProvider', '$httpProvider', 'cfpLoadingBarProvider', '$qProvider', 'blockUIConfig', function($provide, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $qProvider, blockUIConfig) {
@@ -38,7 +39,6 @@ angular
 				responseError: function(rejection) {
 					notifyError(rejection);
 					sessionStorage.clear();
-					//location.href = '/login';
 					return $q.reject(rejection);
 				}
 			};
@@ -52,7 +52,7 @@ angular
 		$rootScope.$state = $state;
 		$rootScope.$stateParams = $stateParams;
 		if ($localStorage.currentUser) {
-			$location.path('/home/');
+			//$location.path('/home/');
 			PermPermissionStore.definePermission('anonymous', function() {
 				return false;
 			});

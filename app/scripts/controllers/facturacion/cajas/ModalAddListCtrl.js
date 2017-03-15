@@ -18,7 +18,7 @@ angular
 			if (vm.selectedService.Clv_Servicio == 0) {
 				ngNotify.set('Selecciona un servicio por favor.', 'error');
 			} else {
-				if (vm.selectedService.Clv_Txt == 'CADIG' || vm.selectedService.Clv_Txt == 'CADI2' || vm.selectedService.Clv_Txt == 'CADI3') {
+				if (vm.selectedService.Clv_Txt == 'CADIG' || vm.selectedService.Clv_Txt == 'CADI2' || vm.selectedService.Clv_Txt == 'CADI3' || vm.selectedService.Clv_Txt == 'CANET') {
 					cajasFactory.consultaCamdo(items.Session, items.Contrato).then(function(data) {
 						if (data.GetCAMDOFACResult.Existe == false) {
 							$uibModalInstance.dismiss('cancel');

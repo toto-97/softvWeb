@@ -12,6 +12,26 @@ angular
 			editarEntrada: '/EntregaParcial/UpdateEntregaParcial',
 			eliminarEntrega: '/EntregaParcial/DeleteEntregaParcial',
 			buscarEntrada: '/BuscaParciales/GetBuscaParcialesList',
+			printEntrega: '/EntregaParcial/GetReporteEntregasParciales'
+		};
+
+		factory.printEntrega = function(consecutivo) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Consecutivo': consecutivo
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.printEntrega, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
 		};
 
 		factory.getPlazas = function() {
