@@ -1,35 +1,35 @@
 'use strict';
 angular.module('softvApp')
-	.controller('ReportesVariosCtrl', function($state, ngNotify, reportesVariosFactory, globalService,$sce) // servicio
-		{
+    .controller('ReportesVariosCtrl', function($state, ngNotify,  $localStorage, reportesVariosFactory, globalService,$sce) // servicio
+        {
             var vm = this;
 
-			this.$onInit = function(){
+            this.$onInit = function(){
                 
-				reportesVariosFactory.mostrarTipServ().then(function(data) {
+                reportesVariosFactory.mostrarTipServ().then(function(data) {
                     vm.tipoServicios = data.GetTipServicioListResult;
-					vm.ServicioDigitalInternet = data.GetTipServicioListResult[1];
-				});
-				//-----------------------------
-				reportesVariosFactory.mostrarMotivoCan().then(function(data) {				
-					//---- para cancelaciones
-					vm.motivos1 = data.GetMotCancelacionListResult; //array
-					vm.selectedMotcan1 = data.GetMotCancelacionListResult[0]; //model
-					//---- para ciudad y resumen por colonia
-					vm.motivos2 = data.GetMotCancelacionListResult; //array					
-					vm.selectedMotcan2 = data.GetMotCancelacionListResult[0]; //model
-				});
-							
-			vm.clv_usuario = 1
+                    vm.ServicioDigitalInternet = data.GetTipServicioListResult[1];
+                });
+                //-----------------------------
+                reportesVariosFactory.mostrarMotivoCan().then(function(data) {              
+                    //---- para cancelaciones
+                    vm.motivos1 = data.GetMotCancelacionListResult; //array
+                    vm.selectedMotcan1 = data.GetMotCancelacionListResult[0]; //model
+                    //---- para ciudad y resumen por colonia
+                    vm.motivos2 = data.GetMotCancelacionListResult; //array                 
+                    vm.selectedMotcan2 = data.GetMotCancelacionListResult[0]; //model
+                });
+                            
+            //clv_usuario = $localStorage.currentUser.idUsuario;
             vm.ordenRadio='1';
-		
+        
                 ListaDistribuidores();                
-			}
+            }
 
 //------------------Distribuidores -------------------------------
 vm.ExisteDistribuidor = ExisteDistribuidor;
 function ExisteDistribuidor(id) {
-	var result = $.grep(Distribuidores, function (obj) { return obj.Clv_Plaza == id; });
+    var result = $.grep(Distribuidores, function (obj) { return obj.Clv_Plaza == id; });
     if (result.length == 0) {
         return false;
     } else {
@@ -38,7 +38,7 @@ function ExisteDistribuidor(id) {
     }
 
 vm.distribuidorPadre = distribuidorPadre;
-function distribuidorPadre (){	    
+function distribuidorPadre (){      
 //console.log('DistribuidoresTodos: ' + DistribuidoresTodos.length);
     if (banderas.banderaDistribuidor == 1) {
 
@@ -51,8 +51,8 @@ function distribuidorPadre (){
                 }
     }
     else if (banderas.banderaDistribuidor == 0) {
-    	Distribuidores = [];//limpiar antes de llenar 
-        reportesVariosFactory.mostrarDistribuidorByUsuario(vm.clv_usuario).then(function(data) {      
+        Distribuidores = [];//limpiar antes de llenar 
+        reportesVariosFactory.mostrarDistribuidorByUsuario(clv_usuario).then(function(data) {      
             DistribuidoresTodos = data.GetDistribuidorByUsuarioResult; //array 
             var i; 
             for (i = 0; i < DistribuidoresTodos.length; i++) //cuántos distribuidores existen
@@ -61,7 +61,7 @@ function distribuidorPadre (){
                     AddToArray(Distribuidores, DistribuidoresTodos[i]); //de array filtro
                 }
         });       
-        banderas.banderaDistribuidor = 1;    	  
+        banderas.banderaDistribuidor = 1;         
     }
 }
 
@@ -128,7 +128,7 @@ vm.plazaPadre = plazaPadre;
         else if (pla == 0) 
         {
             Plazas = [];//limpiar antes de llenar   
-            reportesVariosFactory.mostrarPlazaByDistribuidor(vm.clv_usuario, Distribuidores).then(function(data) {         
+            reportesVariosFactory.mostrarPlazaByDistribuidor(clv_usuario, Distribuidores).then(function(data) {         
                 PlazasTodos = data.GetPlazasByDistribuidorResult; // array
         
                 for (var i = 0; i < PlazasTodos.length; i++) //cuántos distribuidores existen
@@ -177,7 +177,7 @@ vm.AddPlazas = AddPlazas;
 
     }
 //------------------Agrega Estado al array -------------------------------
-	vm.ExisteEstado = ExisteEstado;
+    vm.ExisteEstado = ExisteEstado;
     function ExisteEstado(id) {
         var result = $.grep(Estados, function (obj) { return obj.Clv_Estado == id; });
         if (result.length == 0) {
@@ -188,7 +188,7 @@ vm.AddPlazas = AddPlazas;
     }
 
     vm.estadoPadre = estadoPadre;
-	function estadoPadre () {   // console.log('EstadosTodos: ' + EstadosTodos.length);    
+    function estadoPadre () {   // console.log('EstadosTodos: ' + EstadosTodos.length);    
         if (est == 1) {
             est = 0;
             Estados = []; //limpiar
@@ -211,7 +211,7 @@ vm.AddPlazas = AddPlazas;
         } // console.log('las Estados elegidas: '+Estados.length);                
     }
 
-	vm.estadoHijo = estadoHijo;
+    vm.estadoHijo = estadoHijo;
     function estadoHijo (obj)    {      
         if (est == 1) {            // si es 1, está seleccionado, volver a NO SELECCIONADO
              vm.estadoTodo = false;//checkbox padre    
@@ -284,7 +284,7 @@ function ciudadPadre () {
     }
 
 vm.ciudadHijo = ciudadHijo;
-	function ciudadHijo (obj) {       
+    function ciudadHijo (obj) {       
         if (banderas.banderaCiudad == 1) 
         {           
              vm.ciudadTodo = false;
@@ -320,7 +320,7 @@ vm.AddCiudades = AddCiudades;
     }
 
 //----------------- Localidad
-	vm.ExisteLocalidad = ExisteLocalidad;
+    vm.ExisteLocalidad = ExisteLocalidad;
     function ExisteLocalidad(id) {
         var result = $.grep(Localidades, function (obj) { return obj.Clv_Localidad == id; });
         if (result.length == 0) {
@@ -884,8 +884,8 @@ vm.AddToArray = AddToArray;
 vm.DeleteFromArray = DeleteFromArray;
 function DeleteFromArray(arr, attr, value) {
 var i = arr.length;
-	while (i--) {
-		if (arr[i]
+    while (i--) {
+        if (arr[i]
             && arr[i].hasOwnProperty(attr)
             && (arguments.length > 2 && arr[i][attr] === value)) {
             arr.splice(i, 1);
@@ -906,158 +906,158 @@ vm.seleccionarTodo = seleccionarTodo;
         } else if (banderas.banderaTodoSeleccionado == 1) {
             banderas.banderaLocalidad = 0;
             banderas.banderaColonia = 0;
-            anderas.banderaCalle = 0;
+            banderas.banderaCalle = 0;
           
             banderas.banderaTodoSeleccionado = 0;        
         }
     }
 
 //---------------------------------------------------------------------
-			
+            
 // inicializa botones del menú de Reportes
 
-			vm.cleanArray = cleanArray;
-			vm.showOpcion = showOpcion;
-			vm.changeBgColor = changeBgColor;
-			vm.soloInternet_esconde = true; //esconde div
+            vm.cleanArray = cleanArray;
+            vm.showOpcion = showOpcion;
+            vm.changeBgColor = changeBgColor;
+            vm.soloInternet_esconde = true; //esconde div
             showOpcion();
 
-			//Inicializa variables
-			var pla = 0, est = 0, coloni = 0, sinter = 0, sdig = 0, tipo = 0, peri = 0;
-			var servicioSeleccionado = 3;
-			var reporteSeleccionado = 1; //value del reporte seleccionado
-			var principales = false; //se muestra para digital
+            //Inicializa variables
+            var pla = 0, est = 0, coloni = 0, sinter = 0, sdig = 0, tipo = 0, peri = 0;
+            var servicioSeleccionado = 3;
+            var reporteSeleccionado = 1; //value del reporte seleccionado
+            var principales = false; //se muestra para digital
 
-			var objPrincipal = {};
-			var objRangoFechas = {};
-			var estatusCliente = {};
-			var objParametros = {};
-			//$('#anioC').val(''); $('#anioC2').val(''); //revisar
+            var objPrincipal = {};
+            var objRangoFechas = {};
+            var estatusCliente = {};
+            var objParametros = {};
+            //$('#anioC').val(''); $('#anioC2').val(''); //revisar
         //---------------------------------------------
-			var Distribuidores = [];
-			var Plazas = [];
-			var Estados = [];
-			var Ciudades = [];
-			var Localidades = [];
-			var Colonias = [];
-			var Calles = [];
-			var Periodos = [];
-			var ServiciosInternet = [];
-			var ServiciosDigital = [];
-			var TipoClientes = [];
-			var Motcan = [];
-			var Motcan2 = []; //Modal Seleccion de Status de cliente
+            var Distribuidores = [];
+            var Plazas = [];
+            var Estados = [];
+            var Ciudades = [];
+            var Localidades = [];
+            var Colonias = [];
+            var Calles = [];
+            var Periodos = [];
+            var ServiciosInternet = [];
+            var ServiciosDigital = [];
+            var TipoClientes = [];
+            var Motcan = [];
+            var Motcan2 = []; //Modal Seleccion de Status de cliente
 
-		
-			var PlazasTodos = [];
-			var EstadosTodos = [];
-			var CiudadesTodos = [];
-			var LocalidadesTodos = [];
-			var ColoniasTodos = [];
-			var CallesTodos = [];
-			var PeriodosTodos = [];
-			var ServiciosInternetTodos = [];
-			var ServiciosDigitalTodos = [];
-			var TipoClientesTodos = [];
+        
+            var PlazasTodos = [];
+            var EstadosTodos = [];
+            var CiudadesTodos = [];
+            var LocalidadesTodos = [];
+            var ColoniasTodos = [];
+            var CallesTodos = [];
+            var PeriodosTodos = [];
+            var ServiciosInternetTodos = [];
+            var ServiciosDigitalTodos = [];
+            var TipoClientesTodos = [];
 
-			var buscaOnovar = 0;
-			vm.botonRegresar = true; //oculta
-			vm.divMotivoCancelacion1 = true;
+            var buscaOnovar = 0;
+            vm.botonRegresar = true; //oculta
+            vm.divMotivoCancelacion1 = true;
 
-			var clv_usuario = 1; //siste, RECIBIR
-			var banderas = {};
-			banderas.clv_usuario = clv_usuario;
-			banderas.banderaDistribuidor = 0;
-			banderas.banderaCiudad = 0;
-			banderas.banderaLocalidad = 0;
-			banderas.banderaColonia = 0;
-			banderas.banderaCalle = 0; // estado del checkbox
-			banderas.banderaTodoSeleccionado = 0;
+            var clv_usuario = $localStorage.currentUser.idUsuario; //siste, RECIBIR
+            var banderas = {};
+            banderas.clv_usuario = clv_usuario;
+            banderas.banderaDistribuidor = 0;
+            banderas.banderaCiudad = 0;
+            banderas.banderaLocalidad = 0;
+            banderas.banderaColonia = 0;
+            banderas.banderaCalle = 0; // estado del checkbox
+            banderas.banderaTodoSeleccionado = 0;
 
-			
+            
 
 //----- Seleccione el servicio ---------------------------------------------------------------
-	vm.cambiaServicio = function(tipServ) {
-    	servicioSeleccionado = tipServ.Clv_TipSer; 
-    	if (servicioSeleccionado == 3) //Digital, no muestra div
-    	{
-    		vm.soloInternet_esconde = true; //se oculta
-    		vm.principales = false; // sí se muestra      //  muestra botón del reporte 'contrataciones principales' //NO BORRAR
-    	} else if (servicioSeleccionado == 2) // Internet, muestra div
-    	{
-		vm.soloInternet_esconde = false; //se muestra
-		vm.principales = true; // NO se muestra, esconde botón del reporte 'contrataciones principales'  // NO BORRAR
-		}
+    vm.cambiaServicio = function(tipServ) {
+        servicioSeleccionado = tipServ.Clv_TipSer; 
+        if (servicioSeleccionado == 3) //Digital, no muestra div
+        {
+            vm.soloInternet_esconde = true; //se oculta
+            vm.principales = false; // sí se muestra      //  muestra botón del reporte 'contrataciones principales' //NO BORRAR
+        } else if (servicioSeleccionado == 2) // Internet, muestra div
+        {
+        vm.soloInternet_esconde = false; //se muestra
+        vm.principales = true; // NO se muestra, esconde botón del reporte 'contrataciones principales'  // NO BORRAR
+        }
         cleanArray();//el servicio debe cambiar antes de mostrar modal de servicios
         showOpcion();
-	}
+    }
 
  //--------------------------------------------------------------------------
 
-			vm.fechaInicial = new Date();
-			vm.fechaFinal = new Date();
+            vm.fechaInicial = new Date();
+            vm.fechaFinal = new Date();
 
-			vm.motcan1 = 0; // set selected value to a particular value
-			vm.motcan2 = 0; // set selected value to a particular value
+            vm.motcan1 = 0; // set selected value to a particular value
+            vm.motcan2 = 0; // set selected value to a particular value
 
-			//Valida input numérico
-			vm.anioC = {
-				value: 2010
-			};
-			vm.anioC2 = {
-				value: 2010
-			};
+            //Valida input numérico
+            vm.anioC = {
+                value: 2010
+            };
+            vm.anioC2 = {
+                value: 2010
+            };
 
-			vm.meses = [{name: 'Enero',	value: '1'},
-				{	name: 'Febrero', value: '2'	},				
-                {	name: 'Marzo',	value: '3'	},
-				{	name: 'Abril',	value: '4'	},
-				{	name: 'Mayo',	value: '5'	},
-				{	name: 'Junio',	value: '6'	},
-				{	name: 'Julio',	value: '7'	},
-				{	name: 'Agosto',	value: '8'	},
-				{	name: 'Septiembre',	value: '9'	},
-				{	name: 'Octubre',	value: '10'	},
-				{	name: 'Noviembre',	value: '11'	},
-				{	name: 'Diciembre',	value: '12'	}
-			];
+            vm.meses = [{name: 'Enero', value: '1'},
+                {   name: 'Febrero', value: '2' },              
+                {   name: 'Marzo',  value: '3'  },
+                {   name: 'Abril',  value: '4'  },
+                {   name: 'Mayo',   value: '5'  },
+                {   name: 'Junio',  value: '6'  },
+                {   name: 'Julio',  value: '7'  },
+                {   name: 'Agosto', value: '8'  },
+                {   name: 'Septiembre', value: '9'  },
+                {   name: 'Octubre',    value: '10' },
+                {   name: 'Noviembre',  value: '11' },
+                {   name: 'Diciembre',  value: '12' }
+            ];
 
 
 
             vm.ultimoMes = vm.meses[0]; //model         
             vm.mesQueAdeuda = vm.meses[0]; //model
 
-			vm.menores = [{	name: 'Menor o igual',	value: '1'}, { name: 'Igual',	value: '2'	}];
-			vm.menoresModel = vm.menores[0].value;
-			vm.divMotivoCancelacion1 = true; //se oculta
+            vm.menores = [{ name: 'Menor o igual',  value: '1'}, { name: 'Igual',   value: '2'  }];
+            vm.menoresModel = vm.menores[0].value;
+            vm.divMotivoCancelacion1 = true; //se oculta
 
-			//inicializa botones del menú de Reportes
-			vm.myButton1 = 'btn-info active';
-			reporteSeleccionado = 1;
-			vm.myButton2 = 'btn-default';
-			vm.myButton3 = 'btn-default';
-			vm.myButton4 = 'btn-default';
-			vm.myButton5 = 'btn-default';
-			vm.myButton6 = 'btn-default';
-			vm.myButton7 = 'btn-default';
-			vm.myButton8 = 'btn-default';
-			vm.myButton9 = 'btn-default';
-			vm.myButton10 = 'btn-default';
-			vm.myButton11 = 'btn-default';
-			vm.myButton12 = 'btn-default';
-			vm.myButton13 = 'btn-default';
-			vm.myButton14 = 'btn-default';
+            //inicializa botones del menú de Reportes
+            vm.myButton1 = 'btn-info active';
+            reporteSeleccionado = 1;
+            vm.myButton2 = 'btn-default';
+            vm.myButton3 = 'btn-default';
+            vm.myButton4 = 'btn-default';
+            vm.myButton5 = 'btn-default';
+            vm.myButton6 = 'btn-default';
+            vm.myButton7 = 'btn-default';
+            vm.myButton8 = 'btn-default';
+            vm.myButton9 = 'btn-default';
+            vm.myButton10 = 'btn-default';
+            vm.myButton11 = 'btn-default';
+            vm.myButton12 = 'btn-default';
+            vm.myButton13 = 'btn-default';
+            vm.myButton14 = 'btn-default';
 
-			//---------------------------------------------
+            //---------------------------------------------
 
-	function cleanArray() {
+    function cleanArray() {
     
-	   objPrincipal = {};		objRangoFechas = {};
-		estatusCliente = {};	objParametros = {};
-		objParametros.conectado = 0, objParametros.Fuera = 0, objParametros.Susp = 0, objParametros.Insta = 0,
-		objParametros.Desconect = 0, objParametros.DescTmp = 0, objParametros.baja = 0;
-		vm.anioC = {value: 2010	};
-		vm.anioC2 = {value: 2010 }; 
+       objPrincipal = {};       objRangoFechas = {};
+        estatusCliente = {};    objParametros = {};
+        objParametros.conectado = 0, objParametros.Fuera = 0, objParametros.Susp = 0, objParametros.Insta = 0,
+        objParametros.Desconect = 0, objParametros.DescTmp = 0, objParametros.baja = 0;
+        vm.anioC = {value: 2010 };
+        vm.anioC2 = {value: 2010 }; 
 
         for (var i = 0; i < vm.DistribuidoresTable.length; i++) //todos los distribuidores de la tabla
             { 
@@ -1065,37 +1065,37 @@ vm.seleccionarTodo = seleccionarTodo;
             }     
 
         Distribuidores = [];    Plazas = [];    Estados = [];   Ciudades = [];
-		Localidades = [];         Colonias = [];	Calles = [];Periodos = [];
-		ServiciosInternet = [];	ServiciosDigital = [];	TipoClientes = [];		Motcan = [];
-		Motcan2 = []; DistribuidoresTodos = [];	PlazasTodos = []; EstadosTodos = [];
-		CiudadesTodos = [];	LocalidadesTodos = [];	ColoniasTodos = []; CallesTodos = [];
-		PeriodosTodos = [];	ServiciosInternetTodos = []; ServiciosDigitalTodos = [];TipoClientesTodos = [];
-		
+        Localidades = [];         Colonias = [];    Calles = [];Periodos = [];
+        ServiciosInternet = []; ServiciosDigital = [];  TipoClientes = [];      Motcan = [];
+        Motcan2 = []; DistribuidoresTodos = []; PlazasTodos = []; EstadosTodos = [];
+        CiudadesTodos = []; LocalidadesTodos = [];  ColoniasTodos = []; CallesTodos = [];
+        PeriodosTodos = []; ServiciosInternetTodos = []; ServiciosDigitalTodos = [];TipoClientesTodos = [];
+        
         vm.botonRegresar = true; //oculta
-		vm.divMotivoCancelacion1 = true; //se oculta
+        vm.divMotivoCancelacion1 = true; //se oculta
         vm.divMotivoCancelacion2 = true;
 
-		clv_usuario = 1; //siste
-		banderas = {};
-		banderas.clv_usuario = clv_usuario;
-		banderas.banderaDistribuidor = 0;
-		banderas.banderaCiudad = 0;
-		banderas.banderaLocalidad = 0;
-		banderas.banderaColonia = 0;
-		banderas.banderaCalle = 0; // estado del checkbox
-		banderas.banderaTodoSeleccionado = 0;			
+        clv_usuario = $localStorage.currentUser.idUsuario; //siste
+        banderas = {};
+        banderas.clv_usuario = clv_usuario;
+        banderas.banderaDistribuidor = 0;
+        banderas.banderaCiudad = 0;
+        banderas.banderaLocalidad = 0;
+        banderas.banderaColonia = 0;
+        banderas.banderaCalle = 0; // estado del checkbox
+        banderas.banderaTodoSeleccionado = 0;           
 
         vm.ultimoMes = vm.meses[0]; //model         
         vm.mesQueAdeuda = vm.meses[0]; //model
-		vm.fechaInicial = new Date();
-		vm.fechaFinal = new Date();
-		vm.search = null;
-		vm.inicializaCheckbox(); //INICIALIZAR TODOS LOS CHECKBOX
+        vm.fechaInicial = new Date();
+        vm.fechaFinal = new Date();
+        vm.search = null;
+        vm.inicializaCheckbox(); //INICIALIZAR TODOS LOS CHECKBOX
     }
 
     vm.inicializaCheckbox = inicializaCheckbox;
 
-		function inicializaCheckbox() {
+        function inicializaCheckbox() {
 
         vm.distriTodo = false;
         vm.todoTodoselected = false;
@@ -1110,260 +1110,260 @@ vm.seleccionarTodo = seleccionarTodo;
         vm.periodoTodo = false;
         vm.calleTodo = false;
 
-        pla = 0, est = 0, coloni = 0, sinter = 0, sdig = 0, tipo = 0, peri = 0;				
-		//-------- status cliente
-		vm.staC =  false;				
-		vm.staF = false;
-		vm.staS =  false;				
-		vm.staI =  false;
-		vm.staD =  false;
-		vm.statN =  false;
-		vm.statT =  false;
-		//-------busca o no
-		vm.buscaOno = false;
-		buscaOnovar = 0;
-	}
+        pla = 0, est = 0, coloni = 0, sinter = 0, sdig = 0, tipo = 0, peri = 0;             
+        //-------- status cliente
+        vm.staC =  false;               
+        vm.staF = false;
+        vm.staS =  false;               
+        vm.staI =  false;
+        vm.staD =  false;
+        vm.statN =  false;
+        vm.statT =  false;
+        //-------busca o no
+        vm.buscaOno = false;
+        buscaOnovar = 0;
+    }
 
 
-	vm.statusCancel = statusCancel;
+    vm.statusCancel = statusCancel;
     function statusCancel() {
         if (objParametros.baja == 1) //checked
-			{
-				vm.divMotivoCancelacion1 = true; //se oculta
-				//---------------------------------------------------------------
-				objParametros.baja = 0;		
+            {
+                vm.divMotivoCancelacion1 = true; //se oculta
+                //---------------------------------------------------------------
+                objParametros.baja = 0;     
              
-			} else if (objParametros.baja == 0) // not checked
-			{
-				vm.divMotivoCancelacion1 = false; //se muestra
-				//---------------------------------------------------------------
-				objParametros.baja = 1;
-			}           
-		}
+            } else if (objParametros.baja == 0) // not checked
+            {
+                vm.divMotivoCancelacion1 = false; //se muestra
+                //---------------------------------------------------------------
+                objParametros.baja = 1;
+            }           
+        }
 
 
-	function showOpcion() {
+    function showOpcion() {
               
-	vm.search = null; //limpia barra búsqueda
-	vm.botonRegresar = true; //no muestra
+    vm.search = null; //limpia barra búsqueda
+    vm.botonRegresar = true; //no muestra
     vm.pdistribuidores = true; //no mostrar
-	vm.pplazas = true; //no mostrar
-	vm.pestados = true;
-	vm.pciudades = true;
-	vm.plocalidades = true;
-	vm.pcolonias = true;
-	vm.pserviciosInternet = true;
-	vm.pserviciosDigital = true;
-	vm.ptipoclientes = true;
-	vm.pperiodos = true;
-	vm.prangosfecha = true;
-	vm.pmesanio = true;
-	vm.pcalles = true;
-	vm.pstatus = true;
-	vm.preporte = true;
-	}
+    vm.pplazas = true; //no mostrar
+    vm.pestados = true;
+    vm.pciudades = true;
+    vm.plocalidades = true;
+    vm.pcolonias = true;
+    vm.pserviciosInternet = true;
+    vm.pserviciosDigital = true;
+    vm.ptipoclientes = true;
+    vm.pperiodos = true;
+    vm.prangosfecha = true;
+    vm.pmesanio = true;
+    vm.pcalles = true;
+    vm.pstatus = true;
+    vm.preporte = true;
+    }
 
 
-			vm.elMenu = elMenu
+            vm.elMenu = elMenu
 
-			function elMenu() {
-				vm.myButton1 = 'btn-default';
-				vm.myButton2 = 'btn-default';
-				vm.myButton3 = 'btn-default';
-				vm.myButton4 = 'btn-default';
-				vm.myButton5 = 'btn-default';
-				vm.myButton6 = 'btn-default';
-				vm.myButton7 = 'btn-default';
-				vm.myButton8 = 'btn-default';
-				vm.myButton9 = 'btn-default';
-				vm.myButton10 = 'btn-default';
-				vm.myButton11 = 'btn-default';
-				vm.myButton12 = 'btn-default';
-				vm.myButton13 = 'btn-default';
-				vm.myButton14 = 'btn-default';
+            function elMenu() {
+                vm.myButton1 = 'btn-default';
+                vm.myButton2 = 'btn-default';
+                vm.myButton3 = 'btn-default';
+                vm.myButton4 = 'btn-default';
+                vm.myButton5 = 'btn-default';
+                vm.myButton6 = 'btn-default';
+                vm.myButton7 = 'btn-default';
+                vm.myButton8 = 'btn-default';
+                vm.myButton9 = 'btn-default';
+                vm.myButton10 = 'btn-default';
+                vm.myButton11 = 'btn-default';
+                vm.myButton12 = 'btn-default';
+                vm.myButton13 = 'btn-default';
+                vm.myButton14 = 'btn-default';
 
-			}
+            }
 
-	function changeBgColor(valReporte) {
+    function changeBgColor(valReporte) {
         vm.elMenu();
         switch (valReporte) {
-			case 1:
-				vm.myButton1 = "btn-info active";
-		  	    break;
-			case 2:
-			     vm.myButton2 = "btn-info active";
-				break;
-			case 3:
-				vm.myButton3 = "btn-info active";
-				break;
-			case 4:
-				vm.myButton4 = "btn-info active";
-				break;
-			case 5:
-				vm.myButton5 = "btn-info active";
-				break;
-			case 6:
-				vm.myButton6 = "btn-info active";
-				break;
-			case 7:
-				vm.myButton7 = "btn-info active";
-				break;
-			case 8:
-				vm.myButton8 = "btn-info active";
-				break;
-			case 9:
-				vm.myButton9 = "btn-info active";
-				break;
-			case 10:
-			vm.myButton10 = "btn-info active";
-				break;
-			case 11:
-				vm.myButton11 = "btn-info active";
-				break;
-			case 12:
-				vm.myButton12 = "btn-info active";
-				break;
-			case 13:
-				vm.myButton13 = "btn-info active";
-				break;
-			case 14:
-				vm.myButton14 = "btn-info active";
-				break;
-				}
+            case 1:
+                vm.myButton1 = "btn-info active";
+                break;
+            case 2:
+                 vm.myButton2 = "btn-info active";
+                break;
+            case 3:
+                vm.myButton3 = "btn-info active";
+                break;
+            case 4:
+                vm.myButton4 = "btn-info active";
+                break;
+            case 5:
+                vm.myButton5 = "btn-info active";
+                break;
+            case 6:
+                vm.myButton6 = "btn-info active";
+                break;
+            case 7:
+                vm.myButton7 = "btn-info active";
+                break;
+            case 8:
+                vm.myButton8 = "btn-info active";
+                break;
+            case 9:
+                vm.myButton9 = "btn-info active";
+                break;
+            case 10:
+            vm.myButton10 = "btn-info active";
+                break;
+            case 11:
+                vm.myButton11 = "btn-info active";
+                break;
+            case 12:
+                vm.myButton12 = "btn-info active";
+                break;
+            case 13:
+                vm.myButton13 = "btn-info active";
+                break;
+            case 14:
+                vm.myButton14 = "btn-info active";
+                break;
+                }
 
-				reporteSeleccionado = valReporte;
-				cleanArray();
-				showOpcion();
-				vm.pdistribuidores = false; //mostrar
-			}
-
-
-
-			// 1.- DISTRIBUIDORES
-			vm.filtroDistribuidores = filtroDistribuidores;
-
-			function filtroDistribuidores() {
-				//Si el array Distribuidores está vacío, no pasar al siguiente modal
-				if (Distribuidores.length == 0) {
-					ngNotify.set('Seleccione al menos un distribuidor', {
-						type: 'error'
-					});
-				} else //array no vacío
-				{
-					if (banderas.banderaTodoSeleccionado == 1) {
-						showServiciosDI(); //va a servicios <--
-					} else { // sigue orden normal
-						showplazas(); //muestra siguiente modal
-					}
-				}
-
-			}
+                reporteSeleccionado = valReporte;
+                cleanArray();
+                showOpcion();
+                vm.pdistribuidores = false; //mostrar
+            }
 
 
-			// 2.- PLAZAS
-			vm.showplazas = showplazas;
 
-			function showplazas() {
+            // 1.- DISTRIBUIDORES
+            vm.filtroDistribuidores = filtroDistribuidores;
 
-				vm.search = ""; //limpia barra búsqueda
-				vm.pplazas = false; //show
-				vm.pdistribuidores = true; //hide
-				ListaPlazas();
-			}
+            function filtroDistribuidores() {
+                //Si el array Distribuidores está vacío, no pasar al siguiente modal
+                if (Distribuidores.length == 0) {
+                    ngNotify.set('Seleccione al menos un distribuidor', {
+                        type: 'error'
+                    });
+                } else //array no vacío
+                {
+                    if (banderas.banderaTodoSeleccionado == 1) {
+                        showServiciosDI(); //va a servicios <--
+                    } else { // sigue orden normal
+                        showplazas(); //muestra siguiente modal
+                    }
+                }
 
-
-			// 3.- ESTADOS
-
-			vm.showEstados = showEstados;
-
-			function showEstados() {
-			
-				if (Plazas.length == 0) //Si el array Distribuidores está vacío, no pasar al siguiente modal
-				{
-					ngNotify.set('Seleccione al menos una plaza', {
-						type: 'error'
-					});
-				} else {
-					vm.search = null; //limpia barra búsqueda
-					vm.pplazas = true;
-					vm.pdistribuidores = true;
-					vm.pestados = false; //show
-					ListaEstados();
-				}
-			}
-
-			// 4.- CIUDADES
+            }
 
 
-			vm.showCiudades = showCiudades;
+            // 2.- PLAZAS
+            vm.showplazas = showplazas;
 
-			function showCiudades() {
-				//Si el array está vacío, no pasar al siguiente modal
-				if (Estados.length == 0) {
-					//alert('Seleccione al menos un estado');
-					ngNotify.set('Seleccione al menos un estado', {
-						type: 'error'
-					});
-				} else {
-					vm.search = null; //limpia barra búsqueda
-					vm.pplazas = true;
-					vm.pestados = true;
-					vm.pciudades = false;
-					ListaCiudades();
-				}
-			}
+            function showplazas() {
 
-			// 5.- LOCALIDADES
+                vm.search = ""; //limpia barra búsqueda
+                vm.pplazas = false; //show
+                vm.pdistribuidores = true; //hide
+                ListaPlazas();
+            }
 
 
-			vm.showLocalidades = showLocalidades;
+            // 3.- ESTADOS
 
-			function showLocalidades() {
-		
-				//Si el array  está vacío, no pasar al siguiente modal
-				if (Ciudades.length == 0) {
-					//alert('Seleccione al menos una ciudad');
-					ngNotify.set('Seleccione al menos una ciudad', {
-						type: 'error'
-					});
-				} else {				
-					vm.search = null; //limpia barra búsqueda
-					vm.pplazas = true;
-					vm.pestados = true;
-					vm.pciudades = true;
-					vm.plocalidades = false;
-					ListaLocalidades();
-				}
-			}
+            vm.showEstados = showEstados;
 
-			// 6.- COLONIAS
-			vm.showColonias = showColonias;
+            function showEstados() {
+            
+                if (Plazas.length == 0) //Si el array Distribuidores está vacío, no pasar al siguiente modal
+                {
+                    ngNotify.set('Seleccione al menos una plaza', {
+                        type: 'error'
+                    });
+                } else {
+                    vm.search = null; //limpia barra búsqueda
+                    vm.pplazas = true;
+                    vm.pdistribuidores = true;
+                    vm.pestados = false; //show
+                    ListaEstados();
+                }
+            }
 
-			function showColonias() { //Si el array Distribuidores está vacío, no pasar al siguiente modal
-			
-				if (Localidades.length == 0) {
-					//alert('Seleccione al menos una localidad');
-					ngNotify.set('Seleccione al menos una localidad', {
-						type: 'error'
-					});
-				} else {
-					vm.search = null; //limpia barra búsqueda
-					vm.pplazas = true;
-					vm.pestados = true;
-					vm.pciudades = true;
-					vm.plocalidades = true;
-					vm.pcolonias = false;
-					ListaColonias();
-				}
-			}
+            // 4.- CIUDADES
 
 
-			// 7.- SERVICIOS
+            vm.showCiudades = showCiudades;
 
-			vm.showServiciosDI = showServiciosDI;
+            function showCiudades() {
+                //Si el array está vacío, no pasar al siguiente modal
+                if (Estados.length == 0) {
+                    //alert('Seleccione al menos un estado');
+                    ngNotify.set('Seleccione al menos un estado', {
+                        type: 'error'
+                    });
+                } else {
+                    vm.search = null; //limpia barra búsqueda
+                    vm.pplazas = true;
+                    vm.pestados = true;
+                    vm.pciudades = false;
+                    ListaCiudades();
+                }
+            }
 
-		function showServiciosDI() // muestra servicios digital o internet
-		{
+            // 5.- LOCALIDADES
+
+
+            vm.showLocalidades = showLocalidades;
+
+            function showLocalidades() {
+        
+                //Si el array  está vacío, no pasar al siguiente modal
+                if (Ciudades.length == 0) {
+                    //alert('Seleccione al menos una ciudad');
+                    ngNotify.set('Seleccione al menos una ciudad', {
+                        type: 'error'
+                    });
+                } else {                
+                    vm.search = null; //limpia barra búsqueda
+                    vm.pplazas = true;
+                    vm.pestados = true;
+                    vm.pciudades = true;
+                    vm.plocalidades = false;
+                    ListaLocalidades();
+                }
+            }
+
+            // 6.- COLONIAS
+            vm.showColonias = showColonias;
+
+            function showColonias() { //Si el array Distribuidores está vacío, no pasar al siguiente modal
+            
+                if (Localidades.length == 0) {
+                    //alert('Seleccione al menos una localidad');
+                    ngNotify.set('Seleccione al menos una localidad', {
+                        type: 'error'
+                    });
+                } else {
+                    vm.search = null; //limpia barra búsqueda
+                    vm.pplazas = true;
+                    vm.pestados = true;
+                    vm.pciudades = true;
+                    vm.plocalidades = true;
+                    vm.pcolonias = false;
+                    ListaColonias();
+                }
+            }
+
+
+            // 7.- SERVICIOS
+
+            vm.showServiciosDI = showServiciosDI;
+
+        function showServiciosDI() // muestra servicios digital o internet
+        {
             
             //Si el array está vacío, no pasar al siguiente modal
             if ((Colonias.length == 0) && banderas.banderaTodoSeleccionado == 0) 
@@ -1395,250 +1395,250 @@ vm.seleccionarTodo = seleccionarTodo;
         }
 
 
-			// 8.- TIPO DE CLIENTES
+            // 8.- TIPO DE CLIENTES
 
-			vm.showTipoClientes = showTipoClientes;
-			function showTipoClientes() {
-		
-				if (reporteSeleccionado != 12) {
-					//Si el array está vacío, no pasar al siguiente modal
-					if (((servicioSeleccionado == 3) && (ServiciosDigital.length == 0)) || ((servicioSeleccionado == 2) && (ServiciosInternet.length == 0))) {
-						//alert('Seleccione al menos un servicio');
-						ngNotify.set('Seleccione al menos un servicio', {
-							type: 'error'
-						});
-					} else {
-						vm.search = null; //limpia barra búsqueda
-						vm.pplazas = true;
-						vm.pestados = true;
-						vm.pciudades = true;
-						vm.plocalidades = true;
-						vm.pcolonias = true;
-						vm.pserviciosInternet = true;
-						vm.pserviciosDigital = true;
-						vm.ptipoclientes = false; // sí se muestra tipo clientes
-						ListaTipoClientes();
-					}
-				} else if (reporteSeleccionado == 12) //Si el reporte seleccionado es '12.- Paquetes de Cortesía'
-				{
-					vm.showPeriodos(); //no muestra 'tipoclientes' y muestra el siguiente
-				}
-			}
-
-
+            vm.showTipoClientes = showTipoClientes;
+            function showTipoClientes() {
+        
+                if (reporteSeleccionado != 12) {
+                    //Si el array está vacío, no pasar al siguiente modal
+                    if (((servicioSeleccionado == 3) && (ServiciosDigital.length == 0)) || ((servicioSeleccionado == 2) && (ServiciosInternet.length == 0))) {
+                        //alert('Seleccione al menos un servicio');
+                        ngNotify.set('Seleccione al menos un servicio', {
+                            type: 'error'
+                        });
+                    } else {
+                        vm.search = null; //limpia barra búsqueda
+                        vm.pplazas = true;
+                        vm.pestados = true;
+                        vm.pciudades = true;
+                        vm.plocalidades = true;
+                        vm.pcolonias = true;
+                        vm.pserviciosInternet = true;
+                        vm.pserviciosDigital = true;
+                        vm.ptipoclientes = false; // sí se muestra tipo clientes
+                        ListaTipoClientes();
+                    }
+                } else if (reporteSeleccionado == 12) //Si el reporte seleccionado es '12.- Paquetes de Cortesía'
+                {
+                    vm.showPeriodos(); //no muestra 'tipoclientes' y muestra el siguiente
+                }
+            }
 
 
 
-			// 9.- PERIODOS
-
-			vm.showPeriodos = showPeriodos;
-
-			function showPeriodos() {
-				
-
-				if (reporteSeleccionado != 12) //Filtro para los reportes que tienen tipo de clientes
-				{
-					if (TipoClientes.length == 0) {
-						//alert('Seleccione al menos un tipo de cliente');
-						ngNotify.set('Seleccione al menos un tipo de cliente', {
-							type: 'error'
-						});
-					} else {
-						vm.search = null; //limpia barra búsqueda
-						vm.pplazas = true;
-						vm.pestados = true;
-						vm.pciudades = true;
-						vm.plocalidades = true;
-						vm.pcolonias = true;
-						vm.pserviciosInternet = true;
-						vm.pserviciosDigital = true;
-						vm.ptipoclientes = true;
-						vm.pperiodos = false; //muestra periodos
-						ListaPeriodos();
-					}
-				} else if (reporteSeleccionado == 12) // Reporte no tiene tipos de clientes
-				{
-					vm.search = null; //limpia barra búsqueda
-					vm.pplazas = true;
-					vm.pestados = true;
-					vm.pciudades = true;
-					vm.plocalidades = true;
-					vm.pcolonias = true;
-					vm.pserviciosInternet = true;
-					vm.pserviciosDigital = true;
-					vm.ptipoclientes = true;
-					vm.pperiodos = false; //muestra periodos
-					ListaPeriodos();
-				}
-			}
 
 
+            // 9.- PERIODOS
 
-			//10.- RANGOS DE FECHA
-			vm.showRangosFecha = showRangosFecha;
+            vm.showPeriodos = showPeriodos;
 
-			function showRangosFecha() {
-			
+            function showPeriodos() {
+                
 
-				if (Periodos.length == 0) //Si el array Periodos está vacío, no pasar al siguiente modal
-				{
-					ngNotify.set('Seleccione al menos un periodo', {
-						type: 'error'
-					});
-				} else {
-					if ((reporteSeleccionado >= 1 && reporteSeleccionado <= 4) || (reporteSeleccionado == 10) || (reporteSeleccionado == 12)) {
-
-						showReporte();
-					} else if ((reporteSeleccionado == 5) || (reporteSeleccionado == 6) || (reporteSeleccionado == 8) || (reporteSeleccionado == 9) || (reporteSeleccionado == 11)) {
-						if (reporteSeleccionado == 9) //Muestra div Motcan si es el reporte 9.-Cancelaciones
-						{
-							vm.MotcanDiv = false; //se muestra       //divT1 = document.getElementById("MotcanDiv");divT1.style.display = "";
-						} else //No muestra el div Motcan
-						{
-							vm.MotcanDiv = true; //se oculta      //divT2 = document.getElementById("MotcanDiv");                    divT2.style.display = "none";
-						}
-
-						vm.search = null; //limpia barra búsqueda
-						//rangosFecha existe
-						vm.pplazas = true;
-						vm.pestados = true;
-						vm.pciudades = true;
-						vm.plocalidades = true;
-						vm.pcolonias = true;
-						vm.pserviciosInternet = true;
-						vm.pserviciosDigital = true;
-						vm.ptipoclientes = true;
-						vm.pperiodos = true;
-						vm.prangosfecha = false;
-						// ListaMotcan();  //ListaRangosFecha();
-
-					} else //cualquier otro reporte
-					{
-						//rangosFecha no existe en estos reportes, pasa al siguiente modal,        no es necesario filtroRangosFecha
-						vm.showMesAnio();
-					}
-				}
-			}
+                if (reporteSeleccionado != 12) //Filtro para los reportes que tienen tipo de clientes
+                {
+                    if (TipoClientes.length == 0) {
+                        //alert('Seleccione al menos un tipo de cliente');
+                        ngNotify.set('Seleccione al menos un tipo de cliente', {
+                            type: 'error'
+                        });
+                    } else {
+                        vm.search = null; //limpia barra búsqueda
+                        vm.pplazas = true;
+                        vm.pestados = true;
+                        vm.pciudades = true;
+                        vm.plocalidades = true;
+                        vm.pcolonias = true;
+                        vm.pserviciosInternet = true;
+                        vm.pserviciosDigital = true;
+                        vm.ptipoclientes = true;
+                        vm.pperiodos = false; //muestra periodos
+                        ListaPeriodos();
+                    }
+                } else if (reporteSeleccionado == 12) // Reporte no tiene tipos de clientes
+                {
+                    vm.search = null; //limpia barra búsqueda
+                    vm.pplazas = true;
+                    vm.pestados = true;
+                    vm.pciudades = true;
+                    vm.plocalidades = true;
+                    vm.pcolonias = true;
+                    vm.pserviciosInternet = true;
+                    vm.pserviciosDigital = true;
+                    vm.ptipoclientes = true;
+                    vm.pperiodos = false; //muestra periodos
+                    ListaPeriodos();
+                }
+            }
 
 
-			//11
-			vm.showMesAnio = showMesAnio;
-			function showMesAnio() {
 
-				if ((reporteSeleccionado == 5) || (reporteSeleccionado == 6) 
+            //10.- RANGOS DE FECHA
+            vm.showRangosFecha = showRangosFecha;
+
+            function showRangosFecha() {
+            
+
+                if (Periodos.length == 0) //Si el array Periodos está vacío, no pasar al siguiente modal
+                {
+                    ngNotify.set('Seleccione al menos un periodo', {
+                        type: 'error'
+                    });
+                } else {
+                    if ((reporteSeleccionado >= 1 && reporteSeleccionado <= 4) || (reporteSeleccionado == 10) || (reporteSeleccionado == 12)) {
+
+                        showReporte();
+                    } else if ((reporteSeleccionado == 5) || (reporteSeleccionado == 6) || (reporteSeleccionado == 8) || (reporteSeleccionado == 9) || (reporteSeleccionado == 11)) {
+                        if (reporteSeleccionado == 9) //Muestra div Motcan si es el reporte 9.-Cancelaciones
+                        {
+                            vm.MotcanDiv = false; //se muestra       //divT1 = document.getElementById("MotcanDiv");divT1.style.display = "";
+                        } else //No muestra el div Motcan
+                        {
+                            vm.MotcanDiv = true; //se oculta      //divT2 = document.getElementById("MotcanDiv");                    divT2.style.display = "none";
+                        }
+
+                        vm.search = null; //limpia barra búsqueda
+                        //rangosFecha existe
+                        vm.pplazas = true;
+                        vm.pestados = true;
+                        vm.pciudades = true;
+                        vm.plocalidades = true;
+                        vm.pcolonias = true;
+                        vm.pserviciosInternet = true;
+                        vm.pserviciosDigital = true;
+                        vm.ptipoclientes = true;
+                        vm.pperiodos = true;
+                        vm.prangosfecha = false;
+                        // ListaMotcan();  //ListaRangosFecha();
+
+                    } else //cualquier otro reporte
+                    {
+                        //rangosFecha no existe en estos reportes, pasa al siguiente modal,        no es necesario filtroRangosFecha
+                        vm.showMesAnio();
+                    }
+                }
+            }
+
+
+            //11
+            vm.showMesAnio = showMesAnio;
+            function showMesAnio() {
+
+                if ((reporteSeleccionado == 5) || (reporteSeleccionado == 6) 
                     || (reporteSeleccionado == 8) || (reporteSeleccionado == 9) || (reporteSeleccionado == 11)){
 
-					var D1 = vm.fechaInicial; // no se usa porque tiene formato con zona horaria
-					var month = D1.getUTCMonth() + 1; //months from 1-12
-					var day = D1.getUTCDate();
-					var year = D1.getUTCFullYear();
-					var fechaInicialYMD = year + "/" + month + "/" + day;
+                    var D1 = vm.fechaInicial; // no se usa porque tiene formato con zona horaria
+                    var month = D1.getUTCMonth() + 1; //months from 1-12
+                    var day = D1.getUTCDate();
+                    var year = D1.getUTCFullYear();
+                    var fechaInicialYMD = year + "/" + month + "/" + day;
 
-					var D2 = vm.fechaFinal; // no se usa porque tiene formato con zona horaria
-					var month = D2.getUTCMonth() + 1; //months from 1-12
-					var day = D2.getUTCDate();
-					var year = D2.getUTCFullYear();
-					var fechaFinalYMD = year + "/" + month + "/" + day;
+                    var D2 = vm.fechaFinal; // no se usa porque tiene formato con zona horaria
+                    var month = D2.getUTCMonth() + 1; //months from 1-12
+                    var day = D2.getUTCDate();
+                    var year = D2.getUTCFullYear();
+                    var fechaFinalYMD = year + "/" + month + "/" + day;
 
-					objPrincipal.fecha_ini = fechaInicialYMD; 
-					objPrincipal.fecha_fin = fechaFinalYMD; 
+                    objPrincipal.fecha_ini = fechaInicialYMD; 
+                    objPrincipal.fecha_fin = fechaFinalYMD; 
 
-					if (reporteSeleccionado == 9) //9.-Cancelaciones
-					{
-						objRangoFechas.motcan = vm.selectedMotcan1.Clv_MOTCAN; //vm.motcan1; 
-						objRangoFechas.motivo = 1; 
-					} else //Como no muestra el div Motcan, todo en ceros
-					{
-						objRangoFechas.motcan = 0; //id opcion seleccionada
-						objRangoFechas.motivo = 0; //lista no activa
-					}
-					//alert('motcan ' + objRangoFechas.motcan + ' ' + ' motivo ' + objRangoFechas.motivo + 'PASA AL FINAL');
+                    if (reporteSeleccionado == 9) //9.-Cancelaciones
+                    {
+                        objRangoFechas.motcan = vm.selectedMotcan1.Clv_MOTCAN; //vm.motcan1; 
+                        objRangoFechas.motivo = 1; 
+                    } else //Como no muestra el div Motcan, todo en ceros
+                    {
+                        objRangoFechas.motcan = 0; //id opcion seleccionada
+                        objRangoFechas.motivo = 0; //lista no activa
+                    }
+                    //alert('motcan ' + objRangoFechas.motcan + ' ' + ' motivo ' + objRangoFechas.motivo + 'PASA AL FINAL');
 
-					showReporte();
-				} else {
-					//objPrincipal.fecha_ini = "0000-00-00";
-					objPrincipal.fecha_ini = String.Empty; //string null
-					objPrincipal.fecha_fin = String.Empty; // string null "0000-00-00";
-					//alert('objPrincipal.fecha_ini  ' + objPrincipal.fecha_ini + ' ' + ' objPrincipal.fecha_fin ' + objPrincipal.fecha_fin);
+                    showReporte();
+                } else {
+                    //objPrincipal.fecha_ini = "0000-00-00";
+                    objPrincipal.fecha_ini = String.Empty; //string null
+                    objPrincipal.fecha_fin = String.Empty; // string null "0000-00-00";
+                    //alert('objPrincipal.fecha_ini  ' + objPrincipal.fecha_ini + ' ' + ' objPrincipal.fecha_fin ' + objPrincipal.fecha_fin);
 
-					if (reporteSeleccionado == 7) {
-						vm.search = null; //limpia barra búsqueda
-						//showMesAnio existe
-						vm.pplazas = true;
-						vm.pestados = true;
-						vm.pciudades = true;
-						vm.plocalidades = true;
-						vm.pcolonias = true;
-						vm.pserviciosInternet = true;
-						vm.pserviciosDigital = true;
-						vm.ptipoclientes = true;
-						vm.pperiodos = true;
-						vm.prangosfecha = true;
-						vm.pmesanio = false;
-						//ListaMesAnio();
-					} else //cualquier otro reporte
-					{
-						vm.showCalles();
-					}
-				}
-			}
+                    if (reporteSeleccionado == 7) {
+                        vm.search = null; //limpia barra búsqueda
+                        //showMesAnio existe
+                        vm.pplazas = true;
+                        vm.pestados = true;
+                        vm.pciudades = true;
+                        vm.plocalidades = true;
+                        vm.pcolonias = true;
+                        vm.pserviciosInternet = true;
+                        vm.pserviciosDigital = true;
+                        vm.ptipoclientes = true;
+                        vm.pperiodos = true;
+                        vm.prangosfecha = true;
+                        vm.pmesanio = false;
+                        //ListaMesAnio();
+                    } else //cualquier otro reporte
+                    {
+                        vm.showCalles();
+                    }
+                }
+            }
 
 
-			//12.- CALLES
+            //12.- CALLES
 
-			vm.showCalles = showCalles;
+            vm.showCalles = showCalles;
 
-			function showCalles() {
+            function showCalles() {
 
-				if ((reporteSeleccionado == 7)) {
+                if ((reporteSeleccionado == 7)) {
                      
-					if (vm.anioC.value == 0) {
-						//alert("Escriba un año");
-						ngNotify.set('Escriba un año', {
-							type: 'error'
-						});
-					} else {
-                        //mes anio					
+                    if (vm.anioC.value == 0) {
+                        //alert("Escriba un año");
+                        ngNotify.set('Escriba un año', {
+                            type: 'error'
+                        });
+                    } else {
+                        //mes anio                  
                         estatusCliente.mes = vm.ultimoMes.value; 
-						estatusCliente.anio = vm.anioC.value; //toma el año tecleado
-						showReporte();
-					}
-				} else {
-					if ((reporteSeleccionado == 13) || (reporteSeleccionado == 14)) //calles existe en estos reportes
-					{
+                        estatusCliente.anio = vm.anioC.value; //toma el año tecleado
+                        showReporte();
+                    }
+                } else {
+                    if ((reporteSeleccionado == 13) || (reporteSeleccionado == 14)) //calles existe en estos reportes
+                    {
                         if (banderas.banderaTodoSeleccionado == 0) //SÍ muestra las calles 
                         {
-						vm.search = null; //limpia barra búsqueda
-						vm.pplazas = true;
-						vm.pestados = true;
-						vm.pciudades = true;
-						vm.plocalidades = true;
-						vm.pcolonias = true;
-						vm.pserviciosInternet = true;
-						vm.pserviciosDigital = true;
-						vm.ptipoclientes = true;
-						vm.pperiodos = true;
-						vm.prangosfecha = true;
-						vm.pmesanio = true;
-						vm.pcalles = false;
-						ListaCalles();
+                        vm.search = null; //limpia barra búsqueda
+                        vm.pplazas = true;
+                        vm.pestados = true;
+                        vm.pciudades = true;
+                        vm.plocalidades = true;
+                        vm.pcolonias = true;
+                        vm.pserviciosInternet = true;
+                        vm.pserviciosDigital = true;
+                        vm.ptipoclientes = true;
+                        vm.pperiodos = true;
+                        vm.prangosfecha = true;
+                        vm.pmesanio = true;
+                        vm.pcalles = false;
+                        ListaCalles();
                         }
                         else if (banderas.banderaTodoSeleccionado == 1)//NO muestra las calles
                         {   
                             showStatus(); //pasa al siguiente 
                         }
-					}
-				}
-			}
+                    }
+                }
+            }
 
 
 
-			//13.- Status del cliente
-			vm.showStatus = showStatus;
-			function showStatus() {
+            //13.- Status del cliente
+            vm.showStatus = showStatus;
+            function showStatus() {
 
-				if ((reporteSeleccionado == 13) || (reporteSeleccionado == 14)) { //Si el array Calles está vacío, no pasar al siguiente modal
-					
+                if ((reporteSeleccionado == 13) || (reporteSeleccionado == 14)) { //Si el array Calles está vacío, no pasar al siguiente modal
+                    
                     if (banderas.banderaTodoSeleccionado == 0)
                     {
                         if (Calles.length == 0) {
@@ -1652,8 +1652,8 @@ vm.seleccionarTodo = seleccionarTodo;
                     { 
                         modalStatus();
                     }                    
-				}
-			}
+                }
+            }
 
 
             vm.modalStatus = modalStatus;
@@ -1677,97 +1677,97 @@ vm.seleccionarTodo = seleccionarTodo;
 
 
 
-			vm.divMotivoCancelacion2 = true; //se oculta
+            vm.divMotivoCancelacion2 = true; //se oculta
 
-			vm.buscaOnoFunction = buscaOnoFunction;
+            vm.buscaOnoFunction = buscaOnoFunction;
 
-			function buscaOnoFunction() {
-				if (buscaOnovar == 1) //checked
-				{
-					vm.divMotivoCancelacion2 = true; //se oculta
-					////---------------------------------------------------------------
-					buscaOnovar = 0;  
-				} else if (buscaOnovar == 0) // not checked
-				{
-					vm.divMotivoCancelacion2 = false; //se muestra
-					////---------------------------------------------------------------
-					buscaOnovar = 1;
+            function buscaOnoFunction() {
+                if (buscaOnovar == 1) //checked
+                {
+                    vm.divMotivoCancelacion2 = true; //se oculta
+                    ////---------------------------------------------------------------
+                    buscaOnovar = 0;  
+                } else if (buscaOnovar == 0) // not checked
+                {
+                    vm.divMotivoCancelacion2 = false; //se muestra
+                    ////---------------------------------------------------------------
+                    buscaOnovar = 1;
 
-				}
-			}
+                }
+            }
 
 
 
-			vm.filtroStatus = filtroStatus;
-			function filtroStatus() {
-			
-				if ((objParametros.conectado == 0) && (objParametros.Insta == 0) && (objParametros.DescTmp == 0) && (objParametros.Fuera == 0) &&
-					(objParametros.Desconect == 0) && (objParametros.Susp == 0) && (objParametros.conectado == 0) && (objParametros.baja == 0)) {
-					//alert("Seleccione por lo menos un status");
-					ngNotify.set('Seleccione al menos un status', {
-						type: 'error'
-					});
-				} else if ((objParametros.conectado == 1) || (objParametros.Insta == 1) || (objParametros.DescTmp == 1) || (objParametros.Fuera == 1) ||
-					(objParametros.Desconect == 1) || (objParametros.Susp == 1) || (objParametros.conectado == 1) || (objParametros.baja == 1)) {
+            vm.filtroStatus = filtroStatus;
+            function filtroStatus() {
+            
+                if ((objParametros.conectado == 0) && (objParametros.Insta == 0) && (objParametros.DescTmp == 0) && (objParametros.Fuera == 0) &&
+                    (objParametros.Desconect == 0) && (objParametros.Susp == 0) && (objParametros.conectado == 0) && (objParametros.baja == 0)) {
+                    //alert("Seleccione por lo menos un status");
+                    ngNotify.set('Seleccione al menos un status', {
+                        type: 'error'
+                    });
+                } else if ((objParametros.conectado == 1) || (objParametros.Insta == 1) || (objParametros.DescTmp == 1) || (objParametros.Fuera == 1) ||
+                    (objParametros.Desconect == 1) || (objParametros.Susp == 1) || (objParametros.conectado == 1) || (objParametros.baja == 1)) {
 
-					objRangoFechas.motcan = vm.selectedMotcan2.Clv_MOTCAN;
+                    objRangoFechas.motcan = vm.selectedMotcan2.Clv_MOTCAN;
                     objRangoFechas.motivo = 0; 
 
-					if (buscaOnovar == 1) //checked
-					{
-						if (vm.anioC2.value == 0) //en modal estatusCliente
-						{
-							//alert("Escriba un año");
-							ngNotify.set('Escriba un año', {
-								type: 'error'
-							});
-						} else {
+                    if (buscaOnovar == 1) //checked
+                    {
+                        if (vm.anioC2.value == 0) //en modal estatusCliente
+                        {
+                            //alert("Escriba un año");
+                            ngNotify.set('Escriba un año', {
+                                type: 'error'
+                            });
+                        } else {
                             // status
-							estatusCliente.buscaOno = 1;
-							estatusCliente.buscarPor = vm.menoresModel;
-							estatusCliente.mes = vm.mesQueAdeuda.value; 
-							estatusCliente.anio = vm.anioC2.value;
-							 // $("#anioC2").val();
-							//pasa al siguiente modal
-							showReporte();
-						}
-					} else {
-						estatusCliente.buscaOno = 0;
-						estatusCliente.buscarPor = 0; //<= ó =
-						estatusCliente.mes = 0;
-						estatusCliente.anio = 0;
-						//alert('PASA AL FINAL');
-						showReporte();
-					}
-				}
-			}
+                            estatusCliente.buscaOno = 1;
+                            estatusCliente.buscarPor = vm.menoresModel;
+                            estatusCliente.mes = vm.mesQueAdeuda.value; 
+                            estatusCliente.anio = vm.anioC2.value;
+                             // $("#anioC2").val();
+                            //pasa al siguiente modal
+                            showReporte();
+                        }
+                    } else {
+                        estatusCliente.buscaOno = 0;
+                        estatusCliente.buscarPor = 0; //<= ó =
+                        estatusCliente.mes = 0;
+                        estatusCliente.anio = 0;
+                        //alert('PASA AL FINAL');
+                        showReporte();
+                    }
+                }
+            }
 
 
 
 
 
 
-			//14
-			vm.showReporte = showReporte;
+            //14
+            vm.showReporte = showReporte;
 
-			function showReporte() {
-				vm.search = null; //limpia barra búsqueda
-				vm.pplazas = true;
-				vm.pestados = true;
-				vm.pciudades = true;
-				vm.plocalidades = true;
-				vm.pcolonias = true;
-				vm.pserviciosInternet = true;
-				vm.pserviciosDigital = true;
-				vm.ptipoclientes = true;
-				vm.pperiodos = true;
-				vm.prangosfecha = true;
-				vm.pmesanio = true;
-				vm.pcalles = true;
-				vm.pstatus = true;
-				vm.preporte = false;
+            function showReporte() {
+                vm.search = null; //limpia barra búsqueda
+                vm.pplazas = true;
+                vm.pestados = true;
+                vm.pciudades = true;
+                vm.plocalidades = true;
+                vm.pcolonias = true;
+                vm.pserviciosInternet = true;
+                vm.pserviciosDigital = true;
+                vm.ptipoclientes = true;
+                vm.pperiodos = true;
+                vm.prangosfecha = true;
+                vm.pmesanio = true;
+                vm.pcalles = true;
+                vm.pstatus = true;
+                vm.preporte = false;
 
-				muestraDistribuidores(); //crea xml
+                muestraDistribuidores(); //crea xml
             }
 
 //-------------------------------------------------------------------------------------------
@@ -1775,37 +1775,37 @@ vm.seleccionarTodo = seleccionarTodo;
 
     vm.ListaPlazas = ListaPlazas;
     function ListaPlazas() {  
-	   reportesVariosFactory.mostrarPlazaByDistribuidor(vm.clv_usuario, Distribuidores).then(function(data) {	
-	       vm.PlazasTable = data.GetPlazasByDistribuidorResult; //mostrar en tabla
-		   PlazasTodos = data.GetPlazasByDistribuidorResult; // array
-		});
+       reportesVariosFactory.mostrarPlazaByDistribuidor(clv_usuario, Distribuidores).then(function(data) {   
+           vm.PlazasTable = data.GetPlazasByDistribuidorResult; //mostrar en tabla
+           PlazasTodos = data.GetPlazasByDistribuidorResult; // array
+        });
     }
 
     vm.ListaEstados = ListaEstados;
-	function ListaEstados() {
-		//enviar solo array Plazas
-	   reportesVariosFactory.mostrarEstadoByPlaza(Plazas).then(function(data) {	
+    function ListaEstados() {
+        //enviar solo array Plazas
+       reportesVariosFactory.mostrarEstadoByPlaza(Plazas).then(function(data) { 
             vm.EstadosTable = data.GetEstadosByplazaResult; //las plazas que se eligen
-	       //EstadosTodos = data.GetEstadosByplazaResult; // todas las plazas que se muestran		
-		});
-	}
+           //EstadosTodos = data.GetEstadosByplazaResult; // todas las plazas que se muestran       
+        });
+    }
 
-	vm.ListaCiudades = ListaCiudades;
-	function ListaCiudades(){
-		//enviar array Plazas y Estados
-		reportesVariosFactory.mostrarCiudad(Plazas, Estados).then(function(data) {
-		  vm.CiudadesTable = data.GetCiudadesBy_PlazasEstadoResult;
-	       //CiudadesTodos = data.GetCiudadesBy_PlazasEstadoResult;	
-		});
-	}
+    vm.ListaCiudades = ListaCiudades;
+    function ListaCiudades(){
+        //enviar array Plazas y Estados
+        reportesVariosFactory.mostrarCiudad(Plazas, Estados).then(function(data) {
+          vm.CiudadesTable = data.GetCiudadesBy_PlazasEstadoResult;
+           //CiudadesTodos = data.GetCiudadesBy_PlazasEstadoResult; 
+        });
+    }
 
-	vm.ListaLocalidades = ListaLocalidades;
-	function ListaLocalidades(){
-		reportesVariosFactory.mostrarLocalidadByCiudad(clv_usuario, Ciudades).then(function(data) {
-	       vm.LocalidadesTable = data.GetLocalidadesbyCiudadResult;
-	       //	LocalidadesTodos = data.GetLocalidadesbyCiudadResult;	
-		});
-	}
+    vm.ListaLocalidades = ListaLocalidades;
+    function ListaLocalidades(){
+        reportesVariosFactory.mostrarLocalidadByCiudad(clv_usuario, Ciudades).then(function(data) {
+           vm.LocalidadesTable = data.GetLocalidadesbyCiudadResult;
+           //   LocalidadesTodos = data.GetLocalidadesbyCiudadResult;   
+        });
+    }
     vm.ListaColonias = ListaColonias;
     function ListaColonias (){
         reportesVariosFactory.mostrarColonia(clv_usuario, banderas.banderaLocalidad, Ciudades, Localidades).then(function(data) {
@@ -2098,7 +2098,7 @@ vm.realizaReporte = realizaReporte;
                     else if ((reporteSeleccionado == 5) ||(reporteSeleccionado == 8) || (reporteSeleccionado == 11))//5 contrataciones principales8 instalaciones, 11 fueras de área
                     {    
                        
-                        urlReporte = data.GetReporteDig_16Result; //url = "ReportesVarios/Reporte_Digital_6"; 
+                        urlReporte = data.GetReporteDig_16Result; //url = "ReportesVarios/Reporte_Digital_16"; 
                     }
 
                     else if (reporteSeleccionado == 6)// 6 contrataciones

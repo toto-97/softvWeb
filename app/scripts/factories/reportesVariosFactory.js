@@ -92,7 +92,7 @@ function reportesVariosFactory($http, $q, globalService, $localStorage ) { //, s
 			'reportData': { 
 				'clv_usuario': clv_usuario,'OtrosFiltrosXml': OtrosFiltrosXml, 'distribuidoresXML':distribuidoresXML,'CompaniasXml':CompaniasXml,
 				'CiudadesXml':CiudadesXml, 'LocalidadesXml':LocalidadesXml, 'ColoniaXml':ColoniaXml, 'ServiciosXml':ServiciosXml, 
-				'ColoniaXml':ColoniaXml,'PeriodosXml':PeriodosXml,'TipoClientesXml':TipoClientesXml, 'localidadF':localidadF, 'coloniaF':coloniaF, 'calleF':calleF
+				'PeriodosXml':PeriodosXml,'TipoClientesXml':TipoClientesXml, 'localidadF':localidadF, 'coloniaF':coloniaF, 'calleF':calleF
 				}
 			};
 		var config = {
@@ -231,7 +231,7 @@ function reportesVariosFactory($http, $q, globalService, $localStorage ) { //, s
 			'reportData': { 
 				'clv_usuario': clv_usuario,'OtrosFiltrosXml': OtrosFiltrosXml, 'distribuidoresXML':distribuidoresXML,'CompaniasXml':CompaniasXml,
 				'CiudadesXml':CiudadesXml, 'LocalidadesXml':LocalidadesXml, 'ColoniaXml':ColoniaXml, 'ServiciosXml':ServiciosXml, 
-				'ColoniaXml':ColoniaXml,'PeriodosXml':PeriodosXml,'TipoClientesXml':TipoClientesXml, 'CalleXml': CalleXml,'localidadF':localidadF, 'coloniaF':coloniaF, 'calleF':calleF
+				'PeriodosXml':PeriodosXml,'TipoClientesXml':TipoClientesXml, 'CalleXml': CalleXml,'localidadF':localidadF, 'coloniaF':coloniaF, 'calleF':calleF
 				}
 			};
 		
