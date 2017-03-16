@@ -24,8 +24,6 @@ angular
 						vm.Numero = detalle.NUMERO;
 						vm.Colonia = detalle.COLONIA;
 						vm.Ciudad = detalle.CIUDAD;
-
-
 						atencionFactory.getServiciosCliente(contrato).then(function(data) {
 							vm.ServiciosCliente = data.GetDameSerDelCliFacListResult;
 
@@ -58,7 +56,7 @@ angular
 								for (var t = 0; t < vm.Status.length; t++) {
 									if (vm.Status[t].Clave == vm.Clv_status) {
 										vm.Estatus = vm.Status[t];
-										Bloqueo();
+										Bloqueo(true);
 									}
 								}
 
@@ -144,25 +142,45 @@ angular
 
 
 
-		function Bloqueo() {
+		function Bloqueo(aplicabloqueo) {
 			console.log(vm.Status);
 			if (vm.Estatus.Clave == 'E') {
-				vm.BtnGuarda = false;
-				vm.FEjecucion = true;
-				vm.FVisita1 = true;
-				vm.FVisita2 = true;
-				vm.FVisita3 = true;
-				vm.FProceso = true;
-				vm.Itrabajo = true
-				vm.Iprioridad = true;
-				vm.IDetProblema = true;
-				vm.IClasproblema = true;
-				vm.Iprobreal = true;
-				vm.Iobser = true;
-				vm.IEstatus = true;
-				vm.Iejecucion = 'input-yellow';
-				vm.Ivisita = 'input-normal';
-				vm.Iproceso = 'input-normal';
+				if (aplicabloqueo == true) {
+					vm.BtnGuarda = false;
+					vm.FEjecucion = true;
+					vm.FVisita1 = true;
+					vm.FVisita2 = true;
+					vm.FVisita3 = true;
+					vm.FProceso = true;
+					vm.Itrabajo = true
+					vm.Iprioridad = true;
+					vm.IDetProblema = true;
+					vm.IClasproblema = true;
+					vm.Iprobreal = true;
+					vm.Iobser = true;
+					vm.IEstatus = true;
+					vm.Iejecucion = 'input-yellow';
+					vm.Ivisita = 'input-normal';
+					vm.Iproceso = 'input-normal';
+				} else {
+					vm.BtnGuarda = true;
+					vm.FEjecucion = false;
+					vm.FVisita1 = true;
+					vm.FVisita2 = true;
+					vm.FVisita3 = true;
+					vm.FProceso = true;
+					vm.Itrabajo = true
+					vm.Iprioridad = false;
+					vm.IDetProblema = true;
+					vm.IClasproblema = true;
+					vm.Iprobreal = false;
+					vm.Iobser = false;
+					vm.IEstatus = false;
+					vm.Iejecucion = 'input-yellow';
+					vm.Ivisita = 'input-normal';
+					vm.Iproceso = 'input-normal';
+				}
+
 			} else if (vm.Estatus.Clave == 'P') {
 				vm.BtnGuarda = true;
 				vm.FEjecucion = false;
@@ -172,13 +190,15 @@ angular
 				vm.FProceso = true;
 				vm.Itrabajo = false
 				vm.Iprioridad = false;
-				vm.IDetProblema = false;
+				vm.IDetProblema = true;
 				vm.IClasproblema = true;
 				vm.Iprobreal = false;
 				vm.Iobser = false;
 				vm.IEstatus = false;
 				vm.Iejecucion = 'input-yellow';
-				vm.Ivisita = 'input-normal';
+				vm.Ivisita1 = 'input-normal';
+				vm.Ivisita2 = 'input-normal';
+				vm.Ivisita3 = 'input-normal';
 				vm.Iproceso = 'input-normal';
 			} else if (vm.Estatus.Clave == 'V') {
 				vm.BtnGuarda = true;
@@ -189,7 +209,7 @@ angular
 				vm.FProceso = true;
 				vm.Itrabajo = false
 				vm.Iprioridad = false;
-				vm.IDetProblema = false;
+				vm.IDetProblema = true;
 				vm.IClasproblema = true;
 				vm.Iprobreal = false;
 				vm.Iobser = false;
@@ -208,7 +228,7 @@ angular
 				vm.FProceso = false;
 				vm.Itrabajo = false
 				vm.Iprioridad = false;
-				vm.IDetProblema = false;
+				vm.IDetProblema = true;
 				vm.IClasproblema = true;
 				vm.Iprobreal = false;
 				vm.Iobser = false;
@@ -224,7 +244,7 @@ angular
 		}
 
 		function CambiaEstatus() {
-			Bloqueo();
+			Bloqueo(false);
 		}
 
 		function Ejecutaqueja() {
@@ -240,17 +260,19 @@ angular
 							obj.Visita1 = vm.visita1;
 							obj.Visita2 = vm.visita2;
 							obj.Visita3 = vm.visita3;
-							obj.HV1 =
-								obj.HV2 =
-								obj.HV3 =
-								obj.FechaProceso = vm.FechaProceso;
-							obj.HP =
-								obj.Visita = vm.Visita;
+							obj.HV1 = '';
+							obj.HV2 = '';
+							obj.HV3 = '';
+							obj.FechaProceso = vm.FechaProceso;
+							obj.HP = '';
+							obj.Visita = vm.Visita;
 							obj.Clv_Tecnico = vm.Tecnico.clv_Tecnico;
 							obj.clvProblema = vm.Problema.clvProblema;
 							obj.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;
 							obj.Solucion = ProblemaReal;
-
+							quejasFactory.UpdateQuejas(obj).then(function(data) {
+								ngNotify.set('La orden se ha guardado correctamente', 'success');
+							});
 
 						} else {
 							ngNotify.set('El cliente, ha sido bloqueado, por lo que no se podrá ejecutar la orden', 'error');
@@ -264,8 +286,24 @@ angular
 			});
 		}
 
-
-
+		function DescargaMaterial() {
+			var modalInstance = $uibModal.open({
+				animation: vm.animationsEnabled,
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: 'views/procesos/ModalDescargaMaterial.html',
+				controller: 'ModalDescargaMaterialCtrl',
+				controllerAs: 'ctrl',
+				backdrop: 'static',
+				keyboard: false,
+				size: 'md',
+				resolve: {
+					// contrato: function() {
+					// 	return vm.GlobalContrato;
+					// }
+				}
+			});
+		}
 		var vm = this;
 		vm.Status = [{
 				'Clave': 'P',
@@ -286,10 +324,11 @@ angular
 		];
 
 		InitalData();
-		vm.Titulo = 'Ejecutar Queja'
+		vm.Titulo = 'Ejecutar Queja';
 		vm.abrirBonificacion = abrirBonificacion;
 		vm.CambiaEstatus = CambiaEstatus;
 		vm.Ejecutaqueja = Ejecutaqueja;
+		vm.DescargaMaterial = DescargaMaterial;
 
 
 	});

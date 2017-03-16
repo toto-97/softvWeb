@@ -62,7 +62,7 @@
                   <div class="col-md-3" style="font-size:12px;">
                     <div class="col-md-12">
                       <b>Tipo de servicio</b>
-                      <select class="form-control input-sm" ng-model="$ctrl.Servicio" ng-options="item as item.Concepto for item in $ctrl.Servicios track by item.Clv_TipSerPrincipal">
+                      <select class="form-control input-sm" ng-model="$ctrl.Servicio" ng-options="item as item.Concepto for item in $ctrl.Servicios track by item.Clv_TipSerPrincipal" ng-disabled="true">
                <option value="">Selecciona</option>
                              </select>
                     </div>
@@ -131,7 +131,7 @@
                         <button type="button" class="btn btn-xs btn-success" ng-click="$ctrl.abrirBonificacion()">Bonificación</button>
                       </div>
                       <div class="col-md-6">
-                        <button type="button" class="btn btn-xs btn-warning">Descar. Material</button>
+                        <button type="button" class="btn btn-xs btn-warning" ng-click="$ctrl.DescargaMaterial()">Descar. Material</button>
                       </div>
 
 
