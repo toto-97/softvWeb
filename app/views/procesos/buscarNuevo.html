@@ -1,0 +1,365 @@
+<style type="text/css">
+	.scrollDiv{
+	    height: 550px;
+	    overflow: auto;
+	    overflow-x: hidden;
+	}
+</style>
+
+<div class="card" id="buscar">
+	<div class="card-head style-default-light collapsed" style=" padding-left:10px;" data-toggle="collapse" data-parent="#buscar" data-target="#buscar1" aria-expanded="false">
+		<header>
+			<strong class="text-primary" style="font-weight:bold; font-size:16px; border:none;"><a href="">Buscar Cliente</a></strong>
+		</header>
+		<div class="tools">
+			<div class="btn-group">
+				<a ui-sref="home.procesos.ordenNueva" class="btn btn-default btn-sm">Cancelar</a>
+			</div>
+		</div>
+	</div>
+	<div class="panel-body buscarContrato collapse" id="buscar1">
+	  <uib-tabset active="active">
+		<uib-tab index="0" heading="Contrato">
+		  <br/>
+		  <form ng-submit="$ctrl.buscarContrato()">
+			<div class="col-md-2">
+			  <div class="form-group">
+				<input type="text" autocomplete="off" class="form-control" required="" placeholder="Contrato" ng-model="$ctrl.contrato">
+			  </div>
+			</div>
+			<br/>
+			<br/>
+			<br/>
+			<div class="note">
+			  <strong>El número de contrato</strong> está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)
+			</div>
+			<footer>
+			  <p class="text-right">
+				<button type="submit" class="btn btn-default btn-info"><i class="fa fa-search"></i> Buscar</button>
+			  </p>
+			</footer>
+		  </form>
+		</uib-tab>
+		<uib-tab index="1" heading="Dirección">
+		  <br/>
+		  <form ng-submit="$ctrl.buscarDomicilio()">
+			<div class="row">
+			  <div class="col-md-3">
+				<div class="form-group">
+				  <input type="text" autocomplete="off" class="form-control" placeholder="Calle" ng-model="$ctrl.calle">
+				</div>
+			  </div>
+			</div>
+			<div class="row">
+			  <div class="col-md-2">
+				<div class="form-group">
+				  <input type="text" autocomplete="off" class="form-control" placeholder="Número" ng-model="$ctrl.numero">
+				</div>
+			  </div>
+			</div>
+			<div class="note">
+			  <p>Busqueda por dirección</p>
+			</div>
+			<footer>
+			  <p class="text-right">
+				<button type="submit" class="btn btn-default btn-info"><i class="fa fa-search"></i> Buscar</button>
+			  </p>
+			</footer>
+		  </form>
+		</uib-tab>
+		<uib-tab index="2" heading="Nombre">
+		  <br/>
+		  <form ng-submit="$ctrl.buscarNombres()">
+			<div class="row">
+			  <div class="col-md-4">
+				<div class="form-group">
+				  <input type="text" autocomplete="off" class="form-control" placeholder="Nombres" ng-model="$ctrl.nombre">
+				</div>
+			  </div>
+			</div>
+			<div class="row">
+			  <div class="col-md-3">
+				<div class="form-group">
+				  <input type="text" autocomplete="off" class="form-control" placeholder="Apellido Paterno" ng-model="$ctrl.paterno">
+				</div>
+			  </div>
+			</div>
+			<div class="row">
+			  <div class="col-md-3">
+				<div class="form-group">
+				  <input type="text" autocomplete="off" class="form-control" placeholder="Apellido Materno" ng-model="$ctrl.materno">
+				</div>
+			  </div>
+			</div>
+			<div class="note">
+			  <p>Busqueda por nombre</p>
+			</div>
+			<footer>
+			  <p class="text-right">
+				<button type="submit" class="btn btn-default btn-info">
+									  <i class="fa fa-search"></i> Buscar
+									  </button>
+			  </p>
+			</footer>
+		  </form>
+		</uib-tab>
+		<uib-tab index="3" heading="SetupBox">
+		  <br/>
+		  <form ng-submit="$ctrl.buscarSetupbox()">
+			<div class="col-md-2">
+			  <div class="form-group">
+				<input type="text" autocomplete="off" class="form-control" required="" placeholder="SetupBox" ng-model="$ctrl.setupbox">
+			  </div>
+			</div>
+			<br/>
+			<br/>
+			<br/>
+			<footer>
+			  <p class="text-right">
+				<button type="submit" class="btn btn-default btn-info"><i class="fa fa-search"></i> Buscar</button>
+			  </p>
+			</footer>
+		  </form>
+		</uib-tab>
+	  </uib-tabset>
+	</div>
+	<!-- <div class="card-body">
+		<div class="section-body">
+			<div class="row">
+				<div class="col-md-7">
+					<div class="col-md-12">
+						<div class="col-md-3">
+							<input type="text" class="form-control input-sm" ng-model="$ctrl.contrato" placeholder="Contrato"><br>
+							<input type="text" class="form-control unput-sm" ng-model="$ctrl.setupbox" placeholder="Set Up Box">
+						</div>
+						<div class="col-md-2">
+							<button class="btn btn-info btn-sm" ng-click="$ctrl.buscarContrato()"><i class="fa fa-search"></i></button><br><br>
+							<button class="btn btn-info btn-sm" ng-click="$ctrl.buscarSetupbox()"><i class="fa fa-search"></i></button>
+						</div>
+						<div class="col-md-5">
+							<input type="text" class="form-control input-sm" ng-model="$ctrl.nombre" placeholder="Nombre">
+							<input type="text" class="form-control input-sm" ng-model="$ctrl.paterno" placeholder="Apellido Paterno">
+							<input type="text" class="form-control input-sm" ng-model="$ctrl.materno" placeholder="Apellido Materno">
+						</div>
+						<div class="col-md-2">
+							<button class="btn btn-info btn-sm" ng-click="$ctrl.buscarNombres()"><i class="fa fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="col-md-12">
+						<div class="col-md-4">
+							<p class="text-muted">Colonia:</p>
+							<select class="form-control select-sm" ng-model="$ctrl.selectedColonia" ng-options="v.nombre for v in $ctrl.colonias|orderBy:'nombre' track by v.clvColonia"></select>
+						</div>
+						<div class="col-md-5">
+							<input type="text" class="form-control input-sm" ng-model="$ctrl.calle" placeholder="Calle">
+							<input type="text" class="form-control input-sm" ng-model="$ctrl.numero" placeholder="Número">
+						</div>
+						<div class="col-md-2">
+							<button class="btn btn-info btn-sm" ng-click="$ctrl.buscarDomicilio()"><i class="fa fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br><br>
+		<div class="col-md-12" style="padding-left: 25px; padding-right: 25px;">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Contrato</th>
+						<th>Nombre</th>
+						<th>Apellido Paterno</th>
+						<th>Apellido Materno</th>
+						<th>Calle</th>
+						<th>Colonia</th>
+						<th>Numero</th>
+						<th>Ciudad</th>
+						<th>Solo Internet</th>
+						<th>Es Hotel</th>
+					</tr>
+				</thead>
+				<tbody style="font-size: 10px;">
+					<tr ng-show="$ctrl.sinRegistros">
+						<td class="text-center" colspan="6">SIN REGISTROS</td>
+					</tr>
+					<tr dir-paginate="x in $ctrl.ordenes|itemsPerPage:7" ng-show="$ctrl.conRegistros">
+						<td>{{ x.CONTRATO }}</td>
+						<td>{{ x.Nombre }}</td>
+						<td>{{ x.Apellido_Paterno }}</td>
+						<td>{{ x.Apellido_Materno }}</td>
+						<td>{{ x.CALLE }}</td>
+						<td>{{ x.COLONIA }}</td>
+						<td>{{ x.NUMERO }}</td>
+						<td>{{ x.CIUDAD }}</td>
+						<td><input type="checkbox" name="inlineRadioOptions" ng-value="{{ x.SOLOINTERNET }}" disabled></td>
+						<td><input type="checkbox" name="inlineRadioOptions" ng-value="{{ x.ESHOTEL }}" disabled></td>
+					</tr>
+				</tbody>
+			</table>
+			<div style="margin-top:-40px;">
+			  <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ng-if="$ctrl.ordenes.length > 0">
+			  </dir-pagination-controls>
+			</div>
+		</div>
+	</div> -->
+</div>
+
+<div class="card">
+	<div class="col-md-12">
+		<table class="table table-bordered table-hover dataTable">
+			<thead>
+				<tr>
+					<th>Contrato</th>
+					<th>Nombre</th>
+					<th>Apellido Paterno</th>
+					<th>Apellido Materno</th>
+					<th>Calle</th>
+					<th>Colonia</th>
+					<th>Numero</th>
+					<th>Ciudad</th>
+					<th>Solo Internet</th>
+					<th>Es Hotel</th>
+					<th>Acción</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-show="$ctrl.sinRegistros">
+					<td class="text-center" colspan="10">SIN REGISTROS</td>
+				</tr>
+				<tr dir-paginate="x in $ctrl.ordenes|itemsPerPage:7" ng-show="$ctrl.conRegistros">
+					<td>{{ x.CONTRATO }}</td>
+					<td>{{ x.Nombre }}</td>
+					<td>{{ x.Apellido_Paterno }}</td>
+					<td>{{ x.Apellido_Materno }}</td>
+					<td>{{ x.CALLE }}</td>
+					<td>{{ x.COLONIA }}</td>
+					<td>{{ x.NUMERO }}</td>
+					<td>{{ x.CIUDAD }}</td>
+					<td><input type="checkbox" name="inlineRadioOptions" ng-value="{{ x.SOLOINTERNET }}" disabled></td>
+					<td><input type="checkbox" name="inlineRadioOptions" ng-value="{{ x.ESHOTEL }}" disabled></td>
+					<td><button class="btn btn-primary" ng-click="$ctrl.seleccionar(x.ContratoBueno,'')">Seleccionar</button></td>
+				</tr>
+			</tbody>
+		</table>
+		<div style="margin-top:-40px;">
+		  <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ng-if="$ctrl.ordenes.length > 0">
+		  </dir-pagination-controls>
+		</div>
+		<br>
+	</div>
+</div>
+
+
+<!-- <div class="section-body">
+    <div class="row  card panel scrollDiv">
+        <div class="col-md-3">
+            <div class="card">
+                <h4 class="text-center">Buscar cliente por:</h4>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="$ctrl.contrato" placeholder="Contrato">
+                            <span class="input-group-btn">
+        						<button class="btn btn-primary btn-xs" ng-click="$ctrl.buscarContrato()">Buscar</button>
+        					</span>
+                        </div>
+                    </div>
+                </div><br><br>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <input type="text" class="form-control" ng-model="$ctrl.nombre" placeholder="Nombre">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <input type="text" class="form-control" ng-model="$ctrl.paterno" placeholder="Apellido Paterno">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <input type="text" class="form-control" ng-model="$ctrl.materno" placeholder="Apellido Materno">
+                    </div>
+                    <div class="col-md-10 col-md-offset-1">
+                        <p class="text-right">
+                            <button class="btn btn-primary btn-xs" ng-click="$ctrl.buscarNombres()">Buscar</button>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+					<div class="col-md-10 col-md-offset-1">
+						<p class="text-muted" style="font-size: 17px;">Colonia</p>
+						<select class="form-control" ng-model="$ctrl.selectedColonia" ng-options="v.nombre for v in $ctrl.colonias|orderBy:'nombre' track by v.clvColonia"></select>
+					</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <input type="text" class="form-control" ng-model="$ctrl.calle" placeholder="Calle">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <input type="text" class="form-control" ng-model="$ctrl.numero" placeholder="Número">
+                    </div>
+                    <div class="col-md-10 col-md-offset-1">
+                        <p class="text-right">
+                            <button class="btn btn-primary btn-xs" ng-click="$ctrl.buscarDomicilio()">Buscar</button>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <input type="text" class="form-control" ng-model="$ctrl.setupbox" placeholder="Set Up Box">
+                    </div>
+                    <div class="col-md-10 col-md-offset-1">
+                        <p class="text-right">
+                            <button class="btn btn-primary btn-xs" ng-click="$ctrl.buscarSetupbox()">Buscar</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+			<div class="col-md-12" style="padding-left: 25px; padding-right: 25px;">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Contrato</th>
+                            <th>Nombre</th>
+							<th>Apellido Paterno</th>
+							<th>Apellido Materno</th>
+							<th>Calle</th>
+                            <th>Colonia</th>
+							<th>Numero</th>
+                            <th>Ciudad</th>
+                            <th>Solo Internet</th>
+                            <th>Es Hotel</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-show="$ctrl.sinRegistros">
+							<td class="text-center" colspan="6">SIN REGISTROS</td>
+						</tr>
+						<tr dir-paginate="x in $ctrl.ordenes|itemsPerPage:7" ng-show="$ctrl.conRegistros">
+							<td>{{ x.CONTRATO }}</td>
+							<td>{{ x.Nombre }}</td>
+							<td>{{ x.Apellido_Paterno }}</td>
+							<td>{{ x.Apellido_Materno }}</td>
+							<td>{{ x.CALLE }}</td>
+							<td>{{ x.COLONIA }}</td>
+							<td>{{ x.NUMERO }}</td>
+							<td>{{ x.CIUDAD }}</td>
+							<td><input type="checkbox" name="inlineRadioOptions" ng-value="{{ x.SOLOINTERNET }}" disabled></td>
+							<td><input type="checkbox" name="inlineRadioOptions" ng-value="{{ x.ESHOTEL }}" disabled></td>
+						</tr>
+					</tbody>
+				</table>
+				<div style="margin-top:-40px;">
+		          <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ng-if="$ctrl.ordenes.length > 0">
+		          </dir-pagination-controls>
+		        </div>
+			</div>
+		</div>
+    </div>
+</div> -->
