@@ -10,7 +10,7 @@ function corporativaConf($stateProvider) {
 		{
 			name: 'home.corporativa.maestro',
 			data: {
-				pageTitle: 'SOFTV | CONTRATO MAESTRO',
+				pageTitle: 'SAC | CONTRATO MAESTRO',
 				permissions: {
 					only: ['contratomaestroSelect'],
 					options: {
@@ -26,7 +26,7 @@ function corporativaConf($stateProvider) {
 		{
 			name: 'home.corporativa.maestroNuevo',
 			data: {
-				pageTitle: 'SOFTV | NUEVO CONTRATO MAESTRO',
+				pageTitle: 'SAC | NUEVO CONTRATO MAESTRO',
 				permissions: {
 					only: ['contratomaestroAdd'],
 					options: {
@@ -42,7 +42,7 @@ function corporativaConf($stateProvider) {
 		{
 			name: 'home.corporativa.maestroEditar',
 			data: {
-				pageTitle: 'SOFTV | Editar CONTRATO MAESTRO',
+				pageTitle: 'SAC | Editar CONTRATO MAESTRO',
 				permissions: {
 					only: ['contratomaestroUpdate'],
 					options: {

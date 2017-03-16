@@ -1,28 +1,50 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('AtencionCtrl', function($state, ngNotify, atencionFactory, $localStorage) {
+	.controller('AtencionCtrl', function($state, ngNotify, atencionFactory, $localStorage, $uibModal) {
 		function initialData() {
 			atencionFactory.getPlazas().then(function(data) {
-				data.GetMuestra_Compania_RelUsuarioListResult.unshift({
-					'razon_social': '----------------',
-					'id_compania': 0
-				});
+				console.log(data);
 				vm.plazas = data.GetMuestra_Compania_RelUsuarioListResult;
 				vm.selectedPlaza = vm.plazas[0];
-			});
-			atencionFactory.getServicios().then(function(data) {
-				vm.servicios = data.GetMuestraTipSerPrincipalListResult;
-				vm.selectedServicio = vm.servicios[0];
-			});
-			atencionFactory.getUsuarios().then(function(data) {
-				data.GetMUESTRAUSUARIOSListResult.unshift({
-					'NOMBRE': '----------------',
-					'Clave': 0
+				atencionFactory.getServicios().then(function(data) {
+					console.log(data);
+					vm.servicios = data.GetMuestraTipSerPrincipalListResult;
+					vm.selectedServicio = vm.servicios[2];
+
+					atencionFactory.getUsuarios().then(function(data) {
+						console.log(data);
+						vm.usuarios = data.GetMUESTRAUSUARIOSListResult;
+						vm.selectedUsuario = vm.usuarios[0];
+
+						var obj = {
+							servicio: 0,
+							reporte: 0,
+							contrato: 0,
+							nombre: '',
+							paterno: '',
+							materno: '',
+							calle: '',
+							numero: '',
+							colonia: 0,
+							setupbox: '',
+							op: 1,
+							compania: 0,
+							clvUsuario: 0
+						};
+						atencionFactory.buscarAtencion(obj).then(function(data) {
+							vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
+							console.log(vm.atenciones);
+						});
+
+					});
+
 				});
-				vm.usuarios = data.GetMUESTRAUSUARIOSListResult;
-				vm.selectedUsuario = vm.usuarios[0];
 			});
+
+
+
+
 		}
 
 		function cambioReporte(x) {
@@ -36,30 +58,49 @@ angular
 		}
 
 		function buscarReporte() {
-			if (vm.contrato == undefined && vm.reporte == undefined) {
-				ngNotify.set('Introduce un número de contrato ó un número de reporte.', 'error');
-			} else if (vm.contrato == '' && vm.reporte == '') {
-				ngNotify.set('Introduce un número de contrato ó un número de reporte.', 'error');
-			} else {
-				var obj = {
-					servicio: vm.selectedServicio.Clv_TipSerPrincipal,
-					reporte: vm.reporte,
-					contrato: vm.contrato,
-					nombre: '',
-					paterno: '',
-					materno: '',
-					calle: '',
-					numero: '',
-					colonia: 0,
-					setupbox: '',
-					op: vm.op,
-					compania:488,
-					clvUsuario:180
-				};
-				atencionFactory.buscarAtencion(obj).then(function(data) {
-					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
-				});
-			}
+
+			var obj = {
+				servicio: vm.selectedServicio.Clv_TipSerPrincipal,
+				reporte: vm.reporte,
+				contrato: 0,
+				nombre: '',
+				paterno: '',
+				materno: '',
+				calle: '',
+				numero: '',
+				colonia: 0,
+				setupbox: '',
+				op: 3,
+				compania: vm.selectedPlaza.id_compania,
+				clvUsuario: vm.selectedUsuario.Clave
+			};
+			atencionFactory.buscarAtencion(obj).then(function(data) {
+				vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
+			});
+
+		}
+
+		function buscarContrato() {
+
+			var obj = {
+				servicio: vm.selectedServicio.Clv_TipSerPrincipal,
+				reporte: 0,
+				contrato: vm.contrato,
+				nombre: '',
+				paterno: '',
+				materno: '',
+				calle: '',
+				numero: '',
+				colonia: 0,
+				setupbox: '',
+				op: 0,
+				compania: 0,
+				clvUsuario: vm.selectedUsuario.Clave
+			};
+			atencionFactory.buscarAtencion(obj).then(function(data) {
+				vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
+			});
+
 		}
 
 		function buscarNombres() {
@@ -79,9 +120,9 @@ angular
 					numero: '',
 					colonia: 0,
 					setupbox: '',
-					op: 1,
-					compania:0,
-					clvUsuario:0
+					op: 14,
+					compania: vm.selectedPlaza.id_compania,
+					clvUsuario: vm.selectedUsuario.Clave
 				};
 				atencionFactory.buscarAtencion(obj).then(function(data) {
 					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
@@ -95,6 +136,28 @@ angular
 					console.log(data);
 					vm.colonias = data.GetuspConsultaColoniasListResult;
 					vm.selectedColonia = vm.colonias[0];
+
+					var obj = {
+						servicio: vm.selectedServicio.Clv_TipSerPrincipal,
+						reporte: 0,
+						contrato: 0,
+						nombre: '',
+						paterno: '',
+						materno: '',
+						calle: '',
+						numero: '',
+						colonia: 0,
+						setupbox: '',
+						op: 4,
+						compania: vm.selectedPlaza.id_compania,
+						clvUsuario: 0
+					};
+					console.log(obj);
+					atencionFactory.buscarAtencion(obj).then(function(data) {
+						console.log(data);
+						vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
+					});
+
 				});
 			}
 		}
@@ -117,8 +180,8 @@ angular
 					colonia: vm.selectedColonia.clvColonia,
 					setupbox: '',
 					op: 2,
-					compania:0,
-					clvUsuario:0
+					compania: 0,
+					clvUsuario: 0
 				};
 				atencionFactory.buscarAtencion(obj).then(function(data) {
 					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
@@ -143,8 +206,8 @@ angular
 					colonia: 0,
 					setupbox: '',
 					op: 11,
-					compania:vm.selectedPlaza.id_compania,
-					clvUsuario:vm.selectedUsuario.Clave
+					compania: vm.selectedPlaza.id_compania,
+					clvUsuario: vm.selectedUsuario.Clave
 				};
 				atencionFactory.buscarAtencion(obj).then(function(data) {
 					console.log(data);
@@ -153,9 +216,41 @@ angular
 			}
 		}
 
+		function DetalleLlamada(obj) {
+			console.log(obj);
+			abrirDetalle(obj.Contrato, obj.llamada, obj.Clv_TipSer);
+		}
+
+		function abrirDetalle(contrato, llamada, servicio) {
+			var options = {};
+			options.contrato = contrato;
+			options.llamada = llamada;
+			options.servicio = servicio;
+			console.log(options);
+			var modalInstance = $uibModal.open({
+				animation: vm.animationsEnabled,
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: 'views/procesos/ModalDetalleLlamada.html',
+				controller: 'ModalDetalleLlamadaCtrl',
+				controllerAs: 'ctrl',
+				backdrop: 'static',
+				keyboard: false,
+				size: 'lg',
+				resolve: {
+					options: function() {
+						return options;
+					}
+				}
+			});
+		}
+
+
+
 		var vm = this;
 		vm.cambioReporte = cambioReporte;
 		vm.buscarReporte = buscarReporte;
+		vm.buscarContrato = buscarContrato
 		vm.buscarNombres = buscarNombres;
 		vm.cambioPlaza = cambioPlaza;
 		vm.buscarColonia = buscarColonia;
@@ -163,5 +258,7 @@ angular
 		vm.calle = '';
 		vm.numero = '';
 		vm.atenciones = [];
+		vm.DetalleLlamada = DetalleLlamada;
+
 		initialData();
 	});

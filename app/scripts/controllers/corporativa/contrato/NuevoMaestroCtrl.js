@@ -12,6 +12,7 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ng
 			vm.cortes = data.GetTiposCortesClientesListResult;
 		});
 		corporativoFactory.getTipoPagos().then(function(data) {
+			console.log(data);
 			vm.tipoPagos = data.GetTipoPagosFacturasListResult;
 		});
 	}
@@ -21,6 +22,13 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ng
 		detalle.ContratosSoftv = vm.contratos;
 		detalle.IdContratoMaestro = vm.contratoMaestro;
 		detalle.Action = "ADD";
+		if (vm.distribuidor == null) {
+			ngNotify.set('Selecciona una distribuidor', 'error');
+			return;
+		}
+		detalle.Distribuidor = vm.distribuidor;
+
+
 		var modalInstance = $uibModal.open({
 			animation: true,
 			ariaLabelledBy: 'modal-title',
@@ -115,7 +123,8 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ng
 				'TipoCorteCli': vm.tipocorte.Id,
 				'ReactivarMan': vm.reacMan,
 				'ReactivarPagoFac': vm.reacPag,
-				'TipoPago': vm.formapago.Id
+				'TipoPago': vm.formapago.Id,
+				'Referencia': vm.Referencia
 			}
 		};
 		corporativoFactory.addMaestro(contrato).then(function(data) {
@@ -125,6 +134,26 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ng
 			vm.guardarBtn = true;
 			vm.helpSave = true;
 		});
+	}
+
+	function CambioTipoPago(x) {
+		if (x == 'postpago') {
+			vm.DesReactiva = false;
+			vm.reactivacion = 'manual';
+
+		} else {
+			vm.DesReactiva = true;
+			vm.reactivacion = 'manual';
+		}
+	}
+
+	function CambioTipo(x) {
+
+		if (x.Cuenta == true) {
+			vm.MuestraReferencia = true;
+		} else {
+			vm.MuestraReferencia = false;
+		}
 	}
 
 
@@ -143,5 +172,9 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ng
 	vm.ligados = true;
 	vm.guardarBtn = false;
 	vm.helpSave = false;
+	vm.CambioTipoPago = CambioTipoPago;
+	vm.DesReactiva = true;
+	vm.MuestraReferencia = false;
+	vm.CambioTipo = CambioTipo;
 }
 angular.module('softvApp').controller('NuevoMaestroCtrl', NuevoMaestroCtrl);

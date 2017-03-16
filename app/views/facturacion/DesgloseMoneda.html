@@ -53,7 +53,8 @@
 									<td>
 										<button class="btn ink-reaction btn-floating-action btn-xs btn-info" style="border-radius: 60px;" ng-click="$ctrl.detalleDesglose(x.Consecutivo)"><i class="fa fa-eye" aria-hidden="true"></i></button>
 										<button class="btn ink-reaction btn-floating-action btn-xs btn-warning" style="border-radius: 60px;" ng-click="$ctrl.validar(1,x.Consecutivo)" permission permission-only="'desglosedemonedaUpdate'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-										<button class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-click="$ctrl.validar(2,x.Consecutivo)" permission permission-only="'desglosedemonedaDelete'"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+										<button class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-click="$ctrl.validar(2,x.Consecutivo)" permission permission-only="'desglosedemonedaDelete'"><i class="fa fa-trash" aria-hidden="true"></i></button>
+										<button class="btn ink-reaction btn-floating-action btn-xs btn-default" ng-click="$ctrl.printDesglose(x.Consecutivo)"><i class="fa fa-print" aria-hidden="true"></i></button></td>
 								</tr>
 							</tbody>
 						</table>

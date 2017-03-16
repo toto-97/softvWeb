@@ -34,6 +34,16 @@ angular
 				controllerAs: '$ctrl'
 			},
 			{
+				name: 'home.procesos.atencionEditar',
+				data: {
+					pageTitle: 'SOFTV | EDITAR ATENCIÓN TELEFÓNICA',
+				},
+				url: '/atencion/editar/:id',
+				templateUrl: 'views/procesos/atencionNueva.html',
+				controller: 'AtencionEditarCtrl',
+				controllerAs: '$ctrl'
+			},
+			{
 				name: 'home.procesos.atencionDetalle',
 				data: {
 					pageTitle: 'SOFTV | ATENCIÓN',
@@ -67,6 +77,26 @@ angular
 				url: '/ordenNueva/:experience/:context',
 				templateUrl: 'views/procesos/ordenNueva.html',
 				controller: 'OrdenNuevaCtrl',
+				controllerAs: '$ctrl'
+			},
+			{
+				name: 'home.procesos.reportes',
+				data: {
+					pageTitle: 'SOFTV | QUEJAS'
+				},
+				url: '/quejas',
+				templateUrl: 'views/procesos/Quejas.html',
+				controller: 'quejasCtrl',
+				controllerAs: '$ctrl'
+			},
+			{
+				name: 'home.procesos.ejecutaqueja',
+				data: {
+					pageTitle: 'SOFTV | EJECUTA QUEJA'
+				},
+				url: '/quejas/ejecuta/:id/:contrato/:servicio',
+				templateUrl: 'views/procesos/QuejaEjecuta.html',
+				controller: 'QuejaEjecutaCtrl',
 				controllerAs: '$ctrl'
 			}
 		];

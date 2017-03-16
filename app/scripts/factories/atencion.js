@@ -274,7 +274,7 @@ angular
 				'IdUsuario': usuarioAtencion,
 				'Op': objAte.op,
 				'Id_Compania': objAte.compania,
-				'ClvUsuario': objAte.clvUsuario
+				'ClvUsuario': $localStorage.currentUser.idUsuario
 			};
 
 			var config = {
