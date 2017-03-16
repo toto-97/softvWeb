@@ -1,10 +1,9 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('modalHistorialEdoctaCtrl', function($uibModal, $uibModalInstance, contrato, cajasFactory, ngNotify) {
+	.controller('modalHistorialEdoctaCtrl', function ($uibModal, $uibModalInstance, contrato, ordenesFactory, cajasFactory, ngNotify) {
 		function init() {
-			cajasFactory.ObtieneEdoCuentaPorContrato(contrato).then(function(data) {
-				console.log(data);
+			cajasFactory.ObtieneEdoCuentaPorContrato(contrato).then(function (data) {
 				vm.ListaEstados = data.GetObtieneEdoCuentaPorContratoListResult;
 			});
 		}
@@ -18,10 +17,12 @@ angular
 		}
 
 		function Reprocesar(IdEstadoCuenta, contrato) {
-			cajasFactory.ValidaReprocesoPorContrato(IdEstadoCuenta).then(function(data) {
+			cajasFactory.ValidaReprocesoPorContrato(IdEstadoCuenta).then(function (data) {
 				if (data.GetDeepValidaReprocesoPorContratoResult.reproceso > 0) {
-					cajasFactory.ReprocesaEdoCuentaContrato(IdEstadoCuenta, contrato).then(function(data) {
-						ngNotify.set('El estado de cuenta se reproceso correctamente.');
+					cajasFactory.ReprocesaEdoCuentaContrato(IdEstadoCuenta, contrato).then(function (data) {
+						ordenesFactory.addBitacoraReproceso(contrato).then(function (dataBit) {
+							ngNotify.set('El estado de cuenta se reproceso correctamente.');
+						});
 					});
 				} else {
 					ngNotify.set('Solo es posible reprocesar el estado de cuenta actual o el cliente tiene un cambio de servicio pendiente', 'error');
@@ -38,11 +39,13 @@ angular
 			var id = detalle.Id;
 			var contratocomp = detalle.Contrato;
 
-			cajasFactory.ReenviaEstadosCuentaPorContrato(IdEstadoCuenta).then(function(data) {
+			cajasFactory.ReenviaEstadosCuentaPorContrato(IdEstadoCuenta).then(function (data) {
 				var reenvia = data.GetDeepReenviaEstadosCuentaPorContratoResult.reenvia;
 				if (reenvia > 0) {
-					cajasFactory.EnviaCorreoEstadoCuenta(contrato, id, contratocomp, IdEstadoCuenta).then(function(data) {
-						ngNotify.set('El estado de cuenta se reenvió correctamente.');
+					cajasFactory.EnviaCorreoEstadoCuenta(contrato, id, contratocomp, IdEstadoCuenta).then(function (data) {
+						ordenesFactory.addBitacoraReenviar(contrato).then(function (dataBit) {
+							ngNotify.set('El estado de cuenta se reenvió correctamente.');
+						});
 					});
 
 				} else {
@@ -69,7 +72,7 @@ angular
 				keyboard: false,
 				size: 'lg',
 				resolve: {
-					options: function() {
+					options: function () {
 						return options;
 					}
 				}

@@ -1,7 +1,8 @@
 'use strict';
 angular
   .module('softvApp')
-  .factory('ordenesFactory', function($http, $q, globalService, $localStorage) {
+  .factory('ordenesFactory', function ($http, $q, globalService, $localStorage) {
+    var factory = {};
     var paths = {
       plazas: '/Muestra_Compania_RelUsuario/GetMuestra_Compania_RelUsuarioList',
       usuarios: '/MUESTRAUSUARIOS/GetMUESTRAUSUARIOSList',
@@ -12,11 +13,13 @@ angular
       buscarCliPorContrato: '/BUSCLIPORCONTRATO_OrdSer/GetDeepBUSCLIPORCONTRATO_OrdSer',
       serviciosCliente: '/DameSerDelCliFac/GetDameSerDelCliFacList',
       dimeServicio: '/Dime_Que_servicio_Tiene_cliente/GetDime_Que_servicio_Tiene_cliente',
-      muestraTrabajo: '/MUESTRATRABAJOSPorTipoUsuario/GetMUESTRATRABAJOSPorTipoUsuarioList'
+      muestraTrabajo: '/MUESTRATRABAJOSPorTipoUsuario/GetMUESTRATRABAJOSPorTipoUsuarioList',
+      addBitacoraReproceso: '/Bitacora/AddReprocesarEdoCuenta',
+      addBitacoraReenviar: '/Bitacora/AddReenviarEdoCuenta'
     };
-    var factory = {};
+
     var usuarioAtencion = $localStorage.currentUser.idUsuario;
-    factory.getPlazas = function() {
+    factory.getPlazas = function () {
       var deferred = $q.defer();
       var user = $localStorage.currentUser.idUsuario;
       var Parametros = {
@@ -27,16 +30,66 @@ angular
           'Authorization': $localStorage.currentUser.token
         }
       };
-      $http.post(globalService.getUrl() + paths.plazas, JSON.stringify(Parametros), config).then(function(response) {
+      $http.post(globalService.getUrl() + paths.plazas, JSON.stringify(Parametros), config).then(function (response) {
         deferred.resolve(response.data);
-      }).catch(function(response) {
+      }).catch(function (response) {
         deferred.reject(response.data);
       });
 
       return deferred.promise;
     };
 
-    factory.getUsuarios = function() {
+    factory.addBitacoraReenviar = function (contrato) {
+      var deferred = $q.defer();
+      var user = $localStorage.currentUser.usuario;
+      var Parametros = {
+        'objReenviarEdoCuenta':
+        {
+          'Usuario': user,
+          'Contrato': contrato
+        }
+
+      };
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.post(globalService.getUrl() + paths.addBitacoraReenviar, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
+
+    factory.addBitacoraReproceso = function (contrato) {
+      var deferred = $q.defer();
+      var user = $localStorage.currentUser.usuario;
+      var Parametros = {
+        'objReprocesarEdoCuenta':
+        {
+          'Usuario': user,
+          'Contrato': contrato
+        }
+
+      };
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.post(globalService.getUrl() + paths.addBitacoraReproceso, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
+
+    factory.getUsuarios = function () {
       var deferred = $q.defer();
       var Parametros = {
         'OP': 2
@@ -46,16 +99,16 @@ angular
           'Authorization': $localStorage.currentUser.token
         }
       };
-      $http.post(globalService.getUrl() + paths.usuarios, JSON.stringify(Parametros), config).then(function(response) {
+      $http.post(globalService.getUrl() + paths.usuarios, JSON.stringify(Parametros), config).then(function (response) {
         deferred.resolve(response.data);
-      }).catch(function(response) {
+      }).catch(function (response) {
         deferred.reject(response.data);
       });
 
       return deferred.promise;
     };
 
-    factory.buscarOrdenes = function(objOrd) {
+    factory.buscarOrdenes = function (objOrd) {
       var deferred = $q.defer();
       var Parametros = {
         "Op": objOrd.op,
@@ -78,16 +131,16 @@ angular
           'Authorization': $localStorage.currentUser.token
         }
       };
-      $http.post(globalService.getUrl() + paths.buscarOrdenes, JSON.stringify(Parametros), config).then(function(response) {
+      $http.post(globalService.getUrl() + paths.buscarOrdenes, JSON.stringify(Parametros), config).then(function (response) {
         deferred.resolve(response.data);
-      }).catch(function(response) {
+      }).catch(function (response) {
         deferred.reject(response.data);
       });
 
       return deferred.promise;
     };
 
-    factory.getColonias = function(idcomp) {
+    factory.getColonias = function (idcomp) {
       var deferred = $q.defer();
       var Parametros = {
         'idcompania': idcomp
@@ -97,16 +150,16 @@ angular
           'Authorization': $localStorage.currentUser.token
         }
       };
-      $http.post(globalService.getUrl() + paths.colonias, JSON.stringify(Parametros), config).then(function(response) {
+      $http.post(globalService.getUrl() + paths.colonias, JSON.stringify(Parametros), config).then(function (response) {
         deferred.resolve(response.data);
-      }).catch(function(response) {
+      }).catch(function (response) {
         deferred.reject(response.data);
       });
 
       return deferred.promise;
     };
 
-    factory.getColoniasUser = function() {
+    factory.getColoniasUser = function () {
       var deferred = $q.defer();
       var Parametros = {
         'IdUsuario': usuarioAtencion
@@ -116,16 +169,16 @@ angular
           'Authorization': $localStorage.currentUser.token
         }
       };
-      $http.post(globalService.getUrl() + paths.buscarColonia, JSON.stringify(Parametros), config).then(function(response) {
+      $http.post(globalService.getUrl() + paths.buscarColonia, JSON.stringify(Parametros), config).then(function (response) {
         deferred.resolve(response.data);
-      }).catch(function(response) {
+      }).catch(function (response) {
         deferred.reject(response.data);
       });
 
       return deferred.promise;
     };
 
-    factory.buscarClientes = function(obj) {
+    factory.buscarClientes = function (obj) {
       var deferred = $q.defer();
       var Parametros = {
         'ContratoCom': obj.contrato,
@@ -146,16 +199,16 @@ angular
           'Authorization': $localStorage.currentUser.token
         }
       };
-      $http.post(globalService.getUrl() + paths.buscarClientes, JSON.stringify(Parametros), config).then(function(response) {
+      $http.post(globalService.getUrl() + paths.buscarClientes, JSON.stringify(Parametros), config).then(function (response) {
         deferred.resolve(response.data);
-      }).catch(function(response) {
+      }).catch(function (response) {
         deferred.reject(response.data);
       });
 
       return deferred.promise;
     };
 
-    factory.buscarCliPorContrato = function(contrato) {
+    factory.buscarCliPorContrato = function (contrato) {
       var deferred = $q.defer();
       var Parametros = {
         'CONTRATO': contrato,
@@ -165,16 +218,16 @@ angular
           'Authorization': $localStorage.currentUser.token
         }
       };
-      $http.post(globalService.getUrl() + paths.buscarCliPorContrato, JSON.stringify(Parametros), config).then(function(response) {
+      $http.post(globalService.getUrl() + paths.buscarCliPorContrato, JSON.stringify(Parametros), config).then(function (response) {
         deferred.resolve(response.data);
-      }).catch(function(response) {
+      }).catch(function (response) {
         deferred.reject(response.data);
       });
 
       return deferred.promise;
     };
 
-    factory.serviciosCliente = function(contrato) {
+    factory.serviciosCliente = function (contrato) {
       var deferred = $q.defer();
       var Parametros = {
         'Contrato': contrato,
@@ -184,16 +237,16 @@ angular
           'Authorization': $localStorage.currentUser.token
         }
       };
-      $http.post(globalService.getUrl() + paths.serviciosCliente, JSON.stringify(Parametros), config).then(function(response) {
+      $http.post(globalService.getUrl() + paths.serviciosCliente, JSON.stringify(Parametros), config).then(function (response) {
         deferred.resolve(response.data);
-      }).catch(function(response) {
+      }).catch(function (response) {
         deferred.reject(response.data);
       });
 
       return deferred.promise;
     };
 
-    factory.dimeServicio = function(contrato) {
+    factory.dimeServicio = function (contrato) {
       var deferred = $q.defer();
       var Parametros = {
         'Contrato': contrato,
@@ -203,16 +256,16 @@ angular
           'Authorization': $localStorage.currentUser.token
         }
       };
-      $http.post(globalService.getUrl() + paths.dimeServicio, JSON.stringify(Parametros), config).then(function(response) {
+      $http.post(globalService.getUrl() + paths.dimeServicio, JSON.stringify(Parametros), config).then(function (response) {
         deferred.resolve(response.data);
-      }).catch(function(response) {
+      }).catch(function (response) {
         deferred.reject(response.data);
       });
 
       return deferred.promise;
     };
 
-    factory.muestraTrabajo = function(tipo, usua) {
+    factory.muestraTrabajo = function (tipo, usua) {
       var deferred = $q.defer();
       var user = $localStorage.currentUser.idUsuario;
       var Parametros = {
@@ -224,9 +277,9 @@ angular
           'Authorization': $localStorage.currentUser.token
         }
       };
-      $http.post(globalService.getUrl() + paths.muestraTrabajo, JSON.stringify(Parametros), config).then(function(response) {
+      $http.post(globalService.getUrl() + paths.muestraTrabajo, JSON.stringify(Parametros), config).then(function (response) {
         deferred.resolve(response.data);
-      }).catch(function(response) {
+      }).catch(function (response) {
         deferred.reject(response.data);
       });
 
