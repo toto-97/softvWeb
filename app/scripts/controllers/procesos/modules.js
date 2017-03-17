@@ -80,6 +80,16 @@ angular
 				controllerAs: '$ctrl'
 			},
 			{
+				name: 'home.procesos.buscarCliente',
+				data: {
+					pageTitle: 'SOFTV | BUSCAR CLIENTE'
+				},
+				url: '/buscarCliente',
+				templateUrl: 'views/procesos/buscarNuevo.html',
+				controller: 'BuscarNuevoCtrl',
+				controllerAs: '$ctrl'
+			},
+			{
 				name: 'home.procesos.reportes',
 				data: {
 					pageTitle: 'SOFTV | QUEJAS'

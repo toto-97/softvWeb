@@ -5,7 +5,7 @@
 		overflow-x: hidden;
 	}
 	.scrollDiv2 {
-		height: 100px;
+		height: 120px;
 		overflow: auto;
 		overflow-x: hidden;
 	}
@@ -45,12 +45,12 @@
 						<input type="text" placeholder="# Orden" class="form-control input-sm" ng-model="$ctrl.orden" ng-disabled="$ctrl.showOrden">
 					</div>
 					<div class="col-md-4">
-						<input type="text" placeholder="Contrato" class="form-control input-sm" ng-model="$ctrl.contrato" ng-disabled="$ctrl.showContrato">
+						<input type="text" placeholder="Contrato" class="form-control input-sm" ng-model="$ctrl.contrato" ng-disabled="$ctrl.showContrato" ng-keydown="$ctrl.buscarContrato($event)">
 					</div>
 					<div class="col-md-3">
-						<div class="btn-group">
-							<button class="btn btn-info btn-sm" ng-click="$ctrl.buscarContrato($ctrl.contrato)"><i class="fa fa-check"></i></button>
-							<button ui-sref="home.procesos.buscarCliente" class="btn btn-info btn-sm"><i class="fa fa-search"></i></button>
+						<div>
+							<!--<button class="btn btn-info btn-sm" ng-click="$ctrl.buscarContrato($ctrl.contrato)"><i class="fa fa-check"></i></button>-->
+							<button ui-sref="home.procesos.buscarCliente" class="btn btn-raised btn-xs btn-default"><i class="fa fa-ellipsis-h"></i></button>
 						</div>
 					</div>
 				</div>
@@ -89,7 +89,7 @@
 				<b><i class="md md-perm-identity"></i> Información del Cliente</b><br>
 				<strong>Distribuidor:</strong> {{$ctrl.datosCli.Compania}}<br>
 				<p><strong>Nombre:</strong> {{$ctrl.datosCli.NOMBRE}}<br>
-					<strong>Dirección:</strong><br>
+					<strong>Dirección:</strong> {{$ctrl.datosCli.CALLE +' '+ $ctrl.datosCli.NUMERO +' '+ $ctrl.datosCli.COLONIA +' '+ $ctrl.datosCli.CIUDAD}}<br>
 					<br>
 					<label class="col-md-3 checkbox-inline checkbox-styled checkbox-warning">
 							<input type="checkbox" name="inlineRadioOptions" ng-value="1" ng-model="$ctrl.internet" ng-disabled="$ctrl.showInternet"><span style="font-size: 10px;">Solo Internet:</span>
@@ -101,7 +101,9 @@
 			</div>
 			<div class="col-md-4">
 				<b><i class="md md-settings-remote"></i> Servicios asignados</b><br>
-				<textarea class="form-control"></textarea>
+				<div class="card wrapper scrollDiv2" style="background: #DDEAE9" ng-show="$ctrl.datos">
+					<p style="font-size: 10px;" class="text-center"><span ng-repeat="x in $ctrl.servicios">{{ x.Servicio }} <br></span></p>
+				</div>
 			</div>
 			<div class="col-md-2">
 				<b><i class="md md-access-time"></i> Fechas</b><br>
@@ -148,14 +150,6 @@
 						</div>
 					</div>
 				</form>
-			</div>
-		</div>
-		<div class="row" ng-show="$ctrl.datos">
-			<div class="col-md-6">
-				<b>Servicios Asignados</b><br>
-				<div class="card wrapper" style="background: #DDEAE9">
-					<p style="font-size: 10px;" class="text-center"><span ng-repeat="x in $ctrl.servicios">{{ x.Servicio }} <br></span></p>
-				</div>
 			</div>
 		</div>
 		<div class="row">

@@ -11,7 +11,7 @@ angular
       buscarColonia: '/uspConsultaColoniasPorUsuario/GetuspConsultaColoniasPorUsuarioList',
       buscarCliPorContrato: '/BUSCLIPORCONTRATO_OrdSer/GetDeepBUSCLIPORCONTRATO_OrdSer',
       serviciosCliente: '/DameSerDelCliFac/GetDameSerDelCliFacList',
-      dimeServicio: '/Dime_Que_servicio_Tiene_cliente/GetDime_Que_servicio_Tiene_cliente',
+      dimeServicio: '/Dime_Que_servicio_Tiene_cliente/GetDime_Que_servicio_Tiene_clienteList',
       muestraTrabajo: '/MUESTRATRABAJOSPorTipoUsuario/GetMUESTRATRABAJOSPorTipoUsuarioList'
     };
     var factory = {};
@@ -212,12 +212,12 @@ angular
       return deferred.promise;
     };
 
-    factory.muestraTrabajo = function(tipo, usua) {
+    factory.muestraTrabajo = function(tipo) {
       var deferred = $q.defer();
       var user = $localStorage.currentUser.idUsuario;
       var Parametros = {
         'ClvTipSer': tipo,
-        'TipoUser': usua
+        'TipoUser': user
       };
       var config = {
         headers: {
