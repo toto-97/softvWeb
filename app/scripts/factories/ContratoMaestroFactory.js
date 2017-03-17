@@ -88,10 +88,10 @@ angular.module('softvApp')
 			var data = new FormData();
 			for (var i = 0; i < file.length; i++) {
 				console.log(file[i]);
-				data.append("file" + i, file[i]);
+				data.append('file' + i, file[i]);
 			}
-			data.append("Distribuidor", Distribuidor)
-			data.append("Contrato", contrato)
+			data.append('Distribuidor', Distribuidor);
+			data.append('Contrato', contrato);
 
 			var config = {
 				headers: {
@@ -106,28 +106,7 @@ angular.module('softvApp')
 			});
 
 			return deferred.promise;
-			// $http({
-			// 		method: 'POST',
-			// 		url: globalService.getUrl() + paths.GetCiudadList,
-			// 		headers: {
-			// 			'Authorization': $localStorage.currentUser.token,
-			// 			'Content-Type': 'multipart/form-data'
-			// 		},
-			// 		data: {
-			// 			data
-			// 		}
-			// 	})
-			// 	.then(function(response) {
-			// 		deferred.resolve(response.data);
-			// 	})
-			// 	.catch(function(response) {
-			// 		deferred.reject(response);
-			// 	});
-			//
-			// return deferred.promise;
-
-
-		}
+		};
 
 		return factory;
 

@@ -89,6 +89,26 @@ angular
 
 		};
 
+		factory.singleEstadoCuenta = function(id, contrato) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'IdEstadoCuenta': id,
+				'Contrato': contrato
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.singleEstadoCuenta, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
 		factory.getSerieByUser = function(vendedor, contrato) {
 			var deferred = $q.defer();
 			var Parametros = {
@@ -1785,7 +1805,7 @@ angular
 				deferred.reject(response);
 			});
 			return deferred.promise;
-		}
+		};
 
 		factory.btnconsultaReporte = function(IdEstadoCuenta, Contrato) {
 			var deferred = $q.defer();
@@ -1804,15 +1824,7 @@ angular
 				deferred.reject(response);
 			});
 			return deferred.promise;
-		}
-
-
-
-
-
-
-
-
+		};
 
 		return factory;
 	});
