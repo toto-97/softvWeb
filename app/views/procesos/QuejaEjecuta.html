@@ -42,7 +42,7 @@
             </div>
             <div id="accordion3-1" class="collapse in" aria-expanded="true" style="height: 0px;">
               <div class="panel-body">
-                <div class="row">
+                <div class="row card" style="    background-color: #f2f3f3">
                   <div class="col-md-3 col-md-offset-2">
                     <b class="text-danger">Generó: </b> {{$ctrl.UsuarioGenero}}
                   </div>
@@ -56,10 +56,17 @@
                   <div class="col-md-3">
 
                     <select class="form-control input-sm" name="Estatus" ng-disabled="$ctrl.IEstatus" ng-model="$ctrl.Estatus" required-message="'Este campo es obligatorio.'" required validate-on="dirty" ng-change="$ctrl.CambiaEstatus()" ng-options="item as item.Nombre for item in $ctrl.Status track by item.Clave">
-                                  <option value="">Selecciona estatus</option>
-                    </select>
+                                      <option value="">Selecciona estatus</option>
+                        </select>
                   </div>
+                </div>
+                <div class="row">
+
                   <div class="col-md-3" style="font-size:12px;">
+
+                    <div class="col-md-12 text-center" style="font-size:14px;">
+                      <b><i class="md md-account-box"></i> Suscriptor</b>
+                    </div>
                     <div class="col-md-12">
                       <b>Tipo de servicio</b>
                       <select class="form-control input-sm" ng-model="$ctrl.Servicio" ng-options="item as item.Concepto for item in $ctrl.Servicios track by item.Clv_TipSerPrincipal" ng-disabled="true">
@@ -84,6 +91,8 @@
                   </div>
 
                   <div class="col-md-3 form-group" style="font-size:12px;">
+
+                    <div class="col-md-12 text-center " style="font-size:14px;"><b><i class="fa fa-clock-o"></i> Fechas</b></div>
                     <div class="col-md-5 "><b>Fecha solicitud</b></div>
                     <div class="col-md-7">
                       <input type="text" class="form-control input-sm" ng-model="$ctrl.FechaSolicitud" ng-disabled="true">
@@ -115,6 +124,7 @@
                   </div>
                   <div class="col-md-3" style="font-size:12px;">
 
+                    <div class="col-md-12 text-center" style="font-size:14px;"><b><i class="md md-assignment-ind"></i> Asignación</b></div>
                     <div class="col-md-12">
                       <b>Departamento Responsable:</b>
                       <input type="text" required-message="'Este campo es obligatorio.'" required validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.Departamento" ng-disabled="true">
@@ -128,10 +138,10 @@
                     <div class="col-md-12">
                       <br>
                       <div class="col-md-6">
-                        <button type="button" class="btn btn-xs btn-success" ng-click="$ctrl.abrirBonificacion()">Bonificación</button>
+                        <button type="button" class="btn btn-xs btn-success" ng-click="$ctrl.abrirBonificacion()"><i class="fa fa-money"></i> Bonificación</button>
                       </div>
                       <div class="col-md-6">
-                        <button type="button" class="btn btn-xs btn-warning" ng-click="$ctrl.DescargaMaterial()">Descar. Material</button>
+                        <button type="button" class="btn btn-xs btn-warning" ng-click="$ctrl.DescargaMaterial()"><i class="fa fa-wrench"></i> Descar. Material</button>
                       </div>
 
 
@@ -145,10 +155,8 @@
 
                   </div>
                   <div class="col-md-3" style="font-size: 10px; margin-top:5px; background-color: #f8f8f8;">
+                    <div class="col-md-12 text-center " style="font-size:14px;"><b><i class="fa fa-calendar"></i> Agenda</b></div>
 
-                    <div class="col-md-12 text-center">
-                      <b><i class="fa fa-calendar" aria-hidden="true"></i> Agenda</b>
-                    </div>
                     <div class="col-md-3">
                       Técnico
                     </div>
@@ -173,13 +181,6 @@
                     <div class="col-md-12">
                       <textarea type="text" class="form-control input-sm " ng-model="$ctrl.ComentarioAgenda"></textarea>
                     </div>
-
-
-
-
-
-
-
                   </div>
                 </div>
               </div>
@@ -228,7 +229,7 @@
            													</label> </div>
           <div class="col-md-12">
             <b> Problema real:</b>
-            <textarea class="form-control input-sm" name="Problema" required-message="'Este campo es obligatorio.'" required validate-on="dirty" ng-disabled="$ctrl.Iprobreal" ng-model="$ctrl.ProblemaReal">
+            <textarea class="form-control input-sm" name="Problema" required-message="'Este campo es obligatorio.'" required validate-on="dirty" ng-disabled="$ctrl.Iprobreal" ng-model="$ctrl.ProblemaReal" placeholder="Redacta brevemente el problema real que derivo la queja">
 
                       </textarea>
           </div>

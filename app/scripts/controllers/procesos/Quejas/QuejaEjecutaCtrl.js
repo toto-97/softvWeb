@@ -104,12 +104,7 @@ angular
 
 						});
 
-						quejasFactory.BuscaBloqueado(vm.GlobalContrato).then(function(data) {
-							if (data.GetDeepBuscaBloqueadoResult.Bloqueado == 1) {
-								$state.go('home.procesos.reportes');
-								ngNotify.set('El cliente ' + vm.contrato + ', ha sido bloqueado, por lo que no se podrá ejecutar la orden', 'error');
-							}
-						});
+
 
 					});
 				} else {

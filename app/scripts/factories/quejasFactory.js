@@ -14,7 +14,8 @@ angular
 			ObtenTecnicos: '/Muestra_Tecnicos_Almacen/GetMuestra_Tecnicos_AlmacenList',
 			ObtenPrioridad: '/Softv_GetPrioridadQueja/GetSoftv_GetPrioridadQuejaList',
 			BuscaBloqueado: '/BuscaBloqueado/GetDeepBuscaBloqueado',
-			UpdateQuejas: '/Quejas/UpdateQuejas'
+			UpdateQuejas: '/Quejas/UpdateQuejas',
+			DameBonificacion: '/DameBonificacion/GetDameBonificacionList'
 		};
 
 		factory.ObtenPrioridad = function() {
@@ -138,7 +139,7 @@ angular
 				'SoloNivel2': object.SoloNivel2,
 				'NoTicket': object.NoTicket
 			};
-			console.log(Parametros);
+			console.log(JSON.stringify(Parametros));
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
@@ -263,6 +264,26 @@ angular
 
 			return deferred.promise;
 		};
+
+		factory.DameBonificacion = function(queja) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Clv_queja': queja
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.DameBonificacion, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
 
 
 
