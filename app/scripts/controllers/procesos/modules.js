@@ -65,7 +65,7 @@ angular
 					}
 				},
 				url: '/ordenes',
-				templateUrl: 'views/procesos/ordenesServicio.html',
+				templateUrl: 'views/procesos/ordenesNew.html',
 				controller: 'OrdenesServicioCtrl',
 				controllerAs: '$ctrl'
 			},
