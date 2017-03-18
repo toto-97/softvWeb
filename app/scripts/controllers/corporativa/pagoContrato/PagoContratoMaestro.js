@@ -143,8 +143,24 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         vm.data.amaterno = '';
     }
 
+    function abrirPago(valor) {
+        vm.animationsEnabled = true;
+			var modalInstance = $uibModal.open({
+				animation: vm.animationsEnabled,
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: 'views/corporativa/abrirPago.html',
+				controller: 'AbrirPagoCtrl',
+				controllerAs: '$ctrl',
+				backdrop: 'static',
+				keyboard: false,
+				size: 'sm'
+			});
+    }
+
     var vm = this;
     vm.buscarPorContrato = buscarPorContrato
+    vm.abrirPago = abrirPago;
 	initialData();
 
 }

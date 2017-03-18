@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <button class="close" aria-label="Close" type="button" ng-click="$ctrl.cancel()">×</button>
+    <h4 class="modal-title">{{$ctrl.titulo}}</h4>
+</div>
+<div class="modal-body">
+    <div class="row" style="padding-left:10px;" ng-show="$ctrl.seleccion">
+        <p>{{$ctrl.subtitulo}}</p>
+        <div class="col-md-12">
+            <label class="radio-inline radio-styled">
+                <input type="radio" name="inlineRadioOptions" ng-value="1" ng-model="$ctrl.tipo"><span>Crédito</span>
+            </label>
+        </div>
+        <div class="col-md-12">
+            <label class="radio-inline radio-styled col-md-12">
+                <input type="radio" name="inlineRadioOptions" ng-value="2" ng-model="$ctrl.tipo"><span>De contado</span>
+            </label>
+        </div>
+    </div>
+    <div class="row" style="padding-left:10px;" ng-show="$ctrl.tipoCredito">
+        <p>Selecciona el tipo de pago</p>
+        <div class="col-md-12">
+            <label class="radio-inline radio-styled">
+                <input type="radio" name="inlineRadioOptions" ng-value="fijo" ng-model="$ctrl.pagos"><span>Pagos Fijos</span>
+            </label>
+        </div>
+        <div class="col-md-12">
+            <label class="radio-inline radio-styled col-md-12">
+                <input type="radio" name="inlineRadioOptions" ng-value="variable" ng-model="$ctrl.pagos"><span>Pagos Variables</span>
+            </label>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.aceptar()">Aceptar</button>
+    <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">{{$ctrl.boton}}</button>
+</div>
