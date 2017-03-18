@@ -1,18 +1,15 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('AtencionCtrl', function($state, ngNotify, atencionFactory, $localStorage, $uibModal) {
+	.controller('AtencionCtrl', function ($state, ngNotify, atencionFactory, $localStorage, $uibModal) {
 		function initialData() {
-			atencionFactory.getPlazas().then(function(data) {
-				console.log(data);
+			atencionFactory.getPlazas().then(function (data) {
 				vm.plazas = data.GetMuestra_Compania_RelUsuarioListResult;
-				vm.selectedPlaza = vm.plazas[0];
-				atencionFactory.getServicios().then(function(data) {
-					console.log(data);
+				atencionFactory.getServicios().then(function (data) {
 					vm.servicios = data.GetMuestraTipSerPrincipalListResult;
 					vm.selectedServicio = vm.servicios[2];
 
-					atencionFactory.getUsuarios().then(function(data) {
+					atencionFactory.getUsuarios().then(function (data) {
 						console.log(data);
 						vm.usuarios = data.GetMUESTRAUSUARIOSListResult;
 						vm.selectedUsuario = vm.usuarios[0];
@@ -32,7 +29,7 @@ angular
 							compania: 0,
 							clvUsuario: 0
 						};
-						atencionFactory.buscarAtencion(obj).then(function(data) {
+						atencionFactory.buscarAtencion(obj).then(function (data) {
 							vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
 							console.log(vm.atenciones);
 						});
@@ -57,6 +54,28 @@ angular
 			}
 		}
 
+		function cambioServicio() {
+			var obj = {
+				servicio: vm.selectedServicio.Clv_TipSerPrincipal,
+				reporte: 0,
+				contrato: 0,
+				nombre: '',
+				paterno: '',
+				materno: '',
+				calle: '',
+				numero: '',
+				colonia: 0,
+				setupbox: '',
+				op: 4,
+				compania: vm.selectedPlaza.id_compania,
+				clvUsuario: 0
+			};
+			atencionFactory.buscarAtencion(obj).then(function (data) {
+				console.log(data);
+				vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
+			});
+		}
+
 		function buscarReporte() {
 
 			var obj = {
@@ -74,7 +93,7 @@ angular
 				compania: vm.selectedPlaza.id_compania,
 				clvUsuario: vm.selectedUsuario.Clave
 			};
-			atencionFactory.buscarAtencion(obj).then(function(data) {
+			atencionFactory.buscarAtencion(obj).then(function (data) {
 				vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
 			});
 
@@ -97,7 +116,7 @@ angular
 				compania: 0,
 				clvUsuario: vm.selectedUsuario.Clave
 			};
-			atencionFactory.buscarAtencion(obj).then(function(data) {
+			atencionFactory.buscarAtencion(obj).then(function (data) {
 				vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
 			});
 
@@ -120,11 +139,11 @@ angular
 					numero: '',
 					colonia: 0,
 					setupbox: '',
-					op: 14,
+					op: 1,
 					compania: vm.selectedPlaza.id_compania,
 					clvUsuario: vm.selectedUsuario.Clave
 				};
-				atencionFactory.buscarAtencion(obj).then(function(data) {
+				atencionFactory.buscarAtencion(obj).then(function (data) {
 					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
 				});
 			}
@@ -132,13 +151,12 @@ angular
 
 		function cambioPlaza() {
 			if (vm.selectedPlaza.id_compania > 0) {
-				atencionFactory.getColonias(vm.selectedPlaza.id_compania).then(function(data) {
+				atencionFactory.getColonias(vm.selectedPlaza.id_compania).then(function (data) {
 					console.log(data);
 					vm.colonias = data.GetuspConsultaColoniasListResult;
 					vm.selectedColonia = vm.colonias[0];
-
 					var obj = {
-						servicio: vm.selectedServicio.Clv_TipSerPrincipal,
+						servicio: 0,
 						reporte: 0,
 						contrato: 0,
 						nombre: '',
@@ -152,12 +170,9 @@ angular
 						compania: vm.selectedPlaza.id_compania,
 						clvUsuario: 0
 					};
-					console.log(obj);
-					atencionFactory.buscarAtencion(obj).then(function(data) {
-						console.log(data);
+					atencionFactory.buscarAtencion(obj).then(function (data) {
 						vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
 					});
-
 				});
 			}
 		}
@@ -183,14 +198,13 @@ angular
 					compania: 0,
 					clvUsuario: 0
 				};
-				atencionFactory.buscarAtencion(obj).then(function(data) {
+				atencionFactory.buscarAtencion(obj).then(function (data) {
 					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
 				});
 			}
 		}
 
 		function bucarUsuario() {
-			console.log('entra');
 			if (vm.selectedUsuario.Clave == 0) {
 				ngNotify.set('Por favor seleccione un usuario.', 'error');
 			} else {
@@ -209,15 +223,13 @@ angular
 					compania: vm.selectedPlaza.id_compania,
 					clvUsuario: vm.selectedUsuario.Clave
 				};
-				atencionFactory.buscarAtencion(obj).then(function(data) {
-					console.log(data);
+				atencionFactory.buscarAtencion(obj).then(function (data) {
 					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
 				});
 			}
 		}
 
 		function DetalleLlamada(obj) {
-			console.log(obj);
 			abrirDetalle(obj.Contrato, obj.llamada, obj.Clv_TipSer);
 		}
 
@@ -238,10 +250,64 @@ angular
 				keyboard: false,
 				size: 'lg',
 				resolve: {
-					options: function() {
+					options: function () {
 						return options;
 					}
 				}
+			});
+		}
+
+		function cambiaConReporte() {
+			var op = 0;
+			if (vm.conReporte) {
+				op = 12;
+			} else {
+				op = 14;
+			}
+			var obj = {
+				servicio: 0,
+				reporte: 0,
+				contrato: 0,
+				nombre: '',
+				paterno: '',
+				materno: '',
+				calle: '',
+				numero: '',
+				colonia: 0,
+				setupbox: '',
+				op: op,
+				compania: vm.selectedPlaza.id_compania,
+				clvUsuario: vm.selectedUsuario.Clave
+			};
+			atencionFactory.buscarAtencion(obj).then(function (data) {
+				vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
+			});
+		}
+
+		function cambiaSinReporte() {
+			var op = 0;
+			if (vm.sinReporte) {
+				op = 13;
+			} else {
+				op = 15;
+			}
+			var obj = {
+				servicio: 0,
+				reporte: 0,
+				contrato: 0,
+				nombre: '',
+				paterno: '',
+				materno: '',
+				calle: '',
+				numero: '',
+				colonia: 0,
+				setupbox: '',
+				op: op,
+				compania: vm.selectedPlaza.id_compania,
+				clvUsuario: vm.selectedUsuario.Clave
+			};
+			atencionFactory.buscarAtencion(obj).then(function (data) {
+				vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
 			});
 		}
 
@@ -259,6 +325,9 @@ angular
 		vm.numero = '';
 		vm.atenciones = [];
 		vm.DetalleLlamada = DetalleLlamada;
+		vm.cambioServicio = cambioServicio;
+		vm.cambiaConReporte = cambiaConReporte;
+		vm.cambiaSinReporte = cambiaSinReporte;
 
 		initialData();
 	});
