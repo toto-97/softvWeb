@@ -110,7 +110,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
     }
 
 	function reloadTables() {
-		cajasFactory.dameDetallePago(vm.session).then(function(detallePago) {
+		cajasFactory.dameDetallePago(vm.saldo.ClvSession).then(function(detallePago) {
 			if (detallePago.GetDameDetalleListResult.length == 0) {
 				vm.blockBaja = true;
 				vm.blockPagar = true;
@@ -121,7 +121,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
 			vm.detallePago = detallePago.GetDameDetalleListResult;
 			vm.detallePagoAux = vm.detallePago;
 		});
-		cajasFactory.dameSumaPago(vm.session).then(function(sumaPago) {
+		cajasFactory.dameSumaPago(vm.saldo.ClvSession).then(function(sumaPago) {
 			vm.sumaPagos = sumaPago.GetSumaDetalleListResult;
 		});
 	}
