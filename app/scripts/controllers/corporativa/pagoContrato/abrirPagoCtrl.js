@@ -16,7 +16,7 @@ function AbrirPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, in
 				controllerAs: '$ctrl',
 				backdrop: 'static',
 				keyboard: false,
-				size: 'sm'
+				size: 'md'
 			});
         }else{
             $uibModalInstance.dismiss('cancel');
