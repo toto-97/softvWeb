@@ -6,6 +6,7 @@ angular
 		vm.showDatosCliente = true;
 		vm.agregar = agregar;
 		vm.buscarContrato = buscarContrato;
+		vm.buscarCliente = buscarCliente;
 		vm.datos = false;
 		init();
 
@@ -135,5 +136,19 @@ angular
 						console.log(vm.datosCli);
 				});
 			}
+		}
+
+		function buscarCliente() {
+			var modalInstance = $uibModal.open({
+				animation: true,
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: 'views/procesos/buscarNuevo.html',
+				controller: 'BuscarNuevoCtrl',
+				controllerAs: '$ctrl',
+				backdrop: 'static',
+				keyboard: false,
+				size: 'lg'
+			});
 		}
 	});
