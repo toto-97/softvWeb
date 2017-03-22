@@ -111,20 +111,20 @@ angular
     factory.buscarOrdenes = function (objOrd) {
       var deferred = $q.defer();
       var Parametros = {
-        "Op": objOrd.op,
-        "Clv_Orden": objOrd.orden,
-        "Contrato": objOrd.contrato,
-        "Nombre": objOrd.nombre,
-        "Apellido_Paterno": objOrd.paterno,
-        "Apellido_Materno": objOrd.materno,
-        "CALLE": objOrd.calle,
-        "NUMERO": objOrd.numero,
-        "ClvColonia": objOrd.colonia,
-        "IdCompania": objOrd.compania,
-        "SetupBox": objOrd.setupbox,
-        "ClvUsuario": usuarioAtencion,
-        "STATUS": objOrd.status,
-        "Auto": objOrd.auto
+        'Op': objOrd.op,
+        'Clv_Orden': objOrd.orden,
+        'Contrato': objOrd.contrato,
+        'Nombre': objOrd.nombre,
+        'Apellido_Paterno': objOrd.paterno,
+        'Apellido_Materno': objOrd.materno,
+        'CALLE': objOrd.calle,
+        'NUMERO': objOrd.numero,
+        'ClvColonia': objOrd.colonia,
+        'IdCompania': objOrd.compania,
+        'SetupBox': objOrd.setupbox,
+        'ClvUsuario': usuarioAtencion,
+        'STATUS': objOrd.status,
+        'Auto': objOrd.auto
       };
       var config = {
         headers: {
@@ -267,7 +267,6 @@ angular
 
     factory.muestraTrabajo = function (tipo, usua) {
       var deferred = $q.defer();
-      var user = $localStorage.currentUser.idUsuario;
       var Parametros = {
         'ClvTipSer': tipo,
         'TipoUser': usua

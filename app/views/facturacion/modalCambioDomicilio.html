@@ -46,13 +46,13 @@
                     </div>
                     <div class="col-md-4">
                         <label>Teléfono</label>
-                        <input type="text" name="telefono" validate-on="dirty" invalid-message="'Número de telefono no válido.'" ui-mask="(999) 999-9999" minlength="10" class="form-control" ng-model="ctrl.telefono" />
+                        <input type="text" required-message="'Este campo es obligatorio.'" required="" name="telefono" validate-on="dirty" invalid-message="'Número de telefono no válido.'" ui-mask="(999) 999-9999" minlength="10" class="form-control" ng-model="ctrl.telefono" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-8">
                         <label>Entre calles</label>
-                        <input type="text" class="form-control" ng-model="ctrl.entreCalles" />
+                        <input type="text" name="entreCalles" class="form-control" required-message="'Este campo es obligatorio.'" validate-on="dirty" required="" ng-model="ctrl.entreCalles" />
                     </div>
                 </div>
             </div>
