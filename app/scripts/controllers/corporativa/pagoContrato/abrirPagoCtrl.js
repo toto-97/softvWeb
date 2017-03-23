@@ -4,7 +4,9 @@ angular.module('softvApp').controller('AbrirPagoCtrl', AbrirPagoCtrl);
 function AbrirPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, $uibModalInstance) {
 
     function aceptar() {
-        if (vm.tipo == 1) {
+		if (vm.tipo == 0 || vm.tipo == null || vm.tipo == undefined) {
+			ngNotify.set('Seleccione un método de pago.', 'error')
+		}else if (vm.tipo == 1) {
 			$uibModalInstance.dismiss('cancel');
             vm.animationsEnabled = true;
 			var modalInstance = $uibModal.open({
@@ -36,7 +38,7 @@ function AbrirPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, in
     }
 
     function cancel() {
-			$uibModalInstance.dismiss('cancel');
+		$uibModalInstance.dismiss('cancel');
 	}
 
     var vm = this;
