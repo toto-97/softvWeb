@@ -8,25 +8,25 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label text-left">Ciudad:</label>
                 <div class="col-sm-10">
-                    <select name="ciudad" validate-on="dirty" class="form-control" ng-model="$ctrl.selectedCiudad" ng-options="v.nombre for v in $ctrl.ciudades track by v.Clv_Ciudad" required-message="'Error!, Este campo es obligatorio.'" required style="font-size:12px;">
+                    <select name="ciudad" validate-on="dirty" class="form-control" ng-change="$ctrl.changeCamdo()" ng-model="$ctrl.selectedCiudad" ng-options="v.nombre for v in $ctrl.ciudades track by v.Clv_Ciudad" required-message="'Error!, Este campo es obligatorio.'" required style="font-size:12px;">
                         <option value="" disabled selected>Seleccione ciudad</option>
                     </select>
                 </div>
                 <label class="col-sm-2 control-label text-left">Localidad:</label>
                 <div class="col-sm-10">
-                    <select name="localidad" validate-on="dirty" class="form-control" ng-model="$ctrl.selectedLocalidad" ng-options="v.Descripcion for v in $ctrl.calle track by v.IdMotivoTicket" required-message="'Error!, Este campo es obligatorio.'" required style="font-size:12px;">
+                    <select name="localidad" validate-on="dirty" class="form-control" ng-change="$ctrl.changeLocalidad()" ng-model="$ctrl.selectedLocalidad" ng-options="v.Nombre for v in $ctrl.localidades track by v.Clv_Localidad" required-message="'Error!, Este campo es obligatorio.'" required style="font-size:12px;">
                         <option value="" disabled selected>Seleccione localidad</option>
                     </select>
                 </div>
                 <label class="col-sm-2 control-label text-left">Colonia:</label>
                 <div class="col-sm-10">
-                    <select name="colonia" validate-on="dirty" class="form-control" ng-model="$ctrl.selectedColonia" ng-options="v.Descripcion for v in $ctrl.calle track by v.IdMotivoTicket" required-message="'Error!, Este campo es obligatorio.'" required style="font-size:12px;">
+                    <select name="colonia" validate-on="dirty" class="form-control" ng-change="$ctrl.changeColonia()" ng-model="$ctrl.selectedColonia" ng-options="v.COLONIA for v in $ctrl.colonias track by v.CLV_COLONIA" required-message="'Error!, Este campo es obligatorio.'" required style="font-size:12px;">
                         <option value="" disabled selected>Seleccione colonia</option>
                     </select>
                 </div>
                 <label class="col-sm-2 control-label text-left">Calle:</label>
                 <div class="col-sm-10">
-                    <select name="calle" validate-on="dirty" class="form-control" ng-model="$ctrl.selectedCalle" ng-options="v.Descripcion for v in $ctrl.calle track by v.IdMotivoTicket" required-message="'Error!, Este campo es obligatorio.'" required style="font-size:12px;">
+                    <select name="calle" validate-on="dirty" class="form-control" ng-model="$ctrl.selectedCalle" ng-options="v.Nombre for v in $ctrl.calles track by v.Clv_Calle" required-message="'Error!, Este campo es obligatorio.'" required style="font-size:12px;">
                         <option value="" disabled selected>Seleccione calle</option>
                     </select>
                 </div>

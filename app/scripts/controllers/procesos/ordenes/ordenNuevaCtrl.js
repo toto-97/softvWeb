@@ -23,11 +23,9 @@ angular
 				vm.datos = true;
 				ordenesFactory.serviciosCliente(vm.contrato).then(function(data) {
 						vm.servicios = data.GetDameSerDelCliFacListResult;
-						console.log(vm.servicios);
 				});
 				ordenesFactory.buscarCliPorContrato(vm.contrato).then(function(data) {
 						vm.datosCli = data.GetDeepBUSCLIPORCONTRATO_OrdSerResult;
-						console.log(vm.datosCli);
 				});
 			}
 		}
@@ -140,11 +138,9 @@ angular
 				vm.datos = true;
 				ordenesFactory.serviciosCliente(vm.contrato).then(function(data) {
 						vm.servicios = data.GetDameSerDelCliFacListResult;
-						console.log(vm.servicios);
 				});
 				ordenesFactory.buscarCliPorContrato(vm.contrato).then(function(data) {
 						vm.datosCli = data.GetDeepBUSCLIPORCONTRATO_OrdSerResult;
-						console.log(vm.datosCli);
 				});
 			} 
 		}

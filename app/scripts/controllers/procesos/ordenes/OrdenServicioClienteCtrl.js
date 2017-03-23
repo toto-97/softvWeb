@@ -18,7 +18,6 @@ angular
 		function changeTrabajo() {
 			ordenesFactory.muestraTrabajo(vm.selectedServicio.clv_tipser).then(function(data) {
 					vm.tipoTrabajo = data.GetMUESTRATRABAJOSPorTipoUsuarioListResult;
-					console.log(vm.tipoTrabajo);
 			});
 		}
 

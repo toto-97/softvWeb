@@ -14,7 +14,7 @@ angular
 				vm.titulo = 'Capture el Domicilio'
 
 				ordenesFactory.getCiudadCamdo(items.contrato).then(function(data) {
-					vm.ciudades = data.GetllenaCiudadCamdoListResult[0];
+					vm.ciudades = data.GetllenaCiudadCamdoListResult;
 					console.log(vm.ciudades);
 				});
 			}else if (items.valor == 2) {
@@ -74,12 +74,48 @@ angular
 			});
 		}
 
+		function changeCamdo() {
+			if (vm.selectedCiudad.Clv_Ciudad == undefined) {
+				vm.colonias = '';
+				vm.calles = '';
+			}else{
+				ordenesFactory.getLocalidadCamdo(items.contrato, vm.selectedCiudad.Clv_Ciudad).then(function(data) {
+					vm.localidades = data.GetllenaLocalidadCamdoListResult;
+				});
+			}
+		}
+
+		function changeLocalidad() {
+			if (vm.selectedLocalidad.Clv_Localidad == undefined) {
+				vm.colonias = '';
+				vm.calles = '';
+			}else{
+				ordenesFactory.getColoniaCamdo(items.contrato, vm.selectedLocalidad.Clv_Localidad).then(function(data) {
+					vm.colonias = data.GetllenaColoniaCamdoListResult;
+				});
+			}
+		}
+
+		function changeColonia() {
+			if (vm.selectedColonia.CLV_COLONIA == undefined) {
+				vm.calles = '';
+			}else{
+				ordenesFactory.getCalleCamdo(items.contrato, vm.selectedColonia.CLV_COLONIA).then(function(data) {
+					vm.calles = data.GetllenaCalleCamdoListResult;
+					console.log(vm.calles);
+				});
+			}
+		}
+
 		function cancel() {
 			$uibModalInstance.dismiss('cancel');
 		}
 
 		var vm = this;
 		vm.cancel = cancel;
+		vm.changeCamdo = changeCamdo;
+		vm.changeLocalidad =changeLocalidad;
+		vm.changeColonia = changeColonia;
 		initial();
 		getDatos();
 	});
