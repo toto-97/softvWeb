@@ -288,5 +288,6 @@ angular
 
 
 
+
 		return factory;
 	});

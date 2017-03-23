@@ -404,9 +404,16 @@ angular
 			});
 		}
 
+		function test() {
+			quejasFactory.test().then(function(data) {
+				console.log(data);
+			});
+		}
+
 
 		var vm = this;
 		InitalData();
+		test();
 		vm.Titulo = 'Quejas area técnica'
 		vm.BuscaReporte = BuscaReporte;
 		vm.BuscaContrato = BuscaContrato;
