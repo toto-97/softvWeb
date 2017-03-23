@@ -22,6 +22,7 @@ angular
 					cajasFactory.ReprocesaEdoCuentaContrato(IdEstadoCuenta, contrato).then(function (data) {
 						ordenesFactory.addBitacoraReproceso(contrato).then(function (dataBit) {
 							ngNotify.set('El estado de cuenta se reproceso correctamente.');
+							init();
 						});
 					});
 				} else {
