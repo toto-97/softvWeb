@@ -221,24 +221,30 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-3" ng-show="ctrl.ArrastraSaldo" style="margin-top: -30px;">
-                    <b>Descripción</b>
-                    <br>
-                    <table class="table table-hover" style="font-size:10px;">
-                      <thead>
-                        <th>Fecha</th>
-                        <th>Importe</th>
-                      </thead>
-                      <tbody>
-                        <tr ng-repeat="x in ctrl.detalleEdo">
-                          <td>{{x.Fecha}}</td>
-                          <td>{{x.TotalRegular | currency }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                  <div class="col-md-3 " ng-show="ctrl.ArrastraSaldo" style="margin-top: -30px;">
+                   <b class="text-danger">Estados de cuenta por saldar</b>
+                   <br>
+                   <div class="card wrapper">
+                     <table class="table table-hover" style="font-size:10px;">
+                       <thead>
+                         <th>Fecha</th>
+                         <th>Importe</th>
+                         <th>Detalle</th>
+                       </thead>
+                       <tbody>
+                         <tr ng-repeat="x in ctrl.detalleEdo">
+                           <td>{{x.Fecha}}</td>
+                           <td><b>{{x.TotalRegular | currency }}</b></td>
+                           <td><button type="button" class="btn ink-reaction btn-icon-toggle btn-primary btn-xs " ng-click="ctrl.MuestraEdoCuenta(x)"><i class="md md-search
+           "></i></button></td>
+                         </tr>
+                       </tbody>
+                     </table>
+
+                   </div>
 
 
-                  </div>
+                 </div>
                 </div>
               </div>
             </div>

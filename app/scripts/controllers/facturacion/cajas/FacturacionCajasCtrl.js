@@ -1,7 +1,7 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('FacturacionCajasCtrl', function($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu) {
+	.controller('FacturacionCajasCtrl', function($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, globalService) {
 
 		function openEdoCuenta() {
 			cajasFactory.getEstadoCuenta(vm.Cliente.Contrato).then(function(data) {
@@ -380,16 +380,11 @@ angular
 						if (data.GetBusCliPorContrato_FacListResult.length > 0) {
 							$('.buscarContrato').collapse('hide');
 							vm.Cliente = data.GetBusCliPorContrato_FacListResult[0];
-
-
 							cajasFactory.ValidaSaldoContrato(vm.Cliente.Contrato).then(function(data) {
-								console.log(data);
 								if (data.GetValidaSaldoContratoResult.tieneSaldo > 0) {
 									vm.ArrastraSaldo = true;
 									cajasFactory.CobraSaldo(vm.Cliente.Contrato).then(function(cobra) {
-										console.log(cobra);
 										vm.session = cobra.GetDeepCobraSaldoResult.ClvSession;
-										console.log(vm.session);
 										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 0).then(function(op1) {
 											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
 												abrirModalPregunta(0, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
@@ -423,7 +418,6 @@ angular
 										});
 										reloadTables();
 										cajasFactory.ObtieneEdoCuentaSinSaldar(vm.Cliente.Contrato, vm.session).then(function(detalleEdo) {
-											console.log(detalleEdo);
 											vm.detalleEdo = detalleEdo.GetObtieneEdoCuentaSinSaldarListResult;
 										});
 									});
@@ -579,9 +573,7 @@ angular
 								if (data.GetValidaSaldoContratoResult.tieneSaldo > 0) {
 									vm.ArrastraSaldo = true;
 									cajasFactory.CobraSaldo(vm.Cliente.Contrato).then(function(cobra) {
-										console.log(cobra);
 										vm.session = cobra.GetDeepCobraSaldoResult.ClvSession;
-										console.log(vm.session);
 										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 0).then(function(op1) {
 											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
 												abrirModalPregunta(0, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
@@ -616,7 +608,6 @@ angular
 										reloadTables();
 
 										cajasFactory.ObtieneEdoCuentaSinSaldar(vm.Cliente.Contrato, vm.session).then(function(detalleEdo) {
-											console.log(detalleEdo);
 											vm.detalleEdo = detalleEdo.GetObtieneEdoCuentaSinSaldarListResult;
 										});
 
@@ -796,12 +787,11 @@ angular
 		}
 
 		function MuestraEdoCuenta(detalle) {
-			console.log(detalle);
-			console.log(vm.Cliente);
-			var options = {};
-			options.Tipo = 1;
-			options.IdEstadoCuenta = detalle.IdEstadoCuenta;
-			options.Contrato = vm.Cliente.ContratoC;
+			var options = {
+				Tipo: 1,
+				IdEstadoCuenta: detalle.IdEstadoCuenta,
+				Contrato: vm.Cliente.ContratoC
+			};
 			var modalInstance = $uibModal.open({
 				animation: true,
 				ariaLabelledBy: 'modal-title',
@@ -818,6 +808,7 @@ angular
 					}
 				}
 			});
+
 
 		}
 

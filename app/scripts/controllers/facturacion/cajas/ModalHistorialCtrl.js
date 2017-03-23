@@ -4,9 +4,7 @@ angular
 	.controller('ModalHistorialCtrl', function($uibModal, $uibModalInstance, contrato, cajasFactory) {
 		function init() {
 			vm.tieneSaldo = false;
-			console.log(contrato);
 			cajasFactory.ValidaHistorialContrato(contrato).then(function(data) {
-				console.log(data);
 				if (data.GetDeepValidaHistorialContratoResult.tieneSaldo > 0) {
 					vm.tieneSaldo = true;
 				}

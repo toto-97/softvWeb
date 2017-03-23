@@ -17,7 +17,6 @@ angular
 
 		factory.printEntrega = function(consecutivo) {
 			var deferred = $q.defer();
-			var user = $localStorage.currentUser.idUsuario;
 			var Parametros = {
 				'Consecutivo': consecutivo
 			};
