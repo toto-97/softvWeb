@@ -4,7 +4,7 @@ angular
 	.controller('QuejaEjecutaCtrl', function($state, ngNotify, $location, $uibModal, $stateParams, atencionFactory, quejasFactory) {
 
 		function InitalData() {
-			console.log($stateParams);
+
 			vm.clv_queja = $stateParams.id;
 			vm.contrato = $stateParams.contrato;
 			vm.Servicio = $stateParams.servicio;
@@ -29,7 +29,7 @@ angular
 
 							quejasFactory.ConsultaQueja($stateParams.id).then(function(data) {
 								var detqueja = data.GetQuejasListResult[0];
-								console.log(detqueja);
+
 								vm.UsuarioGenero = detqueja.UsuarioGenero;
 								vm.UsuarioEjecuto = detqueja.UsuarioEjecuto;
 								vm.TecnicoAgenda = detqueja.NombreTecAge;
@@ -138,7 +138,7 @@ angular
 
 
 		function Bloqueo(aplicabloqueo) {
-			console.log(vm.Status);
+
 			if (vm.Estatus.Clave == 'E') {
 				if (aplicabloqueo == true) {
 					vm.BtnGuarda = false;
@@ -247,14 +247,36 @@ angular
 				console.log(data);
 				if (data.GetDeepValidaQuejaCompaniaAdicResult.Valida == 0) {
 					quejasFactory.BuscaBloqueado(vm.GlobalContrato).then(function(bloqueado) {
+						console.log(bloqueado);
 						if (bloqueado.GetDeepBuscaBloqueadoResult.Bloqueado == 0) {
-							obj = {};
+							alert('here');
+							var obj = {};
+							console.log(obj);
 							obj.Clv_Queja = vm.clv_queja;
+							console.log(obj);
 							obj.Status = vm.Estatus.Clave;
+							console.log(obj);
 							obj.Fecha_Ejecucion = vm.FechaEjecucion;
-							obj.Visita1 = vm.visita1;
-							obj.Visita2 = vm.visita2;
-							obj.Visita3 = vm.visita3;
+							console.log(obj);
+							if (vm.visita1 == undefined) {
+								obj.Visita1 = '';
+							} else {
+								obj.Visita1 = vm.visita1;
+							}
+							console.log(obj);
+							if (vm.visita2 == undefined) {
+								obj.Visita2 = '';
+							} else {
+								obj.Visita2 = vm.visita2
+							}
+							console.log(obj);
+							if (vm.visita3 == undefined) {
+								obj.Visita3 = '';
+							} else {
+								obj.Visita3 = vm.visita3
+							}
+							console.log(obj);
+
 							obj.HV1 = '';
 							obj.HV2 = '';
 							obj.HV3 = '';
@@ -264,10 +286,10 @@ angular
 							obj.Clv_Tecnico = vm.Tecnico.clv_Tecnico;
 							obj.clvProblema = vm.Problema.clvProblema;
 							obj.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;
-							obj.Solucion = ProblemaReal;
-							quejasFactory.UpdateQuejas(obj).then(function(data) {
-								ngNotify.set('La orden se ha guardado correctamente', 'success');
-							});
+							obj.Solucion = vm.ProblemaReal;
+							// quejasFactory.UpdateQuejas(obj).then(function(data) {
+							// 	ngNotify.set('La orden se ha guardado correctamente', 'success');
+							// });
 
 						} else {
 							ngNotify.set('El cliente, ha sido bloqueado, por lo que no se podrá ejecutar la orden', 'error');

@@ -52,12 +52,6 @@ angular
 			} else {
 				ngNotify.set('No se puede realizar una queja, ya que La llamada ya presenta una queja.', 'error');
 			}
-
-
-
-
-
-
 		}
 
 		function cancel() {
