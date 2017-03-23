@@ -23,22 +23,28 @@ angular
 		}
 
 		function abrir(valor) {
-			var modalInstance = $uibModal.open({
-				animation: true,
-				ariaLabelledBy: 'modal-title',
-				ariaDescribedBy: 'modal-body',
-				templateUrl: 'views/procesos/modalOrdenTrabajos.html',
-				controller: 'ModalOrdenCtrl',
-				controllerAs: '$ctrl',
-				backdrop: 'static',
-				keyboard: false,
-				size: 'md',
-				resolve: {
-					valor: function() {
-						return valor;
+			var items = {
+				contrato: cont,
+				valor: valor
+			};
+			if(vm.selectedTrabajo.Clv_Trabajo == 37) {
+				var modalInstance = $uibModal.open({
+					animation: true,
+					ariaLabelledBy: 'modal-title',
+					ariaDescribedBy: 'modal-body',
+					templateUrl: 'views/procesos/modalOrdenTrabajos.html',
+					controller: 'ModalOrdenCtrl',
+					controllerAs: '$ctrl',
+					backdrop: 'static',
+					keyboard: false,
+					size: 'md',
+					resolve: {
+						items: function() {
+							return items;
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 
         function cancel() {

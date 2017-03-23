@@ -12,7 +12,8 @@ angular
       buscarCliPorContrato: '/BUSCLIPORCONTRATO_OrdSer/GetDeepBUSCLIPORCONTRATO_OrdSer',
       serviciosCliente: '/DameSerDelCliFac/GetDameSerDelCliFacList',
       dimeServicio: '/Dime_Que_servicio_Tiene_cliente/GetDime_Que_servicio_Tiene_clienteList',
-      muestraTrabajo: '/MUESTRATRABAJOSPorTipoUsuario/GetMUESTRATRABAJOSPorTipoUsuarioList'
+      muestraTrabajo: '/MUESTRATRABAJOSPorTipoUsuario/GetMUESTRATRABAJOSPorTipoUsuarioList',
+      getCiudadCamdo: '/CAMDO/GetllenaCiudadCamdoList'
     };
     var factory = {};
     var usuarioAtencion = $localStorage.currentUser.idUsuario;
@@ -225,6 +226,26 @@ angular
         }
       };
       $http.post(globalService.getUrl() + paths.muestraTrabajo, JSON.stringify(Parametros), config).then(function(response) {
+        deferred.resolve(response.data);
+      }).catch(function(response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
+
+    factory.getCiudadCamdo = function(contrato) {
+      var deferred = $q.defer();
+      var user = $localStorage.currentUser.idUsuario;
+      var Parametros = {
+        'CONTRATO': contrato
+      };
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.post(globalService.getUrl() + paths.getCiudadCamdo, JSON.stringify(Parametros), config).then(function(response) {
         deferred.resolve(response.data);
       }).catch(function(response) {
         deferred.reject(response.data);

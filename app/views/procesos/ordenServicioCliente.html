@@ -21,7 +21,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label text-right">Trabajo:</label>
                 <div class="col-sm-8">
-                    <select name="servicio" class="form-control" ng-model="$ctrl.selectedTrabajo" ng-options="x.Descripcion for x in $ctrl.tipoTrabajo track by x.Clv_Trabajo" required>
+                    <select name="servicio" class="form-control" ng-change="$ctrl.pantallasExtras()" ng-model="$ctrl.selectedTrabajo" ng-options="x.Descripcion for x in $ctrl.tipoTrabajo track by x.Clv_Trabajo" required>
                         <option value="" disabled selected>Seleccione tipo de trabajo</option>
                     </select>
                 </div>
@@ -49,6 +49,6 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="$ctrl.abrir($ctrl.selected)">Aceptar</button>
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.abrir($ctrl.selectedTrabajo.Clv_Trabajo)">Aceptar</button>
     <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
 </div>

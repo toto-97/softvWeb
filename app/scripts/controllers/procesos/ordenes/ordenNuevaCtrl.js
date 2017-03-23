@@ -122,20 +122,31 @@ angular
 			vm.showGuardar = true;
 		}
 
-		function buscarContrato(contrato) {
-			if (contrato == 0 || contrato == undefined) {
-				ngNotify.set('Inserta un número de contrato', 'error');
-			}else {
+		function buscarContrato(event) {
+			// if (contrato == 0 || contrato == undefined) {
+			// 	ngNotify.set('Inserta un número de contrato', 'error');
+			// }else {
+			if (event.keyCode == 13) {
+				if (vm.contrato == null || vm.contrato == '' || vm.contrato == undefined) {
+					ngNotify.set('Coloque un contrato válido', 'error');
+					return;
+				}
+
+				if(vm.contrato.indexOf('-') != -1 || vm.contrato.indexOf(',') != -1 || vm.contrato.indexOf('.') != -1){
+					ngNotify.set('Coloque un contrato real y no compuesto', 'error');
+					return;
+				}
+				
 				vm.datos = true;
-				ordenesFactory.serviciosCliente(contrato).then(function(data) {
+				ordenesFactory.serviciosCliente(vm.contrato).then(function(data) {
 						vm.servicios = data.GetDameSerDelCliFacListResult;
 						console.log(vm.servicios);
 				});
-				ordenesFactory.buscarCliPorContrato(contrato).then(function(data) {
+				ordenesFactory.buscarCliPorContrato(vm.contrato).then(function(data) {
 						vm.datosCli = data.GetDeepBUSCLIPORCONTRATO_OrdSerResult;
 						console.log(vm.datosCli);
 				});
-			}
+			} 
 		}
 
 		function buscarCliente() {

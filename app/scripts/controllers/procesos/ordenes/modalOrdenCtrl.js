@@ -1,10 +1,10 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('ModalOrdenCtrl', function($uibModalInstance, $uibModal, valor, reportesFactory) {
+	.controller('ModalOrdenCtrl', function($uibModalInstance, $uibModal, items, reportesFactory, ordenesFactory) {
 
 		function initial() {
-			if (valor == 1) {
+			if (items.valor == 37) {
 				vm.cambioDomicilio = true;
 				vm.contratacionExt = false;
 				vm.cancelacionExt = false;
@@ -12,7 +12,12 @@ angular
 				vm.entregaAparatos = false;
 				vm.entregaCables = false;
 				vm.titulo = 'Capture el Domicilio'
-			}else if (valor == 2) {
+
+				ordenesFactory.getCiudadCamdo(items.contrato).then(function(data) {
+					vm.ciudades = data.GetllenaCiudadCamdoListResult[0];
+					console.log(vm.ciudades);
+				});
+			}else if (items.valor == 2) {
 				vm.contratacionExt = true;
 				vm.cambioDomicilio = false;
 				vm.cancelacionExt = false;
@@ -20,7 +25,7 @@ angular
 				vm.entregaAparatos = false;
 				vm.entregaCables = false;
 				vm.titulo = 'Extenciones por Instalar'
-			}else if (valor == 3) {
+			}else if (items.valor == 3) {
 				vm.contratacionExt = false;
 				vm.cambioDomicilio = false;
 				vm.cancelacionExt = true;
@@ -28,7 +33,7 @@ angular
 				vm.entregaAparatos = false;
 				vm.entregaCables = false;
 				vm.titulo = 'Extenciones por Desinstalar'
-			}else if (valor == 4) {
+			}else if (items.valor == 4) {
 				vm.contratacionExt = false;
 				vm.cambioDomicilio = false;
 				vm.cancelacionExt = false;
@@ -36,7 +41,7 @@ angular
 				vm.entregaAparatos = false;
 				vm.entregaCables = false;
 				vm.titulo = 'Instalación de Servicios de Internet'
-			}else if (valor == 5) {
+			}else if (items.valor == 5) {
 				vm.contratacionExt = false;
 				vm.cambioDomicilio = false;
 				vm.cancelacionExt = false;
@@ -44,7 +49,7 @@ angular
 				vm.entregaAparatos = true;
 				vm.entregaCables = false;
 				vm.titulo = 'Seleccione el Aparato'
-			}else if (valor == 6) {
+			}else if (items.valor == 6) {
 				vm.contratacionExt = false;
 				vm.cambioDomicilio = false;
 				vm.cancelacionExt = false;

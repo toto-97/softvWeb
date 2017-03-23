@@ -45,7 +45,7 @@
 						<input type="text" placeholder="# Orden" class="form-control input-sm" ng-model="$ctrl.orden" ng-disabled="$ctrl.showOrden">
 					</div>
 					<div class="col-md-4">
-						<input type="text" placeholder="Contrato" class="form-control input-sm" ng-model="$ctrl.contrato" ng-disabled="$ctrl.showContrato" ng-keydown="$ctrl.buscarContrato($event)">
+						<input type="text" placeholder="Contrato" class="form-control input-sm" ng-model="$ctrl.contrato" ng-disabled="$ctrl.showContrato" ng-keydown="$ctrl.buscarContrato($event, $ctrl.contrato)">
 					</div>
 					<div class="col-md-3">
 						<div>
