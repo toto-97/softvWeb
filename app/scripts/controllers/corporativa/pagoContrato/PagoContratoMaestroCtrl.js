@@ -143,7 +143,13 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         vm.data.amaterno = '';
     }
 
-    function abrirPago(valor) {
+    function abrirPago() {
+        var items = {
+            Concepto: item,
+            Session: vm.session,
+            Contrato: vm.Cliente.Contrato,
+            Suscriptor: vm.Suscriptor
+        };
         vm.animationsEnabled = true;
         var modalInstance = $uibModal.open({
             animation: vm.animationsEnabled,
@@ -154,7 +160,12 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
             controllerAs: '$ctrl',
             backdrop: 'static',
             keyboard: false,
-            size: 'sm'
+            size: 'sm',
+            resolve: {
+                items: function() {
+                    return items;
+                }
+            }
         });
     }
 
