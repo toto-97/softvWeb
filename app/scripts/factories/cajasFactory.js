@@ -63,9 +63,7 @@ angular
 			preguntaCajas: '/uspHaz_Pregunta/GetDeepuspHaz_Pregunta',
 			afirmaPregunta: '/uspHaz_Pregunta/GetDeeAfirmacionPregunta',
 			checaRetiro: '/ChecaOrdenRetiro/GetChecaOrdenRetiroList',
-			getObservaciones: '/ConRelClienteObs/GetDeepConRelClienteObs',
-			cobraSaldo: '/CobraSaldo/GetDeepCobraSaldo',
-			obtenEdoCuenta: '/ObtieneEdoCuentaSinSaldar/GetObtieneEdoCuentaSinSaldarList'
+			getObservaciones: '/ConRelClienteObs/GetDeepConRelClienteObs'
 		};
 
 		factory.validarContrato = function(contrato) {
@@ -1343,45 +1341,6 @@ angular
 				}
 			};
 			$http.post(globalService.getUrl() + paths.preCobraAdeudo, JSON.stringify(Parametros), config).then(function(response) {
-				deferred.resolve(response.data);
-			}).catch(function(response) {
-				deferred.reject(response);
-			});
-
-			return deferred.promise;
-		};
-
-		factory.cobraSaldo = function(contrato) {
-			var deferred = $q.defer();
-			var Parametros = {
-				"Contrato":contrato
-			};
-			var config = {
-				headers: {
-					'Authorization': $localStorage.currentUser.token
-				}
-			};
-			$http.post(globalService.getUrl() + paths.cobraSaldo, JSON.stringify(Parametros), config).then(function(response) {
-				deferred.resolve(response.data);
-			}).catch(function(response) {
-				deferred.reject(response);
-			});
-
-			return deferred.promise;
-		};
-
-		factory.obtenEdoCuenta = function(contrato,clave) {
-			var deferred = $q.defer();
-			var Parametros = {
-				"Contrato":contrato,
-				"ClvSession":clave
-			};
-			var config = {
-				headers: {
-					'Authorization': $localStorage.currentUser.token
-				}
-			};
-			$http.post(globalService.getUrl() + paths.obtenEdoCuenta, JSON.stringify(Parametros), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response);

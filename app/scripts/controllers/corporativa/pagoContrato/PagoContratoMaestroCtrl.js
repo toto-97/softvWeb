@@ -1,11 +1,7 @@
 'use strict';
 angular.module('softvApp').controller('PagoContratoMaestroCtrl', PagoContratoMaestroCtrl);
 
-function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu) {
-
-	function initialData() {
-
-	}
+function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, pagosMaestrosFactory) {
 
     function buscarPorContrato(contratoForm) {
         PNotify.removeAll();
@@ -91,8 +87,8 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                             }
                         });
                         vm.muestraCliente = true;
-						cajasFactory.cobraSaldo(vm.Cliente.Contrato).then(function(data) {
-                            vm.saldo = data.GetDeepCobraSaldoResult;
+						pagosMaestrosFactory.cobraSaldoMaestro(vm.Cliente.Contrato).then(function(data) {
+                            vm.saldo = data.GetDeepCobraSaldoContratoMaestroResult;
 							cajasFactory.obtenEdoCuenta(vm.Cliente.Contrato,vm.saldo.ClvSession).then(function(data) {
 	                            vm.edoCuenta = data.GetObtieneEdoCuentaSinSaldarListResult;
 							});
@@ -144,27 +140,100 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
     }
 
     function abrirPago() {
-        var items = {
-            Concepto: item,
-            Session: vm.session,
-            Contrato: vm.Cliente.Contrato,
-            Suscriptor: vm.Suscriptor
-        };
-        vm.animationsEnabled = true;
-        var modalInstance = $uibModal.open({
-            animation: vm.animationsEnabled,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: 'views/corporativa/abrirPago.html',
-            controller: 'AbrirPagoCtrl',
-            controllerAs: '$ctrl',
-            backdrop: 'static',
-            keyboard: false,
-            size: 'sm',
-            resolve: {
-                items: function() {
-                    return items;
+        cajasFactory.sumaTotalDetalle(vm.saldo.ClvSession).then(function(data) {
+            var items = {
+                Contrato: vm.Cliente.Contrato,
+                Compania: vm.saldo.IdCompania,
+                Distribuidor: vm.saldo.IdDistribuidor,
+                SessionPadre: vm.saldo.ClvSessionPadre,
+                Monto: data.GetDeepSumaTotalDetalleResult.Monto
+            };
+            vm.animationsEnabled = true;
+            var modalInstance = $uibModal.open({
+                animation: vm.animationsEnabled,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'views/corporativa/abrirPago.html',
+                controller: 'AbrirPagoCtrl',
+                controllerAs: '$ctrl',
+                backdrop: 'static',
+                keyboard: false,
+                size: 'sm',
+                resolve: {
+                    items: function() {
+                        return items;
+                    }
                 }
+            });
+        });
+    }
+
+    function openPay(tipo) {
+        cajasFactory.dameSucursalCompa(vm.Cliente.Contraton).then(function(data) {
+            if (data.GetDeepDameRelSucursalCompaResult.Id == 0) {
+                ngNotify.set('La caja no tiene asignados folios para esta plaza.', 'error');
+            } else {
+                cajasFactory.dimeSiYaFact(vm.Cliente.Contrato).then(function(dataDime) {
+                    if (dataDime.GetDeepDimeSiYaGrabeFacResult.Id == 0) {
+                        cajasFactory.sumaTotalDetalle(vm.session).then(function(sumaTotal) {
+                            var items = {
+                                monto: sumaTotal.GetDeepSumaTotalDetalleResult.Monto,
+                                IdSession: vm.session,
+                                Contrato: vm.Cliente.Contrato,
+                                Tipo: tipo,
+                                Vendedor: 0,
+                                Serie: 0,
+                                Folio: 0
+                            };
+                            vm.animationsEnabled = true;
+                            var modalInstance = $uibModal.open({
+                                animation: vm.animationsEnabled,
+                                ariaLabelledBy: 'modal-title',
+                                ariaDescribedBy: 'modal-body',
+                                templateUrl: 'views/facturacion/modalPagar.html',
+                                controller: 'ModalPagarCtrl',
+                                controllerAs: 'ctrl',
+                                backdrop: 'static',
+                                keyboard: false,
+                                size: 'md',
+                                resolve: {
+                                    items: function() {
+                                        return items;
+                                    }
+                                }
+                            });
+                        });
+                    } else {
+                        cajasFactory.sumaTotalDetalle(vm.session).then(function(sumaTotal) {
+                            var items = {
+                                monto: sumaTotal.GetDeepSumaTotalDetalleResult.Monto,
+                                IdSession: vm.session,
+                                Contrato: vm.Cliente.Contrato,
+                                Tipo: 'C',
+                                Vendedor: 0,
+                                Serie: 0,
+                                Folio: 0
+                            };
+                            vm.animationsEnabled = true;
+                            var modalInstance = $uibModal.open({
+                                animation: vm.animationsEnabled,
+                                ariaLabelledBy: 'modal-title',
+                                ariaDescribedBy: 'modal-body',
+                                templateUrl: 'views/facturacion/modalYaPago.html',
+                                controller: 'ModalYaPagoCtrl',
+                                controllerAs: 'ctrl',
+                                backdrop: 'static',
+                                keyboard: false,
+                                size: 'md',
+                                resolve: {
+                                    items: function() {
+                                        return items;
+                                    }
+                                }
+                            });
+                        });
+                    }
+                });
             }
         });
     }
@@ -172,6 +241,4 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
     var vm = this;
     vm.buscarPorContrato = buscarPorContrato
     vm.abrirPago = abrirPago;
-	initialData();
-
 }
