@@ -1,10 +1,11 @@
 'use strict';
 angular.module('softvApp').controller('AbrirPagoCtrl', AbrirPagoCtrl);
 
-function AbrirPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, $uibModalInstance) {
+function AbrirPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, $uibModalInstance, items) {
 
     function aceptar() {
-		if (vm.tipo == 0 || vm.tipo == null || vm.tipo == undefined) {
+		var metodo = vm.tipo
+		if (vm.tipo == null || vm.tipo == undefined) {
 			ngNotify.set('Seleccione un método de pago.', 'error')
 		}else if (vm.tipo == 1) {
 			$uibModalInstance.dismiss('cancel');
@@ -18,7 +19,15 @@ function AbrirPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, in
 				controllerAs: '$ctrl',
 				backdrop: 'static',
 				keyboard: false,
-				size: 'md'
+				size: 'md',
+                resolve: {
+                    items: function() {
+                        return items;
+                    },
+					metodo: function() {
+						return metodo;
+					}
+                }
 			});
         }else{
             $uibModalInstance.dismiss('cancel');
@@ -32,7 +41,15 @@ function AbrirPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, in
 				controllerAs: '$ctrl',
 				backdrop: 'static',
 				keyboard: false,
-				size: 'md'
+				size: 'md',
+                resolve: {
+                    items: function() {
+                        return items;
+                    },
+					metodo: function() {
+						return metodo;
+					}
+                }
 			});
         }
     }

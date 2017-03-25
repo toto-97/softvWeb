@@ -1,8 +1,9 @@
 'use strict';
 angular.module('softvApp').controller('PagarContadoCtrl', PagarContadoCtrl);
 
-function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, $uibModalInstance, items) {
+function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, $uibModalInstance, items, metodo, $localStorage) {
 	function initialData() {
+		vm.monto = items.Monto;
 		cajasFactory.dameBancos().then(function(data) {
 			data.GetMuestraBancosListResult.unshift({
 				'nombre': '----------------',
@@ -91,6 +92,265 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 		});
 	}
 
+	function ok() {
+		if (vm.casePago == undefined) {
+			ngNotify.set('Por favor llena un metodo de pago.', 'error');
+		} else {
+			switch (vm.casePago) {
+				case 1:
+					if (vm.efectivo >= vm.monto) {
+						var objPagar = {
+							'contrato': items.Contrato,
+							'credito':metodo,
+							'cajera': $localStorage.currentUser.usuario,
+							'maquina': $localStorage.currentUser.maquina,
+							'sucursal': $localStorage.currentUser.sucursal,
+							'compania': items.Compania,
+							'distribuidor': items.Distribuidor,
+							'sessionPadre': items.SessionPadre,
+							'tipo': 0,
+							'monto': vm.monto,
+							'GLOEFECTIVO2': vm.efectivo,
+							'GLOCHEQUE2': 0,
+							'GLOCLV_BANCOCHEQUE2': 0,
+							'NUMEROCHEQUE2': '',
+							'GLOTARJETA2': 0,
+							'GLOCLV_BANCOTARJETA2': 0,
+							'NUMEROTARJETA2': '',
+							'TARJETAAUTORIZACION2': '',
+							'CLV_Nota2': 0,
+							'GLONOTA3': 0,
+							'token': $localStorage.currentUser.token
+						};
+						console.log(objPagar);
+						// cajasFactory.insertSeguridadToken(items.IdSession).then(function(dataToken) {
+						// 	cajasFactory.nuevoPago(items.IdSession, vm.efectivo, vm.cambio).then(function(dataNuevo) {
+						// 		cajasFactory.grabaPago(objPagar).then(function(dataGraba) {
+						// 			$uibModalInstance.dismiss('cancel');
+						// 			$rootScope.$emit('ocultarPagar', {});
+						// 			$rootScope.$emit('getVendedores', {});
+						// 			ngNotify.set('Pago Exitoso', 'success');
+						// 			var modalInstance = $uibModal.open({
+						// 				animation: true,
+						// 				ariaLabelledBy: 'modal-title',
+						// 				ariaDescribedBy: 'modal-body',
+						// 				templateUrl: 'views/facturacion/modalSingleTicket.html',
+						// 				controller: 'ModalSingleTicketCtrl',
+						// 				controllerAs: 'ctrl',
+						// 				backdrop: 'static',
+						// 				keyboard: false,
+						// 				size: 'sm',
+						// 				resolve: {
+						// 					factura: function() {
+						// 						return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
+						// 					},
+						// 					imprimir: function() {
+						// 						return true;
+						// 					}
+						// 				}
+						// 			});
+						// 		});
+						// 	});
+						// });
+					} else {
+						ngNotify.set('No se ha saldado la factura.', 'error');
+					}
+					break;
+				case 2:
+					if (vm.selectedBancoCheque.Clave == 0) {
+						ngNotify.set('Selecciona un banco.', 'error');
+					} else if (vm.numeroCheque == "" || vm.numeroCheque == undefined) {
+						ngNotify.set('Digita el número del cheque.', 'error');
+					} else {
+						if (vm.dineroCheque == vm.monto) {
+							var objPagar = {
+								'contrato': items.Contrato,
+								'credito':metodo,
+								'cajera': $localStorage.currentUser.usuario,
+								'maquina': $localStorage.currentUser.maquina,
+								'sucursal': $localStorage.currentUser.sucursal,
+								'compania': items.Compania,
+								'distribuidor': items.Distribuidor,
+								'sessionPadre': items.SessionPadre,
+								'tipo': 0,
+								'monto': vm.monto,
+								'GLOEFECTIVO2': 0,
+								'GLOCHEQUE2': vm.dineroCheque,
+								'GLOCLV_BANCOCHEQUE2': vm.selectedBancoCheque.Clave,
+								'NUMEROCHEQUE2': vm.numeroCheque,
+								'GLOTARJETA2': 0,
+								'GLOCLV_BANCOTARJETA2': 0,
+								'NUMEROTARJETA2': '',
+								'TARJETAAUTORIZACION2': '',
+								'CLV_Nota2': 0,
+								'GLONOTA3': 0,
+								'token': $localStorage.currentUser.token
+							};
+							console.log(objPagar);
+							// cajasFactory.insertSeguridadToken(items.IdSession).then(function(data) {
+							// 	cajasFactory.grabaPago(objPagar).then(function(dataGraba) {
+							// 		$uibModalInstance.dismiss('cancel');
+							// 		$rootScope.$emit('ocultarPagar', {});
+							// 		$rootScope.$emit('getVendedores', {});
+							// 		ngNotify.set('Pago Exitoso', 'success');
+							// 		var modalInstance = $uibModal.open({
+							// 			animation: true,
+							// 			ariaLabelledBy: 'modal-title',
+							// 			ariaDescribedBy: 'modal-body',
+							// 			templateUrl: 'views/facturacion/modalSingleTicket.html',
+							// 			controller: 'ModalSingleTicketCtrl',
+							// 			controllerAs: 'ctrl',
+							// 			backdrop: 'static',
+							// 			keyboard: false,
+							// 			size: 'sm',
+							// 			resolve: {
+							// 				factura: function() {
+							// 					return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
+							// 				},
+							// 				imprimir: function() {
+							// 					return true;
+							// 				}
+							// 			}
+							// 		});
+							// 	});
+							// });
+						} else {
+							ngNotify.set('No se ha saldado la factura', 'error');
+						}
+					}
+					break;
+				case 3:
+					if (vm.selectedBancoTransferencia.Clave == 0) {
+						ngNotify.set('Selecciona un banco', 'error');
+					} else if (vm.cuentaTransferencia == "" || vm.cuentaTransferencia == undefined) {
+						ngNotify.set('Digita el número de cuenta por favor.', 'error');
+					} else if (vm.autorizacionTransferencia == "" || vm.autorizacionTransferencia == undefined) {
+						ngNotify.set('Digita el número de autorizacion.', 'error');
+					} else {
+						if (vm.dineroTransferencia == vm.monto) {
+							var objPagar = {
+								'contrato': items.Contrato,
+								'credito':metodo,
+								'cajera': $localStorage.currentUser.usuario,
+								'maquina': $localStorage.currentUser.maquina,
+								'sucursal': $localStorage.currentUser.sucursal,
+								'compania': items.Compania,
+								'distribuidor': items.Distribuidor,
+								'sessionPadre': items.SessionPadre,
+								'tipo': 0,
+								'monto': vm.monto,
+								'GLOEFECTIVO2': 0,
+								'GLOCHEQUE2': 0,
+								'GLOCLV_BANCOCHEQUE2': 0,
+								'NUMEROCHEQUE2': '',
+								'GLOTARJETA2': vm.dineroTransferencia,
+								'GLOCLV_BANCOTARJETA2': vm.selectedBancoTransferencia.Clave,
+								'NUMEROTARJETA2': vm.cuentaTransferencia,
+								'TARJETAAUTORIZACION2': vm.autorizacionTransferencia,
+								'CLV_Nota2': 0,
+								'GLONOTA3': 0,
+								'token': $localStorage.currentUser.token
+							};
+							console.log(objPagar);
+							// cajasFactory.insertSeguridadToken(items.IdSession).then(function(data) {
+							// 	cajasFactory.grabaPago(objPagar).then(function(dataGraba) {
+							// 		$uibModalInstance.dismiss('cancel');
+							// 		$rootScope.$emit('ocultarPagar', {});
+							// 		$rootScope.$emit('getVendedores', {});
+							// 		ngNotify.set('Pago Exitoso', 'success');
+							// 		var modalInstance = $uibModal.open({
+							// 			animation: true,
+							// 			ariaLabelledBy: 'modal-title',
+							// 			ariaDescribedBy: 'modal-body',
+							// 			templateUrl: 'views/facturacion/modalSingleTicket.html',
+							// 			controller: 'ModalSingleTicketCtrl',
+							// 			controllerAs: 'ctrl',
+							// 			backdrop: 'static',
+							// 			keyboard: false,
+							// 			size: 'sm',
+							// 			resolve: {
+							// 				factura: function() {
+							// 					return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
+							// 				},
+							// 				imprimir: function() {
+							// 					return true;
+							// 				}
+							// 			}
+							// 		});
+							// 	});
+							// });
+						} else {
+							ngNotify.set('No se ha saldado la factura', 'error');
+						}
+					}
+					break;
+				case 4:
+					if (vm.dineroCredito == '' || vm.dineroCredito == undefined) {
+						ngNotify.set('Seleccione un número de nota por favor', 'error');
+					} else {
+						if (vm.pagoNota >= vm.monto) {
+							var objPagar = {
+								'contrato': items.Contrato,
+								'credito':metodo,
+								'cajera': $localStorage.currentUser.usuario,
+								'maquina': $localStorage.currentUser.maquina,
+								'sucursal': $localStorage.currentUser.sucursal,
+								'compania': items.Compania,
+								'distribuidor': items.Distribuidor,
+								'sessionPadre': items.SessionPadre,
+								'tipo': 0,
+								'monto': vm.monto,
+								'GLOEFECTIVO2': 0,
+								'GLOCHEQUE2': 0,
+								'GLOCLV_BANCOCHEQUE2': 0,
+								'NUMEROCHEQUE2': '',
+								'GLOTARJETA2': 0,
+								'GLOCLV_BANCOTARJETA2': 0,
+								'NUMEROTARJETA2': '',
+								'TARJETAAUTORIZACION2': '',
+								'CLV_Nota2': vm.dineroCredito,
+								'GLONOTA3': vm.pagoNota,
+								'token': $localStorage.currentUser.token
+							};
+							console.log(objPagar);
+							// cajasFactory.insertSeguridadToken(items.IdSession).then(function(data) {
+							// 	cajasFactory.grabaPago(objPagar).then(function(dataGraba) {
+							// 		$uibModalInstance.dismiss('cancel');
+							// 		$rootScope.$emit('ocultarPagar', {});
+							// 		$rootScope.$emit('getVendedores', {});
+							// 		ngNotify.set('Pago Exitoso', 'success');
+							// 		var modalInstance = $uibModal.open({
+							// 			animation: true,
+							// 			ariaLabelledBy: 'modal-title',
+							// 			ariaDescribedBy: 'modal-body',
+							// 			templateUrl: 'views/facturacion/modalSingleTicket.html',
+							// 			controller: 'ModalSingleTicketCtrl',
+							// 			controllerAs: 'ctrl',
+							// 			backdrop: 'static',
+							// 			keyboard: false,
+							// 			size: 'sm',
+							// 			resolve: {
+							// 				factura: function() {
+							// 					return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
+							// 				},
+							// 				imprimir: function() {
+							// 					return true;
+							// 				}
+							// 			}
+							// 		});
+							// 	});
+							// });
+						} else {
+							ngNotify.set('No se ha saldado la factura', 'error');
+						}
+					}
+					break;
+				default:
+					console.log('sasasas');
+			}
+		}
+	}
+
     function cancel() {
 	    $uibModalInstance.dismiss('cancel');
 	}
@@ -101,5 +361,6 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 	vm.cambioCheque = cambioCheque;
 	vm.cambioTransferencia = cambioTransferencia;
 	vm.cambioCredito = cambioCredito;
+	vm.ok = ok;
 	initialData();
 }
