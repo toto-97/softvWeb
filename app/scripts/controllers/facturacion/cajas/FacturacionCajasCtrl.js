@@ -709,6 +709,7 @@ angular
 
 		function reloadTables() {
 			cajasFactory.dameDetallePago(vm.session).then(function(detallePago) {
+				console.log(detallePago);
 				if (detallePago.GetDameDetalleListResult.length == 0) {
 					vm.blockBaja = true;
 					vm.blockPagar = true;

@@ -1342,11 +1342,12 @@ angular
 			return deferred.promise;
 		};
 
-		factory.folioDisponible = function(vendedor, serie) {
+		factory.folioDisponible = function(vendedor, serie, contrato) {
 			var deferred = $q.defer();
 			var Parametros = {
 				'Clv_Vendedor': vendedor,
-				'Serie': serie
+				'Serie': serie,
+				'Contrato': contrato
 			};
 			var config = {
 				headers: {
@@ -1726,7 +1727,7 @@ angular
 		factory.ReprocesaEdoCuentaContrato = function(IdEstadoCuenta, Contrato) {
 			var deferred = $q.defer();
 			var Parametros = {
-				'IdEstadoCuenta': IdEstadoCuenta,
+				'IdEdoCuenta': IdEstadoCuenta,
 				'Contrato': Contrato
 			};
 			var config = {
