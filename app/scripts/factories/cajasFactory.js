@@ -175,7 +175,6 @@ angular
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			console.log(obj);
 			$http.post(globalService.getUrl() + paths.guardarAgenda, JSON.stringify(obj), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
@@ -1794,8 +1793,6 @@ angular
 				'ContratoCom': ContratoCom,
 				'IdEstadoCuenta': IdEstadoCuenta
 			};
-			console.log(JSON.stringify(Parametros));
-			console.log(JSON.stringify($localStorage.currentUser.token));
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token

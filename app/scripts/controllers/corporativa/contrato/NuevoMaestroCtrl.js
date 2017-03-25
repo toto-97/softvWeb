@@ -12,7 +12,6 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ng
 			vm.cortes = data.GetTiposCortesClientesListResult;
 		});
 		corporativoFactory.getTipoPagos().then(function(data) {
-			console.log(data);
 			vm.tipoPagos = data.GetTipoPagosFacturasListResult;
 		});
 	}
