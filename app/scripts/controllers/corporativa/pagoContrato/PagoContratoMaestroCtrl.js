@@ -140,36 +140,44 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
     }
 
     function abrirPago() {
-        cajasFactory.sumaTotalDetalle(vm.saldo.ClvSession).then(function(data) {
-            var items = {
-                Contrato: vm.Cliente.Contrato,
-                Compania: vm.saldo.IdCompania,
-                Distribuidor: vm.saldo.IdDistribuidor,
-                SessionPadre: vm.saldo.ClvSessionPadre,
-                Monto: data.GetDeepSumaTotalDetalleResult.Monto
-            };
-            vm.animationsEnabled = true;
-            var modalInstance = $uibModal.open({
-                animation: vm.animationsEnabled,
-                ariaLabelledBy: 'modal-title',
-                ariaDescribedBy: 'modal-body',
-                templateUrl: 'views/corporativa/abrirPago.html',
-                controller: 'AbrirPagoCtrl',
-                controllerAs: '$ctrl',
-                backdrop: 'static',
-                keyboard: false,
-                size: 'sm',
-                resolve: {
-                    items: function() {
-                        return items;
-                    }
-                }
-            });
+        pagosMaestrosFactory.dimeSiYaGrabeFacMaestro(vm.Cliente.Contrato).then(function(data) {
+            if (data.GetDimeSiYaGrabeUnaFacMaestroResult == 0) {
+                console.log(data.GetDimeSiYaGrabeUnaFacMaestroResult);
+                cajasFactory.sumaTotalDetalle(vm.saldo.ClvSession).then(function(data) {
+                    var items = {
+                        Contrato: vm.Cliente.Contrato,
+                        Compania: vm.saldo.IdCompania,
+                        Distribuidor: vm.saldo.IdDistribuidor,
+                        SessionPadre: vm.saldo.ClvSessionPadre,
+                        Monto: data.GetDeepSumaTotalDetalleResult.Monto
+                    };
+                    vm.animationsEnabled = true;
+                    var modalInstance = $uibModal.open({
+                        animation: vm.animationsEnabled,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'views/corporativa/abrirPago.html',
+                        controller: 'AbrirPagoCtrl',
+                        controllerAs: '$ctrl',
+                        backdrop: 'static',
+                        keyboard: false,
+                        size: 'sm',
+                        resolve: {
+                            items: function() {
+                                return items;
+                            }
+                        }
+                    });
+                });
+            } else {
+                console.log('1');
+            }
         });
+        
     }
 
     function openPay(tipo) {
-        cajasFactory.dameSucursalCompa(vm.Cliente.Contraton).then(function(data) {
+        cajasFactory.dameSucursalCompa(vm.Cliente.Contrato).then(function(data) {
             if (data.GetDeepDameRelSucursalCompaResult.Id == 0) {
                 ngNotify.set('La caja no tiene asignados folios para esta plaza.', 'error');
             } else {
