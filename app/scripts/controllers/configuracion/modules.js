@@ -20,7 +20,7 @@ angular
 				},
 				url: '/configuracion/permisos',
 				templateUrl: 'views/configuracion/permisos.html',
-				controller: 'AtencionCtrl',
+				controller: 'PermisosCtrl',
 				controllerAs: '$ctrl'
 			},
 			{
@@ -36,7 +36,7 @@ angular
 				},
 				url: '/configuracion/roles',
 				templateUrl: 'views/configuracion/roles.html',
-				controller: 'AtencionCtrl',
+				controller: 'RolCtrl',
 				controllerAs: '$ctrl'
 			}
 		];
