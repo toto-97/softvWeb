@@ -120,38 +120,38 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 							'TARJETAAUTORIZACION2': '',
 							'CLV_Nota2': 0,
 							'GLONOTA3': 0,
-							'token': $localStorage.currentUser.token
+							'token': $localStorage.currentUser.token1
 						};
 						console.log(objPagar);
-						// cajasFactory.insertSeguridadToken(items.IdSession).then(function(dataToken) {
-						// 	cajasFactory.nuevoPago(items.IdSession, vm.efectivo, vm.cambio).then(function(dataNuevo) {
-						// 		cajasFactory.grabaPago(objPagar).then(function(dataGraba) {
-						// 			$uibModalInstance.dismiss('cancel');
-						// 			$rootScope.$emit('ocultarPagar', {});
-						// 			$rootScope.$emit('getVendedores', {});
-						// 			ngNotify.set('Pago Exitoso', 'success');
-						// 			var modalInstance = $uibModal.open({
-						// 				animation: true,
-						// 				ariaLabelledBy: 'modal-title',
-						// 				ariaDescribedBy: 'modal-body',
-						// 				templateUrl: 'views/facturacion/modalSingleTicket.html',
-						// 				controller: 'ModalSingleTicketCtrl',
-						// 				controllerAs: 'ctrl',
-						// 				backdrop: 'static',
-						// 				keyboard: false,
-						// 				size: 'sm',
-						// 				resolve: {
-						// 					factura: function() {
-						// 						return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
-						// 					},
-						// 					imprimir: function() {
-						// 						return true;
-						// 					}
-						// 				}
-						// 			});
-						// 		});
-						// 	});
-						// });
+						cajasFactory.insertSeguridadToken(items.IdSession).then(function(dataToken) {
+							cajasFactory.nuevoPago(items.IdSession, vm.efectivo, vm.cambio).then(function(dataNuevo) {
+								cajasFactory.grabaPago(objPagar).then(function(dataGraba) {
+									$uibModalInstance.dismiss('cancel');
+									$rootScope.$emit('ocultarPagar', {});
+									$rootScope.$emit('getVendedores', {});
+									ngNotify.set('Pago Exitoso', 'success');
+									var modalInstance = $uibModal.open({
+										animation: true,
+										ariaLabelledBy: 'modal-title',
+										ariaDescribedBy: 'modal-body',
+										templateUrl: 'views/facturacion/modalSingleTicket.html',
+										controller: 'ModalSingleTicketCtrl',
+										controllerAs: 'ctrl',
+										backdrop: 'static',
+										keyboard: false,
+										size: 'sm',
+										resolve: {
+											factura: function() {
+												return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
+											},
+											imprimir: function() {
+												return true;
+											}
+										}
+									});
+								});
+							});
+						});
 					} else {
 						ngNotify.set('No se ha saldado la factura.', 'error');
 					}
@@ -184,36 +184,36 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 								'TARJETAAUTORIZACION2': '',
 								'CLV_Nota2': 0,
 								'GLONOTA3': 0,
-								'token': $localStorage.currentUser.token
+								'token': $localStorage.currentUser.token1
 							};
 							console.log(objPagar);
-							// cajasFactory.insertSeguridadToken(items.IdSession).then(function(data) {
-							// 	cajasFactory.grabaPago(objPagar).then(function(dataGraba) {
-							// 		$uibModalInstance.dismiss('cancel');
-							// 		$rootScope.$emit('ocultarPagar', {});
-							// 		$rootScope.$emit('getVendedores', {});
-							// 		ngNotify.set('Pago Exitoso', 'success');
-							// 		var modalInstance = $uibModal.open({
-							// 			animation: true,
-							// 			ariaLabelledBy: 'modal-title',
-							// 			ariaDescribedBy: 'modal-body',
-							// 			templateUrl: 'views/facturacion/modalSingleTicket.html',
-							// 			controller: 'ModalSingleTicketCtrl',
-							// 			controllerAs: 'ctrl',
-							// 			backdrop: 'static',
-							// 			keyboard: false,
-							// 			size: 'sm',
-							// 			resolve: {
-							// 				factura: function() {
-							// 					return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
-							// 				},
-							// 				imprimir: function() {
-							// 					return true;
-							// 				}
-							// 			}
-							// 		});
-							// 	});
-							// });
+							cajasFactory.insertSeguridadToken(items.IdSession).then(function(data) {
+								cajasFactory.grabaPago(objPagar).then(function(dataGraba) {
+									$uibModalInstance.dismiss('cancel');
+									$rootScope.$emit('ocultarPagar', {});
+									$rootScope.$emit('getVendedores', {});
+									ngNotify.set('Pago Exitoso', 'success');
+									var modalInstance = $uibModal.open({
+										animation: true,
+										ariaLabelledBy: 'modal-title',
+										ariaDescribedBy: 'modal-body',
+										templateUrl: 'views/facturacion/modalSingleTicket.html',
+										controller: 'ModalSingleTicketCtrl',
+										controllerAs: 'ctrl',
+										backdrop: 'static',
+										keyboard: false,
+										size: 'sm',
+										resolve: {
+											factura: function() {
+												return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
+											},
+											imprimir: function() {
+												return true;
+											}
+										}
+									});
+								});
+							});
 						} else {
 							ngNotify.set('No se ha saldado la factura', 'error');
 						}
@@ -249,36 +249,36 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 								'TARJETAAUTORIZACION2': vm.autorizacionTransferencia,
 								'CLV_Nota2': 0,
 								'GLONOTA3': 0,
-								'token': $localStorage.currentUser.token
+								'token': $localStorage.currentUser.token1
 							};
 							console.log(objPagar);
-							// cajasFactory.insertSeguridadToken(items.IdSession).then(function(data) {
-							// 	cajasFactory.grabaPago(objPagar).then(function(dataGraba) {
-							// 		$uibModalInstance.dismiss('cancel');
-							// 		$rootScope.$emit('ocultarPagar', {});
-							// 		$rootScope.$emit('getVendedores', {});
-							// 		ngNotify.set('Pago Exitoso', 'success');
-							// 		var modalInstance = $uibModal.open({
-							// 			animation: true,
-							// 			ariaLabelledBy: 'modal-title',
-							// 			ariaDescribedBy: 'modal-body',
-							// 			templateUrl: 'views/facturacion/modalSingleTicket.html',
-							// 			controller: 'ModalSingleTicketCtrl',
-							// 			controllerAs: 'ctrl',
-							// 			backdrop: 'static',
-							// 			keyboard: false,
-							// 			size: 'sm',
-							// 			resolve: {
-							// 				factura: function() {
-							// 					return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
-							// 				},
-							// 				imprimir: function() {
-							// 					return true;
-							// 				}
-							// 			}
-							// 		});
-							// 	});
-							// });
+							cajasFactory.insertSeguridadToken(items.IdSession).then(function(data) {
+								cajasFactory.grabaPago(objPagar).then(function(dataGraba) {
+									$uibModalInstance.dismiss('cancel');
+									$rootScope.$emit('ocultarPagar', {});
+									$rootScope.$emit('getVendedores', {});
+									ngNotify.set('Pago Exitoso', 'success');
+									var modalInstance = $uibModal.open({
+										animation: true,
+										ariaLabelledBy: 'modal-title',
+										ariaDescribedBy: 'modal-body',
+										templateUrl: 'views/facturacion/modalSingleTicket.html',
+										controller: 'ModalSingleTicketCtrl',
+										controllerAs: 'ctrl',
+										backdrop: 'static',
+										keyboard: false,
+										size: 'sm',
+										resolve: {
+											factura: function() {
+												return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
+											},
+											imprimir: function() {
+												return true;
+											}
+										}
+									});
+								});
+							});
 						} else {
 							ngNotify.set('No se ha saldado la factura', 'error');
 						}
@@ -310,36 +310,36 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 								'TARJETAAUTORIZACION2': '',
 								'CLV_Nota2': vm.dineroCredito,
 								'GLONOTA3': vm.pagoNota,
-								'token': $localStorage.currentUser.token
+								'token': $localStorage.currentUser.token1
 							};
 							console.log(objPagar);
-							// cajasFactory.insertSeguridadToken(items.IdSession).then(function(data) {
-							// 	cajasFactory.grabaPago(objPagar).then(function(dataGraba) {
-							// 		$uibModalInstance.dismiss('cancel');
-							// 		$rootScope.$emit('ocultarPagar', {});
-							// 		$rootScope.$emit('getVendedores', {});
-							// 		ngNotify.set('Pago Exitoso', 'success');
-							// 		var modalInstance = $uibModal.open({
-							// 			animation: true,
-							// 			ariaLabelledBy: 'modal-title',
-							// 			ariaDescribedBy: 'modal-body',
-							// 			templateUrl: 'views/facturacion/modalSingleTicket.html',
-							// 			controller: 'ModalSingleTicketCtrl',
-							// 			controllerAs: 'ctrl',
-							// 			backdrop: 'static',
-							// 			keyboard: false,
-							// 			size: 'sm',
-							// 			resolve: {
-							// 				factura: function() {
-							// 					return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
-							// 				},
-							// 				imprimir: function() {
-							// 					return true;
-							// 				}
-							// 			}
-							// 		});
-							// 	});
-							// });
+							cajasFactory.insertSeguridadToken(items.IdSession).then(function(data) {
+								cajasFactory.grabaPago(objPagar).then(function(dataGraba) {
+									$uibModalInstance.dismiss('cancel');
+									$rootScope.$emit('ocultarPagar', {});
+									$rootScope.$emit('getVendedores', {});
+									ngNotify.set('Pago Exitoso', 'success');
+									var modalInstance = $uibModal.open({
+										animation: true,
+										ariaLabelledBy: 'modal-title',
+										ariaDescribedBy: 'modal-body',
+										templateUrl: 'views/facturacion/modalSingleTicket.html',
+										controller: 'ModalSingleTicketCtrl',
+										controllerAs: 'ctrl',
+										backdrop: 'static',
+										keyboard: false,
+										size: 'sm',
+										resolve: {
+											factura: function() {
+												return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
+											},
+											imprimir: function() {
+												return true;
+											}
+										}
+									});
+								});
+							});
 						} else {
 							ngNotify.set('No se ha saldado la factura', 'error');
 						}

@@ -142,7 +142,6 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
     function abrirPago() {
         pagosMaestrosFactory.dimeSiYaGrabeFacMaestro(vm.Cliente.Contrato).then(function(data) {
             if (data.GetDimeSiYaGrabeUnaFacMaestroResult == 0) {
-                console.log(data.GetDimeSiYaGrabeUnaFacMaestroResult);
                 cajasFactory.sumaTotalDetalle(vm.saldo.ClvSession).then(function(data) {
                     var items = {
                         Contrato: vm.Cliente.Contrato,
@@ -170,81 +169,36 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                     });
                 });
             } else {
-                console.log('1');
-            }
-        });
-        
-    }
-
-    function openPay(tipo) {
-        cajasFactory.dameSucursalCompa(vm.Cliente.Contrato).then(function(data) {
-            if (data.GetDeepDameRelSucursalCompaResult.Id == 0) {
-                ngNotify.set('La caja no tiene asignados folios para esta plaza.', 'error');
-            } else {
-                cajasFactory.dimeSiYaFact(vm.Cliente.Contrato).then(function(dataDime) {
-                    if (dataDime.GetDeepDimeSiYaGrabeFacResult.Id == 0) {
-                        cajasFactory.sumaTotalDetalle(vm.session).then(function(sumaTotal) {
-                            var items = {
-                                monto: sumaTotal.GetDeepSumaTotalDetalleResult.Monto,
-                                IdSession: vm.session,
-                                Contrato: vm.Cliente.Contrato,
-                                Tipo: tipo,
-                                Vendedor: 0,
-                                Serie: 0,
-                                Folio: 0
-                            };
-                            vm.animationsEnabled = true;
-                            var modalInstance = $uibModal.open({
-                                animation: vm.animationsEnabled,
-                                ariaLabelledBy: 'modal-title',
-                                ariaDescribedBy: 'modal-body',
-                                templateUrl: 'views/facturacion/modalPagar.html',
-                                controller: 'ModalPagarCtrl',
-                                controllerAs: 'ctrl',
-                                backdrop: 'static',
-                                keyboard: false,
-                                size: 'md',
-                                resolve: {
-                                    items: function() {
-                                        return items;
-                                    }
-                                }
-                            });
-                        });
-                    } else {
-                        cajasFactory.sumaTotalDetalle(vm.session).then(function(sumaTotal) {
-                            var items = {
-                                monto: sumaTotal.GetDeepSumaTotalDetalleResult.Monto,
-                                IdSession: vm.session,
-                                Contrato: vm.Cliente.Contrato,
-                                Tipo: 'C',
-                                Vendedor: 0,
-                                Serie: 0,
-                                Folio: 0
-                            };
-                            vm.animationsEnabled = true;
-                            var modalInstance = $uibModal.open({
-                                animation: vm.animationsEnabled,
-                                ariaLabelledBy: 'modal-title',
-                                ariaDescribedBy: 'modal-body',
-                                templateUrl: 'views/facturacion/modalYaPago.html',
-                                controller: 'ModalYaPagoCtrl',
-                                controllerAs: 'ctrl',
-                                backdrop: 'static',
-                                keyboard: false,
-                                size: 'md',
-                                resolve: {
-                                    items: function() {
-                                        return items;
-                                    }
-                                }
-                            });
-                        });
-                    }
+                cajasFactory.sumaTotalDetalle(vm.saldo.ClvSession).then(function(data) {
+                    var items = {
+                        Contrato: vm.Cliente.Contrato,
+                        Compania: vm.saldo.IdCompania,
+                        Distribuidor: vm.saldo.IdDistribuidor,
+                        SessionPadre: vm.saldo.ClvSessionPadre,
+                        Monto: data.GetDeepSumaTotalDetalleResult.Monto
+                    };
+                    vm.animationsEnabled = true;
+                    var modalInstance = $uibModal.open({
+                        animation: vm.animationsEnabled,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'views/corporativa/yaPago.html',
+                        controller: 'YaPagoCtrl',
+                        controllerAs: '$ctrl',
+                        backdrop: 'static',
+                        keyboard: false,
+                        size: 'md',
+                        resolve: {
+                            items: function() {
+                                return items;
+                            }
+                        }
+                    });
                 });
             }
         });
     }
+
 
     var vm = this;
     vm.buscarPorContrato = buscarPorContrato
