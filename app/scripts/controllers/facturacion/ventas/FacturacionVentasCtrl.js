@@ -33,7 +33,9 @@ angular
 		});
 
 		function getVendedores() {
-			vm.series = [];
+			vm.selectedVendedor = '';
+			vm.selectedSerie = '';
+			vm.selectedFolio = '';
 			cajasFactory.getVendedoresByUser(vm.Cliente.Contrato).then(function(data) {
 				vm.vendedores = data.GetMuestraVendedores2ListResult;
 			});
@@ -51,7 +53,7 @@ angular
 
 		function changeSerie() {
 			if (vm.selectedSerie != undefined) {
-				cajasFactory.folioDisponible(vm.selectedVendedor.Clv_Vendedor, vm.selectedSerie.SERIE).then(function(data) {
+				cajasFactory.folioDisponible(vm.selectedVendedor.Clv_Vendedor, vm.selectedSerie.SERIE, vm.Cliente.Contrato).then(function(data) {
 					if (data.GetFolioDisponibleListResult.length > 0) {
 						vm.folios = data.GetFolioDisponibleListResult;
 					}
@@ -383,9 +385,7 @@ angular
 								if (data.GetValidaSaldoContratoResult.tieneSaldo > 0) {
 									vm.ArrastraSaldo = true;
 									cajasFactory.CobraSaldo(vm.Cliente.Contrato).then(function(cobra) {
-										console.log(cobra);
 										vm.session = cobra.GetDeepCobraSaldoResult.ClvSession;
-										console.log(vm.session);
 										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 0).then(function(op1) {
 											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
 												abrirModalPregunta(0, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
@@ -407,7 +407,6 @@ angular
 											}
 										});
 										cajasFactory.getObservaciones(vm.Cliente.Contrato).then(function(observa) {
-											console.log(observa);
 											if (observa.GetDeepConRelClienteObsResult.Obs) {
 												new PNotify({
 													title: 'Observaciones',
@@ -585,9 +584,7 @@ angular
 								if (data.GetValidaSaldoContratoResult.tieneSaldo > 0) {
 									vm.ArrastraSaldo = true;
 									cajasFactory.CobraSaldo(vm.Cliente.Contrato).then(function(cobra) {
-										console.log(cobra);
 										vm.session = cobra.GetDeepCobraSaldoResult.ClvSession;
-										console.log(vm.session);
 										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 0).then(function(op1) {
 											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
 												abrirModalPregunta(0, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
@@ -609,7 +606,6 @@ angular
 											}
 										});
 										cajasFactory.getObservaciones(vm.Cliente.Contrato).then(function(observa) {
-											console.log(observa);
 											if (observa.GetDeepConRelClienteObsResult.Obs) {
 												new PNotify({
 													title: 'Observaciones',
@@ -770,7 +766,6 @@ angular
 		}
 
 		function InformacionCobro(detalle) {
-			console.log(detalle);
 			var items = {};
 			items.Clv_Session = detalle.Clv_Session;
 			items.CLV_DETALLE = detalle.CLV_DETALLE;

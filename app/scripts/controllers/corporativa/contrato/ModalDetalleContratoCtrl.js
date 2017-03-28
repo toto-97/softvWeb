@@ -4,7 +4,6 @@ angular
 	.controller('ModalDetalleContratoCtrl', function($uibModalInstance, $uibModal, ContratoMaestroFactory, $rootScope, ngNotify, contrato) {
 		this.$onInit = function() {
 			vm.contrato = contrato;
-			console.log(contrato);
 		}
 
 		function cancel() {

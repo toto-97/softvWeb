@@ -4,36 +4,6 @@
 </div>
 <div class="modal-body">
   <div class="row">
-    <div class="col-md-6 form-group">
-      <div class="col-sm-12">
-        <b>Busqueda Por Contrato</b>
-      </div>
-      <div class="col-md-3">
-        <input type="text" name="" value="" class="form-control">
-      </div>
-      <div class="col-md-3">
-
-      </div>
-      <div class="col-md-3">
-
-      </div>
-      <div class="col-md-3">
-
-      </div>
-    </div>
-    <div class="col-md-6">
-      <b>Periodos y fecha de generación</b>
-      <table class="table">
-        <thead>
-          <th>Periodo</th>
-          <th>Fecha</th>
-        </thead>
-      </table>
-    </div>
-
-
-  </div>
-  <div class="row">
     <table class="table table-hover" style="font-size:10px;">
       <thead>
         <th>Contrato</th>
@@ -58,7 +28,7 @@
           <td><button type="button" ng-click="ctrl.Imprimir(x);" name="button" class="btn btn-primary btn-xs"><i class="fa fa-print" aria-hidden="true"></i>
    Imprimir</button></td>
           <td>
-            <button type="button" ng-click="ctrl.Reprocesar(x.IdEstadoCuenta);" name="button" class="btn btn-default-bright btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i> Reprocesar</button>
+            <button type="button" ng-click="ctrl.Reprocesar(x.IdEstadoCuenta, x.ContratoBueno);" name="button" class="btn btn-default-bright btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i> Reprocesar</button>
             <button type="button" ng-click="ctrl.Reenviar(x);" name="button" class="btn btn-default-bright btn-xs"><i class="fa fa-envelope-o" aria-hidden="true"></i> Reenviar</button>
           </td>
         </tr>

@@ -16,7 +16,7 @@ angular
 					quejasFactory.ObtenColonias(vm.Plazas[0].id_compania).then(function(data) {
 						vm.Colonias = data.GetuspConsultaColoniasListResult;
 						var Parametros = {
-							'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
+							'Clv_TipSer': 0,
 							'Clv_Queja': 0,
 							'Contrato': '',
 							'NOMBRE': '',
@@ -25,8 +25,8 @@ angular
 							'CALLE': '',
 							'NUMERO': '',
 							'SetupBox': '',
-							'Status': vm.Status.Clave,
-							'Op': 45,
+							'Status': '',
+							'Op': 1,
 							'ClvColonia': 0,
 							'IdCompania': vm.Plaza.id_compania,
 							'ClvUsuario': 0,
@@ -68,7 +68,7 @@ angular
 
 		function BuscaReporte() {
 			var Parametros = {
-				'Clv_TipSer': 0,
+				'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
 				'Clv_Queja': vm.Reporte,
 				'Contrato': '',
 				'NOMBRE': '',
@@ -129,12 +129,12 @@ angular
 		function BuscaporNombre() {
 
 			var Parametros = {
-				'Clv_TipSer': 0,
+				'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
 				'Clv_Queja': 0,
 				'Contrato': 0,
 				'NOMBRE': vm.Nombre,
 				'AP': vm.APaterno,
-				'AM': vm.AMaterno,
+				'AM': '',
 				'CALLE': '',
 				'NUMERO': '',
 				'SetupBox': '',
@@ -162,7 +162,7 @@ angular
 			}
 
 			var Parametros = {
-				'Clv_TipSer': 0,
+				'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
 				'Clv_Queja': 0,
 				'Contrato': 0,
 				'NOMBRE': '',
@@ -173,7 +173,7 @@ angular
 				'SetupBox': '',
 				'Status': '',
 				'Op': 2,
-				'ClvColonia': colonia,
+				'ClvColonia': 0,
 				'IdCompania': 0,
 				'ClvUsuario': 0,
 				'SoloNivel2': 0,
@@ -200,13 +200,14 @@ angular
 					'NUMERO': '',
 					'SetupBox': '',
 					'Status': vm.Status.Clave,
-					'Op': 45,
+					'Op': 199,
 					'ClvColonia': 0,
 					'IdCompania': x.id_compania,
 					'ClvUsuario': 0,
 					'SoloNivel2': 0,
 					'NoTicket': 0
 				};
+				console.log(Parametros);
 				quejasFactory.ObtenLista(Parametros).then(function(data) {
 					console.log(data);
 					vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
@@ -215,7 +216,28 @@ angular
 		}
 
 		function CambioServicio(x) {
-
+			var Parametros = {
+				'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
+				'Clv_Queja': 0,
+				'Contrato': 0,
+				'NOMBRE': '',
+				'AP': '',
+				'AM': '',
+				'CALLE': '',
+				'NUMERO': '',
+				'SetupBox': '',
+				'Status': vm.Status.Clave,
+				'Op': 4,
+				'ClvColonia': 0,
+				'IdCompania': vm.Plaza.id_compania,
+				'ClvUsuario': 0,
+				'SoloNivel2': 0,
+				'NoTicket': 0
+			};
+			quejasFactory.ObtenLista(Parametros).then(function(data) {
+				console.log(data);
+				vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
+			});
 		}
 
 		function CambioStatus() {
@@ -246,11 +268,31 @@ angular
 		}
 
 		function CambioNivel() {
-
+			var Parametros = {
+				'Clv_TipSer': 0,
+				'Clv_Queja': 0,
+				'Contrato': '',
+				'NOMBRE': '',
+				'AP': '',
+				'AM': '',
+				'CALLE': '',
+				'NUMERO': '',
+				'SetupBox': '',
+				'Status': '',
+				'Op': 1,
+				'ClvColonia': 0,
+				'IdCompania': 0,
+				'ClvUsuario': 0,
+				'SoloNivel2': vm.Nivel2.isChecked,
+				'NoTicket': 0
+			};
+			quejasFactory.ObtenLista(Parametros).then(function(data) {
+				console.log(data);
+				vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
+			});
 		}
 
 		function BuscaporSTB() {
-
 			if (vm.STB == null) {
 				alert('selecciona stb');
 			}
@@ -308,7 +350,10 @@ angular
 
 		}
 
-		function abrirBonificacion() {
+		function abrirBonificacion(object) {
+			var detalle = {};
+			detalle.Block = true;
+			detalle.Queja = object.Clv_Queja;
 			var modalInstance = $uibModal.open({
 				animation: vm.animationsEnabled,
 				ariaLabelledBy: 'modal-title',
@@ -320,28 +365,31 @@ angular
 				keyboard: false,
 				size: 'md',
 				resolve: {
-					// contrato: function() {
-					// 	return vm.GlobalContrato;
-					// }
+					detalle: function() {
+						return detalle;
+					}
 				}
 			});
 		}
 
-		function abrirDetalleQueja(id) {
-			console.log(id);
+		function abrirDetalleQueja(details) {
+			var detalle = {};
+			detalle.Clv_Queja = details.Clv_Queja;
+			detalle.Clv_TipSer = details.Clv_TipSer;
+			detalle.Contrato = details.Contrato;
 			var modalInstance = $uibModal.open({
 				animation: vm.animationsEnabled,
 				ariaLabelledBy: 'modal-title',
 				ariaDescribedBy: 'modal-body',
 				templateUrl: 'views/procesos/ModalConsultaQueja.html',
 				controller: 'ModalConsultaQuejaCtrl',
-				controllerAs: 'ctrl',
+				controllerAs: '$ctrl',
 				backdrop: 'static',
 				keyboard: false,
 				size: 'lg',
 				resolve: {
-					id: function() {
-						return id;
+					detalle: function() {
+						return detalle;
 					}
 				}
 			});
@@ -386,7 +434,7 @@ angular
 				'Nombre': 'Ejecutadas'
 			},
 			{
-				'Clave': 'p',
+				'Clave': 'S',
 				'Nombre': 'En Proceso'
 			}
 		];
