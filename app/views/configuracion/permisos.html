@@ -13,8 +13,10 @@
           Selecciona un rol para asignar permisos:
           <select class="selectpicker form-control" ng-model="$ctrl.Rol" ng-change="$ctrl.ObtenPermisos()" ng-options="option.Nombre for option in $ctrl.Roles track by option.IdRol">
                         <option value="">Selecciona Rol</option>
-
+                        <option value="">Otro Rol</option>
                     </select><br />
+                </div>
+            </div>
         </div>
       </div>
     </div>

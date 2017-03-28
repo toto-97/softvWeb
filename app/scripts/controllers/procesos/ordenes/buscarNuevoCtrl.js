@@ -1,7 +1,7 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('BuscarNuevoCtrl', function($state, ngNotify, ordenesFactory) {
+	.controller('BuscarNuevoCtrl', function($state, ngNotify, ordenesFactory, $uibModalInstance) {
 		var vm = this;
 		$('.buscarContrato').collapse('show');
 		vm.buscarNombres = buscarNombres;
@@ -11,6 +11,7 @@ angular
 		vm.buscarSetupbox = buscarSetupbox;
 		vm.buscarContrato =buscarContrato;
 		vm.seleccionar =seleccionar;
+		vm.cancel = cancel;
 		initial()
 
 		function initial(){
@@ -37,6 +38,7 @@ angular
 
 		function seleccionar(id, selec) {
 			$state.go('home.procesos.ordenNueva',{ experience: id, context: selec });
+			$uibModalInstance.dismiss('cancel');
 		}
 
 		function buscarContrato() {
@@ -164,6 +166,10 @@ angular
 					}
 				});
 			}
+		}
+
+		function cancel() {
+			$uibModalInstance.dismiss('cancel');
 		}
 
 	});
