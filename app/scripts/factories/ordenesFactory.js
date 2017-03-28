@@ -17,7 +17,7 @@ angular
       getCiudadCamdo: '/CAMDO/GetllenaCiudadCamdoList',
       getLocalidadCamdo: '/CAMDO/GetllenaLocalidadCamdoList',
       getColoniaCamdo: '/CAMDO/GetllenaColoniaCamdoList',
-      getCalleCamdo: '/CAMDO/GetllenaCalleCamdoList'
+      getCalleCamdo: '/CAMDO/GetllenaCalleCamdoList',
       addBitacoraReproceso: '/Bitacora/AddReprocesarEdoCuenta',
       addBitacoraReenviar: '/Bitacora/AddReenviarEdoCuenta'
     };
