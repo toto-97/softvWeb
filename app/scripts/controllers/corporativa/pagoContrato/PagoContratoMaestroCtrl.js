@@ -147,6 +147,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                         Contrato: vm.Cliente.Contrato,
                         Compania: vm.saldo.IdCompania,
                         Distribuidor: vm.saldo.IdDistribuidor,
+                        Session: vm.saldo.ClvSession,
                         SessionPadre: vm.saldo.ClvSessionPadre,
                         Monto: data.GetDeepSumaTotalDetalleResult.Monto
                     };
@@ -174,6 +175,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                         Contrato: vm.Cliente.Contrato,
                         Compania: vm.saldo.IdCompania,
                         Distribuidor: vm.saldo.IdDistribuidor,
+                        Session: vm.saldo.ClvSession,
                         SessionPadre: vm.saldo.ClvSessionPadre,
                         Monto: data.GetDeepSumaTotalDetalleResult.Monto
                     };

@@ -7,7 +7,8 @@ angular
 			cobraSaldoMaestro: '/CobraSaldoContratoMaestro/GetDeepCobraSaldoContratoMaestro',
 			obtenEdoCuenta: '/ObtieneEdoCuentaSinSaldar/GetObtieneEdoCuentaSinSaldarList',
 			grabaFactura: '/GrabaFacturaCMaestro/GetGrabaFacturaCMaestro',
-			dimeSiYaGrabeFacMaestro: '/DimeSiYaGrabeUnaFacMaestro/GetDimeSiYaGrabeUnaFacMaestro'
+			dimeSiYaGrabeFacMaestro: '/DimeSiYaGrabeUnaFacMaestro/GetDimeSiYaGrabeUnaFacMaestro',
+			nuevoPagoEfectivo: '/NuevoPago/AddNuevoPago_FacMaestro'
 		};
 
 		factory.cobraSaldoMaestro = function(contrato) {
@@ -99,6 +100,29 @@ angular
 				}
 			};
 			$http.post(globalService.getUrl() + paths.dimeSiYaGrabeFacMaestro, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.nuevoPagoEfectivo = function(session,efectivo,cambio) {
+			var deferred = $q.defer();
+			var Parametros = {
+				"objNuevoPago_FacMaestro": {
+						"IdSession": session,
+						"Efectivo": efectivo,
+						"Cambio": cambio
+					}
+				};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.nuevoPagoEfectivo, JSON.stringify(Parametros), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response);
