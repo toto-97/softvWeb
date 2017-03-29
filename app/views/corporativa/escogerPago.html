@@ -13,6 +13,10 @@
             </label>
         </div>
     </div>
+    <div class="row text-left" style="padding-left: 15px;">
+        <h3>Monto: {{$ctrl.monto | currency}}</h3>
+    </div>
+
     <div class="row" ng-show="$ctrl.fijos" style="padding-top: 15px;">
         <div class="col-md-9 form-group">
             <label class="label-control">Pago inicial</label>
@@ -24,18 +28,14 @@
         </div>
         <div class="col-md-6 form-group">
             <label class="label-control">Monto mensual.</label>
-            <input type="number" class="form-control" ng-model="$ctrl.monto">
+            <input type="number" class="form-control" ng-model="$ctrl.mensulaidad">
         </div>
     </div>
     
     <div class="row" ng-show="$ctrl.variables" style="padding-top: 15px;">
         <div class="col-md-9 form-group">
-            <label class="label-control">Pago inicial</label>
-            <input type="number" class="form-control" ng-model="$ctrl.pagoInicial"><span style="font-size: 11px; color: red;">Éste campo no es necesario.</span>
-        </div>
-        <div class="col-md-6 form-group">
-            <label class="label-control">Abono.</label>
-            <input type="number" class="form-control" ng-model="$ctrl.abono">
+            <label class="label-control">Abono</label>
+            <input type="number" class="form-control" ng-model="$ctrl.pagoInicial">
         </div>
     </div>
 </div>
