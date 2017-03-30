@@ -273,7 +273,7 @@ angular
       var deferred = $q.defer();
       var Parametros = {
         'ClvTipSer': tipo,
-        'TipoUser': user
+        'TipoUser': usua
       };
       var config = {
         headers: {

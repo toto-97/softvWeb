@@ -548,7 +548,8 @@ angular
 				'Calle': calle,
 				'Numero': numero,
 				'Op': 2,
-				'ClvColonia': 0
+				'ClvColonia': 0,
+				'Usuario': $localStorage.currentUser.idUsuario
 			};
 			var config = {
 				headers: {
