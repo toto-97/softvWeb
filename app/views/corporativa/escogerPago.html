@@ -20,15 +20,15 @@
     <div class="row" ng-show="$ctrl.fijos" style="padding-top: 15px;">
         <div class="col-md-9 form-group">
             <label class="label-control">Pago inicial</label>
-            <input type="number" class="form-control" ng-model="$ctrl.pagoInicial"><span style="font-size: 11px; color: red;">Éste campo no es necesario.</span>
+            <input type="number" class="form-control" ng-change="$ctrl.operacion()" ng-model="$ctrl.pagoInicial">
         </div>
         <div class="col-md-6 form-group">
             <label class="label-control">Número de pagos mensuales.</label>
-            <input type="number" class="form-control" ng-model="$ctrl.numeroPagos">
+            <input type="number" class="form-control" ng-change="$ctrl.operacion()" ng-model="$ctrl.numeroPagos">
         </div>
         <div class="col-md-6 form-group">
             <label class="label-control">Monto mensual.</label>
-            <input type="number" class="form-control" ng-model="$ctrl.mensulaidad">
+            <p>{{$ctrl.mensualidad | currency}}</p>
         </div>
     </div>
     
@@ -40,7 +40,7 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-success" type="button" ng-show="$ctrl.botonFijo" ng-click="$ctrl.guardarFijo()">Guardar</button>
+    <button class="btn btn-success" type="button" ng-show="$ctrl.botonFijo" ng-click="$ctrl.guardarFijo()">Siguiente</button>
     <button class="btn btn-success" type="button" ng-show="$ctrl.botonVariable" ng-click="$ctrl.guardarVariable()">Guardar</button>
     <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
 </div>
