@@ -120,7 +120,9 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 							'TARJETAAUTORIZACION2': '',
 							'CLV_Nota2': 0,
 							'GLONOTA3': 0,
-							'token': $localStorage.currentUser.token1
+							'token': $localStorage.currentUser.token1,
+							'NoPagos' : 0,
+  							'PagoInicial': 0
 						};
 						console.log(objPagar);
 						// cajasFactory.insertSeguridadToken(items.IdSession).then(function(dataToken) {
@@ -192,7 +194,9 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 								'TARJETAAUTORIZACION2': '',
 								'CLV_Nota2': 0,
 								'GLONOTA3': 0,
-								'token': $localStorage.currentUser.token1
+								'token': $localStorage.currentUser.token1,
+								'NoPagos' : 0,
+								'PagoInicial': 0
 							};
 							console.log(objPagar);
 							// cajasFactory.insertSeguridadToken(items.IdSession).then(function(data) {
@@ -265,7 +269,9 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 								'TARJETAAUTORIZACION2': vm.autorizacionTransferencia,
 								'CLV_Nota2': 0,
 								'GLONOTA3': 0,
-								'token': $localStorage.currentUser.token1
+								'token': $localStorage.currentUser.token1,
+								'NoPagos' : 0,
+								'PagoInicial': 0
 							};
 							console.log(objPagar);
 							// cajasFactory.insertSeguridadToken(items.IdSession).then(function(data) {

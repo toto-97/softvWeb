@@ -1,9 +1,9 @@
 'use strict';
 angular.module('softvApp').controller('PagarCreditoCtrl', PagarCreditoCtrl);
 
-function PagarCreditoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, $uibModalInstance, items, metodo, $localStorage, pagosMaestrosFactory) {
+function PagarCreditoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, $uibModalInstance, items, metodo, $localStorage, pagosMaestrosFactory, elem) {
 	function initialData() {
-		vm.monto = items.Monto;
+		vm.monto = elem.PagoInicial;
 		cajasFactory.dameBancos().then(function(data) {
 			data.GetMuestraBancosListResult.unshift({
 				'nombre': '----------------',
@@ -100,16 +100,12 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 				case 1:
 					if (vm.efectivo >= vm.monto) {
 						var objPagar = {
-							'contrato': items.Contrato,
-							'credito':metodo,
-							'cajera': $localStorage.currentUser.usuario,
-							'maquina': $localStorage.currentUser.maquina,
-							'sucursal': $localStorage.currentUser.sucursal,
-							'compania': items.Compania,
-							'distribuidor': items.Distribuidor,
-							'sessionPadre': items.SessionPadre,
-							'tipo': 0,
-							'monto': vm.monto,
+							'Clv_FacturaMaestro': elem.Clv_FacturaMaestro,
+							'ContratoMaestro': items.Contrato,
+							'Cajera': $localStorage.currentUser.usuario,
+							'IpMaquina': $localStorage.currentUser.maquina,
+							'Sucursal': $localStorage.currentUser.sucursal,
+							'Monto': vm.monto,
 							'GLOEFECTIVO2': vm.efectivo,
 							'GLOCHEQUE2': 0,
 							'GLOCLV_BANCOCHEQUE2': 0,
@@ -118,18 +114,19 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 							'GLOCLV_BANCOTARJETA2': 0,
 							'NUMEROTARJETA2': '',
 							'TARJETAAUTORIZACION2': '',
-							'CLV_Nota2': 0,
+							'CLV_Nota3': 0,
 							'GLONOTA3': 0,
-							'token': $localStorage.currentUser.token1
+							'IdCompania': items.Compania,
+							'IdDistribuidor': items.Distribuidor
 						};
 						console.log(objPagar);
 						// cajasFactory.insertSeguridadToken(items.IdSession).then(function(dataToken) {
 							pagosMaestrosFactory.nuevoPagoEfectivo(items.Session, vm.efectivo, vm.cambio).then(function(dataNuevo) {
-								pagosMaestrosFactory.grabaFactura(objPagar).then(function(dataGraba) {
+								pagosMaestrosFactory.pagoGrabaFactura(objPagar).then(function(dataGraba) {
 									console.log(dataGraba);
-									console.log(dataGraba.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro);
-									if (dataGraba.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro == 0) {
-										ngNotify.set(dataGraba.GetGrabaFacturaCMaestroResult.Msg, 'error');
+									console.log(dataGraba.AddGuardaPagoFacturaMaestroResult);
+									if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
+										ngNotify.set('No se grabo la factura', 'error');
 									}else {
 										$uibModalInstance.dismiss('cancel');
 										ngNotify.set('Pago grabado correctamente', 'success');
@@ -192,7 +189,9 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 								'TARJETAAUTORIZACION2': '',
 								'CLV_Nota2': 0,
 								'GLONOTA3': 0,
-								'token': $localStorage.currentUser.token1
+								'token': $localStorage.currentUser.token1,
+								'NoPagos' : elem.NoPagos,
+								'PagoInicial': elem.PagoInicial
 							};
 							console.log(objPagar);
 							// cajasFactory.insertSeguridadToken(items.IdSession).then(function(data) {
@@ -265,7 +264,9 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 								'TARJETAAUTORIZACION2': vm.autorizacionTransferencia,
 								'CLV_Nota2': 0,
 								'GLONOTA3': 0,
-								'token': $localStorage.currentUser.token1
+								'token': $localStorage.currentUser.token1,
+								'NoPagos' : elem.NoPagos,
+								'PagoInicial': elem.PagoInicial
 							};
 							console.log(objPagar);
 							// cajasFactory.insertSeguridadToken(items.IdSession).then(function(data) {
