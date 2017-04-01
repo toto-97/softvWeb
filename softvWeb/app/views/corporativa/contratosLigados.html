@@ -1,0 +1,35 @@
+<div class="modal-header">
+  <button type="button" class="close" ng-click="$ctrl.cancel()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h3 class="modal-title" id="modal-title">Contratos Ligados</h3>
+</div>
+<div class="modal-body" id="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <p class="text-right"><button class="btn btn-success btn-sm" ng-click="$ctrl.clientesModal()"><i class="fa fa-plus" aria-hidden="true"></i> Añadir</button></p>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Contrato</td>
+            <td>Cliente</td>
+            <td>Acciones</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-if="$ctrl.contratos.length == 0">
+            <td colspan="3" class="text-center">SIN REGISTROS</td>
+          </tr>
+          <tr dir-paginate="x in $ctrl.contratos|itemsPerPage:8">
+            <td>{{ x.CONTRATO }}</td>
+            <td>{{ x.Nombre }} {{ x.Apellido_Materno }} {{ x.Apellido_Paterno }}</td>
+            <td><button class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-click="$ctrl.eliminarContrato($index)"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default btn-sm" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
+  <button class="btn btn-primary btn-sm" type="button" ng-show="$ctrl.showokbtn" ng-click="$ctrl.ok()">Aceptar</button>
+  <button class="btn btn-primary btn-sm" type="button" ng-show="$ctrl.showeditbtn" ng-click="$ctrl.edit()">Editar</button>
+</div>

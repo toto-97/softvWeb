@@ -1,8 +1,8 @@
 'use strict';
 angular.module('softvApp')
-	.controller('TicketsCtrl', function($uibModal, $rootScope, ngNotify, ticketsFactory, $filter) {
+	.controller('TicketsCtrl', function ($uibModal, $rootScope, ngNotify, ticketsFactory, $filter) {
 		function initialData() {
-			ticketsFactory.getPlazas().then(function(data) {
+			ticketsFactory.getPlazas().then(function (data) {
 				data.GetMuestra_Compania_RelUsuarioListResult.unshift({
 					'razon_social': '----------------',
 					'id_compania': 0
@@ -10,7 +10,7 @@ angular.module('softvApp')
 				vm.plazas = data.GetMuestra_Compania_RelUsuarioListResult;
 				vm.selectedPlaza = vm.plazas[1];
 
-				ticketsFactory.getTipoFactura().then(function(data) {
+				ticketsFactory.getTipoFactura().then(function (data) {
 					data.GetMUESTRATIPOFACTURAListResult.unshift({
 						'CONCEPTO': '----------------',
 						'CLAVE': "0"
@@ -19,19 +19,19 @@ angular.module('softvApp')
 					vm.selectedTipo = vm.tipos[1];
 
 
-					ticketsFactory.getSucursales().then(function(data) {
+					ticketsFactory.getSucursales().then(function (data) {
 						vm.sucursales = data.GetObtieneSucursalesEspeciales_ReimpresionListResult;
 						vm.selectedSucursal = vm.sucursales[1];
 
 
-						ticketsFactory.getFacturas().then(function(data) {
+						ticketsFactory.getFacturas().then(function (data) {
 							data.GetMUESTRATIPOFACTURA_ReimpresionListResult.unshift({
 								'CONCEPTO': '----------------',
 								'CLAVE': "0"
 							});
 							vm.facturas = data.GetMUESTRATIPOFACTURA_ReimpresionListResult;
 							vm.selectedFactura = vm.facturas[1];
-							buscarSucursal();
+							buscarSucursal(1);
 
 						});
 					});
@@ -47,11 +47,11 @@ angular.module('softvApp')
 
 		}
 
-		$rootScope.$on('actualiza_tickets', function() {
+		$rootScope.$on('actualiza_tickets', function () {
 			buscarSucursal(vm.buscaID);
 		});
 
-		$rootScope.$on('actualiza_tickets_especial', function() {
+		$rootScope.$on('actualiza_tickets_especial', function () {
 			buscarEspecial();
 		});
 
@@ -77,7 +77,7 @@ angular.module('softvApp')
 						compania: vm.selectedPlaza.id_compania,
 						nombre: ''
 					};
-					ticketsFactory.buscarTickets(busqueda).then(function(data) {
+					ticketsFactory.buscarTickets(busqueda).then(function (data) {
 						vm.ticketsSucuarsales = data.GetBUSCAFACTURASListResult;
 					});
 				} else {
@@ -91,7 +91,7 @@ angular.module('softvApp')
 						compania: vm.selectedPlaza.id_compania,
 						nombre: ''
 					};
-					ticketsFactory.buscarTickets(busqueda).then(function(data) {
+					ticketsFactory.buscarTickets(busqueda).then(function (data) {
 						vm.ticketsSucuarsales = data.GetBUSCAFACTURASListResult;
 					});
 				}
@@ -108,7 +108,7 @@ angular.module('softvApp')
 						compania: vm.selectedPlaza.id_compania,
 						nombre: ''
 					};
-					ticketsFactory.buscarTickets(busqueda).then(function(data) {
+					ticketsFactory.buscarTickets(busqueda).then(function (data) {
 						vm.ticketsSucuarsales = data.GetBUSCAFACTURASListResult;
 					});
 				}
@@ -124,7 +124,7 @@ angular.module('softvApp')
 						compania: vm.selectedPlaza.id_compania,
 						nombre: ''
 					};
-					ticketsFactory.buscarTickets(busqueda).then(function(data) {
+					ticketsFactory.buscarTickets(busqueda).then(function (data) {
 						vm.ticketsSucuarsales = data.GetBUSCAFACTURASListResult;
 					});
 				}
@@ -140,7 +140,7 @@ angular.module('softvApp')
 						compania: vm.selectedPlaza.id_compania,
 						nombre: vm.nombre
 					};
-					ticketsFactory.buscarTickets(busqueda).then(function(data) {
+					ticketsFactory.buscarTickets(busqueda).then(function (data) {
 						vm.ticketsSucuarsales = data.GetBUSCAFACTURASListResult;
 					});
 				}
@@ -164,7 +164,7 @@ angular.module('softvApp')
 						contrato: '',
 						sucursal: vm.selectedSucursal.CLV_SUCURSAL
 					};
-					ticketsFactory.buscarEspeciales(buscar).then(function(data) {
+					ticketsFactory.buscarEspeciales(buscar).then(function (data) {
 						vm.ticketsEspeciales = data.GetBuscaFacturasEspecialesListResult;
 					});
 				} else if (vm.tipoBusE == 1) {
@@ -177,7 +177,7 @@ angular.module('softvApp')
 						contrato: '',
 						sucursal: vm.selectedSucursal.CLV_SUCURSAL
 					};
-					ticketsFactory.buscarEspeciales(buscar).then(function(data) {
+					ticketsFactory.buscarEspeciales(buscar).then(function (data) {
 						vm.ticketsEspeciales = data.GetBuscaFacturasEspecialesListResult;
 					});
 				} else if (vm.tipoBusE == 2) {
@@ -190,7 +190,7 @@ angular.module('softvApp')
 						contrato: '',
 						sucursal: vm.selectedSucursal.CLV_SUCURSAL
 					};
-					ticketsFactory.buscarEspeciales(buscar).then(function(data) {
+					ticketsFactory.buscarEspeciales(buscar).then(function (data) {
 						vm.ticketsEspeciales = data.GetBuscaFacturasEspecialesListResult;
 					});
 				} else if (vm.tipoBusE == 3) {
@@ -204,7 +204,7 @@ angular.module('softvApp')
 							contrato: '',
 							sucursal: vm.selectedSucursal.CLV_SUCURSAL
 						};
-						ticketsFactory.buscarEspeciales(buscar).then(function(data) {
+						ticketsFactory.buscarEspeciales(buscar).then(function (data) {
 							vm.ticketsEspeciales = data.GetBuscaFacturasEspecialesListResult;
 						});
 					} else {
@@ -218,7 +218,7 @@ angular.module('softvApp')
 							contrato: '',
 							sucursal: vm.selectedSucursal.CLV_SUCURSAL
 						};
-						ticketsFactory.buscarEspeciales(buscar).then(function(data) {
+						ticketsFactory.buscarEspeciales(buscar).then(function (data) {
 							vm.ticketsEspeciales = data.GetBuscaFacturasEspecialesListResult;
 						});
 					}
@@ -232,7 +232,7 @@ angular.module('softvApp')
 						contrato: vm.contratoE,
 						sucursal: vm.selectedSucursal.CLV_SUCURSAL
 					};
-					ticketsFactory.buscarEspeciales(buscar).then(function(data) {
+					ticketsFactory.buscarEspeciales(buscar).then(function (data) {
 						vm.ticketsEspeciales = data.GetBuscaFacturasEspecialesListResult;
 					});
 				}
@@ -254,7 +254,7 @@ angular.module('softvApp')
 				keyboard: false,
 				size: 'md',
 				resolve: {
-					item: function() {
+					item: function () {
 						return x;
 					}
 				}
@@ -268,7 +268,7 @@ angular.module('softvApp')
 			} else {
 				vm.factura = x.Clv_Factura;
 			}
-			ticketsFactory.validaCancela(vm.factura).then(function(data) {
+			ticketsFactory.validaCancela(vm.factura).then(function (data) {
 				if (data.GetValidaCancelacionFacturaListResult[0].Res == 1) {
 					ngNotify.set(data.GetValidaCancelacionFacturaListResult[0].Msg, 'error');
 				} else {
@@ -283,7 +283,7 @@ angular.module('softvApp')
 						keyboard: false,
 						size: 'md',
 						resolve: {
-							item: function() {
+							item: function () {
 								return x;
 							}
 						}
@@ -329,21 +329,14 @@ angular.module('softvApp')
 		}
 
 		function enviarCorreo(x) {
-			var modalInstance = $uibModal.open({
-				animation: true,
-				ariaLabelledBy: 'modal-title',
-				ariaDescribedBy: 'modal-body',
-				templateUrl: 'views/facturacion/modalCorreo.html',
-				controller: 'CorreoCtrl',
-				controllerAs: '$ctrl',
-				backdrop: 'static',
-				keyboard: false,
-				size: 'md',
-				resolve: {
-					item: function() {
-						return x;
-					}
-				}
+			var obj = {
+				factura: x.clv_Factura,
+				reimprimir: 0,
+				cancelar: 0,
+				correo: 1
+			};
+			ticketsFactory.getOptionsTickets(obj).then(function (opt) {
+				ngNotify.set('Ticket enviado exitosamente.','success');
 			});
 		}
 

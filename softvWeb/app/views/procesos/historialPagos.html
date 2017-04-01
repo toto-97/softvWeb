@@ -1,0 +1,53 @@
+<div class="modal-header">
+    <button class="close" aria-label="Close" type="button" ng-click="$ctrl.cancel()">×</button>
+    <h4 class="modal-title">Historial del Pagos</h4>
+</div>
+<div class="modal-body">
+    <div class="col-md-4">
+        <input type="text" class="form-control" placeholder="Busqueda..." ng-model="$ctrl.search">
+    </div>
+    <br/>
+    <br/>
+    <table id="tableHistorialPago" class="table table-bordered table-hover dataTable">
+        <thead>
+            <tr>
+                <th ng-click="$ctrl.sort('Serie')">Serie
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='Serie'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="$ctrl.sort('Folio')">Folio
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='Folio'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="$ctrl.sort('Fecha')">Fecha
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='Fecha'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="$ctrl.sort('Importe')">Importe
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='Importe'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th ng-click="$ctrl.sort('Status')">Status
+                    <span class="glyphicon sort-icon" ng-show="sortKey=='Status'" ng-class="{'glyphicon glyphicon-chevron-up':reverse,'glyphicon glyphicon-chevron-down':!reverse}"></span>
+                </th>
+                <th id="Status"><b>Consultar</b></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr dir-paginate="x in $ctrl.tickets|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:5">
+                <td>{{ x.Serie }}</td>
+                <td>{{ x.Folio }}</td>
+                <td>{{ x.Fecha }}</td>
+                <td>{{ x.Importe | currency }}</td>
+                <td>{{ x.Status }}</td>
+                <td class="text-center"><button class="btn btn-default btn-sm" ng-click="$ctrl.dameFactura(x.Clv_Factura)">Ver</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="padding-left: 20px;">
+        <dir-pagination-controls
+            max-size="5"
+            direction-links="true"
+            boundary-links="true" >
+        </dir-pagination-controls>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
+</div>
