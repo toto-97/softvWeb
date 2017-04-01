@@ -54,6 +54,22 @@ function corporativaConf($stateProvider) {
 			templateUrl: 'views/corporativa/editarContratoMaestro.html',
 			controller: 'EditarMaestroCtrl',
 			controllerAs: '$ctrl'
+		},
+		{
+			name: 'home.corporativa.recepcionpago',
+			data: {
+				pageTitle: 'SAC | RECEPCION DE PAGO',
+				permissions: {
+					only: ['recepciondepagosSelect'],
+					options: {
+						reload: false
+					}
+				}
+			},
+			url: '/corporativa/recepcionpago',
+			templateUrl: 'views/corporativa/Recepcionpago.html',
+			controller: 'RecepcionPagoCtrl',
+			controllerAs: '$ctrl'
 		}
 	];
 	states.forEach(function(state) {
