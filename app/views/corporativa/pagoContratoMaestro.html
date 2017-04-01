@@ -1,0 +1,165 @@
+<div class="row" style="margin-top:10px;">
+
+  <div class="card" style="margin-top:20px;">
+    <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
+      <header>
+        <strong style="font-weight:bold; border:none; margin-left:10px;">Contratos Maestros</strong>
+        <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Pago Contratos Maestros</small>
+      </header>
+    </div>
+
+    <div class="card-body">
+      <div class="panel-group" id="accordion3">
+        <div class="card panel">
+          <div class="card-head card-head-xs style-primary-light collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1" aria-expanded="false">
+            <header><i class="fa fa-search"></i> Buscar contrato</header>
+            <div class="tools">
+              <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+            </div>
+          </div>
+          <div id="accordion3-1" class="collapse buscarContrato" aria-expanded="false" style="height: 0px;">
+            <div class="panel-body">
+                <form ng-submit="$ctrl.buscarPorContrato()">
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <b>Contrato :</b><br>
+                            <input type="text" class="form-control" ng-model="$ctrl.data.contrato" required="">
+                            <button class="btn btn-info btn-xs"><i class="fa fa-search"></i> Buscar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div ng-show="$ctrl.muestraCliente" style="margin-top:-20px;" ng-style="{'background-color': $ctrl.color}">
+      <br>
+      <div class="row" style="padding-left: 30px; padding-right: 30px;">
+        <div class="panel-group" id="datosCliente">
+          <div class="card panel" ng-style="{'background-color': $ctrl.color}">
+            <div class="card-head card-head-xs collapsed" data-toggle="collapse" data-parent="#datosCliente" data-target="#datosCliente-1" aria-expanded="false" ng-click="$ctrl.showDatosCliente = !$ctrl.showDatosCliente">
+              <header class="text-primary-dark" style="font-size: 12px;" ng-show="$ctrl.showDatosCliente">Datos del Cliente</header>
+              <div class="tools">
+                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+              </div>
+            </div>
+            <div id="datosCliente-1" class="collapse datosCliente" aria-expanded="false" style="margin-top: -20px">
+              <div class="row" style="padding-left:10px; padding-top: 5px;">
+                <div class="col-md-10">
+                  <p class="text-center" style="color:red;" ng-show="$ctrl.showFiscales">EL CLIENTE CUENTA CON DATOS FISCALES</p>
+                  <p style="font-size: 10px;">
+                    <strong>Contrato: </strong>{{ $ctrl.Cliente.ContratoC }}<br/>
+                    <strong>Nombre: </strong>{{ $ctrl.Cliente.Nombre }}<br/>
+                    <strong>Dirección: </strong>{{ $ctrl.Cliente.Calle }} {{ $ctrl.Cliente.Colonia }} {{ $ctrl.Cliente.Ciudad }}<br/>
+                    <strong>#: </strong>{{ $ctrl.Cliente.Numero }}<br/>
+                    <strong>Colonia: </strong>{{ $ctrl.Cliente.Colonia }} <strong style="padding-left:50px;">Teléfono: </strong>{{ $ctrl.Cliente.Telefono }}<br/>
+                    <strong>Ciudad: </strong>{{ $ctrl.Cliente.Ciudad }}<br/>
+                    <strong>Tipo suscriptor: </strong>{{ $ctrl.Suscriptor.Descripcion }}<strong style="padding-left:50px;">{{ $ctrl.periodo }}</strong></br>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--end .panel -->
+        </div>
+
+
+        <div class="panel-group" id="conceptosCliente" style="margin-top: -20px;">
+          <div class="card panel" ng-style="{'background-color': $ctrl.color}">
+            <div class="card-head card-head-xs collapsed" data-toggle="collapse" data-parent="#conceptosCliente" data-target="#conceptosCliente-1" aria-expanded="false" ng-click="$ctrl.showConceptos = !$ctrl.showConceptos">
+              <header class="text-primary-dark" style="font-size: 12px;" ng-show="$ctrl.showConceptos">Detalle de Pagos</header>
+              <div class="tools">
+                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+              </div>
+            </div>
+            <div id="conceptosCliente-1" class="collapse conceptosCliente row" aria-expanded="false" style="margin-top: 20px">
+              <div class="table-responsive col-md-9" style="padding-left: 20px; width: 70%">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr style="background-color: #B5B6B6;">
+                      <th style="font-size: 10px;">Aparato</th>
+                      <th style="font-size: 10px;">Concepto</th>
+                      <th style="font-size: 10px;">Tv's Extra</th>
+                      <th style="font-size: 10px;">Meses Cortesia</th>
+                      <th style="font-size: 10px;">Meses a Pagar</th>
+                      <th style="font-size: 10px;">Importe</th>
+                      <th style="font-size: 10px;">Periodo PI</th>
+                      <th style="font-size: 10px;">Periodo PF</th>
+                      <th style="font-size: 10px;">Puntos APPO</th>
+                      <th style="font-size: 10px;">Puntos APA</th>
+                      <th style="font-size: 10px;">Puntos APPA</th>
+                      <th style="font-size: 10px;">Puntos Combo</th>
+                      <th style="font-size: 10px;">Importe a Bonificar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="x in $ctrl.detallePago">
+                      <td style="font-size: 9px;">{{ x.MacCableModem }}</td>
+                      <td style="font-size: 9px;">{{ x.DESCORTA }}</td>
+                      <td style="font-size: 9px;">{{ x.tvAdic }}</td>
+                      <td style="font-size: 9px;">{{ x.Meses_Cortesia }}</td>
+                      <td style="font-size: 9px;">{{ x.mesesApagar }}</td>
+                      <td style="font-size: 9px;">{{ x.importe | currency }}</td>
+                      <td style="font-size: 9px;">{{ x.periodoPagadoIni }}</td>
+                      <td style="font-size: 9px;">{{ x.periodoPagadoFin }}</td>
+                      <td style="font-size: 9px;">{{ x.PuntosAplicadosOtros }}</td>
+                      <td style="font-size: 9px;">{{ x.puntosAplicadosAnt }}</td>
+                      <td style="font-size: 9px;">{{ x.PuntosAplicadosPagoAdelantado }}</td>
+                      <td style="font-size: 9px;">{{ x.bonificacion }}</td>
+                      <td style="font-size: 9px;">{{ x.importeBonifica }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-3">
+                  <h4 class="text-muted">Descripcion</h4>
+                  <label class="col-sm-3 control-label text-right">Saldo</label>
+                  <div class="col-sm-8">
+                      <input type="number"
+                      style="font-size: 12px;"
+                      class="form-control"
+                      ng-model="$ctrl.saldo.Saldo"
+                      disabled>
+                  </div>
+                  <h5 class="text-muted">Estados de Cuenta por Saldar</h5>
+                  <table class="table table-bordered">
+                      <thead>
+                          <tr>
+                              <th>Fecha</th>
+                              <th>Importe</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr ng-repeat="x in $ctrl.edoCuenta" style="font-size: 10px;">
+                              <td>{{x.Fecha}}</td>
+                              <td>{{x.TotalRegular}}</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-md-offset-8 text-center">
+                <table class="table">
+                  <tr ng-repeat="x in $ctrl.sumaPagos">
+                    <td style="font-size: 11px;" ng-if="!$last"><strong>{{ x.Descripcion }}</strong></td>
+                    <td style="font-size: 15px;" ng-if="$last"><strong>{{ x.Descripcion }}</strong></td>
+                    <td style="font-size: 11px;" ng-if="!$last"> {{ x.Total | currency }} </td>
+                    <td style="font-size: 15px;" ng-if="$last"><strong>{{ x.Total | currency }}</strong></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="row" style="padding-right:20px;">
+              <p class="text-right">
+                <button class="btn btn-lg btn-success btn-sm" ng-click="$ctrl.abrirPago()" ng-disabled="$ctrl.blockPagar"><i class="fa fa-money" aria-hidden="true"></i> PAGAR</button>
+              </p>
+            </div>
+          </div>
+          <!--end .panel -->
+        </div>
+      </div>
+      <!--end .row -->
+    </div>

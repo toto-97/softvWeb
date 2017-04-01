@@ -70,6 +70,22 @@ function corporativaConf($stateProvider) {
 			templateUrl: 'views/corporativa/Recepcionpago.html',
 			controller: 'RecepcionPagoCtrl',
 			controllerAs: '$ctrl'
+		},
+		{
+			name: 'home.corporativa.pago',
+			data: {
+				pageTitle: 'SOFTV | PAGO CONTRATO MAESTRO',
+				permissions: {
+					only: ['contratomaestroUpdate'],
+					options: {
+						reload: false
+					}
+				}
+			},
+			url: '/corporativa/pagoContratoMaestro',
+			templateUrl: 'views/corporativa/pagoContratoMaestro.html',
+			controller: 'PagoContratoMaestroCtrl',
+			controllerAs: '$ctrl'
 		}
 	];
 	states.forEach(function(state) {
