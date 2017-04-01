@@ -6,6 +6,7 @@ angular
 		vm.showDatosCliente = true;
 		vm.agregar = agregar;
 		vm.buscarContrato = buscarContrato;
+		vm.buscarCliente = buscarCliente;
 		vm.datos = false;
 		init();
 
@@ -22,11 +23,9 @@ angular
 				vm.datos = true;
 				ordenesFactory.serviciosCliente(vm.contrato).then(function(data) {
 						vm.servicios = data.GetDameSerDelCliFacListResult;
-						console.log(vm.servicios);
 				});
 				ordenesFactory.buscarCliPorContrato(vm.contrato).then(function(data) {
 						vm.datosCli = data.GetDeepBUSCLIPORCONTRATO_OrdSerResult;
-						console.log(vm.datosCli);
 				});
 			}
 		}
@@ -121,19 +120,42 @@ angular
 			vm.showGuardar = true;
 		}
 
-		function buscarContrato(contrato) {
-			if (contrato == 0 || contrato == undefined) {
-				ngNotify.set('Inserta un número de contrato', 'error');
-			}else {
+		function buscarContrato(event) {
+			// if (contrato == 0 || contrato == undefined) {
+			// 	ngNotify.set('Inserta un número de contrato', 'error');
+			// }else {
+			if (event.keyCode == 13) {
+				if (vm.contrato == null || vm.contrato == '' || vm.contrato == undefined) {
+					ngNotify.set('Coloque un contrato válido', 'error');
+					return;
+				}
+
+				if(vm.contrato.indexOf('-') != -1 || vm.contrato.indexOf(',') != -1 || vm.contrato.indexOf('.') != -1){
+					ngNotify.set('Coloque un contrato real y no compuesto', 'error');
+					return;
+				}
+				
 				vm.datos = true;
-				ordenesFactory.serviciosCliente(contrato).then(function(data) {
+				ordenesFactory.serviciosCliente(vm.contrato).then(function(data) {
 						vm.servicios = data.GetDameSerDelCliFacListResult;
-						console.log(vm.servicios);
 				});
-				ordenesFactory.buscarCliPorContrato(contrato).then(function(data) {
+				ordenesFactory.buscarCliPorContrato(vm.contrato).then(function(data) {
 						vm.datosCli = data.GetDeepBUSCLIPORCONTRATO_OrdSerResult;
-						console.log(vm.datosCli);
 				});
-			}
+			} 
+		}
+
+		function buscarCliente() {
+			var modalInstance = $uibModal.open({
+				animation: true,
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: 'views/procesos/buscarNuevo.html',
+				controller: 'BuscarNuevoCtrl',
+				controllerAs: '$ctrl',
+				backdrop: 'static',
+				keyboard: false,
+				size: 'lg'
+			});
 		}
 	});

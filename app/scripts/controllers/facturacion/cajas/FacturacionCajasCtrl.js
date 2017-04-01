@@ -195,7 +195,7 @@ angular
 		}
 
 		function openPay(tipo) {
-			cajasFactory.dameSucursalCompa(vm.Cliente.Contraton).then(function(data) {
+			cajasFactory.dameSucursalCompa(vm.Cliente.Contrato).then(function(data) {
 				if (data.GetDeepDameRelSucursalCompaResult.Id == 0) {
 					ngNotify.set('La caja no tiene asignados folios para esta plaza.', 'error');
 				} else {
@@ -709,6 +709,7 @@ angular
 
 		function reloadTables() {
 			cajasFactory.dameDetallePago(vm.session).then(function(detallePago) {
+				console.log(detallePago);
 				if (detallePago.GetDameDetalleListResult.length == 0) {
 					vm.blockBaja = true;
 					vm.blockPagar = true;

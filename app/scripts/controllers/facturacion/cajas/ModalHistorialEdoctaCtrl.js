@@ -1,7 +1,7 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('modalHistorialEdoctaCtrl', function ($uibModal, $uibModalInstance, contrato, ordenesFactory, cajasFactory, ngNotify) {
+	.controller('modalHistorialEdoctaCtrl', function ($uibModal, $uibModalInstance, contrato, ordenesFactory, cajasFactory, ngNotify, $rootScope) {
 		function init() {
 			cajasFactory.ObtieneEdoCuentaPorContrato(contrato).then(function (data) {
 				vm.ListaEstados = data.GetObtieneEdoCuentaPorContratoListResult;
@@ -21,6 +21,7 @@ angular
 				if (data.GetDeepValidaReprocesoPorContratoResult.reproceso > 0) {
 					cajasFactory.ReprocesaEdoCuentaContrato(IdEstadoCuenta, contrato).then(function (data) {
 						ordenesFactory.addBitacoraReproceso(contrato).then(function (dataBit) {
+							$rootScope.$emit('realoadPagos', {});
 							ngNotify.set('El estado de cuenta se reproceso correctamente.');
 							init();
 						});

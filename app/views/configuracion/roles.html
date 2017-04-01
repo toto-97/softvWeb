@@ -1,58 +1,44 @@
 <div class="card" style="margin-top:30px;">
-  <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
-    <header>
-      <strong class="text-primary" style="font-weight:bold; border:none; margin-left:10px;">Roles</strong>
-
-    </header>
-    <div class="tools">
-      <div class="btn-group">
-
-
-      </div>
+    <div class="card-head" style="">
+        <div class="col-md-6">
+            <header>
+                <div>
+                    <strong style="font-weight:bold; border:none; color: #0aa89e; font-size: 20px;">Roles</strong>
+                </div>
+            </header>
+        </div>
+        <div class="col-md-1 col-md-offset-5">
+            <div class="btn-group" permission permission-only="'rolesAdd'">
+                <button class="btn ink-reaction btn-success" type="button"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo</button>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="card-body">
-    <div class="col-md-12" style="padding-left: 25px; padding-right: 25px;">
-
-
-
-      <table class="table">
+    <br><br>
+    <table class="table" id="datos">
         <thead>
-          <tr>
-            <th>#Rol</th>
-            <th>Rol</th>
-            <th>Activo</th>
-
-          </tr>
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Tipo de Almacen</th>
+                <th>Autoriza Ordenes</th>
+                <th>Administrador de Material</th>
+                <th>Acciones</th>
+            </tr>
         </thead>
         <tbody>
-          <tr ng-show="$ctrl.sinDatos">
-            <td colspan="3">
-              <p class="text-center">No se encontraron datos</p>
-            </td>
-          </tr>
-          <tr dir-paginate="x in $ctrl.Roles | itemsPerPage:5">
-            <td>{{ x.IdRol }}</td>
-            <td>{{ x.Nombre }}</td>
-            <td ng-if=" x.Estado==true">
-              <button type="button" class="btn ink-reaction btn-floating-action btn-success btn-xs"><i class="fa fa-check"></i></button>
-            </td>
-            <td ng-if=" x.Estado==false">
-              <button type="button" class="btn ink-reaction btn-floating-action btn-danger btn-xs"><i class="fa fa-check"></i></button>
-            </td>
-
-            <td>
-              <button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.detalle(x)"><i class="fa fa-eye"></i></button>
-
-            </td>
-          </tr>
+            <tr>
+                <td>1</td>
+                <td>Autorización</td>
+                <td>Almacen principal</td>
+                <td><label class="checkbox-inline checkbox-styled"><input type="checkbox"><span></span></label></td>
+                <td><label class="checkbox-inline checkbox-styled"><input type="checkbox"><span></span></label></td>
+                <td><button class="btn ink-reaction btn-floating-action btn-xs btn-warning"  permission permission-only="'rolesUpdate'" style="border-radius: 60px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
+            </tr>
         </tbody>
-      </table>
-      <div style="padding-left: 20px;" ng-show="$ctrl.showPaginator">
-        <dir-pagination-controls max-size="8" direction-links="true" boundary-links="true">
-        </dir-pagination-controls>
-      </div>
-    </div>
-  </div>
-
+        <tfoot>
+            <tr>
+                <td colspan="6" id="paginador"></td>
+            </tr>
+        </tfoot>
+    </table>
 </div>

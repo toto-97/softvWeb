@@ -32,7 +32,7 @@ angular
 			var objCAMDOFAC = {
 				'Clv_Sesion': items.Session,
 				'CONTRATO': items.Contrato,
-				'Clv_Calle': vm.selectedColonia.Clv_calle,
+				'Clv_Calle': vm.selectedCalle.Clv_calle,
 				'NUMERO': vm.numero,
 				'Num_int': vm.numeroInterior,
 				'ENTRECALLES': vm.entreCalles,

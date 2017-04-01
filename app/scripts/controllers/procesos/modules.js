@@ -65,7 +65,7 @@ angular
 					}
 				},
 				url: '/ordenes',
-				templateUrl: 'views/procesos/ordenesServicio.html',
+				templateUrl: 'views/procesos/ordenesNew.html',
 				controller: 'OrdenesServicioCtrl',
 				controllerAs: '$ctrl'
 			},
@@ -77,6 +77,16 @@ angular
 				url: '/ordenNueva/:experience/:context',
 				templateUrl: 'views/procesos/ordenNueva.html',
 				controller: 'OrdenNuevaCtrl',
+				controllerAs: '$ctrl'
+			},
+			{
+				name: 'home.procesos.buscarCliente',
+				data: {
+					pageTitle: 'SOFTV | BUSCAR CLIENTE'
+				},
+				url: '/buscarCliente',
+				templateUrl: 'views/procesos/buscarNuevo.html',
+				controller: 'BuscarNuevoCtrl',
 				controllerAs: '$ctrl'
 			},
 			{

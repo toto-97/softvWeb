@@ -33,7 +33,9 @@ angular
 		});
 
 		function getVendedores() {
-			vm.series = [];
+			vm.selectedVendedor = '';
+			vm.selectedSerie = '';
+			vm.selectedFolio = '';
 			cajasFactory.getVendedoresByUser(vm.Cliente.Contrato).then(function(data) {
 				vm.vendedores = data.GetMuestraVendedores2ListResult;
 			});
@@ -51,7 +53,7 @@ angular
 
 		function changeSerie() {
 			if (vm.selectedSerie != undefined) {
-				cajasFactory.folioDisponible(vm.selectedVendedor.Clv_Vendedor, vm.selectedSerie.SERIE).then(function(data) {
+				cajasFactory.folioDisponible(vm.selectedVendedor.Clv_Vendedor, vm.selectedSerie.SERIE, vm.Cliente.Contrato).then(function(data) {
 					if (data.GetFolioDisponibleListResult.length > 0) {
 						vm.folios = data.GetFolioDisponibleListResult;
 					}

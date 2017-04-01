@@ -175,7 +175,6 @@ angular
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			console.log(obj);
 			$http.post(globalService.getUrl() + paths.guardarAgenda, JSON.stringify(obj), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
@@ -549,7 +548,8 @@ angular
 				'Calle': calle,
 				'Numero': numero,
 				'Op': 2,
-				'ClvColonia': 0
+				'ClvColonia': 0,
+				'Usuario': $localStorage.currentUser.idUsuario
 			};
 			var config = {
 				headers: {
@@ -1342,11 +1342,12 @@ angular
 			return deferred.promise;
 		};
 
-		factory.folioDisponible = function(vendedor, serie) {
+		factory.folioDisponible = function(vendedor, serie, contrato) {
 			var deferred = $q.defer();
 			var Parametros = {
 				'Clv_Vendedor': vendedor,
-				'Serie': serie
+				'Serie': serie,
+				'Contrato': contrato
 			};
 			var config = {
 				headers: {
@@ -1726,7 +1727,7 @@ angular
 		factory.ReprocesaEdoCuentaContrato = function(IdEstadoCuenta, Contrato) {
 			var deferred = $q.defer();
 			var Parametros = {
-				'IdEstadoCuenta': IdEstadoCuenta,
+				'IdEdoCuenta': IdEstadoCuenta,
 				'Contrato': Contrato
 			};
 			var config = {
@@ -1793,8 +1794,6 @@ angular
 				'ContratoCom': ContratoCom,
 				'IdEstadoCuenta': IdEstadoCuenta
 			};
-			console.log(JSON.stringify(Parametros));
-			console.log(JSON.stringify($localStorage.currentUser.token));
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
