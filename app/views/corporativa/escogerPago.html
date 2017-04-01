@@ -35,12 +35,12 @@
     <div class="row" ng-show="$ctrl.variables" style="padding-top: 15px;">
         <div class="col-md-9 form-group">
             <label class="label-control">Abono</label>
-            <input type="number" class="form-control" ng-model="$ctrl.pagoInicial">
+            <input type="number" class="form-control" ng-model="$ctrl.abono">
         </div>
     </div>
 </div>
 <div class="modal-footer">
     <button class="btn btn-success" type="button" ng-show="$ctrl.botonFijo" ng-click="$ctrl.guardarFijo()">Siguiente</button>
-    <button class="btn btn-success" type="button" ng-show="$ctrl.botonVariable" ng-click="$ctrl.guardarVariable()">Guardar</button>
+    <button class="btn btn-success" type="button" ng-show="$ctrl.botonVariable" ng-click="$ctrl.guardarVariable()">Siguiente</button>
     <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
 </div>
