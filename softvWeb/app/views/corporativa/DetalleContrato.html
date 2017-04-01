@@ -1,0 +1,88 @@
+<style type="text/css">
+	.scrollDiv {
+		height: 300px;
+		overflow: auto;
+		overflow-x: hidden;
+	}
+</style>
+<div class="modal-header">
+	<button class="close" aria-label="Close" type="button" ng-click="ctrl.cancel()">×</button>
+	<h4 class="modal-title">Detalle Contrato #{{ ctrl.contrato.IdContratoMaestro }}</h4>
+</div>
+<div class="modal-body" style="padding-top:20px;">
+	<div class="row form-group">
+		<div class="col-md-6">
+			<b>Razón Social:</b>
+			<p>{{ctrl.contrato.RazonSocial}}</p>
+		</div>
+		<div class="col-md-6">
+			<b>Nombre comercial:</b>
+			<p>{{ctrl.contrato.NombreComercial}}</p>
+		</div>
+		<div class="col-md-6">
+			<b>Distribuidor:</b>
+			<p>{{ctrl.contrato.DistribuidorDes}}</p>
+		</div>
+		<div class="col-md-6">
+			<b>RFC:</b>
+			<p>{{ctrl.contrato.RFC}}</p>
+		</div>
+	</div>
+	<hr>
+	<div class="row form-group">
+		<div class="col-md-12 ">
+			<div class="col-md-6">
+				<b>Domicilio Fiscal:</b><br>
+				<p>Calle: {{ctrl.contrato.CalleDes}}<br> No.Exterior: {{ctrl.contrato.NumExt}} <br>No.Interior: {{ctrl.contrato.NumInt}}<br>
+			</div>
+			<div class="col-md-6">
+				Colonia: {{ctrl.contrato.ColoniaDes}}<br> CP: {{ctrl.contrato.CodigoPostal}}<br> Ciudad: {{ctrl.contrato.CiudadDes}}
+				<br>Estado: {{ctrl.contrato.EstadoDes}}
+
+			</div>
+		</div>
+
+
+		<div class="col-md-6">
+			<p> <b>Días de crédito:</b>{{ctrl.contrato.DiasCredito}} </p>
+			<p> <b>Días de gracia:</b>{{ctrl.contrato.DiasGracia}} </p>
+			<p> <b>Limite de Crédito:</b>{{ctrl.contrato.LimiteCredito}} </p>
+		</div>
+		<div class="col-md-6">
+			<p ng-if="ctrl.contrato.PagoEdoCuetna==true"> <b>Tipo de pago:</b> Pago con Edo.Cuenta</p>
+			<p ng-if="ctrl.contrato.PagoFac==true"> <b>Tipo de pago:</b> Pago Factura</p>
+			<p ng-if="ctrl.contrato.PostPago==true"><b>Forma de pago:</b> Postpago</p>
+			<p ng-if="ctrl.contrato.Prepago==true"><b>Forma de pago:</b> Prepago</p>
+			<b>Fecha facturación:</b>{{ctrl.contrato.FechaFac}}
+		</div>
+
+	</div>
+</div>
+
+
+<div class="row form-group">
+	<div class="col-md-11" ng-class="ctrl.contrato.lstCliS.length > 3 ? 'scrollDiv':''">
+		<h4 class="text-center">Contratos Asignados</h4>
+		<table class="table" style="font-size:12px;">
+			<thead>
+				<th>Contrato</th>
+				<th>Direccíon</th>
+				<th>Cliente</th>
+			</thead>
+			<tbody>
+				<tr ng-if="ctrl.contrato.lstCliS.length >0" ng-repeat="x in ctrl.contrato.lstCliS">
+					<td>{{ x.ContratoCom }}</td>
+					<td>{{ x.Direccion }}</td>
+					<td>{{ x.NombreCli }}</td>
+				</tr>
+				<tr>
+					<td colspan="3">No contiene contatos asignados</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-default btn-sm" type="button" ng-click="ctrl.cancel()">Cancelar</button>
+</div>

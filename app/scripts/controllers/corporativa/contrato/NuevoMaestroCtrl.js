@@ -122,7 +122,8 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ng
 				'TipoCorteCli': vm.tipocorte.Id,
 				'ReactivarMan': vm.reacMan,
 				'ReactivarPagoFac': vm.reacPag,
-				'TipoPago': vm.formapago.Id
+				'TipoPago': vm.formapago.Id,
+				'Referencia': vm.Referencia
 			}
 		};
 		corporativoFactory.addMaestro(contrato).then(function(data) {
@@ -145,6 +146,15 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ng
 		}
 	}
 
+	function CambioTipo(x) {
+
+		if (x.Cuenta == true) {
+			vm.MuestraReferencia = true;
+		} else {
+			vm.MuestraReferencia = false;
+		}
+	}
+
 
 	var vm = this;
 	vm.abrirContratos = abrirContratos;
@@ -163,5 +173,7 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ng
 	vm.helpSave = false;
 	vm.CambioTipoPago = CambioTipoPago;
 	vm.DesReactiva = true;
+	vm.MuestraReferencia = false;
+	vm.CambioTipo = CambioTipo;
 }
 angular.module('softvApp').controller('NuevoMaestroCtrl', NuevoMaestroCtrl);

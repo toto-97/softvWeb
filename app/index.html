@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
     <link rel="stylesheet" href="bower_components/ng-notify/src/styles/ng-notify.css" />
     <link rel="stylesheet" href="bower_components/angular-block-ui/dist/angular-block-ui.css" />
+    <link rel="stylesheet" href="bower_components/pnotify/dist/pnotify.css" />
     <link rel="stylesheet" href="bower_components/pnotify/dist/pnotify.brighttheme.css" />
     <link rel="stylesheet" href="bower_components/pnotify/dist/pnotify.buttons.css" />
-    <link rel="stylesheet" href="bower_components/pnotify/dist/pnotify.css" />
     <link rel="stylesheet" href="bower_components/pnotify/dist/pnotify.history.css" />
     <link rel="stylesheet" href="bower_components/pnotify/dist/pnotify.mobile.css" />
     <!-- endbower -->
@@ -53,11 +53,11 @@
     <script src="bower_components/angular-block-ui/dist/angular-block-ui.js"></script>
     <script src="bower_components/ngstorage/ngStorage.js"></script>
     <script src="bower_components/angularUtils-pagination/dirPagination.js"></script>
+    <script src="bower_components/pnotify/dist/pnotify.js"></script>
     <script src="bower_components/pnotify/dist/pnotify.animate.js"></script>
     <script src="bower_components/pnotify/dist/pnotify.buttons.js"></script>
     <script src="bower_components/pnotify/dist/pnotify.callbacks.js"></script>
     <script src="bower_components/pnotify/dist/pnotify.confirm.js"></script>
-    <script src="bower_components/pnotify/dist/pnotify.js"></script>
     <script src="bower_components/pnotify/dist/pnotify.desktop.js"></script>
     <script src="bower_components/pnotify/dist/pnotify.history.js"></script>
     <script src="bower_components/pnotify/dist/pnotify.mobile.js"></script>
@@ -67,6 +67,7 @@
     <script src="bower_components/angular-permission/dist/angular-permission-ui.js"></script>
     <script src="bower_components/angular-permission/dist/angular-permission-ng.js"></script>
     <script src="bower_components/tg-angular-validator/dist/angular-validator.js"></script>
+    <script src="bower_components/angular-ui-mask/dist/mask.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -86,8 +87,20 @@
     <script src="scripts/controllers/procesos/modules.js"></script>
     <script src="scripts/controllers/procesos/atencion/atencion.js"></script>
     <script src="scripts/controllers/procesos/atencion/atencionDetalle.js"></script>
-    <script src="scripts/controllers/procesos/atencion/historialPagos.js"></script>
-    <script src="scripts/controllers/procesos/atencion/historialReportes.js"></script>
+    <script src="scripts/controllers/procesos/atencion/AtencionEditarCtrl.js"></script>
+    <script src="scripts/controllers/procesos/atencion/AtencionNuevaCtrl.js"></script>
+    <script src="scripts/controllers/procesos/atencion/ModalAgendaCtrl.js"></script>
+    <script src="scripts/controllers/procesos/atencion/ModalBuscaClienteCtrl.js"></script>
+    <script src="scripts/controllers/procesos/atencion/ModalDetalleCobroCtrl.js"></script>
+    <script src="scripts/controllers/procesos/atencion/ModalDetalleLlamadaCtrl.js"></script>
+    <!--quejas-->
+    <script src="scripts/controllers/procesos/Quejas/ModalBonificacionCtrl.js"></script>
+    <script src="scripts/controllers/procesos/Quejas/ModalConsultaQuejaCtrl.js"></script>
+    <script src="scripts/controllers/procesos/Quejas/QuejaEjecutaCtrl.js"></script>
+    <script src="scripts/controllers/procesos/Quejas/quejasCtrl.js"></script>
+    <script src="scripts/controllers/procesos/Quejas/ModalDescargaMaterialCtrl.js"></script>
+    <script src="scripts/factories/quejasFactory.js"></script>
+    <!---->
     <script src="scripts/controllers/configuracion/modules.js"></script>
     <script src="scripts/factories/cajasFactory.js"></script>
     <script src="scripts/controllers/facturacion/modules.js"></script>
@@ -108,8 +121,11 @@
     <script src="scripts/controllers/facturacion/cajas/ModalSingleOrdenCtrl.js"></script>
     <script src="scripts/controllers/facturacion/cajas/ModalEdoCuentaCtrl.js"></script>
     <script src="scripts/controllers/facturacion/cajas/ModalSingleQuejaCtrl.js"></script>
+    <script src="scripts/controllers/facturacion/cajas/ModalSingleNotaCtrl.js"></script>
     <script src="scripts/controllers/facturacion/cajas/ModalMotivoCancelacionCtrl.js"></script>
     <script src="scripts/controllers/facturacion/cajas/ModalPreguntaCtrl.js"></script>
+    <script src="scripts/controllers/facturacion/cajas/ModalHistorialEdoctaCtrl.js"></script>
+    <script src="scripts/controllers/facturacion/cajas/ModalNuevoEdoctaCtrl.js"></script>
     <script src="scripts/controllers/reportes/ReporteCiudadCartera/CiudadCarteraCtrl.js"></script>
     <script src="scripts/controllers/reportes/modules.js"></script>
     <script src="scripts/factories/reportesFactory.js"></script>
@@ -134,8 +150,11 @@
     <script src="scripts/factories/arqueoFactory.js"></script>
     <script src="scripts/controllers/facturacion/arqueo/ArqueoCajasCtrl.js"></script>
     <script src="scripts/controllers/reportes/ReporteCiudadCartera/CiudadCarteraCtrl.js"></script>
-    <script src="scripts/controllers/procesos/ordenes/ordenesCtrl.js"></script>
-    <script src="scripts/controllers/procesos/ordenes/ordenNuevaCtrl.js"></script>
+    <script src="scripts/controllers/procesos/ordenes/OrdenesServicioCtrl.js"></script>
+    <script src="scripts/controllers/procesos/ordenes/OrdenNuevaCtrl.js"></script>
+    <script src="scripts/controllers/procesos/ordenes/OrdenServicioClienteCtrl.js"></script>
+    <script src="scripts/controllers/procesos/ordenes/BuscarNuevoCtrl.js"></script>
+    <script src="scripts/controllers/procesos/ordenes/ModalOrdenCtrl.js"></script>
     <script src="scripts/controllers/configuracion/Permisos/PermisosCtrl.js"></script>
     <script src="scripts/controllers/configuracion/Roles/RolCtrl.js"></script>
     <script src="scripts/controllers/configuracion/Roles/ModalAddRolCtrl.js"></script>
@@ -146,6 +165,7 @@
     <script src="scripts/controllers/facturacion/tickets/ReimprimirCtrl.js"></script>
     <script src="scripts/controllers/facturacion/tickets/cancelarTicketCtrl.js"></script>
     <script src="scripts/controllers/facturacion/tickets/MotivoTicketCtrl.js"></script>
+    <script src="scripts/controllers/facturacion/tickets/CorreoCtrl.js"></script>
     <script src="scripts/controllers/corporativa/modules.js"></script>
     <script src="scripts/controllers/corporativa/contrato/ContratoMaestroCtrl.js"></script>
     <script src="scripts/controllers/corporativa/contrato/NuevoMaestroCtrl.js"></script>
@@ -156,6 +176,11 @@
     <script src="scripts/controllers/corporativa/contrato/ModalDetalleContratoCtrl.js"></script>
     <script src="scripts/factories/ContratoMaestroFactory.js"></script>
     <script src="scripts/factories/corporativoFactory.js"></script>
+    <script src="scripts/controllers/facturacion/cajas/ModalInformacionCobroCtrl.js"></script>
+    <script src="scripts/controllers/facturacion/cajas/ModalAgendaVentasCtrl.js"></script>
+    <script src="scripts/directives/UploadFile.js"></script>
+    <script src="scripts/controllers/facturacion/desglose/PrintArchivosCtrl.js"></script>
+    <script src="scripts/factories/ordenesFactory.js"></script>
     <script src="scripts/factories/pagosMaestrosFactory.js"></script>
     <script src="scripts/controllers/corporativa/pagoContrato/PagoContratoMaestroCtrl.js"></script>
     <script src="scripts/controllers/corporativa/pagoContrato/AbrirPagoCtrl.js"></script>

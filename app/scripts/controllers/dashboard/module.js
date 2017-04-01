@@ -5,7 +5,7 @@ angular
 		var states = [{
 				name: 'home.dashboard',
 				data: {
-					pageTitle: 'SOFTV | DASHBOARD',
+					pageTitle: 'SAC | DASHBOARD',
 					permissions: {
 						ecxept: ['anonymous'],
 						options: {

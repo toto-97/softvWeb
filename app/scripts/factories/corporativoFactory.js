@@ -16,7 +16,7 @@ angular.module('softvApp')
 			ligarContratos: '/ContratoMaestroFac/GetAddRelContratoMaestroContrato',
 			singleContrato: '/ContratoMaestroFac/GetRelContratos',
 			updateContrato: '/ContratoMaestroFac/UpdateContratoMaestroFac',
-			UpdateRelContrato: '/ContratoMaestroFac/GetRomperRelContratoMaestroContrato',
+			UpdateRelContrato: '/ContratoMaestroFac/GetAddUpdate',
 			buscarCliente: '/uspBuscaContratoSeparado2/GetBuscaByIdDisList'
 		};
 
@@ -57,9 +57,9 @@ angular.module('softvApp')
 			return deferred.promise;
 		};
 
-		factory.UpdateRelContrato = function(contrato, lista) {
+		factory.UpdateRelContrato = function(contrato, lista, distribuidor) {
 			console.log(contrato);
-			console.log(lista);
+			console.log(distribuidor);
 			var deferred = $q.defer();
 			var config = {
 				headers: {
@@ -67,10 +67,11 @@ angular.module('softvApp')
 				}
 			};
 			var Parametros = {
-				'objRep': {
-					'IdContratoMaestro': contrato
+				'objCM': {
+					'IdContratoMaestro': contrato,
+					'Distribuidor': distribuidor
 				},
-				'lstRel': lista
+				'Contratos': lista
 
 			};
 

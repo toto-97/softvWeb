@@ -1,7 +1,7 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('EntregasParcialesCtrl', function($state, $uibModal, $rootScope, entregasFactory, $filter, ngNotify) {
+	.controller('EntregasParcialesCtrl', function($state, $uibModal, globalService, $rootScope, entregasFactory, $filter, ngNotify) {
 		function initialData() {
 			entregasFactory.getPlazas().then(function(data) {
 				vm.plazas = data.GetMuestraPlazasProcesosListResult;
@@ -138,12 +138,40 @@ angular
 			}
 		}
 
+		function printEntrega(x) {
+			entregasFactory.printEntrega(x).then(function(data) {
+				var url = globalService.getUrlReportes() + '/Reportes/' + data.GetReporteEntregasParcialesResult[0].NombreCajera;
+				var obj = {
+					url: url,
+					titulo: 'Imprimir Entrega Parcial'
+				};
+				var modalInstance = $uibModal.open({
+					animation: true,
+					ariaLabelledBy: 'modal-title',
+					ariaDescribedBy: 'modal-body',
+					templateUrl: 'views/facturacion/printArchivos.html',
+					controller: 'PrintArchivosCtrl',
+					controllerAs: '$ctrl',
+					backdrop: 'static',
+					keyboard: false,
+					windowClass: 'app-modal-window',
+					size: 'lg',
+					resolve: {
+						items: function() {
+							return obj;
+						}
+					}
+				});
+			});
+		}
+
 		var vm = this;
 		vm.changePlaza = changePlaza;
 		vm.eliminarEntrada = eliminarEntrada;
 		vm.cambiarBusqueda = cambiarBusqueda;
 		vm.buscarEntrada = buscarEntrada;
 		vm.showPaginator = false;
+		vm.printEntrega = printEntrega;
 		initialData();
 
 	});

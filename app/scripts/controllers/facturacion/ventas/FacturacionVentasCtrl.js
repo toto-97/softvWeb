@@ -1,29 +1,29 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('FacturacionVentasCtrl', function($uibModal, $state, $rootScope, cajasFactory, ngNotify) {
-
-		function initialData() {
-			getVendedores();
-		}
-
+	.controller('FacturacionVentasCtrl', function($uibModal, $state, $rootScope, cajasFactory, ngNotify, globalService) {
 		function openEdoCuenta() {
-			vm.animationsEnabled = true;
-			var modalInstance = $uibModal.open({
-				animation: vm.animationsEnabled,
-				ariaLabelledBy: 'modal-title',
-				ariaDescribedBy: 'modal-body',
-				templateUrl: 'views/facturacion/modalEdoCuenta.html',
-				controller: 'ModalEdoCuentaCtrl',
-				controllerAs: 'ctrl',
-				backdrop: 'static',
-				keyboard: false,
-				size: 'lg',
-				windowClass: 'app-modal-window',
-				resolve: {
-					contrato: function() {
-						return vm.Cliente.Contrato;
-					}
+			cajasFactory.getEstadoCuenta(vm.Cliente.Contrato).then(function(data) {
+				if (data.GetDeeptieneEdoCuentaResult.tieneEdoCuenta) {
+					var modalInstance = $uibModal.open({
+						animation: true,
+						ariaLabelledBy: 'modal-title',
+						ariaDescribedBy: 'modal-body',
+						templateUrl: 'views/facturacion/modalEdoCuenta.html',
+						controller: 'ModalEdoCuentaCtrl',
+						controllerAs: 'ctrl',
+						backdrop: 'static',
+						keyboard: false,
+						size: 'lg',
+						windowClass: 'app-modal-window',
+						resolve: {
+							contrato: function() {
+								return vm.Cliente.Contrato;
+							}
+						}
+					});
+				} else {
+					ngNotify.set('El cliente no cuenta con estado de cuenta generado.', 'info');
 				}
 			});
 		}
@@ -33,43 +33,29 @@ angular
 		});
 
 		function getVendedores() {
-			cajasFactory.dameVendedores().then(function(data) {
-				data.GetVendedoresLListResult.unshift({
-					'Nombre': '----------------',
-					'Clv_Vendedor': 0
-				});
-				vm.vendedores = data.GetVendedoresLListResult;
-				vm.selectedVendedor = data.GetVendedoresLListResult[0];
+			vm.selectedVendedor = '';
+			vm.selectedSerie = '';
+			vm.selectedFolio = '';
+			cajasFactory.getVendedoresByUser(vm.Cliente.Contrato).then(function(data) {
+				vm.vendedores = data.GetMuestraVendedores2ListResult;
 			});
 		}
 
 		function changeVendedor() {
-			if (vm.selectedVendedor.Clv_Vendedor == 0) {
-				ngNotify.set('Selecciona un vendedor.', 'error');
-			} else {
-				cajasFactory.ultimoFolio(vm.selectedVendedor.Clv_Vendedor).then(function(data) {
-					data.GetUltimoSerieYFolioListResult.unshift({
-						'SERIE': '----------------',
-						'ULTIMOFOLIO_USADO': 0
-					});
+			vm.folios = '';
+			if (vm.selectedVendedor != undefined) {
+				cajasFactory.getSerieByUser(vm.selectedVendedor.Clv_Vendedor, vm.Cliente.Contrato).then(function(data) {
 					vm.series = data.GetUltimoSerieYFolioListResult;
-					vm.selectedSerie = data.GetUltimoSerieYFolioListResult[0];
 					vm.folios = '';
 				});
 			}
 		}
 
 		function changeSerie() {
-			if (vm.selectedSerie.ULTIMOFOLIO_USADO == 0) {
-				ngNotify.set('Selecciona una serie.', 'error');
-			} else {
-				cajasFactory.folioDisponible(vm.selectedVendedor.Clv_Vendedor, vm.selectedSerie.SERIE).then(function(data) {
+			if (vm.selectedSerie != undefined) {
+				cajasFactory.folioDisponible(vm.selectedVendedor.Clv_Vendedor, vm.selectedSerie.SERIE, vm.Cliente.Contrato).then(function(data) {
 					if (data.GetFolioDisponibleListResult.length > 0) {
-						data.GetFolioDisponibleListResult.unshift({
-							'Folio': '----------------',
-						});
 						vm.folios = data.GetFolioDisponibleListResult;
-						vm.selectedFolio = data.GetFolioDisponibleListResult[0];
 					}
 				});
 			}
@@ -245,7 +231,7 @@ angular
 			} else if (vm.selectedSerie.ULTIMOFOLIO_USADO == 0 || vm.selectedSerie.ULTIMOFOLIO_USADO == '' || vm.selectedSerie.ULTIMOFOLIO_USADO == undefined) {
 				ngNotify.set('Selecciona una serie.', 'error');
 			} else {
-				if (vm.selectedFolio.Folio == 0 || vm.selectedFolio.Folio == '' || vm.selectedFolio.Folio == undefined || vm.selectedFolio.Folio == '----------------') {
+				if (vm.selectedFolio.Folio == undefined || vm.selectedFolio.Folio == 0 || vm.selectedFolio.Folio == '' || vm.selectedFolio.Folio == '----------------') {
 					ngNotify.set('La caja no tiene asignados folios para esta plaza.', 'error');
 				} else {
 					cajasFactory.dameSucursalCompa(vm.Cliente.Contrato).then(function(data) {
@@ -387,69 +373,126 @@ angular
 			$('.buscarContrato').collapse('hide');
 			vm.mostrarSuspencion = false;
 			reset();
+			vm.ArrastraSaldo = false;
 			var contrato = vm.data.contrato;
 			cajasFactory.validarContrato(vm.data.contrato).then(function(datacontrato) {
 				if (datacontrato.Getsp_dameContratoCompaniaAdicListResult[0].Contrato > 0) {
 					cajasFactory.buscarContrato(contrato).then(function(data) {
 						if (data.GetBusCliPorContrato_FacListResult.length > 0) {
 							vm.Cliente = data.GetBusCliPorContrato_FacListResult[0];
-							cajasFactory.dameSession(vm.Cliente.Contrato).then(function(session) {
-								vm.session = session.GetDeepDameClv_SessionResult.IdSession;
-								cajasFactory.preguntaCajas(vm.Cliente.Contrato, 0).then(function(op1) {
-									if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
-										abrirModalPregunta(0, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
-									}
-								});
-								cajasFactory.preguntaCajas(vm.Cliente.Contrato, 2).then(function(op1) {
-									if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
-										abrirModalPregunta(2, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
-									}
-								});
-								cajasFactory.preguntaCajas(vm.Cliente.Contrato, 3).then(function(op1) {
-									if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
-										abrirModalPregunta(3, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
-									}
-								});
-								cajasFactory.preguntaCajas(vm.Cliente.Contrato, 900).then(function(op1) {
-									if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
-										abrirModalPregunta(900, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
-									}
-								});
-								cajasFactory.checaRetiro(vm.Cliente.Contrato).then(function(retiro) {
-									if (retiro.GetChecaOrdenRetiroListResult[0].Resultado > 0) {
-										new PNotify({
-											title: 'Aviso',
-											text: retiro.GetChecaOrdenRetiroListResult[0].Msg,
-											hide: false
+
+							cajasFactory.ValidaSaldoContrato(vm.Cliente.Contrato).then(function(data) {
+								if (data.GetValidaSaldoContratoResult.tieneSaldo > 0) {
+									vm.ArrastraSaldo = true;
+									cajasFactory.CobraSaldo(vm.Cliente.Contrato).then(function(cobra) {
+										vm.session = cobra.GetDeepCobraSaldoResult.ClvSession;
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 0).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(0, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
 										});
-									}
-								});
-								cajasFactory.getObservaciones(vm.Cliente.Contrato).then(function(observa) {
-									if (observa.GetDeepConRelClienteObsResult.Obs) {
-										new PNotify({
-											title: 'Observaciones',
-											type: 'info',
-											text: observa.GetDeepConRelClienteObsResult.Obs,
-											hide: false
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 2).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(2, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
 										});
-									}
-								});
-								if (session.GetDeepDameClv_SessionResult.Error == 0) {
-									reloadTables();
-									vm.mostrarSuspencion = false;
-									vm.color = '#ffffff'
-									vm.colorServicios = '#E2EBEA';
-								} else {
-									reloadTables();
-									vm.mostrarSuspencion = true;
-									vm.color = '#D6D9D9';
-									vm.colorServicios = '#B8BABA';
-									ngNotify.set(session.GetDeepDameClv_SessionResult.Msg, {
-										type: 'warn',
-										sticky: true
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 3).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(3, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 900).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(900, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.getObservaciones(vm.Cliente.Contrato).then(function(observa) {
+											if (observa.GetDeepConRelClienteObsResult.Obs) {
+												new PNotify({
+													title: 'Observaciones',
+													type: 'info',
+													text: observa.GetDeepConRelClienteObsResult.Obs,
+													hide: false
+												});
+											}
+										});
+										reloadTables();
+
+										cajasFactory.ObtieneEdoCuentaSinSaldar(vm.Cliente.Contrato, vm.session).then(function(detalleEdo) {
+											vm.detalleEdo = detalleEdo.GetObtieneEdoCuentaSinSaldarListResult;
+										});
+
+
 									});
+
+								} else {
+
+
+									cajasFactory.dameSession(vm.Cliente.Contrato).then(function(session) {
+										vm.session = session.GetDeepDameClv_SessionResult.IdSession;
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 0).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(0, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 2).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(2, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 3).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(3, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 900).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(900, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.checaRetiro(vm.Cliente.Contrato).then(function(retiro) {
+											if (retiro.GetChecaOrdenRetiroListResult[0].Resultado > 0) {
+												new PNotify({
+													title: 'Aviso',
+													text: retiro.GetChecaOrdenRetiroListResult[0].Msg,
+													hide: false
+												});
+											}
+										});
+										cajasFactory.getObservaciones(vm.Cliente.Contrato).then(function(observa) {
+											if (observa.GetDeepConRelClienteObsResult.Obs) {
+												new PNotify({
+													title: 'Observaciones',
+													type: 'info',
+													text: observa.GetDeepConRelClienteObsResult.Obs,
+													hide: false
+												});
+											}
+										});
+										if (session.GetDeepDameClv_SessionResult.Error == 0) {
+											reloadTables();
+											vm.mostrarSuspencion = false;
+											vm.color = '#ffffff'
+											vm.colorServicios = '#E2EBEA';
+										} else {
+											reloadTables();
+											vm.mostrarSuspencion = true;
+											vm.color = '#D6D9D9';
+											vm.colorServicios = '#B8BABA';
+											ngNotify.set(session.GetDeepDameClv_SessionResult.Msg, {
+												type: 'warn',
+												sticky: true
+											});
+										}
+									});
+
 								}
+
+
 							});
+
+
+
 							cajasFactory.serviciosCliente(vm.Cliente.Contrato).then(function(servicios) {
 								var array = $.map(servicios, function(value, index) {
 									return [value];
@@ -468,6 +511,7 @@ angular
 								}
 							});
 							vm.muestraCliente = true;
+							getVendedores();
 						} else {
 							ngNotify.set('No se encontro ningun cliente con ese número de contrato.', 'error');
 							reset();
@@ -536,53 +580,103 @@ angular
 					cajasFactory.buscarContrato(x).then(function(data) {
 						if (data.GetBusCliPorContrato_FacListResult.length > 0) {
 							vm.Cliente = data.GetBusCliPorContrato_FacListResult[0];
-							cajasFactory.dameSession(vm.Cliente.Contrato).then(function(session) {
-								vm.session = session.GetDeepDameClv_SessionResult.IdSession;
-								cajasFactory.preguntaCajas(vm.Cliente.Contrato, 0).then(function(op1) {
-									if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
-										abrirModalPregunta(0, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
-									}
-								});
-								cajasFactory.preguntaCajas(vm.Cliente.Contrato, 2).then(function(op1) {
-									if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
-										abrirModalPregunta(2, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
-									}
-								});
-								cajasFactory.preguntaCajas(vm.Cliente.Contrato, 3).then(function(op1) {
-									if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
-										abrirModalPregunta(3, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
-									}
-								});
-								cajasFactory.preguntaCajas(vm.Cliente.Contrato, 900).then(function(op1) {
-									if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
-										abrirModalPregunta(900, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
-									}
-								});
-								cajasFactory.checaRetiro(vm.Cliente.Contrato).then(function(retiro) {
-									if (retiro.GetChecaOrdenRetiroListResult[0].Resultado > 0) {
-										new PNotify({
-											title: 'Aviso',
-											text: retiro.GetChecaOrdenRetiroListResult[0].Msg,
-											hide: false
+							cajasFactory.ValidaSaldoContrato(vm.Cliente.Contrato).then(function(data) {
+								if (data.GetValidaSaldoContratoResult.tieneSaldo > 0) {
+									vm.ArrastraSaldo = true;
+									cajasFactory.CobraSaldo(vm.Cliente.Contrato).then(function(cobra) {
+										vm.session = cobra.GetDeepCobraSaldoResult.ClvSession;
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 0).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(0, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
 										});
-									}
-								});
-								if (session.GetDeepDameClv_SessionResult.Error == 0) {
-									reloadTables();
-									vm.mostrarSuspencion = false;
-									vm.color = '#ffffff'
-									vm.colorServicios = '#E2EBEA';
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 2).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(2, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 3).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(3, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 900).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(900, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.getObservaciones(vm.Cliente.Contrato).then(function(observa) {
+											if (observa.GetDeepConRelClienteObsResult.Obs) {
+												new PNotify({
+													title: 'Observaciones',
+													type: 'info',
+													text: observa.GetDeepConRelClienteObsResult.Obs,
+													hide: false
+												});
+											}
+										});
+										reloadTables();
+
+										cajasFactory.ObtieneEdoCuentaSinSaldar(vm.Cliente.Contrato, vm.session).then(function(detalleEdo) {
+											vm.detalleEdo = detalleEdo.GetObtieneEdoCuentaSinSaldarListResult;
+										});
+
+
+									});
+
 								} else {
-									reloadTables();
-									vm.mostrarSuspencion = true;
-									vm.color = '#D6D9D9';
-									vm.colorServicios = '#B8BABA';
-									ngNotify.set(session.GetDeepDameClv_SessionResult.Msg, {
-										type: 'warn',
-										sticky: true
+
+									cajasFactory.dameSession(vm.Cliente.Contrato).then(function(session) {
+										vm.session = session.GetDeepDameClv_SessionResult.IdSession;
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 0).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(0, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 2).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(2, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 3).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(3, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 900).then(function(op1) {
+											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
+												abrirModalPregunta(900, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
+											}
+										});
+										cajasFactory.checaRetiro(vm.Cliente.Contrato).then(function(retiro) {
+											if (retiro.GetChecaOrdenRetiroListResult[0].Resultado > 0) {
+												new PNotify({
+													title: 'Aviso',
+													text: retiro.GetChecaOrdenRetiroListResult[0].Msg,
+													hide: false
+												});
+											}
+										});
+										if (session.GetDeepDameClv_SessionResult.Error == 0) {
+											reloadTables();
+											vm.mostrarSuspencion = false;
+											vm.color = '#ffffff'
+											vm.colorServicios = '#E2EBEA';
+										} else {
+											reloadTables();
+											vm.mostrarSuspencion = true;
+											vm.color = '#D6D9D9';
+											vm.colorServicios = '#B8BABA';
+											ngNotify.set(session.GetDeepDameClv_SessionResult.Msg, {
+												type: 'warn',
+												sticky: true
+											});
+										}
 									});
 								}
 							});
+
+
 							cajasFactory.serviciosCliente(vm.Cliente.Contrato).then(function(servicios) {
 								var array = $.map(servicios, function(value, index) {
 									return [value];
@@ -606,6 +700,7 @@ angular
 							reset();
 						}
 					});
+					getVendedores();
 				} else {
 					ngNotify.set('El usuario no tiene permisos para ver a este cliente.', 'error');
 					reset();
@@ -670,6 +765,55 @@ angular
 			vm.data.amaterno = '';
 		}
 
+		function InformacionCobro(detalle) {
+			var items = {};
+			items.Clv_Session = detalle.Clv_Session;
+			items.CLV_DETALLE = detalle.CLV_DETALLE;
+
+			var modalInstance = $uibModal.open({
+				animation: true,
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: 'views/facturacion/modalInformacionCobro.html',
+				controller: 'ModalInformacionCobroCtrl',
+				controllerAs: 'ctrl',
+				backdrop: 'static',
+				keyboard: false,
+				class: 'modal-backdrop fade',
+				size: 'md',
+				resolve: {
+					items: function() {
+						return items;
+					}
+				}
+			});
+		}
+
+		function MuestraEdoCuenta(detalle) {
+			var options = {};
+			options.Tipo = 1;
+			options.IdEstadoCuenta = detalle.IdEstadoCuenta;
+			options.Contrato = vm.Cliente.ContratoC;
+			var modalInstance = $uibModal.open({
+				animation: true,
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: 'views/facturacion/ModalEdoCuenta.html',
+				controller: 'ModalNuevoEdoctaCtrl',
+				controllerAs: 'ctrl',
+				backdrop: 'static',
+				keyboard: false,
+				size: 'lg',
+				resolve: {
+					options: function() {
+						return options;
+					}
+				}
+			});
+
+
+		}
+
 		var vm = this;
 		vm.openHistorial = openHistorial;
 		vm.openInformation = openInformation;
@@ -691,5 +835,6 @@ angular
 		vm.changeVendedor = changeVendedor;
 		vm.changeSerie = changeSerie;
 		vm.openEdoCuenta = openEdoCuenta;
-		initialData();
+		vm.InformacionCobro = InformacionCobro;
+		vm.MuestraEdoCuenta = MuestraEdoCuenta;
 	});

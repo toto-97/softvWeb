@@ -10,7 +10,27 @@ angular
 			consultaDesglose: '/DesgloseDeMoneda/GetDeepDesgloseDeMoneda',
 			updateDesglose: '/DesgloseDeMoneda/UpdateDesgloseDeMoneda',
 			deleteDesglose: '/DesgloseDeMoneda/DeleteDesgloseDeMoneda',
-			validarCajero: '/ValidacionLoginCajera/GetDeepValidacionLoginCajera'
+			validarCajero: '/ValidacionLoginCajera/GetDeepValidacionLoginCajera',
+			printDesglose: '/DesgloseDeMoneda/GetReporteDesgloseMoneda'
+		};
+
+		factory.printDesglose = function(consecutivo) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Consecutivo': consecutivo
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.printDesglose, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
 		};
 
 		factory.checarDesglose = function(usuario, fecha) {

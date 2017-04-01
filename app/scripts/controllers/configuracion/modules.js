@@ -10,7 +10,7 @@ angular
 			{
 				name: 'home.configuracion.permisos',
 				data: {
-					pageTitle: 'SOFTV | PERMISOS',
+					pageTitle: 'SAC | PERMISOS',
 					permissions: {
 						only: ['permisosSelect'],
 						options: {
@@ -20,13 +20,13 @@ angular
 				},
 				url: '/configuracion/permisos',
 				templateUrl: 'views/configuracion/permisos.html',
-				controller: 'AtencionCtrl',
+				controller: 'PermisosCtrl',
 				controllerAs: '$ctrl'
 			},
 			{
 				name: 'home.configuracion.roles',
 				data: {
-					pageTitle: 'SOFTV | ROLES',
+					pageTitle: 'SAC | ROLES',
 					permissions: {
 						only: ['rolesSelect'],
 						options: {
@@ -36,7 +36,7 @@ angular
 				},
 				url: '/configuracion/roles',
 				templateUrl: 'views/configuracion/roles.html',
-				controller: 'AtencionCtrl',
+				controller: 'RolCtrl',
 				controllerAs: '$ctrl'
 			}
 		];
