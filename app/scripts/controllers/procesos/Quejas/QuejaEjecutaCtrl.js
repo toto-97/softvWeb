@@ -4,7 +4,7 @@ angular
 	.controller('QuejaEjecutaCtrl', function($state, ngNotify, $location, $uibModal, $stateParams, atencionFactory, quejasFactory) {
 
 		function InitalData() {
-			console.log($stateParams);
+
 			vm.clv_queja = $stateParams.id;
 			vm.contrato = $stateParams.contrato;
 			vm.Servicio = $stateParams.servicio;
@@ -15,7 +15,7 @@ angular
 					param.servicio = vm.Servicio;
 					param.op = 0;
 					atencionFactory.buscarCliente(param).then(function(data) {
-						console.log(data);
+
 						var detalle = data.GetuspBuscaContratoSeparado2ListResult[0];
 						var contrato = detalle.ContratoBueno;
 						vm.GlobalContrato = contrato;
@@ -39,12 +39,54 @@ angular
 								vm.DetalleProblema = detqueja.Problema;
 								vm.Observaciones = detqueja.Observaciones;
 								vm.DetalleSolucion = detqueja.Solucion;
-								vm.FechaSolicitud = detqueja.Fecha_Soliciutud;
-								vm.FechaEjecucion = detqueja.Fecha_Ejecucion;
-								vm.FechaProceso = detqueja.FechaProceso;
-								vm.FechaVisita1 = detqueja.HV1;
-								vm.FechaVisita2 = detqueja.HV2;
-								vm.FechaVisita3 = detqueja.HV3;
+								//dateParse('04/01/2017');
+								var fsolicitud = detqueja.Fecha_Soliciutud.split(' ');
+								vm.FechaSolicitud = fsolicitud[0];
+								var hora = getTime(detqueja.Fecha_Soliciutud);
+								vm.HoraSolicitud = hora;
+
+								if (detqueja.Fecha_Ejecucion != null) {
+									var fejecucion = detqueja.Fecha_Ejecucion.split(' ');
+									console.log(fejecucion);
+									vm.FechaEjecucion = fejecucion[0];
+									var horaEjecucion = getTime(detqueja.Fecha_Ejecucion);
+									vm.HoraEjecucion = horaEjecucion;
+								}
+								if (detqueja.FechaProceso != null) {
+									console.log(detqueja.FechaProceso);
+									var fproceso = detqueja.FechaProceso.split(' ');
+									vm.FechaProceso = fproceso[0];
+									vm.HoraProceso = getTime(detqueja.FechaProceso);
+								}
+								if (detqueja.Visita1 != null) {
+
+									var fvisita1 = detqueja.Visita1.split(' ');
+									console.log(fvisita1[0]);
+									vm.Fechavisita1 = fvisita1[0];
+									vm.Horavisita1 = getTime(detqueja.Visita1);
+								}
+								if (detqueja.Visita2 != null) {
+
+									var fvisita2 = detqueja.Visita2.split(' ');
+									console.log(fvisita2[0]);
+									vm.Fechavisita2 = fvisita2[0];
+									vm.Horavisita2 = getTime(detqueja.Visita2);
+								}
+								if (detqueja.Visita3 != null) {
+
+									var fvisita3 = detqueja.Visita3.split(' ');
+									console.log(fvisita3[0]);
+									vm.Fechavisita3 = fvisita3[0];
+									vm.Horavisita3 = getTime(detqueja.Visita3);
+								}
+
+								if (detqueja.EjecucuionReal != null) {
+									var fEjecucuionReal = detqueja.EjecucuionReal.split(' ');
+									console.log(fEjecucuionReal[0]);
+									vm.FechaEjecucuionReal = fEjecucuionReal[0];
+									vm.HoraEjecucuionReal = getTime(detqueja.EjecucuionReal);
+								}
+
 								vm.Departamento = detqueja.Clasificacion;
 								vm.Clv_trabajo = detqueja.Clv_Trabajo;
 								vm.Clv_prioridad = detqueja.clvPrioridadQueja;
@@ -114,6 +156,40 @@ angular
 			});
 		}
 
+		function dateParse(date) {
+			var realdate = date.split(" ")
+			var strDate = realdate[0];
+			console.log(strDate);
+			var dateParts = strDate.split("/");
+			console.log(dateParts);
+			var date = new Date(dateParts[2], (dateParts[1] - 1), dateParts[0]);
+			console.log(dateParts[0].length)
+			console.log(dateParts[1].length)
+			console.log(dateParts[2].length)
+			if (dateParts[0].length == 1) {
+				var dia = '0' + ateParts[0];
+				console.log(dia);
+			}
+			console.log(date);
+		}
+
+
+		function getTime(date) {
+			var fejecucion = date.split(' ');
+			console.log(fejecucion);
+			if (fejecucion.length == 3) {
+				return fejecucion[2];
+			} else if (fejecucion.length == 4) {
+				var hora = fejecucion[3].split(':');
+				if (hora[0].length == 1) {
+					return '0' + fejecucion[3];
+				} else {
+					return fejecucion[3];
+				}
+
+			}
+		}
+
 
 		function abrirBonificacion() {
 			var modalInstance = $uibModal.open({
@@ -138,7 +214,7 @@ angular
 
 
 		function Bloqueo(aplicabloqueo) {
-			console.log(vm.Status);
+
 			if (vm.Estatus.Clave == 'E') {
 				if (aplicabloqueo == true) {
 					vm.BtnGuarda = false;
@@ -247,14 +323,56 @@ angular
 				console.log(data);
 				if (data.GetDeepValidaQuejaCompaniaAdicResult.Valida == 0) {
 					quejasFactory.BuscaBloqueado(vm.GlobalContrato).then(function(bloqueado) {
+						console.log(bloqueado);
 						if (bloqueado.GetDeepBuscaBloqueadoResult.Bloqueado == 0) {
-							obj = {};
+							if (vm.Estatus.Clave == 'P') {
+								if (vm.FechaEjecucion == undefined) {
+									ngNotify.set('Seleccione la fecha de ejecución', 'error');
+									return;
+								}
+
+							} else if (vm.Estatus.Clave == 'V') {
+								if (vm.visita1 == undefined && vm.visita2 == undefined && vm.visita3 == undefined) {
+									ngNotify.set('Seleccione la fecha de visita', 'error');
+								}
+
+							} else if (vm.Estatus.Clave == 'S') {
+								if (vm.FechaProceso == undefined) {
+									ngNotify.set('Seleccione la fecha de proceso', 'error');
+								}
+							} else {
+								ngNotify.set('Seleccione un estatus', 'error');
+							}
+
+
+							alert('here');
+							var obj = {};
+							console.log(obj);
 							obj.Clv_Queja = vm.clv_queja;
+							console.log(obj);
 							obj.Status = vm.Estatus.Clave;
+							console.log(obj);
 							obj.Fecha_Ejecucion = vm.FechaEjecucion;
-							obj.Visita1 = vm.visita1;
-							obj.Visita2 = vm.visita2;
-							obj.Visita3 = vm.visita3;
+							console.log(obj);
+							if (vm.visita1 == undefined) {
+								obj.Visita1 = '';
+							} else {
+								obj.Visita1 = vm.visita1;
+							}
+							console.log(obj);
+							if (vm.visita2 == undefined) {
+								obj.Visita2 = '';
+							} else {
+								obj.Visita2 = vm.visita2
+							}
+							console.log(obj);
+							if (vm.visita3 == undefined) {
+								obj.Visita3 = '';
+							} else {
+								obj.Visita3 = vm.visita3
+							}
+
+
 							obj.HV1 = '';
 							obj.HV2 = '';
 							obj.HV3 = '';
@@ -264,10 +382,12 @@ angular
 							obj.Clv_Tecnico = vm.Tecnico.clv_Tecnico;
 							obj.clvProblema = vm.Problema.clvProblema;
 							obj.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;
-							obj.Solucion = ProblemaReal;
-							quejasFactory.UpdateQuejas(obj).then(function(data) {
-								ngNotify.set('La orden se ha guardado correctamente', 'success');
-							});
+							obj.Solucion = vm.ProblemaReal;
+
+							console.log(obj);
+							// quejasFactory.UpdateQuejas(obj).then(function(data) {
+							// 	ngNotify.set('La orden se ha guardado correctamente', 'success');
+							// });
 
 						} else {
 							ngNotify.set('El cliente, ha sido bloqueado, por lo que no se podrá ejecutar la orden', 'error');

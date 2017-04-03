@@ -94,12 +94,12 @@ angular
 		function BuscaContrato() {
 
 			if (vm.Servicio == null) {
-				alert('Selecciona un servicio');
+
 				return;
 			}
 
 			if (vm.Plaza == null) {
-				alert('Selecciona un plaza');
+
 				return;
 			}
 			var Parametros = {
@@ -294,7 +294,7 @@ angular
 
 		function BuscaporSTB() {
 			if (vm.STB == null) {
-				alert('selecciona stb');
+
 			}
 			var Parametros = {
 				'Clv_TipSer': 0,
@@ -323,7 +323,7 @@ angular
 		function BuscaporTicket() {
 
 			if (vm.Ticket == null) {
-				alert('selecciona ticket');
+
 			}
 			var Parametros = {
 				'Clv_TipSer': 0,
@@ -396,7 +396,7 @@ angular
 		}
 
 		function EjecutaQueja(id, contrato, servicio) {
-			alert(servicio);
+
 			$state.go('home.procesos.ejecutaqueja', {
 				'id': id,
 				'contrato': contrato,
@@ -404,9 +404,31 @@ angular
 			});
 		}
 
-
+		function EliminaQueja(details) {
+			var detalle = {};
+			detalle.Clv_Queja = details.Clv_Queja;
+			detalle.Clv_TipSer = details.Clv_TipSer;
+			detalle.Contrato = details.Contrato;
+			var modalInstance = $uibModal.open({
+				animation: vm.animationsEnabled,
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: 'views/procesos/ModalEliminaQueja.html',
+				controller: 'ModalEliminaQuejaCtrl',
+				controllerAs: 'ctrl',
+				backdrop: 'static',
+				keyboard: false,
+				size: 'sm',
+				resolve: {
+					detalle: function() {
+						return detalle;
+					}
+				}
+			});
+		}
 		var vm = this;
 		InitalData();
+
 		vm.Titulo = 'Quejas area técnica'
 		vm.BuscaReporte = BuscaReporte;
 		vm.BuscaContrato = BuscaContrato;
@@ -421,6 +443,7 @@ angular
 		vm.abrirBonificacion = abrirBonificacion;
 		vm.abrirDetalleQueja = abrirDetalleQueja;
 		vm.EjecutaQueja = EjecutaQueja;
+		vm.EliminaQueja = EliminaQueja;
 		vm.LosStatus = [{
 				'Clave': 'P',
 				'Nombre': 'Pendiente'

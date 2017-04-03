@@ -56,6 +56,22 @@ function corporativaConf($stateProvider) {
 			controllerAs: '$ctrl'
 		},
 		{
+			name: 'home.corporativa.recepcionpago',
+			data: {
+				pageTitle: 'SAC | RECEPCION DE PAGO',
+				permissions: {
+					only: ['recepciondepagosSelect'],
+					options: {
+						reload: false
+					}
+				}
+			},
+			url: '/corporativa/recepcionpago',
+			templateUrl: 'views/corporativa/Recepcionpago.html',
+			controller: 'RecepcionPagoCtrl',
+			controllerAs: '$ctrl'
+		},
+		{
 			name: 'home.corporativa.pago',
 			data: {
 				pageTitle: 'SOFTV | PAGO CONTRATO MAESTRO',
