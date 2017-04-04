@@ -1,7 +1,7 @@
 'use strict';
 angular.module('softvApp').controller('PagarCreditoCtrl', PagarCreditoCtrl);
 
-function PagarCreditoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, $uibModalInstance, items, metodo, $localStorage, pagosMaestrosFactory, elem) {
+function PagarCreditoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, $uibModalInstance, items, $localStorage, pagosMaestrosFactory, elem) {
 	function initialData() {
 		vm.monto = elem.PagoInicial;
 		cajasFactory.dameBancos().then(function(data) {

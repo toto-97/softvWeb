@@ -1,14 +1,14 @@
 <div class="modal-header">
     <button class="close" aria-label="Close" type="button" ng-click="$ctrl.cancel()">×</button>
-    <h4 class="modal-title">Pregunta Importante</h4>
+    <h4 class="modal-title">Cantidad a abonar</h4>
 </div>
 <div class="modal-body" style="padding-top:20px;">
-	<div class="row">
-		<div class="col-md-12">
-			<h3 class="text-center">El Cliente ya tiene un pago registrado al día de hoy</h3>
-			<h2 class="text-center" style="color:red;">¿Deseas continuar con el pago?</h2>
-		</div>
-	</div>
+	<div class="row" style="padding-top: 15px;">
+        <div class="col-md-9 form-group">
+            <label class="label-control">Abono</label>
+            <input type="number" class="form-control" ng-model="$ctrl.abono">
+        </div>
+    </div>
 </div>
 <div class="modal-footer">
 	<button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
