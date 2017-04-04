@@ -6,6 +6,7 @@ angular
 		function initialData() {
 			console.log(detalle);
 			quejasFactory.DameBonificacion(detalle.Queja).then(function(data) {
+				console.log(data);
 				vm.bonificacion = data.GetDameBonificacionListResult[0];
 
 			});

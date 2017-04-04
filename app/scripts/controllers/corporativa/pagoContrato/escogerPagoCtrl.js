@@ -47,6 +47,7 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 				'NoPagos' : vm.numeroPagos,
 				'PagoInicial': vm.pagoInicial
 			};
+			console.log(objPagar);
 			pagosMaestrosFactory.grabaFactura(objPagar).then(function(dataGraba) {
 				vm.clvCactura = dataGraba.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro;
 				var elem = {
