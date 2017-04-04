@@ -94,32 +94,53 @@
 
                     <div class="col-md-12 text-center " style="font-size:14px;"><b><i class="fa fa-clock-o"></i> Fechas</b></div>
                     <div class="col-md-5 "><b>Fecha solicitud</b></div>
-                    <div class="col-md-7">
-                      <input type="text" class="form-control input-sm" ng-model="$ctrl.FechaSolicitud" ng-disabled="true">
+                    <div class="col-md-4">
+                      <input type="text" class="form-control input-sm" ng-model="$ctrl.FechaSolicitud" ng-disabled="true" placeholder="DD/MM/YYYY" ui-mask="99/99/9999">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control input-sm" ng-model="$ctrl.HoraSolicitud" ng-disabled="true" placeholder="hh:mm AA" ui-mask="99:99 AA">
                     </div>
                     <div class="col-md-5"><b>Ejecución</b></div>
-                    <div class="col-md-7">
-                      <input type="text" class="form-control input-sm" ng-class="$ctrl.Iejecucion" ng-model="$ctrl.FechaEjecucion" placeholder="DD/MM/YYYY h:mm AA" ui-mask="99/99/9999 ?9:99 AA" model-view-value="true" ng-disabled="$ctrl.FEjecucion">
+                    <div class="col-md-4">
+                      <input type="text" class="form-control input-sm" ng-class="$ctrl.Iejecucion" ng-model="$ctrl.FechaEjecucion" placeholder="DD/MM/YYYY" ui-mask="99/99/9999" model-view-value="true" ng-disabled="$ctrl.FEjecucion">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control input-sm" ng-class="$ctrl.Iejecucion" ng-model="$ctrl.HoraEjecucion" placeholder="hh:mm AA" ui-mask="99:99 AA" model-view-value="true" ng-disabled="$ctrl.FEjecucion">
                     </div>
                     <div class="col-md-5"><b>Visita1</b></div>
-                    <div class="col-md-7">
-                      <input type="text" class="form-control input-sm" ng-model="$ctrl.visita1" ng-class="$ctrl.Ivisita1" placeholder="DD/MM/YYYY h:mm AA" ui-mask="99/99/9999 ?9:99 AA" model-view-value="true" ng-disabled="$ctrl.FVisita1">
+                    <div class="col-md-4">
+                      <input type="text" class="form-control input-sm" ng-model="$ctrl.Fechavisita1" ng-class="$ctrl.Ivisita1" placeholder="DD/MM/YYYY" ui-mask="99/99/9999" model-view-value="true" ng-disabled="$ctrl.FVisita1">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control input-sm" ng-model="$ctrl.Horavisita1" ng-class="$ctrl.Ivisita1" placeholder="hh:mm AA" ui-mask="99:99 AA" model-view-value="true" ng-disabled="$ctrl.FVisita1">
                     </div>
                     <div class="col-md-5"><b>Visita2</b></div>
-                    <div class="col-md-7">
-                      <input type="text" class="form-control input-sm" ng-model="$ctrl.visita2" ng-class="$ctrl.Ivisita2" placeholder="DD/MM/YYYY h:mm AA" ui-mask="99/99/9999 ?9:99 AA" model-view-value="true" ng-disabled="$ctrl.FVisita2">
+                    <div class="col-md-4">
+                      <input type="text" class="form-control input-sm" ng-model="$ctrl.Fechavisita2" ng-class="$ctrl.Ivisita2" placeholder="DD/MM/YYYY" ui-mask="99/99/9999" model-view-value="true" ng-disabled="$ctrl.FVisita2">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control input-sm" ng-model="$ctrl.Horavisita2" ng-class="$ctrl.Ivisita2" placeholder="hh:mm AA" ui-mask="99:99 AA" model-view-value="true" ng-disabled="$ctrl.FVisita2">
                     </div>
                     <div class="col-md-5"><b>Visita3</b></div>
-                    <div class="col-md-7">
-                      <input type="text" class="form-control input-sm" ng-model="$ctrl.visita3" ng-class="$ctrl.Ivisita3" placeholder="DD/MM/YYYY h:mm AA" ui-mask="99/99/9999 ?9:99 AA" model-view-value="true" ng-disabled="$ctrl.FVisita3">
+                    <div class="col-md-4">
+                      <input type="text" class="form-control input-sm" ng-model="$ctrl.Fechavisita3" ng-class="$ctrl.Ivisita3" placeholder="DD/MM/YYYY" ui-mask="99/99/9999" model-view-value="true" ng-disabled="$ctrl.FVisita3">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control input-sm" ng-model="$ctrl.Horavisita3" ng-class="$ctrl.Ivisita3" placeholder="hh:mm AA" ui-mask="99:99 AA" model-view-value="true" ng-disabled="$ctrl.FVisita3">
                     </div>
                     <div class="col-md-5"><b>En proceso</b></div>
-                    <div class="col-md-7">
-                      <input type="text" class="form-control input-sm" ng-model="$ctrl.FechaProceso" ng-class="$ctrl.Iproceso" placeholder="DD/MM/YYYY h:mm AA" ui-mask="99/99/9999 ?9:99 AA" model-view-value="true" ng-disabled="$ctrl.FProceso">
+                    <div class="col-md-4">
+                      <input type="text" class="form-control input-sm" ng-model="$ctrl.FechaProceso" ng-class="$ctrl.Iproceso" placeholder="DD/MM/YYYY" ui-mask="99/99/9999" model-view-value="true" ng-disabled="$ctrl.FProceso">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control input-sm" ng-model="$ctrl.HoraProceso" ng-class="$ctrl.Iproceso" placeholder="hh:mm AA" ui-mask="99:99 AA" model-view-value="true" ng-disabled="$ctrl.FProceso">
                     </div>
                     <div class="col-md-5">Ejecución real</div>
-                    <div class="col-md-7">
-                      <input type="text" class="form-control input-sm" ng-model="$ctrl.FechaEReal" placeholder="DD/MM/YYYY hh:mm AA" ui-mask="99/99/9999 99:99 AA" model-view-value="true" ng-disabled="true">
+                    <div class="col-md-4">
+                      <input type="text" class="form-control input-sm" ng-model="$ctrl.FechaEjecucuionReal" placeholder="DD/MM/YYYY" ui-mask="99/99/9999" model-view-value="true" ng-disabled="true">
+                    </div>
+                    <div class="col-md-3">
+                      <input type="text" class="form-control input-sm" ng-model="$ctrl.HoraEjecucuionReal" placeholder="hh:mm AA" ui-mask="99:99 AA" model-view-value="true" ng-disabled="true">
                     </div>
                   </div>
                   <div class="col-md-3" style="font-size:12px;">

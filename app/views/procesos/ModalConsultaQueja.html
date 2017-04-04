@@ -1,6 +1,6 @@
 <div class="modal-header">
-  <button class="close" aria-label="Close" type="button" ng-click="ctrl.cancel()">×</button>
-  <h4 class="modal-title"><i class="fa fa-thumb-tack"></i> Detalle de reporte # {{ctrl.Clv_Queja}}</h4>
+  <button class="close" aria-label="Close" type="button" ng-click="$ctrl.cancel()">×</button>
+  <h4 class="modal-title"><i class="fa fa-thumb-tack"></i> Detalle de reporte # {{$ctrl.clv_queja}}</h4>
 </div>
 <div class="modal-body">
   <div class="row">
@@ -14,7 +14,7 @@
         </div>
         <div id="accordion3-1" class="collapse in" aria-expanded="true" style="height: 0px;">
           <div class="panel-body">
-            <div class="row card" style="    background-color: #f2f3f3">
+            <div class="row card" style="background-color: #f2f3f3">
               <div class="col-md-3 col-md-offset-2">
                 <b class="text-danger">Generó: </b> {{$ctrl.UsuarioGenero}}
               </div>
@@ -27,9 +27,10 @@
               </div>
               <div class="col-md-3">
 
-                <select class="form-control input-sm" name="Estatus" ng-disabled="$ctrl.IEstatus" ng-model="$ctrl.Estatus" required-message="'Este campo es obligatorio.'" required validate-on="dirty" ng-change="$ctrl.CambiaEstatus()" ng-options="item as item.Nombre for item in $ctrl.Status track by item.Clave">
-                                    <option value="">Selecciona estatus</option>
-                      </select>
+                <select class="form-control input-sm" name="Estatus" ng-disabled="$ctrl.IEstatus" ng-model="$ctrl.Estatus" required-message="'Este campo es obligatorio.'" required validate-on="dirty" ng-change="$ctrl.CambiaEstatus()" ng-options="item as item.Nombre for item in $ctrl.Status track by item.Clave"
+                    ng-disabled="true">
+                  <option value="">Selecciona estatus</option>
+                  </select>
               </div>
             </div>
             <div class="row">
@@ -71,23 +72,23 @@
                 </div>
                 <div class="col-md-5"><b>Ejecución</b></div>
                 <div class="col-md-7">
-                  <input type="text" class="form-control input-sm" ng-class="$ctrl.Iejecucion" ng-model="$ctrl.FechaEjecucion" placeholder="DD/MM/YYYY h:mm AA" ui-mask="99/99/9999 ?9:99 AA" model-view-value="true" ng-disabled="$ctrl.FEjecucion">
+                  <input type="text" class="form-control input-sm" ng-class="$ctrl.Iejecucion" ng-model="$ctrl.FechaEjecucion" placeholder="DD/MM/YYYY h:mm AA" ui-mask="99/99/9999 ?9:99 AA" model-view-value="true" ng-disabled="true">
                 </div>
                 <div class="col-md-5"><b>Visita1</b></div>
                 <div class="col-md-7">
-                  <input type="text" class="form-control input-sm" ng-model="$ctrl.visita1" ng-class="$ctrl.Ivisita1" placeholder="DD/MM/YYYY h:mm AA" ui-mask="99/99/9999 ?9:99 AA" model-view-value="true" ng-disabled="$ctrl.FVisita1">
+                  <input type="text" class="form-control input-sm" ng-model="$ctrl.visita1" ng-class="$ctrl.Ivisita1" placeholder="DD/MM/YYYY h:mm AA" ui-mask="99/99/9999 ?9:99 AA" model-view-value="true" ng-disabled="true">
                 </div>
                 <div class="col-md-5"><b>Visita2</b></div>
                 <div class="col-md-7">
-                  <input type="text" class="form-control input-sm" ng-model="$ctrl.visita2" ng-class="$ctrl.Ivisita2" placeholder="DD/MM/YYYY h:mm AA" ui-mask="99/99/9999 ?9:99 AA" model-view-value="true" ng-disabled="$ctrl.FVisita2">
+                  <input type="text" class="form-control input-sm" ng-model="$ctrl.visita2" ng-class="$ctrl.Ivisita2" placeholder="DD/MM/YYYY h:mm AA" ui-mask="99/99/9999 ?9:99 AA" model-view-value="true" ng-disabled="true">
                 </div>
                 <div class="col-md-5"><b>Visita3</b></div>
                 <div class="col-md-7">
-                  <input type="text" class="form-control input-sm" ng-model="$ctrl.visita3" ng-class="$ctrl.Ivisita3" placeholder="DD/MM/YYYY h:mm AA" ui-mask="99/99/9999 ?9:99 AA" model-view-value="true" ng-disabled="$ctrl.FVisita3">
+                  <input type="text" class="form-control input-sm" ng-model="$ctrl.visita3" ng-class="$ctrl.Ivisita3" placeholder="DD/MM/YYYY h:mm AA" ui-mask="99/99/9999 ?9:99 AA" model-view-value="true" ng-disabled="true">
                 </div>
                 <div class="col-md-5"><b>En proceso</b></div>
                 <div class="col-md-7">
-                  <input type="text" class="form-control input-sm" ng-model="$ctrl.FechaProceso" ng-class="$ctrl.Iproceso" placeholder="DD/MM/YYYY h:mm AA" ui-mask="99/99/9999 ?9:99 AA" model-view-value="true" ng-disabled="$ctrl.FProceso">
+                  <input type="text" class="form-control input-sm" ng-model="$ctrl.FechaProceso" ng-class="$ctrl.Iproceso" placeholder="DD/MM/YYYY h:mm AA" ui-mask="99/99/9999 ?9:99 AA" model-view-value="true" ng-disabled="true">
                 </div>
                 <div class="col-md-5">Ejecución real</div>
                 <div class="col-md-7">
@@ -103,7 +104,7 @@
                 </div>
                 <div class="col-md-12">
                   <b>Selecciona Técnico:</b>
-                  <select class="form-control input-sm" name="Tecnico" required-message="'Este campo es obligatorio.'" required validate-on="dirty" ng-model="$ctrl.Tecnico" ng-options="item as item.Nombre for item in $ctrl.Tecnicos track by item.clv_Tecnico">
+                  <select class="form-control input-sm" name="Tecnico" required-message="'Este campo es obligatorio.'" required validate-on="dirty" ng-model="$ctrl.Tecnico" ng-options="item as item.Nombre for item in $ctrl.Tecnicos track by item.clv_Tecnico" ng-disabled="true">
                      <option value="">Selecciona</option>
                      </select>
                 </div>
@@ -200,6 +201,6 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-default-bright btn-sm" type="button" ng-click="ctrl.cancel()">Cancelar</button>
-  <button class="btn btn-primary btn-sm" type="button" ng-click="ctrl.ok()">Aceptar</button>
+  <button class="btn btn-default-bright btn-sm" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
+  <button class="btn btn-primary btn-sm" type="button" ng-click="$ctrl.ok()">Aceptar</button>
 </div>
