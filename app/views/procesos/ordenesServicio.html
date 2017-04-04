@@ -15,7 +15,7 @@
 		</header>
 		<div class="tools">
 			<div class="btn-group">
-				<a class="btn btn-success btn-sm" ng-click="$ctrl.seleccionar(1,'nuevo')"> NUEVO</a>
+				<a class="btn btn-success btn-sm" ng-click="$ctrl.seleccionar(1,'nuevo')"><i class="fa fa-plus" aria-hidden="true"></i> NUEVO</a>
 
 			</div>
 		</div>
@@ -196,7 +196,6 @@
 							<th>Calle</th>
 							<th>Numero</th>
 							<th>Acción</th>
-							<th>Ejecutar</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -212,9 +211,6 @@
 							<td>#{{ x.NUMERO}}</td>
 							<td>
 								<button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.seleccionar(2,'consultar')"><i class="fa fa-eye"></i></button>
-								<button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ng-click="$ctrl.seleccionar(3,'ejecutar')"><i class="fa fa-pencil-square-o"></i></button>
-							</td>
-							<td>
 								<a ng-click="$ctrl.EjecutaQueja(x.Clv_Queja,x.Contrato,x.Clv_TipSer)" class="btn ink-reaction btn-xs btn-success"><i class="md md-launch"></i> Ejecutar</a>
 							</td>
 						</tr>
