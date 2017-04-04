@@ -3,7 +3,7 @@
   <div class="card" style="margin-top:20px;">
     <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
       <header>
-        <strong style="font-weight:bold; border:none; margin-left:10px;">Contratos Maestros</strong>
+        <strong style="font-weight:bold; border:none; margin-left:10px;">Pago Contratos Maestros</strong>
         <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Pago Contratos Maestros</small>
       </header>
     </div>
@@ -11,7 +11,8 @@
     <div class="card-body">
       <div class="panel-group" id="accordion3">
         <div class="card panel">
-          <div class="card-head card-head-xs style-primary-light collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1" aria-expanded="false">
+          <div class="card-head card-head-xs style-primary-light collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1"
+            aria-expanded="false">
             <header><i class="fa fa-search"></i> Buscar contrato</header>
             <div class="tools">
               <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
@@ -19,19 +20,79 @@
           </div>
           <div id="accordion3-1" class="collapse buscarContrato" aria-expanded="false" style="height: 0px;">
             <div class="panel-body">
-                <form ng-submit="$ctrl.buscarPorContrato()">
-                    <div class="row">
-                        <div class="col-md-4 form-group">
-                            <b>Contrato :</b><br>
-                            <input type="text" class="form-control" ng-model="$ctrl.data.contrato" required="">
-                            <button class="btn btn-info btn-xs"><i class="fa fa-search"></i> Buscar</button>
-                        </div>
+              <uib-tabset active="active">
+                <uib-tab index="0" heading="Contrato">
+                  <div class="row">
+                    <br>
+                    <div class="col-md-3">
+
+                      <p>Nombre Comercial :
+                        <p>
+                          <input type="text" class="form-control input-sm" ng-model="$ctrl.NombreComer">
+
                     </div>
-                </form>
+                    <div class="col-md-1">
+                      <br>
+                      <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscarNombrec();"><i class="fa fa-search"></i> Buscar</button>
+
+                    </div>
+                    <div class="col-md-3">
+                      <p>Razón social :</p>
+                      <input type="text" class="form-control input-sm" ng-model="$ctrl.RazonS">
+
+                    </div>
+                    <div class="col-md-1">
+                      <br>
+                      <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscarRazonS();"><i class="fa fa-search"></i> Buscar</button>
+
+                    </div>
+                    <div class="col-md-3">
+                      <p>No.Contrato :</p>
+                      <input type="number" class="form-control input-sm" ng-model="$ctrl.contratobusqueda">
+
+                    </div>
+                    <br>
+                    <button class="btn btn-info btn-xs" ng-click="$ctrl.Buscarporcontrato();"><i class="fa fa-search"></i> Buscar</button>
+                  </div>
+                </uib-tab>
+                <uib-tab index="1" heading="Ubicación">
+                   <div class="row">
+                     <br>
+                      <div class="col-md-3">
+
+                <p>Distribuidor:</p>
+                <select ng-model="$ctrl.Distribuidor" ng-change="$ctrl.ObtenerCiudades($ctrl.Distribuidor);" class="form-control input-sm"
+                  ng-options="item as item.Nombre for item in $ctrl.Distribuidores track by item.Clv_Plaza">
+                        <option value="">Selecciona</option>
+                    </select>
+              </div>
+              <div class="col-md-3">
+                <p>Ciudad:</p>
+                <select ng-model="$ctrl.Ciudad" class="form-control input-sm" ng-options="item as item.Nombre for item in $ctrl.Ciudades track by item.Clv_Ciudad">
+                         <option value="">Selecciona</option>
+                    </select>
+
+              </div>
+              <div class="col-md-1">
+                <br>
+                <button class="btn btn-info btn-sm" ng-click="$ctrl.BuscarCiudad();"><i class="fa fa-search"></i> Buscar</button>
+
+              </div>
+            </div>
+            
+
+                </uib-tab>
+              </uib-tabset>
+
+             
+
+              
             </div>
           </div>
+          <!-- panel body -->
         </div>
       </div>
+      <!--end .panel -->
     </div>
 
     <div ng-show="$ctrl.muestraCliente" style="margin-top:-20px;" ng-style="{'background-color': $ctrl.color}">
@@ -47,16 +108,22 @@
             </div>
             <div id="datosCliente-1" class="collapse datosCliente" aria-expanded="false" style="margin-top: -20px">
               <div class="row" style="padding-left:10px; padding-top: 5px;">
-                <div class="col-md-10">
+                <div class="col-md-4">
                   <p class="text-center" style="color:red;" ng-show="$ctrl.showFiscales">EL CLIENTE CUENTA CON DATOS FISCALES</p>
-                  <p style="font-size: 10px;">
-                    <strong>Contrato: </strong>{{ $ctrl.Cliente.ContratoC }}<br/>
-                    <strong>Nombre: </strong>{{ $ctrl.Cliente.Nombre }}<br/>
-                    <strong>Dirección: </strong>{{ $ctrl.Cliente.Calle }} {{ $ctrl.Cliente.Colonia }} {{ $ctrl.Cliente.Ciudad }}<br/>
-                    <strong>#: </strong>{{ $ctrl.Cliente.Numero }}<br/>
-                    <strong>Colonia: </strong>{{ $ctrl.Cliente.Colonia }} <strong style="padding-left:50px;">Teléfono: </strong>{{ $ctrl.Cliente.Telefono }}<br/>
-                    <strong>Ciudad: </strong>{{ $ctrl.Cliente.Ciudad }}<br/>
-                    <strong>Tipo suscriptor: </strong>{{ $ctrl.Suscriptor.Descripcion }}<strong style="padding-left:50px;">{{ $ctrl.periodo }}</strong></br>
+                  <p class="text-muted" style="font-size: 15px;"><i class="md md-account-box"></i> Detalles del contrato maestro</p>
+                  <p style="font-size: 14px;">
+                    <b>Contrato: </b>{{ $ctrl.Contratos.IdContratoMaestro }}<br/>
+                    <b>Nombre Comercial: </b>{{ $ctrl.Contratos.NombreComercial }}<br/ >
+                    <b>Razón Social: </b>{{ $ctrl.Contratos.RazonSocial }}<br/><br/>
+                  </p>
+                </div>
+                <div class="col-md-5">
+                  <p class="text-muted" style="font-size: 15px;"><i class="md md-assignment-ind"></i> Dirección</p>
+                  <p style="font-size: 14px;">
+                    <b>Calle: </b>{{ $ctrl.Contratos.CalleDes }}     <b># Ext: </b>{{ $ctrl.Contratos.NumExt }}     <b># Int: </b>{{ $ctrl.Contratos.NumInt }}<br/>
+                    <b>Colonia: </b>{{ $ctrl.Contratos.ColoniaDes }}<br/>
+                    <b>Codigo Postal: </b>{{$ctrl.Contratos.CodigoPostal}}     <b>Localidades: </b>{{ $ctrl.Contratos.LocalidadDes }}<br/>
+                    <b>Estado: </b>{{ $ctrl.Contratos.EstadoDes }}     <b>Ciudad: </b>{{ $ctrl.Contratos.CiudadDes }}<br/>
                   </p>
                 </div>
               </div>
@@ -113,7 +180,7 @@
                   </tbody>
                 </table>
               </div>
-              <div class="col-md-3">
+              <!--<div class="col-md-3">
                   <h4 class="text-muted">Descripcion</h4>
                   <label class="col-sm-3 control-label text-right">Saldo</label>
                   <div class="col-sm-8">
@@ -138,10 +205,8 @@
                           </tr>
                       </tbody>
                   </table>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 col-md-offset-8 text-center">
+              </div>-->
+              <div class="col-md-3 text-center" style="padding-top: 175px;">
                 <table class="table">
                   <tr ng-repeat="x in $ctrl.sumaPagos">
                     <td style="font-size: 11px;" ng-if="!$last"><strong>{{ x.Descripcion }}</strong></td>
@@ -151,12 +216,13 @@
                   </tr>
                 </table>
               </div>
-            </div>
-            <div class="row" style="padding-right:20px;">
+            <div class="row" style="padding-right: 40px;">
               <p class="text-right">
                 <button class="btn btn-lg btn-success btn-sm" ng-click="$ctrl.abrirPago()" ng-disabled="$ctrl.blockPagar"><i class="fa fa-money" aria-hidden="true"></i> PAGAR</button>
               </p>
             </div>
+            </div>
+              
           </div>
           <!--end .panel -->
         </div>

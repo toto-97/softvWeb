@@ -23,7 +23,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
       parametros = {
         'Fecha': '',
         'Ticket': '',
-        'ContratoMaestro': (vm.ContratoMaestro == null)?0:vm.ContratoMaestro ,
+        'ContratoMaestro': (vm.ContratoMaestro == null) ? 0 : vm.ContratoMaestro,
         'Cliente': '',
         'Op': opcion
       };
@@ -36,14 +36,43 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
         'Op': opcion
       };
     }
-
-
     ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
       vm.pagos = data.GetBuscaFacturasMaestroListResult;
 
     });
   }
+
+  function PagarCredito(x) {
+    console.log(x);
+    var items = {
+        Contrato: vm.Contratos.IdContratoMaestro,
+        Compania: vm.saldo.IdCompania,
+        Distribuidor: vm.saldo.IdDistribuidor,
+        Session: vm.saldo.ClvSession,
+        SessionPadre: vm.saldo.ClvSessionPadre,
+        Monto: data.GetDeepSumaTotalDetalleResult.Monto
+    };
+    vm.animationsEnabled = true;
+    var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: 'views/corporativa/abrirPago.html',
+        controller: 'AbrirPagoCtrl',
+        controllerAs: '$ctrl',
+        backdrop: 'static',
+        keyboard: false,
+        size: 'sm',
+        resolve: {
+            items: function () {
+                return items;
+            }
+        }
+    });
+  }
+
   var vm = this;
   vm.buscaContrato = buscaContrato;
+  vm.PagarCredito = PagarCredito;
 }
 angular.module('softvApp').controller('RecepcionPagoCtrl', RecepcionPagoCtrl);

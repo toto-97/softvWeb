@@ -14,7 +14,8 @@
     <div class="card-body">
       <div class="panel-group" id="accordion3">
         <div class="card panel">
-          <div class="card-head card-head-xs style-primary-light collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1" aria-expanded="false">
+          <div class="card-head card-head-xs style-primary-light collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1"
+            aria-expanded="false">
             <header><i class="fa fa-search"></i> Buscar contrato</header>
             <div class="tools">
               <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
@@ -24,31 +25,31 @@
             <div class="panel-body">
               <div class="row">
                 <div class="col-md-2">
-                <p>Ticket</p>
-               <input type="text" ng-model="$ctrl.Ticket" class="form-control input-sm" >
-               
+                  <p>Ticket</p>
+                  <input type="text" ng-model="$ctrl.Ticket" class="form-control input-sm">
+
                 </div>
                 <div class="col-md-1">
-                   <br>
-                    <button class="btn btn-info btn-xs"  ng-click="$ctrl.buscaContrato(2)" >Buscar</button>
+                  <br>
+                  <button class="btn btn-info btn-xs" ng-click="$ctrl.buscaContrato(2)">Buscar</button>
                 </div>
                 <div class="col-md-3">
-                    <p>Cliente</p>
-<input type="text" class="form-control input-sm " ng-model="$ctrl.Cliente" >
+                  <p>Cliente</p>
+                  <input type="text" class="form-control input-sm " ng-model="$ctrl.Cliente">
 
                 </div>
                 <div class="col-md-1">
-                    </br>
-                    <button class="btn btn-info btn-xs"   ng-click="$ctrl.buscaContrato(4)" >Buscar</button>
+                  </br>
+                  <button class="btn btn-info btn-xs" ng-click="$ctrl.buscaContrato(4)">Buscar</button>
                 </div>
                 <div class="col-md-2">
-                   <p>Contrato Maestro</p>
-<input type="text" class="form-control input-sm" ng-model="$ctrl.ContratoMaestro" >
+                  <p>Contrato Maestro</p>
+                  <input type="text" class="form-control input-sm" ng-model="$ctrl.ContratoMaestro">
 
                 </div>
                 <div class="col-md-1">
-                    <br>
-                    <button class="btn btn-info btn-xs"  ng-click="$ctrl.buscaContrato(3)" >Buscar</button>
+                  <br>
+                  <button class="btn btn-info btn-xs" ng-click="$ctrl.buscaContrato(3)">Buscar</button>
                 </div>
                 <div class="col-md-2">
 
@@ -99,9 +100,7 @@
                   <td>{{x.Importe}}</td>
                   <td>{{x.TotalAbonado}}</td>
                   <td>
-                    <button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.DetalleContrato(x);"><i class="fa fa-eye"></i></button>
-                  
-
+                    <button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.PagarCredito(x)"><i class="fa fa-credit-card"></i></button>
                 </tr>
               </tbody>
             </table>
