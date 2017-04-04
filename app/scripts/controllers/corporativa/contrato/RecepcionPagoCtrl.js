@@ -42,10 +42,20 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
         });
     }
 
+    $rootScope.$on('realoadBrowse', function () {
+        reloadTables();
+    });
+
+    function reloadTables() {
+        ContratoMaestroFactory.GetMuestraFacturasMaestroList().then(function (data) {
+            vm.pagos = data.GetMuestraFacturasMaestroListResult;
+        });
+    }
+
     function PagarCredito(x) {
-        if(x.Importe > x.ACuantosPagos) {
+        if (x.Importe <= x.TotalAbonado) {
             ngNotify.set('Ya se saldo el adeudo.', 'error');
-        }else {
+        } else {
             console.log(x);
             if (x.ACuantosPagos == "Variables") {
                 pagosMaestrosFactory.cobraSaldoMaestro(x.ContratoMaestro).then(function (data) {
@@ -73,13 +83,13 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                         keyboard: false,
                         size: 'sm',
                         resolve: {
-                            items: function() {
+                            items: function () {
                                 return items;
                             },
-                            elem1: function() {
+                            elem1: function () {
                                 return elem1;
                             },
-                            x: function() {
+                            x: function () {
                                 return x;
                             }
                         }
@@ -111,10 +121,10 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                         keyboard: false,
                         size: 'md',
                         resolve: {
-                            items: function() {
+                            items: function () {
                                 return items;
                             },
-                            elem: function() {
+                            elem: function () {
                                 return elem;
                             }
                         }
