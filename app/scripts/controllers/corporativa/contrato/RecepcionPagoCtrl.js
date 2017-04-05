@@ -99,6 +99,10 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                 pagosMaestrosFactory.cobraSaldoMaestro(x.ContratoMaestro).then(function (data) {
                     vm.saldo = data.GetDeepCobraSaldoContratoMaestroResult;
                     var monto = (x.Importe - x.PagoInicial) / x.ACuantosPagos;
+                    var restante = (x.Importe - x.TotalAbonado);
+                    if(restante < monto) {
+                        monto = restante;
+                    }
                     var items = {
                         Contrato: x.ContratoMaestro,
                         Compania: x.IdCompania,
