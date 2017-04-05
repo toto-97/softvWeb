@@ -291,6 +291,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
 
 
     var vm = this;
+    $('.buscarContrato').collapse();
     vm.BuscarNombrec = BuscarNombrec;
     vm.BuscarRazonS = BuscarRazonS;
     vm.BuscarCiudad = BuscarCiudad;

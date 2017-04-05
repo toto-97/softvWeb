@@ -3,7 +3,7 @@
     <div class="card" style="margin-top:20px;">
         <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
             <header>
-                <strong style="font-weight:bold; border:none; margin-left:10px;">Recepcíon de pagos</strong>
+                <strong style="font-weight:bold; border:none; margin-left:10px;">Recepción de pagos</strong>
                 <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Contratos Maestros</small>
             </header>
             <div class="tools">
@@ -25,6 +25,15 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-2">
+                                    <p>Contrato Maestro</p>
+                                    <input type="text" class="form-control input-sm" ng-model="$ctrl.ContratoMaestro">
+
+                                </div>
+                                <div class="col-md-1">
+                                    <br>
+                                    <button class="btn btn-info btn-xs" ng-click="$ctrl.buscaContrato(3)">Buscar</button>
+                                </div>
+                                <div class="col-md-2">
                                     <p>Ticket</p>
                                     <input type="text" ng-model="$ctrl.Ticket" class="form-control input-sm">
 
@@ -41,15 +50,6 @@
                                 <div class="col-md-1">
                                     </br>
                                     <button class="btn btn-info btn-xs" ng-click="$ctrl.buscaContrato(4)">Buscar</button>
-                                </div>
-                                <div class="col-md-2">
-                                    <p>Contrato Maestro</p>
-                                    <input type="text" class="form-control input-sm" ng-model="$ctrl.ContratoMaestro">
-
-                                </div>
-                                <div class="col-md-1">
-                                    <br>
-                                    <button class="btn btn-info btn-xs" ng-click="$ctrl.buscaContrato(3)">Buscar</button>
                                 </div>
                                 <div class="col-md-2">
 
@@ -79,10 +79,11 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>clave factura</th>
+                                    <th>Contrato maestro</th>
+                                    <th>Clave Factura</th>
                                     <th>Ticket</th>
-                                    <th>Tipo</th>
                                     <th>Cliente</th>
+                                    <th>Tipo</th>
                                     <th>Fecha</th>
                                     <th>Importe</th>
                                     <th>Pagos</th>
@@ -93,10 +94,12 @@
                             <tbody>
 
                                 <tr ng-show="$ctrl.pagos.length>0" dir-paginate="x in $ctrl.pagos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:5">
+                                    
+                                    <td>{{x.ContratoMaestro}}</td>
                                     <td>{{x.Clv_FacturaMaestro}}</td>
                                     <td>{{x.Ticket}}</td>
-                                    <td>{{x.Tipo}}</td>
                                     <td>{{x.Cliente}}</td>
+                                    <td>{{x.Tipo}}</td>
                                     <td>{{x.Fecha}}</td>
                                     <td>{{x.Importe}}</td>
                                     <td>{{x.ACuantosPagos}}</td>

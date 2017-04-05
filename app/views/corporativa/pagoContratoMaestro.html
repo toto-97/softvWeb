@@ -23,43 +23,39 @@
                             <uib-tabset active="active">
                                 <uib-tab index="0" heading="Contrato">
                                     <div class="row">
-                                        <br>
+                                        <br/>
                                         <div class="col-md-3">
-
-                                            <p>Nombre Comercial :
-                                                <p>
-                                                    <input type="text" class="form-control input-sm" ng-model="$ctrl.NombreComer">
-
-                                        </div>
-                                        <div class="col-md-1">
-                                            <br>
-                                            <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscarNombrec();"><i class="fa fa-search"></i> Buscar</button>
-
-                                        </div>
-                                        <div class="col-md-3">
-                                            <p>Razón social :</p>
-                                            <input type="text" class="form-control input-sm" ng-model="$ctrl.RazonS">
-
-                                        </div>
-                                        <div class="col-md-1">
-                                            <br>
-                                            <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscarRazonS();"><i class="fa fa-search"></i> Buscar</button>
-
-                                        </div>
-                                        <div class="col-md-3">
-                                            <p>Contrato Maestro:</p>
+                                            <label>Contrato Maestro:</label>
                                             <input type="number" class="form-control input-sm" ng-model="$ctrl.contratobusqueda">
-
                                         </div>
-                                        <br>
-                                        <button class="btn btn-info btn-xs" ng-click="$ctrl.Buscarporcontrato();"><i class="fa fa-search"></i> Buscar</button>
+                                        <div class="col-md-1">
+                                            <br/>
+                                            <button class="btn btn-info btn-xs" ng-click="$ctrl.Buscarporcontrato();"><i class="fa fa-search"></i> Buscar</button>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label>Nombre Comercial:<label>
+                                            <input type="text" class="form-control input-sm" ng-model="$ctrl.NombreComer">
+                                        </div>
+                                        <div class="col-md-1">
+                                            <br/>
+                                            <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscarNombrec();"><i class="fa fa-search"></i> Buscar</button>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label>Razón social:</label>
+                                            <input type="text" class="form-control input-sm" ng-model="$ctrl.RazonS">
+                                        </div>
+                                        <div class="col-md-1">
+                                            <br/>
+                                            <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscarRazonS();"><i class="fa fa-search"></i> Buscar</button>
+                                        </div>
                                     </div>
                                 </uib-tab>
                                 <uib-tab index="1" heading="Ubicación">
                                     <div class="row">
                                         <br>
                                         <div class="col-md-3">
-
                                             <p>Distribuidor:</p>
                                             <select ng-model="$ctrl.Distribuidor" ng-change="$ctrl.ObtenerCiudades($ctrl.Distribuidor);" class="form-control input-sm"
                                                 ng-options="item as item.Nombre for item in $ctrl.Distribuidores track by item.Clv_Plaza">
@@ -126,7 +122,8 @@
                                         <b>Colonia: </b>{{ $ctrl.Contratos.ColoniaDes }}<br/>
                                         <b>Codigo Postal: </b>{{$ctrl.Contratos.CodigoPostal}}<br/>
                                         <b>Estado: </b>{{ $ctrl.Contratos.EstadoDes }} <b>Ciudad: </b>{{ $ctrl.Contratos.CiudadDes
-                                        }}<br/>
+                                        }}
+                                        <br/>
                                     </p>
                                 </div>
                             </div>
@@ -150,14 +147,8 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr style="background-color: #B5B6B6;">
-                                            <th style="font-size: 10px;">Aparato</th>
                                             <th style="font-size: 10px;">Concepto</th>
-                                            <th style="font-size: 10px;">Tv's Extra</th>
-                                            <th style="font-size: 10px;">Meses Cortesia</th>
-                                            <th style="font-size: 10px;">Meses a Pagar</th>
                                             <th style="font-size: 10px;">Importe</th>
-                                            <th style="font-size: 10px;">Periodo PI</th>
-                                            <th style="font-size: 10px;">Periodo PF</th>
                                             <th style="font-size: 10px;">Puntos APPO</th>
                                             <th style="font-size: 10px;">Puntos APA</th>
                                             <th style="font-size: 10px;">Puntos APPA</th>
@@ -167,14 +158,8 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="x in $ctrl.detallePago">
-                                            <td style="font-size: 9px;">{{ x.MacCableModem }}</td>
                                             <td style="font-size: 9px;">{{ x.DESCORTA }}</td>
-                                            <td style="font-size: 9px;">{{ x.tvAdic }}</td>
-                                            <td style="font-size: 9px;">{{ x.Meses_Cortesia }}</td>
-                                            <td style="font-size: 9px;">{{ x.mesesApagar }}</td>
                                             <td style="font-size: 9px;">{{ x.importe | currency }}</td>
-                                            <td style="font-size: 9px;">{{ x.periodoPagadoIni }}</td>
-                                            <td style="font-size: 9px;">{{ x.periodoPagadoFin }}</td>
                                             <td style="font-size: 9px;">{{ x.PuntosAplicadosOtros }}</td>
                                             <td style="font-size: 9px;">{{ x.puntosAplicadosAnt }}</td>
                                             <td style="font-size: 9px;">{{ x.PuntosAplicadosPagoAdelantado }}</td>
@@ -184,33 +169,33 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <!--<div class="col-md-3">
-                  <h4 class="text-muted">Descripcion</h4>
-                  <label class="col-sm-3 control-label text-right">Saldo</label>
-                  <div class="col-sm-8">
-                      <input type="number"
-                      style="font-size: 12px;"
-                      class="form-control"
-                      ng-model="$ctrl.saldo.Saldo"
-                      disabled>
-                  </div>
-                  <h5 class="text-muted">Estados de Cuenta por Saldar</h5>
-                  <table class="table table-bordered">
-                      <thead>
-                          <tr>
-                              <th>Fecha</th>
-                              <th>Importe</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr ng-repeat="x in $ctrl.edoCuenta" style="font-size: 10px;">
-                              <td>{{x.Fecha}}</td>
-                              <td>{{x.TotalRegular}}</td>
-                          </tr>
-                      </tbody>
-                  </table>
-              </div>-->
-                            <div class="col-md-3 text-center" style="padding-top: 175px;">
+                            <div class="col-md-3">
+                                <h4 class="text-muted">Descripcion</h4>
+                                <label class="col-sm-3 control-label text-right">Saldo</label>
+                                <div class="col-sm-8">
+                                    <input type="number"
+                                    style="font-size: 12px;"
+                                    class="form-control"
+                                    ng-model="$ctrl.saldo.Saldo"
+                                    disabled>
+                                </div>
+                                <h5 class="text-muted">Estados de Cuenta por Saldar</h5>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Importe</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="x in $ctrl.edoCuenta" style="font-size: 10px;">
+                                            <td>{{x.Fecha}}</td>
+                                            <td>{{x.TotalRegular}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-3 col-md-offset-9 text-center">
                                 <table class="table">
                                     <tr ng-repeat="x in $ctrl.sumaPagos">
                                         <td style="font-size: 11px;" ng-if="!$last"><strong>{{ x.Descripcion }}</strong></td>
