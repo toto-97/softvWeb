@@ -95,13 +95,13 @@
                         <td>{{ x.COLONIA }}</td>
                         <td>{{ x.NUMERO }}</td>
                         <td>{{ x.CIUDAD }}</td>
-                        <td><button class="btn btn-warning btn-xs" ng-click="$ctrl.seleccionar(x.ContratoBueno,'')"><i class="fa fa-check" aria-hidden="true"></i></button></td>
+                        <td><button class="btn btn-warning btn-xs" ng-click="$ctrl.seleccionar(x)"><i class="fa fa-check" aria-hidden="true"></i></button></td>
                     </tr>
                 </tbody>
             </table>
-            <div style="margin-top:-40px;">
-            <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ng-if="$ctrl.ordenes.length > 0">
-            </dir-pagination-controls>
+            <div>
+                <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ng-if="$ctrl.ordenes.length > 0">
+                </dir-pagination-controls>
             </div>
             <br>
         </div>

@@ -65,7 +65,7 @@ angular
 					}
 				},
 				url: '/ordenes',
-				templateUrl: 'views/procesos/ordenesNew.html',
+				templateUrl: 'views/procesos/ordenesServicio.html',
 				controller: 'OrdenesServicioCtrl',
 				controllerAs: '$ctrl'
 			},
@@ -74,7 +74,7 @@ angular
 				data: {
 					pageTitle: 'SOFTV | NUEVA ORDEN DE SERVICIO'
 				},
-				url: '/ordenNueva/:experience/:context',
+				url: '/ordenes/nueva',
 				templateUrl: 'views/procesos/ordenNueva.html',
 				controller: 'OrdenNuevaCtrl',
 				controllerAs: '$ctrl'
