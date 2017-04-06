@@ -8,6 +8,42 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
 
         });
     }
+    
+    function saldadas() {
+        console.log(vm.pendientes);
+        var parametros;
+        if (vm.pendientes == 1) {
+            ContratoMaestroFactory.GetMuestraFacturasMaestroList().then(function (data) {
+                vm.pagos = data.GetMuestraFacturasMaestroListResult;
+            });
+        }
+        else if (vm.pendientes == 2) {
+            parametros = {
+                'Fecha': '',
+                'Ticket': '',
+                'ContratoMaestro': 0,
+                'Cliente': '',
+                'Op': 5,
+                'Saldada': 1
+            };
+            ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
+                vm.pagos = data.GetBuscaFacturasMaestroListResult;
+            });
+        }
+        else if (vm.pendientes == 3) {
+            parametros = {
+                'Fecha': '',
+                'Ticket': '',
+                'ContratoMaestro': 0,
+                'Cliente': '',
+                'Op': 5,
+                'Saldada': 0
+            };
+            ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
+                vm.pagos = data.GetBuscaFacturasMaestroListResult;
+            });
+        }
+    }
 
     function buscaContrato(opcion) {
         var parametros;
@@ -17,7 +53,8 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                 'Ticket': vm.Ticket,
                 'ContratoMaestro': 0,
                 'Cliente': '',
-                'Op': opcion
+                'Op': opcion,
+                'Saldada': 1
             };
         } else if (opcion == 3) {
             parametros = {
@@ -25,21 +62,27 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                 'Ticket': '',
                 'ContratoMaestro': (vm.ContratoMaestro == null) ? 0 : vm.ContratoMaestro,
                 'Cliente': '',
-                'Op': opcion
+                'Op': opcion,
+                'Saldada': 0
             };
-        } else {
+        } else if (opcion == 4) {
             parametros = {
                 'Fecha': '',
                 'Ticket': '',
                 'ContratoMaestro': 0,
                 'Cliente': vm.Cliente,
-                'Op': opcion
+                'Op': opcion,
+                'Saldada': 0
             };
         }
         ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
             vm.pagos = data.GetBuscaFacturasMaestroListResult;
 
         });
+        vm.Ticket = '';
+        vm.ContratoMaestro = '';
+        vm.Cliente = '';
+        $('.buscarContrato').collapse('hide');
     }
 
     $rootScope.$on('realoadBrowse', function () {
@@ -139,6 +182,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     }
 
     var vm = this;
+    vm.saldadas = saldadas;
     vm.buscaContrato = buscaContrato;
     vm.PagarCredito = PagarCredito;
 }

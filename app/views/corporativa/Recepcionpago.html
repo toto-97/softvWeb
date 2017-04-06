@@ -42,7 +42,7 @@
                                     <br>
                                     <button class="btn btn-info btn-xs" ng-click="$ctrl.buscaContrato(2)">Buscar</button>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <p>Cliente</p>
                                     <input type="text" class="form-control input-sm " ng-model="$ctrl.Cliente">
 
@@ -52,7 +52,25 @@
                                     <button class="btn btn-info btn-xs" ng-click="$ctrl.buscaContrato(4)">Buscar</button>
                                 </div>
                                 <div class="col-md-2">
-
+                                    <div>
+                                        <div class="col-md-12">
+                                            <label class="radio-inline radio-styled">
+                                                <input type="radio" name="inlineRadioOptions" ng-value="1" ng-model="$ctrl.pendientes" ng-change="$ctrl.saldadas()"><span>Todas</span>
+                                            </label>
+                                        </div>
+                                        <br/>
+                                        <div class="col-md-12">
+                                            <label class="radio-inline radio-styled">
+                                                <input type="radio" name="inlineRadioOptions" ng-value="2" ng-model="$ctrl.pendientes" ng-change="$ctrl.saldadas()"><span>Saldadas</span>
+                                            </label>
+                                        </div>
+                                        <br/>
+                                        <div class="col-md-12">
+                                            <label class="radio-inline radio-styled">
+                                                <input type="radio" name="inlineRadioOptions" ng-value="3" ng-model="$ctrl.pendientes" ng-change="$ctrl.saldadas()"><span>Pendientes</span>
+                                            </label>
+                                        </div>
+                                    </div>
 
 
                                 </div>
