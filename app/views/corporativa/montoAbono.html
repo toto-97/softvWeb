@@ -1,8 +1,11 @@
 <div class="modal-header">
     <button class="close" aria-label="Close" type="button" ng-click="$ctrl.cancel()">×</button>
-    <h4 class="modal-title">Cantidad a abonar</h4>
+    <h5 class="modal-title">Cantidad a abonar a la factura <span style="color:red">{{$ctrl.factura}}</span></h5>
 </div>
 <div class="modal-body" style="padding-top:20px;">
+    <div class="row" ng-show="$ctrl.minimo">
+        <h4>¡Su mensualidad es de {{$ctrl.monto | currency}}!</h4>
+    </div>
 	<div class="row" style="padding-top: 15px;">
         <div class="col-md-9 form-group">
             <label class="label-control">Abono</label>

@@ -229,7 +229,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
 
     function abrirPago() {
         pagosMaestrosFactory.dimeSiYaGrabeFacMaestro(vm.Contratos.IdContratoMaestro).then(function (data) {
-            if (data.GetDimeSiYaGrabeUnaFacMaestroResult == 0) {
+            if (data.GetDimeSiYaGrabeUnaFacMaestroResult.Valida == 0) {
                 cajasFactory.sumaTotalDetalle(vm.saldo.ClvSession).then(function (data) {
                     var items = {
                         Contrato: vm.Contratos.IdContratoMaestro,
@@ -291,6 +291,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
 
 
     var vm = this;
+    $('.buscarContrato').collapse();
     vm.BuscarNombrec = BuscarNombrec;
     vm.BuscarRazonS = BuscarRazonS;
     vm.BuscarCiudad = BuscarCiudad;

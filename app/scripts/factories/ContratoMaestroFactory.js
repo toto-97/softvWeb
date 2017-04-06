@@ -56,7 +56,8 @@ angular.module('softvApp')
 				'Ticket': objeto.Ticket,
 				'ContratoMaestro': objeto.ContratoMaestro,
 				'Cliente':objeto.Cliente,
-				'Op': objeto.Op
+				'Op': objeto.Op,
+				'Saldada': objeto.Saldada
 			};
 			console.log(parametros);
 			$http.post(globalService.getUrl() + paths.BuscaFacturasMaestro, JSON.stringify(parametros), config).then(function(response) {

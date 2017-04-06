@@ -17,6 +17,12 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 			vm.botonVariable = true;
 		}
 	}
+
+	function abonoMenor() {
+		if (vm.abono > vm.monto) {
+			vm.abono = vm.monto;
+		}
+	}
 	
 	function guardarFijo() {
 		if (vm.pagoInicial == undefined || vm.pagoInicial == null || vm.pagoInicial == 0 || vm.pagoInicial < 0 || vm.numeroPagos == undefined || vm.numeroPagos == null || vm.numeroPagos == 0 || vm.numeroPagos < 0) {
@@ -168,7 +174,9 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 	}
 
     var vm = this;
+	vm.numeroPagos = 1;
     vm.cambio = cambio;
+	vm.abonoMenor = abonoMenor;
 	vm.guardarFijo = guardarFijo;
 	vm.guardarVariable = guardarVariable;
 	vm.operacion = operacion;

@@ -3,10 +3,44 @@
 function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, ngNotify, $state, ContratoMaestroFactory, pagosMaestrosFactory) {
     this.$onInit = function () {
         ContratoMaestroFactory.GetMuestraFacturasMaestroList().then(function (data) {
-            console.log(data);
             vm.pagos = data.GetMuestraFacturasMaestroListResult;
 
         });
+    }
+    
+    function saldadas() {
+        var parametros;
+        if (vm.pendientes == 1) {
+            ContratoMaestroFactory.GetMuestraFacturasMaestroList().then(function (data) {
+                vm.pagos = data.GetMuestraFacturasMaestroListResult;
+            });
+        }
+        else if (vm.pendientes == 2) {
+            parametros = {
+                'Fecha': '',
+                'Ticket': '',
+                'ContratoMaestro': 0,
+                'Cliente': '',
+                'Op': 5,
+                'Saldada': 1
+            };
+            ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
+                vm.pagos = data.GetBuscaFacturasMaestroListResult;
+            });
+        }
+        else if (vm.pendientes == 3) {
+            parametros = {
+                'Fecha': '',
+                'Ticket': '',
+                'ContratoMaestro': 0,
+                'Cliente': '',
+                'Op': 5,
+                'Saldada': 0
+            };
+            ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
+                vm.pagos = data.GetBuscaFacturasMaestroListResult;
+            });
+        }
     }
 
     function buscaContrato(opcion) {
@@ -17,7 +51,8 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                 'Ticket': vm.Ticket,
                 'ContratoMaestro': 0,
                 'Cliente': '',
-                'Op': opcion
+                'Op': opcion,
+                'Saldada': 1
             };
         } else if (opcion == 3) {
             parametros = {
@@ -25,21 +60,27 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                 'Ticket': '',
                 'ContratoMaestro': (vm.ContratoMaestro == null) ? 0 : vm.ContratoMaestro,
                 'Cliente': '',
-                'Op': opcion
+                'Op': opcion,
+                'Saldada': 0
             };
-        } else {
+        } else if (opcion == 4) {
             parametros = {
                 'Fecha': '',
                 'Ticket': '',
                 'ContratoMaestro': 0,
                 'Cliente': vm.Cliente,
-                'Op': opcion
+                'Op': opcion,
+                'Saldada': 0
             };
         }
         ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
             vm.pagos = data.GetBuscaFacturasMaestroListResult;
 
         });
+        vm.Ticket = '';
+        vm.ContratoMaestro = '';
+        vm.Cliente = '';
+        $('.buscarContrato').collapse('hide');
     }
 
     $rootScope.$on('realoadBrowse', function () {
@@ -56,7 +97,6 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
         if (x.Importe <= x.TotalAbonado) {
             ngNotify.set('Ya se saldo el adeudo.', 'error');
         } else {
-            console.log(x);
             if (x.ACuantosPagos == "Variables") {
                 pagosMaestrosFactory.cobraSaldoMaestro(x.ContratoMaestro).then(function (data) {
                     vm.saldo = data.GetDeepCobraSaldoContratoMaestroResult;
@@ -65,7 +105,8 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                         Contrato: x.ContratoMaestro,
                         Compania: x.IdCompania,
                         Distribuidor: x.IdDistribuidor,
-                        Session: vm.saldo.ClvSession
+                        Session: vm.saldo.ClvSession,
+                        Modo: 'v'
                     };
                     var elem1 = {
                         PagoInicial: monto,
@@ -99,13 +140,18 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                 pagosMaestrosFactory.cobraSaldoMaestro(x.ContratoMaestro).then(function (data) {
                     vm.saldo = data.GetDeepCobraSaldoContratoMaestroResult;
                     var monto = (x.Importe - x.PagoInicial) / x.ACuantosPagos;
+                    var restante = (x.Importe - x.TotalAbonado);
+                    if(restante < monto) {
+                        monto = restante;
+                    }
                     var items = {
                         Contrato: x.ContratoMaestro,
                         Compania: x.IdCompania,
                         Distribuidor: x.IdDistribuidor,
-                        Session: vm.saldo.ClvSession
+                        Session: vm.saldo.ClvSession,
+                        Modo: 'f'
                     };
-                    var elem = {
+                    var elem1 = {
                         PagoInicial: monto,
                         Clv_FacturaMaestro: x.Clv_FacturaMaestro
                     };
@@ -114,18 +160,21 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                         animation: vm.animationsEnabled,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
-                        templateUrl: 'views/corporativa/pagarCredito.html',
-                        controller: 'PagarCreditoCtrl',
+                        templateUrl: 'views/corporativa/montoAbono.html',
+                        controller: 'MontoAbonoCtrl',
                         controllerAs: '$ctrl',
                         backdrop: 'static',
                         keyboard: false,
-                        size: 'md',
+                        size: 'sm',
                         resolve: {
                             items: function () {
                                 return items;
                             },
-                            elem: function () {
-                                return elem;
+                            elem1: function () {
+                                return elem1;
+                            },
+                            x: function () {
+                                return x;
                             }
                         }
                     });
@@ -135,6 +184,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     }
 
     var vm = this;
+    vm.saldadas = saldadas;
     vm.buscaContrato = buscaContrato;
     vm.PagarCredito = PagarCredito;
 }
