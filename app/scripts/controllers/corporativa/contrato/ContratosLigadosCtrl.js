@@ -110,8 +110,9 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 
 	function ValidaArchivo() {
 		var files = $("#inputFile2").get(0).files;
-		ContratoMaestroFactory.UpdateFile(files, vm.Distribuidor.Clv_Plaza, detalle.IdContratoMaestro).then(function(data) {
-
+			console.log(detalle.IdContratoMaestro, vm.Distribuidor.Clv_Plaza);
+		
+		ContratoMaestroFactory.UpdateFile(files, detalle.IdContratoMaestro, vm.Distribuidor.Clv_Plaza).then(function(data) {
 			if (data.ContratosValidos.length > 0) {
 				ngNotify.set('Se encontraron ' + data.ContratosValidos.length + ' contratos válidos', 'grimace');
 				vm.contratos = [];

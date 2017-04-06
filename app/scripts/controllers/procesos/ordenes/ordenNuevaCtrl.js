@@ -8,26 +8,27 @@ function OrdenNuevaCtrl($state, ngNotify, $stateParams, $uibModal, ordenesFactor
 	vm.buscarContrato = buscarContrato;
 	vm.buscarCliente = buscarCliente;
 	vm.status = 'P';
+	vm.fecha = new Date();
 
 
 	function agregar() {
-		if (vm.contrato == undefined || vm.contrato == '') {
-			ngNotify.set('Sin contrato asignado.', 'error')
+		if (vm.contratoBueno == undefined || vm.contratoBueno == '') {
+			ngNotify.set('Seleccione un cliente válido.', 'error')
 		} else {
 			vm.animationsEnabled = true;
 			var modalInstance = $uibModal.open({
 				animation: vm.animationsEnabled,
 				ariaLabelledBy: 'modal-title',
 				ariaDescribedBy: 'modal-body',
-				templateUrl: 'views/procesos/OrdenServicioCliente.html',
-				controller: 'OrdenServicioClienteCtrl',
+				templateUrl: 'views/procesos/ModalAgregarServicio.html',
+				controller: 'ModalAgregarServicioCtrl',
 				controllerAs: '$ctrl',
 				backdrop: 'static',
 				keyboard: false,
 				size: 'md',
 				resolve: {
 					cont: function () {
-						return vm.contrato;
+						return vm.contratoBueno;
 					}
 				}
 			});
@@ -35,9 +36,6 @@ function OrdenNuevaCtrl($state, ngNotify, $stateParams, $uibModal, ordenesFactor
 	}
 
 	function buscarContrato(event) {
-		// if (contrato == 0 || contrato == undefined) {
-		// 	ngNotify.set('Inserta un número de contrato', 'error');
-		// }else {
 		if (event.keyCode == 13) {
 			if (vm.contrato == null || vm.contrato == '' || vm.contrato == undefined) {
 				ngNotify.set('Coloque un contrato válido', 'error');
@@ -46,7 +44,18 @@ function OrdenNuevaCtrl($state, ngNotify, $stateParams, $uibModal, ordenesFactor
 
 			ordenesFactory.getContratoReal(vm.contrato).then(function (data) {
 				if (data.GetuspBuscaContratoSeparado2ListResult.length > 0) {
+					vm.contratoBueno = data.GetuspBuscaContratoSeparado2ListResult[0].ContratoBueno;
 					datosContrato(data.GetuspBuscaContratoSeparado2ListResult[0].ContratoBueno);
+				}else{
+					vm.servicios = '';
+					vm.datosCli = '';
+					new PNotify({
+						title: 'Sin Resultados',
+						type: 'error',
+						text: 'No se encontro resultados con ese contrato.',
+						hide: true
+					});
+					vm.contratoBueno = '';
 				}
 			});;
 		}
@@ -54,6 +63,7 @@ function OrdenNuevaCtrl($state, ngNotify, $stateParams, $uibModal, ordenesFactor
 
 	$rootScope.$on('cliente_select', function (e, contrato) {
 		vm.contrato = contrato.CONTRATO;
+		vm.contratoBueno = contrato.ContratoBueno;
 		datosContrato(contrato.ContratoBueno);
 	});
 
