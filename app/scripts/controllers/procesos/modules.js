@@ -75,7 +75,7 @@ angular
 					pageTitle: 'SOFTV | NUEVA ORDEN DE SERVICIO'
 				},
 				url: '/ordenes/nueva',
-				templateUrl: 'views/procesos/ordenNueva.html',
+				templateUrl: 'views/procesos/nuevaOrdenServicio.html',
 				controller: 'OrdenNuevaCtrl',
 				controllerAs: '$ctrl'
 			},
