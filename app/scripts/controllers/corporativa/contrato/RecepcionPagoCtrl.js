@@ -3,14 +3,12 @@
 function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, ngNotify, $state, ContratoMaestroFactory, pagosMaestrosFactory) {
     this.$onInit = function () {
         ContratoMaestroFactory.GetMuestraFacturasMaestroList().then(function (data) {
-            console.log(data);
             vm.pagos = data.GetMuestraFacturasMaestroListResult;
 
         });
     }
     
     function saldadas() {
-        console.log(vm.pendientes);
         var parametros;
         if (vm.pendientes == 1) {
             ContratoMaestroFactory.GetMuestraFacturasMaestroList().then(function (data) {
@@ -99,7 +97,6 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
         if (x.Importe <= x.TotalAbonado) {
             ngNotify.set('Ya se saldo el adeudo.', 'error');
         } else {
-            console.log(x);
             if (x.ACuantosPagos == "Variables") {
                 pagosMaestrosFactory.cobraSaldoMaestro(x.ContratoMaestro).then(function (data) {
                     vm.saldo = data.GetDeepCobraSaldoContratoMaestroResult;
@@ -108,7 +105,8 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                         Contrato: x.ContratoMaestro,
                         Compania: x.IdCompania,
                         Distribuidor: x.IdDistribuidor,
-                        Session: vm.saldo.ClvSession
+                        Session: vm.saldo.ClvSession,
+                        Modo: 'v'
                     };
                     var elem1 = {
                         PagoInicial: monto,
@@ -150,9 +148,10 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                         Contrato: x.ContratoMaestro,
                         Compania: x.IdCompania,
                         Distribuidor: x.IdDistribuidor,
-                        Session: vm.saldo.ClvSession
+                        Session: vm.saldo.ClvSession,
+                        Modo: 'f'
                     };
-                    var elem = {
+                    var elem1 = {
                         PagoInicial: monto,
                         Clv_FacturaMaestro: x.Clv_FacturaMaestro
                     };
@@ -161,18 +160,21 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                         animation: vm.animationsEnabled,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
-                        templateUrl: 'views/corporativa/pagarCredito.html',
-                        controller: 'PagarCreditoCtrl',
+                        templateUrl: 'views/corporativa/montoAbono.html',
+                        controller: 'MontoAbonoCtrl',
                         controllerAs: '$ctrl',
                         backdrop: 'static',
                         keyboard: false,
-                        size: 'md',
+                        size: 'sm',
                         resolve: {
                             items: function () {
                                 return items;
                             },
-                            elem: function () {
-                                return elem;
+                            elem1: function () {
+                                return elem1;
+                            },
+                            x: function () {
+                                return x;
                             }
                         }
                     });
