@@ -1,3 +1,16 @@
+<style>
+.body{font-size: 10px;}
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    padding: 7px 8px;
+    line-height: 1.846153846;
+    vertical-align: top;
+    border-top: 1px solid rgba(189, 193, 193, 0.2);
+}
+
+</style>
+
+
+
 <div class="row" style="margin-top:10px;">
 
   <div class="card" style="margin-top:20px;">
@@ -99,21 +112,10 @@
         </div>
       </div>
       <!--end .panel -->
-    </div>
 
-
-
-
-
-    <div class="col-md-12">
-      <div class="row">
-
-
-        <div class="col-md-12" style="padding-left: 25px; padding-right: 25px;">
-          <p class="text-right" style="margin-top: 10px;">
-
-          </p>
-          <table class="table">
+ <div class="col-md-12">
+         
+          <table class="table" style="font-size:10px;">
             <thead>
               <tr>
                 <th>#contrato</th>
@@ -125,7 +127,7 @@
             </thead>
             <tbody>
 
-              <tr ng-show="$ctrl.Contratos.length>0" dir-paginate="x in $ctrl.Contratos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:5">
+              <tr ng-show="$ctrl.Contratos.length>0" dir-paginate="x in $ctrl.Contratos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:8">
                 <td>{{x.IdContratoMaestro}}</td>
                 <td>{{x.RazonSocial}}</td>
                 <td>{{x.RFC}}</td>
@@ -143,11 +145,19 @@
           </div>
         </div>
 
-
-
-      </div>
-
     </div>
+
+
+
+
+
+
+
+       
+
+
+
+   
 
 
 
