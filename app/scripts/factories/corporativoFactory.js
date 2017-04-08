@@ -304,7 +304,7 @@ angular.module('softvApp')
 				'IdDistribuidor': obje.IdDistribuidor
 			};
 
-			console.log(Parametros);
+			console.log(JSON.stringify(Parametros));
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
