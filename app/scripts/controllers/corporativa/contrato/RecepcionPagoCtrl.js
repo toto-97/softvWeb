@@ -14,6 +14,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
             ContratoMaestroFactory.GetMuestraFacturasMaestroList().then(function (data) {
                 vm.pagos = data.GetMuestraFacturasMaestroListResult;
             });
+            vm.pagar = false;
         }
         else if (vm.pendientes == 2) {
             parametros = {
@@ -27,6 +28,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
             ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
                 vm.pagos = data.GetBuscaFacturasMaestroListResult;
             });
+            vm.pagar = true;
         }
         else if (vm.pendientes == 3) {
             parametros = {
@@ -40,6 +42,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
             ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
                 vm.pagos = data.GetBuscaFacturasMaestroListResult;
             });
+            vm.pagar = false;
         }
     }
 

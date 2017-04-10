@@ -1,7 +1,7 @@
 <div class="modal-body">
     <button class="close" aria-label="Close" type="button" ng-click="$ctrl.cancel()">×</button>
    	<form class="form-horizontal">
-		<h5><strong>Importe total a pagar: {{ $ctrl.monto | currency }}</strong></h4>
+		<h5><strong>Importe total a pagar: {{ $ctrl.monto | currency : "$" : 4 }}</strong></h4>
 		<!-- Text input-->
 		<div class="form-group">
 			<div class="row">
@@ -71,11 +71,11 @@
 		 	</div>-->
 		 	<!--<legend></legend>-->
 	 		<div class="col-md-6" style="padding-left: 50px;">
-		  		<h4><strong>Cambio: {{ $ctrl.cambio | currency }}</strong></h4>
+		  		<h4><strong>Cambio: {{ $ctrl.cambio | currency : "$" : 4 }}</strong></h4>
 		  	</div>
 		  	<div class="col-md-6" style="padding-right:50px;">
-		  		<p class="text-right">Total a Abonado: {{ $ctrl.TotalAbonado | currency }}<br/>
-					Saldo: {{ $ctrl.monto | currency }}</p>
+		  		<p class="text-right">Total a Abonado: {{ $ctrl.TotalAbonado | currency : "$" : 4 }}<br/>
+					Saldo: {{ $ctrl.monto | currency : "$" : 4 }}</p>
 		  	</div>
 		</div>
 	</form>
