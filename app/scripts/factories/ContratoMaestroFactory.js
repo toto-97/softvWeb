@@ -129,16 +129,14 @@ angular.module('softvApp')
 
 		};
 
-		factory.UpdateFile = function(file, Distribuidor, contrato) {
+		factory.UpdateFile = function(file, contrato, distribuidor) {
 			var deferred = $q.defer();
 			var data = new FormData();
 			for (var i = 0; i < file.length; i++) {
-				console.log(file[i]);
 				data.append('file' + i, file[i]);
 			}
-			data.append('Distribuidor', Distribuidor);
-			data.append('Contrato', contrato);
-
+			data.append('Distrib', distribuidor);
+			data.append('idcontrato', contrato);
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token,
