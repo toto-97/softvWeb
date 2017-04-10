@@ -4,7 +4,7 @@ angular.module('softvApp').controller('PagarContadoCtrl', PagarContadoCtrl);
 function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, $uibModalInstance, items, metodo, $localStorage, pagosMaestrosFactory) {
 	function initialData() {
 		vm.monto = items.Monto;
-		cajasFactory.dameBancos().then(function(data) {
+		cajasFactory.dameBancos().then(function (data) {
 			data.GetMuestraBancosListResult.unshift({
 				'nombre': '----------------',
 				'Clave': 0
@@ -83,7 +83,7 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 		vm.numeroCheque = '';
 		vm.efectivo = '';
 		vm.casePago = 4;
-		cajasFactory.dameMontoCredito(vm.dineroCredito, items.Contrato).then(function(data) {
+		cajasFactory.dameMontoCredito(vm.dineroCredito, items.Contrato).then(function (data) {
 			vm.pagoNota = data.GetDeepMontoNotaCreditoResult.Monto;
 			vm.TotalAbonado = vm.pagoNota;
 			if (vm.TotalAbonado > vm.monto) {
@@ -101,7 +101,7 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 					if (vm.efectivo >= vm.monto) {
 						var objPagar = {
 							'contrato': items.Contrato,
-							'credito':metodo,
+							'credito': metodo,
 							'cajera': $localStorage.currentUser.usuario,
 							'maquina': $localStorage.currentUser.maquina,
 							'sucursal': $localStorage.currentUser.sucursal,
@@ -121,46 +121,44 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 							'CLV_Nota2': 0,
 							'GLONOTA3': 0,
 							'token': $localStorage.currentUser.token1,
-							'NoPagos' : 0,
-  							'PagoInicial': 0
+							'NoPagos': 0,
+							'PagoInicial': 0
 						};
-						console.log(objPagar);
 						// cajasFactory.insertSeguridadToken(items.IdSession).then(function(dataToken) {
-							pagosMaestrosFactory.nuevoPagoEfectivo(items.Session, vm.efectivo, vm.cambio).then(function(dataNuevo) {
-								pagosMaestrosFactory.grabaFactura(objPagar).then(function(dataGraba) {
-									console.log(dataGraba);
-									console.log(dataGraba.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro);
-									if (dataGraba.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro == 0) {
-										ngNotify.set(dataGraba.GetGrabaFacturaCMaestroResult.Msg, 'error');
-									}else {
-										$uibModalInstance.dismiss('cancel');
-										ngNotify.set('Pago grabado correctamente', 'success');
-									}
-									// $uibModalInstance.dismiss('cancel');
-									// $rootScope.$emit('ocultarPagar', {});
-									// $rootScope.$emit('getVendedores', {});
-									// ngNotify.set('Pago Exitoso', 'success');
-									// var modalInstance = $uibModal.open({
-									// 	animation: true,
-									// 	ariaLabelledBy: 'modal-title',
-									// 	ariaDescribedBy: 'modal-body',
-									// 	templateUrl: 'views/facturacion/modalSingleTicket.html',
-									// 	controller: 'ModalSingleTicketCtrl',
-									// 	controllerAs: 'ctrl',
-									// 	backdrop: 'static',
-									// 	keyboard: false,
-									// 	size: 'sm',
-									// 	resolve: {
-									// 		factura: function() {
-									// 			return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
-									// 		},
-									// 		imprimir: function() {
-									// 			return true;
-									// 		}
-									// 	}
-									// });
-								});
+						pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
+							vm.factura = dataGraba.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro;
+							pagosMaestrosFactory.nuePagoEfectivoMaestro(vm.factura, vm.efectivo, vm.cambio).then(function (dataNuevo) {
 							});
+							if (dataGraba.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro == 0) {
+								ngNotify.set(dataGraba.GetGrabaFacturaCMaestroResult.Msg, 'error');
+							} else {
+								$uibModalInstance.dismiss('cancel');
+								ngNotify.set('Pago grabado correctamente', 'success');
+							}
+							// $uibModalInstance.dismiss('cancel');
+							// $rootScope.$emit('ocultarPagar', {});
+							// $rootScope.$emit('getVendedores', {});
+							// ngNotify.set('Pago Exitoso', 'success');
+							// var modalInstance = $uibModal.open({
+							// 	animation: true,
+							// 	ariaLabelledBy: 'modal-title',
+							// 	ariaDescribedBy: 'modal-body',
+							// 	templateUrl: 'views/facturacion/modalSingleTicket.html',
+							// 	controller: 'ModalSingleTicketCtrl',
+							// 	controllerAs: 'ctrl',
+							// 	backdrop: 'static',
+							// 	keyboard: false,
+							// 	size: 'sm',
+							// 	resolve: {
+							// 		factura: function() {
+							// 			return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
+							// 		},
+							// 		imprimir: function() {
+							// 			return true;
+							// 		}
+							// 	}
+							// });
+						});
 						// });
 					} else {
 						ngNotify.set('No se ha saldado la factura.', 'error');
@@ -175,7 +173,7 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 						if (vm.dineroCheque == vm.monto) {
 							var objPagar = {
 								'contrato': items.Contrato,
-								'credito':metodo,
+								'credito': metodo,
 								'cajera': $localStorage.currentUser.usuario,
 								'maquina': $localStorage.currentUser.maquina,
 								'sucursal': $localStorage.currentUser.sucursal,
@@ -195,44 +193,41 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 								'CLV_Nota2': 0,
 								'GLONOTA3': 0,
 								'token': $localStorage.currentUser.token1,
-								'NoPagos' : 0,
+								'NoPagos': 0,
 								'PagoInicial': 0
 							};
-							console.log(objPagar);
 							// cajasFactory.insertSeguridadToken(items.IdSession).then(function(data) {
-								pagosMaestrosFactory.grabaFactura(objPagar).then(function(dataGraba) {
-									console.log(dataGraba);
-									console.log(dataGraba.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro);
-									if (dataGraba.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro == 0) {
-										ngNotify.set(dataGraba.GetGrabaFacturaCMaestroResult.Msg, 'error');
-									}else {
-										$uibModalInstance.dismiss('cancel');
-										ngNotify.set('Pago grabado correctamente', 'success');
-									}
-									// $uibModalInstance.dismiss('cancel');
-									// $rootScope.$emit('ocultarPagar', {});
-									// $rootScope.$emit('getVendedores', {});
-									// ngNotify.set('Pago Exitoso', 'success');
-									// var modalInstance = $uibModal.open({
-									// 	animation: true,
-									// 	ariaLabelledBy: 'modal-title',
-									// 	ariaDescribedBy: 'modal-body',
-									// 	templateUrl: 'views/facturacion/modalSingleTicket.html',
-									// 	controller: 'ModalSingleTicketCtrl',
-									// 	controllerAs: 'ctrl',
-									// 	backdrop: 'static',
-									// 	keyboard: false,
-									// 	size: 'sm',
-									// 	resolve: {
-									// 		factura: function() {
-									// 			return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
-									// 		},
-									// 		imprimir: function() {
-									// 			return true;
-									// 		}
-									// 	}
-									// });
-								});
+							pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
+								if (dataGraba.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro == 0) {
+									ngNotify.set(dataGraba.GetGrabaFacturaCMaestroResult.Msg, 'error');
+								} else {
+									$uibModalInstance.dismiss('cancel');
+									ngNotify.set('Pago grabado correctamente', 'success');
+								}
+								// $uibModalInstance.dismiss('cancel');
+								// $rootScope.$emit('ocultarPagar', {});
+								// $rootScope.$emit('getVendedores', {});
+								// ngNotify.set('Pago Exitoso', 'success');
+								// var modalInstance = $uibModal.open({
+								// 	animation: true,
+								// 	ariaLabelledBy: 'modal-title',
+								// 	ariaDescribedBy: 'modal-body',
+								// 	templateUrl: 'views/facturacion/modalSingleTicket.html',
+								// 	controller: 'ModalSingleTicketCtrl',
+								// 	controllerAs: 'ctrl',
+								// 	backdrop: 'static',
+								// 	keyboard: false,
+								// 	size: 'sm',
+								// 	resolve: {
+								// 		factura: function() {
+								// 			return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
+								// 		},
+								// 		imprimir: function() {
+								// 			return true;
+								// 		}
+								// 	}
+								// });
+							});
 							// });
 						} else {
 							ngNotify.set('No se ha saldado la factura', 'error');
@@ -250,7 +245,7 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 						if (vm.dineroTransferencia == vm.monto) {
 							var objPagar = {
 								'contrato': items.Contrato,
-								'credito':metodo,
+								'credito': metodo,
 								'cajera': $localStorage.currentUser.usuario,
 								'maquina': $localStorage.currentUser.maquina,
 								'sucursal': $localStorage.currentUser.sucursal,
@@ -270,44 +265,41 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 								'CLV_Nota2': 0,
 								'GLONOTA3': 0,
 								'token': $localStorage.currentUser.token1,
-								'NoPagos' : 0,
+								'NoPagos': 0,
 								'PagoInicial': 0
 							};
-							console.log(objPagar);
 							// cajasFactory.insertSeguridadToken(items.IdSession).then(function(data) {
-								pagosMaestrosFactory.grabaFactura(objPagar).then(function(dataGraba) {
-									console.log(dataGraba);
-									console.log(dataGraba.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro);
-									if (dataGraba.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro == 0) {
-										ngNotify.set(dataGraba.GetGrabaFacturaCMaestroResult.Msg, 'error');
-									}else {
-										$uibModalInstance.dismiss('cancel');
-										ngNotify.set('Pago grabado correctamente', 'success');
-									}
-									// $uibModalInstance.dismiss('cancel');
-									// $rootScope.$emit('ocultarPagar', {});
-									// $rootScope.$emit('getVendedores', {});
-									// ngNotify.set('Pago Exitoso', 'success');
-									// var modalInstance = $uibModal.open({
-									// 	animation: true,
-									// 	ariaLabelledBy: 'modal-title',
-									// 	ariaDescribedBy: 'modal-body',
-									// 	templateUrl: 'views/facturacion/modalSingleTicket.html',
-									// 	controller: 'ModalSingleTicketCtrl',
-									// 	controllerAs: 'ctrl',
-									// 	backdrop: 'static',
-									// 	keyboard: false,
-									// 	size: 'sm',
-									// 	resolve: {
-									// 		factura: function() {
-									// 			return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
-									// 		},
-									// 		imprimir: function() {
-									// 			return true;
-									// 		}
-									// 	}
-									// });
-								});
+							pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
+								if (dataGraba.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro == 0) {
+									ngNotify.set(dataGraba.GetGrabaFacturaCMaestroResult.Msg, 'error');
+								} else {
+									$uibModalInstance.dismiss('cancel');
+									ngNotify.set('Pago grabado correctamente', 'success');
+								}
+								// $uibModalInstance.dismiss('cancel');
+								// $rootScope.$emit('ocultarPagar', {});
+								// $rootScope.$emit('getVendedores', {});
+								// ngNotify.set('Pago Exitoso', 'success');
+								// var modalInstance = $uibModal.open({
+								// 	animation: true,
+								// 	ariaLabelledBy: 'modal-title',
+								// 	ariaDescribedBy: 'modal-body',
+								// 	templateUrl: 'views/facturacion/modalSingleTicket.html',
+								// 	controller: 'ModalSingleTicketCtrl',
+								// 	controllerAs: 'ctrl',
+								// 	backdrop: 'static',
+								// 	keyboard: false,
+								// 	size: 'sm',
+								// 	resolve: {
+								// 		factura: function() {
+								// 			return dataGraba.GetDeepGrabaFacturas2Result.Clv_FacturaSalida;
+								// 		},
+								// 		imprimir: function() {
+								// 			return true;
+								// 		}
+								// 	}
+								// });
+							});
 							// });
 						} else {
 							ngNotify.set('No se ha saldado la factura', 'error');
@@ -386,11 +378,11 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
 		}
 	}
 
-    function cancel() {
-	    $uibModalInstance.dismiss('cancel');
+	function cancel() {
+		$uibModalInstance.dismiss('cancel');
 	}
 
-    var vm = this;
+	var vm = this;
 	vm.cancel = cancel;
 	vm.cambioEfectivo = cambioEfectivo;
 	vm.cambioCheque = cambioCheque;
