@@ -6,9 +6,6 @@
                 <strong style="font-weight:bold; border:none; margin-left:10px;">Recepción de pagos</strong>
                 <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Contratos Maestros</small>
             </header>
-            <div class="tools">
-                <button class="btn btn-primary btn-sm" type="button" ui-sref="home.corporativa.maestroNuevo"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo</button>
-            </div>
         </div>
 
         <div class="card-body">
@@ -125,7 +122,8 @@
                                     <td>{{x.ACuantosPagos}}</td>
                                     <td>{{x.TotalAbonado}}</td>
                                     <td>
-                                        <button class="btn ink-reaction btn-floating-action btn-xs btn-success" ng-click="$ctrl.PagarCredito(x)"><i class="fa fa-credit-card"></i></button>
+                                        <button class="btn ink-reaction btn-floating-action btn-xs btn-success" ng-disabled="$ctrl.pagar" ng-click="$ctrl.PagarCredito(x)"><i class="fa fa-credit-card"></i></button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
