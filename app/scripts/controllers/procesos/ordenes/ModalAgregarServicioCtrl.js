@@ -1,15 +1,15 @@
 'use strict';
 angular.module('softvApp').controller('ModalAgregarServicioCtrl', ModalAgregarServicioCtrl);
 
-function ModalAgregarServicioCtrl($uibModal, $uibModalInstance, ordenesFactory, cont) {
+function ModalAgregarServicioCtrl($uibModal, $uibModalInstance, ordenesFactory, items, $rootScope) {
 	var vm = this;
 	vm.cancel = cancel;
-	vm.abrir = abrir;
+	vm.guardaDetalle = guardaDetalle;
 	vm.changeTrabajo = changeTrabajo;
 	vm.realizar = true;
 
 	this.$onInit = function () {
-		ordenesFactory.dimeServicio(cont).then(function (data) {
+		ordenesFactory.dimeServicio(items.contrato).then(function (data) {
 			vm.servicios = data.GetDime_Que_servicio_Tiene_clienteListResult;
 		});
 	}
@@ -20,29 +20,53 @@ function ModalAgregarServicioCtrl($uibModal, $uibModalInstance, ordenesFactory, 
 		});
 	}
 
-	function abrir(valor) {
-		var items = {
-			contrato: cont,
-			valor: valor
-		};
-		if (vm.selectedTrabajo.Clv_Trabajo == 37) {
-			var modalInstance = $uibModal.open({
-				animation: true,
-				ariaLabelledBy: 'modal-title',
-				ariaDescribedBy: 'modal-body',
-				templateUrl: 'views/procesos/modalOrdenTrabajos.html',
-				controller: 'ModalOrdenCtrl',
-				controllerAs: '$ctrl',
-				backdrop: 'static',
-				keyboard: false,
-				size: 'md',
-				resolve: {
-					items: function () {
-						return items;
-					}
+	function guardaDetalle() {
+		ordenesFactory.validaOrden(items.contrato, vm.selectedTrabajo.Clv_Trabajo).then(function (data) {
+			if (data.GetDeepVALIDAOrdenQuejaResult.Msg != null) {
+				ngNotify.set(data.GetDeepVALIDAOrdenQuejaResult.Msg, 'info');
+			} else {
+				var realiza = 0;
+				if (vm.realizar) {
+					realiza = 1;
 				}
-			});
-		}
+				var detalle = {
+					clave: items.clv_orden,
+					trabajo: vm.selectedTrabajo.Clv_Trabajo,
+					observaciones: vm.observaciones,
+					SeRealiza: realiza
+				};
+				ordenesFactory.addDetalleOrden(detalle).then(function (data) {
+					vm.clv_detalle_orden = data.AddDetOrdSerResult;
+					$rootScope.$emit('detalle_orden', vm.clv_detalle_orden);
+					if (vm.selectedTrabajo.Descripcion.toLowerCase().includes('bcabm')) {
+						ngNotify.set('La baja de cablemodem se genera de forma automática en el momento que todos los servicios pasen a baja.', 'info');
+					}
+					else if (vm.selectedTrabajo.Descripcion.toLowerCase().includes('bapar')) {
+						ngNotify.set('La baja de aparato digital se genera de forma automática en el momento que todos los servicios pasen a baja.', 'info');
+					}
+					else if (vm.selectedTrabajo.Descripcion.toLowerCase().includes('camdo') || vm.selectedTrabajo.Descripcion.toLowerCase().includes('cadig') || vm.selectedTrabajo.Descripcion.toLowerCase().includes('canet')) {
+						items.clv_detalle_orden = vm.clv_detalle_orden;
+						console.log(items);
+						var modalInstance = $uibModal.open({
+							animation: true,
+							ariaLabelledBy: 'modal-title',
+							ariaDescribedBy: 'modal-body',
+							templateUrl: 'views/facturacion/modalCambioDomicilio.html',
+							controller: 'CambioDomicilioOrdenesCtrl',
+							controllerAs: 'ctrl',
+							backdrop: 'static',
+							keyboard: false,
+							size: 'md',
+							resolve: {
+								items: function () {
+									return items;
+								}
+							}
+						});
+					}
+				});
+			}
+		});
 	}
 
 	function cancel() {

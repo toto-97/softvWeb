@@ -1,7 +1,7 @@
 'use strict';
 angular.module('softvApp').controller('OrdenNuevaCtrl', OrdenNuevaCtrl);
 
-function OrdenNuevaCtrl($state, ngNotify, $stateParams, $uibModal, ordenesFactory, $rootScope) {
+function OrdenNuevaCtrl($state, ngNotify, $stateParams, $uibModal, ordenesFactory, $rootScope, $filter) {
 	var vm = this;
 	vm.showDatosCliente = true;
 	vm.agregar = agregar;
@@ -9,62 +9,85 @@ function OrdenNuevaCtrl($state, ngNotify, $stateParams, $uibModal, ordenesFactor
 	vm.buscarCliente = buscarCliente;
 	vm.status = 'P';
 	vm.fecha = new Date();
+	vm.observaciones = '';
 
 
 	function agregar() {
 		if (vm.contratoBueno == undefined || vm.contratoBueno == '') {
 			ngNotify.set('Seleccione un cliente válido.', 'error')
 		} else {
-			vm.animationsEnabled = true;
-			var modalInstance = $uibModal.open({
-				animation: vm.animationsEnabled,
-				ariaLabelledBy: 'modal-title',
-				ariaDescribedBy: 'modal-body',
-				templateUrl: 'views/procesos/ModalAgregarServicio.html',
-				controller: 'ModalAgregarServicioCtrl',
-				controllerAs: '$ctrl',
-				backdrop: 'static',
-				keyboard: false,
-				size: 'md',
-				resolve: {
-					cont: function () {
-						return vm.contratoBueno;
+			var fecha = $filter('date')(vm.fecha, 'dd/MM/yyyy');
+			var orden = {
+				contrato: vm.contratoBueno,
+				fecha: fecha,
+				observaciones: vm.observaciones
+
+			};
+			ordenesFactory.addOrdenServicio(orden).then(function (data) {
+				vm.clv_orden = data.AddOrdSerResult;
+				var items = {
+					contrato: vm.contratoBueno,
+					clv_orden: vm.clv_orden
+				};
+				var modalInstance = $uibModal.open({
+					animation: true,
+					ariaLabelledBy: 'modal-title',
+					ariaDescribedBy: 'modal-body',
+					templateUrl: 'views/procesos/ModalAgregarServicio.html',
+					controller: 'ModalAgregarServicioCtrl',
+					controllerAs: '$ctrl',
+					backdrop: 'static',
+					keyboard: false,
+					size: 'md',
+					resolve: {
+						items: function () {
+							return items;
+						}
 					}
-				}
+				});
 			});
+
 		}
 	}
 
 	function buscarContrato(event) {
-		if (event.keyCode == 13) {
-			if (vm.contrato == null || vm.contrato == '' || vm.contrato == undefined) {
-				ngNotify.set('Coloque un contrato válido', 'error');
-				return;
-			}
-
-			ordenesFactory.getContratoReal(vm.contrato).then(function (data) {
-				if (data.GetuspBuscaContratoSeparado2ListResult.length > 0) {
-					vm.contratoBueno = data.GetuspBuscaContratoSeparado2ListResult[0].ContratoBueno;
-					datosContrato(data.GetuspBuscaContratoSeparado2ListResult[0].ContratoBueno);
-				}else{
-					vm.servicios = '';
-					vm.datosCli = '';
-					new PNotify({
-						title: 'Sin Resultados',
-						type: 'error',
-						text: 'No se encontro resultados con ese contrato.',
-						hide: true
-					});
-					vm.contratoBueno = '';
-				}
-			});;
+		vm.clv_orden = '';
+		if (vm.contrato == null || vm.contrato == '' || vm.contrato == undefined) {
+			ngNotify.set('Coloque un contrato válido', 'error');
+			return;
 		}
+		if(!vm.contrato.includes('-')){
+			ngNotify.set('Coloque un contrato válido', 'error');
+			return;
+		}
+
+		ordenesFactory.getContratoReal(vm.contrato).then(function (data) {
+			if (data.GetuspBuscaContratoSeparado2ListResult.length > 0) {
+				vm.contratoBueno = data.GetuspBuscaContratoSeparado2ListResult[0].ContratoBueno;
+				datosContrato(data.GetuspBuscaContratoSeparado2ListResult[0].ContratoBueno);
+			} else {
+				vm.servicios = '';
+				vm.datosCli = '';
+				new PNotify({
+					title: 'Sin Resultados',
+					type: 'error',
+					text: 'No se encontro resultados con ese contrato.',
+					hide: true
+				});
+				vm.contratoBueno = '';
+				vm.clv_orden = '';
+			}
+		});
 	}
 
 	$rootScope.$on('cliente_select', function (e, contrato) {
 		vm.contrato = contrato.CONTRATO;
 		vm.contratoBueno = contrato.ContratoBueno;
 		datosContrato(contrato.ContratoBueno);
+	});
+
+	$rootScope.$on('detalle_orden', function (e, detalle) {
+		vm.clv_detalle = detalle;
 	});
 
 	function datosContrato(contrato) {

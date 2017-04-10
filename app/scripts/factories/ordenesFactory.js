@@ -19,10 +19,95 @@ angular
             getColoniaCamdo: '/CAMDO/GetllenaColoniaCamdoList',
             getCalleCamdo: '/CAMDO/GetllenaCalleCamdoList',
             addBitacoraReproceso: '/Bitacora/AddReprocesarEdoCuenta',
-            addBitacoraReenviar: '/Bitacora/AddReenviarEdoCuenta'
+            addBitacoraReenviar: '/Bitacora/AddReenviarEdoCuenta',
+            addOrdenServicio: '/OrdSer/AddOrdSer',
+            validaOrden: '/VALIDAOrdenQueja/GetDeepVALIDAOrdenQueja',
+            addDetalleOrden: '/DetOrdSer/AddDetOrdSer'
         };
 
         var usuarioAtencion = $localStorage.currentUser.idUsuario;
+
+        factory.addDetalleOrden = function (obj) {
+            var deferred = $q.defer();
+            var Parametros = {
+                'objDetOrdSer':
+                {
+                    'Clv_Orden': obj.clave,
+                    'Clv_Trabajo': obj.trabajo,
+                    'Obs': obj.observaciones,
+                    'SeRealiza': obj.seRealiza,
+                }
+
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+            $http.post(globalService.getUrl() + paths.addDetalleOrden, JSON.stringify(Parametros), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+        };
+
+        factory.validaOrden = function (contrato, servicio) {
+            var deferred = $q.defer();
+            var Parametros = {
+                'Contrato': contrato,
+                'TipSer': servicio,
+                'Usuario': $localStorage.currentUser.usuario
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+            $http.post(globalService.getUrl() + paths.validaOrden, JSON.stringify(Parametros), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+        };
+
+        factory.addOrdenServicio = function (obj) {
+            var deferred = $q.defer();
+            var user = $localStorage.currentUser.idUsuario;
+            var Parametros = {
+                "objOrdSer":
+                {
+                    'Clv_TipSer': 0,
+                    'Contrato': obj.contrato,
+                    'Fec_Sol': obj.fecha,
+                    'Fec_Eje': '',
+                    'Visita1': '',
+                    'Visita2': '',
+                    'Status': 'P',
+                    'Clv_Tecnico': 0,
+                    'IMPRESA': 0,
+                    'Clv_FACTURA': 0,
+                    'Obs': obj.observaciones,
+                    'ListadeArticulos': ''
+                }
+
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+            $http.post(globalService.getUrl() + paths.addOrdenServicio, JSON.stringify(Parametros), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+        };
 
         factory.getPlazas = function () {
             var deferred = $q.defer();

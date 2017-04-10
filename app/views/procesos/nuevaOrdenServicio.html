@@ -38,11 +38,21 @@
 						<small><b>Servicios:</b></small>
 					</div>
 					<div class="col-md-3">
-						<input type="text" placeholder="# Orden" class="form-control input-sm" ng-model="$ctrl.orden" disabled>
+						<input type="text" placeholder="# Orden" class="form-control input-sm" ng-model="$ctrl.clv_orden" disabled>
 					</div>
 					<div class="col-md-4">
-						<input type="text" placeholder="No. contrato" class="form-control input-sm" ng-model="$ctrl.contrato"
-						 ng-keydown="$ctrl.buscarContrato($event, $ctrl.contrato)">
+						<form angular-validator-submit="$ctrl.buscarContrato()" name="contratoForm" novalidate angular-validator>
+							<input type="text" 
+							placeholder="No. contrato" 
+							class="form-control input-sm" 
+							ng-model="$ctrl.contrato"
+							name="contrato"
+							validate-on="dirty"
+							placeholder="Contrato"
+							ng-pattern = "/^[0-9]+([-][0-9]+)?$/"
+							required-message="'Este campo es obligatorio.'"
+							invalid-message = "'Formato de contrato inválido.'">
+						</form>
 					</div>
 					<div class="col-md-3" style="margin-left: -20px;">
 						<div>
@@ -147,7 +157,7 @@
 			</div>
 			<div class="col-md-4">
 				<small>Observaciones:</small>
-				<input type="text" class="form-control">
+				<input type="text" class="form-control" ng-model="$ctrl.observaciones">
 			</div>
 		</div>
 		<div class="row">
