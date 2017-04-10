@@ -4,7 +4,7 @@
 </div>
 <div class="modal-body" style="padding-top:20px;">
     <div class="row" ng-show="$ctrl.minimo">
-        <h4>¡Su mensualidad es de {{$ctrl.monto | currency}}!</h4>
+        <h4 class="text-center">¡Su mensualidad es de {{ $ctrl.monto | currency : "$" : 4 }}!</h4>
     </div>
 	<div class="row" style="padding-top: 15px;">
         <div class="col-md-9 form-group">
