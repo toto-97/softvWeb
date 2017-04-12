@@ -14,6 +14,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
             ContratoMaestroFactory.GetMuestraFacturasMaestroList().then(function (data) {
                 vm.pagos = data.GetMuestraFacturasMaestroListResult;
             });
+            vm.pagar = false;
         }
         else if (vm.pendientes == 2) {
             parametros = {
@@ -27,6 +28,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
             ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
                 vm.pagos = data.GetBuscaFacturasMaestroListResult;
             });
+            vm.pagar = true;
         }
         else if (vm.pendientes == 3) {
             parametros = {
@@ -40,6 +42,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
             ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
                 vm.pagos = data.GetBuscaFacturasMaestroListResult;
             });
+            vm.pagar = false;
         }
     }
 
@@ -98,86 +101,78 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
             ngNotify.set('Ya se saldo el adeudo.', 'error');
         } else {
             if (x.ACuantosPagos == "Variables") {
-                pagosMaestrosFactory.cobraSaldoMaestro(x.ContratoMaestro).then(function (data) {
-                    vm.saldo = data.GetDeepCobraSaldoContratoMaestroResult;
-                    var monto = (x.Importe - x.PagoInicial) / x.ACuantosPagos;
-                    var items = {
-                        Contrato: x.ContratoMaestro,
-                        Compania: x.IdCompania,
-                        Distribuidor: x.IdDistribuidor,
-                        Session: vm.saldo.ClvSession,
-                        Modo: 'v'
-                    };
-                    var elem1 = {
-                        PagoInicial: monto,
-                        Clv_FacturaMaestro: x.Clv_FacturaMaestro
-                    };
-                    vm.animationsEnabled = true;
-                    var modalInstance = $uibModal.open({
-                        animation: vm.animationsEnabled,
-                        ariaLabelledBy: 'modal-title',
-                        ariaDescribedBy: 'modal-body',
-                        templateUrl: 'views/corporativa/montoAbono.html',
-                        controller: 'MontoAbonoCtrl',
-                        controllerAs: '$ctrl',
-                        backdrop: 'static',
-                        keyboard: false,
-                        size: 'sm',
-                        resolve: {
-                            items: function () {
-                                return items;
-                            },
-                            elem1: function () {
-                                return elem1;
-                            },
-                            x: function () {
-                                return x;
-                            }
+                var monto = (x.Importe - x.PagoInicial) / x.ACuantosPagos;
+                var items = {
+                    Contrato: x.ContratoMaestro,
+                    Compania: x.IdCompania,
+                    Distribuidor: x.IdDistribuidor,
+                    Modo: 'v'
+                };
+                var elem1 = {
+                    PagoInicial: monto,
+                    Clv_FacturaMaestro: x.Clv_FacturaMaestro
+                };
+                vm.animationsEnabled = true;
+                var modalInstance = $uibModal.open({
+                    animation: vm.animationsEnabled,
+                    ariaLabelledBy: 'modal-title',
+                    ariaDescribedBy: 'modal-body',
+                    templateUrl: 'views/corporativa/montoAbono.html',
+                    controller: 'MontoAbonoCtrl',
+                    controllerAs: '$ctrl',
+                    backdrop: 'static',
+                    keyboard: false,
+                    size: 'sm',
+                    resolve: {
+                        items: function () {
+                            return items;
+                        },
+                        elem1: function () {
+                            return elem1;
+                        },
+                        x: function () {
+                            return x;
                         }
-                    });
+                    }
                 });
             } else {
-                pagosMaestrosFactory.cobraSaldoMaestro(x.ContratoMaestro).then(function (data) {
-                    vm.saldo = data.GetDeepCobraSaldoContratoMaestroResult;
-                    var monto = (x.Importe - x.PagoInicial) / x.ACuantosPagos;
-                    var restante = (x.Importe - x.TotalAbonado);
-                    if(restante < monto) {
-                        monto = restante;
-                    }
-                    var items = {
-                        Contrato: x.ContratoMaestro,
-                        Compania: x.IdCompania,
-                        Distribuidor: x.IdDistribuidor,
-                        Session: vm.saldo.ClvSession,
-                        Modo: 'f'
-                    };
-                    var elem1 = {
-                        PagoInicial: monto,
-                        Clv_FacturaMaestro: x.Clv_FacturaMaestro
-                    };
-                    vm.animationsEnabled = true;
-                    var modalInstance = $uibModal.open({
-                        animation: vm.animationsEnabled,
-                        ariaLabelledBy: 'modal-title',
-                        ariaDescribedBy: 'modal-body',
-                        templateUrl: 'views/corporativa/montoAbono.html',
-                        controller: 'MontoAbonoCtrl',
-                        controllerAs: '$ctrl',
-                        backdrop: 'static',
-                        keyboard: false,
-                        size: 'sm',
-                        resolve: {
-                            items: function () {
-                                return items;
-                            },
-                            elem1: function () {
-                                return elem1;
-                            },
-                            x: function () {
-                                return x;
-                            }
+                var monto = (x.Importe - x.PagoInicial) / x.ACuantosPagos;
+                var restante = (x.Importe - x.TotalAbonado);
+                if(restante < monto) {
+                    monto = restante;
+                }
+                var items = {
+                    Contrato: x.ContratoMaestro,
+                    Compania: x.IdCompania,
+                    Distribuidor: x.IdDistribuidor,
+                    Modo: 'f'
+                };
+                var elem1 = {
+                    PagoInicial: monto,
+                    Clv_FacturaMaestro: x.Clv_FacturaMaestro
+                };
+                vm.animationsEnabled = true;
+                var modalInstance = $uibModal.open({
+                    animation: vm.animationsEnabled,
+                    ariaLabelledBy: 'modal-title',
+                    ariaDescribedBy: 'modal-body',
+                    templateUrl: 'views/corporativa/montoAbono.html',
+                    controller: 'MontoAbonoCtrl',
+                    controllerAs: '$ctrl',
+                    backdrop: 'static',
+                    keyboard: false,
+                    size: 'sm',
+                    resolve: {
+                        items: function () {
+                            return items;
+                        },
+                        elem1: function () {
+                            return elem1;
+                        },
+                        x: function () {
+                            return x;
                         }
-                    });
+                    }
                 });
             }
         }

@@ -24,8 +24,35 @@ function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStora
             ngNotify.set('Inserte el abono', 'error');
         } else if (items.Modo == 'v') {
             $uibModalInstance.dismiss('cancel');
-            pagosMaestrosFactory.cobraSaldoMaestro(x.ContratoMaestro).then(function (data) {
-                vm.saldo = data.GetDeepCobraSaldoContratoMaestroResult;
+            var elem = {
+                PagoInicial: vm.abono,
+                Clv_FacturaMaestro: elem1.Clv_FacturaMaestro
+            };
+            vm.animationsEnabled = true;
+            var modalInstance = $uibModal.open({
+                animation: vm.animationsEnabled,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'views/corporativa/pagarCredito.html',
+                controller: 'PagarCreditoCtrl',
+                controllerAs: '$ctrl',
+                backdrop: 'static',
+                keyboard: false,
+                size: 'md',
+                resolve: {
+                    items: function () {
+                        return items;
+                    },
+                    elem: function () {
+                        return elem;
+                    }
+                }
+            });
+        } else if (items.Modo == 'f') {
+                if (vm.abono < vm.monto) {
+                    ngNotify.set('El abono no debe ser menor a la mensualidad.', 'error');
+                }else {
+                $uibModalInstance.dismiss('cancel');
                 var elem = {
                     PagoInicial: vm.abono,
                     Clv_FacturaMaestro: elem1.Clv_FacturaMaestro
@@ -50,40 +77,7 @@ function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStora
                         }
                     }
                 });
-            });
-        } else if (items.Modo == 'f') {
-            pagosMaestrosFactory.cobraSaldoMaestro(x.ContratoMaestro).then(function (data) {
-                vm.saldo = data.GetDeepCobraSaldoContratoMaestroResult;
-                if (vm.abono < vm.monto) {
-                    ngNotify.set('El abono no debe ser menor a la mensualidad.', 'error');
-                }else {
-                    $uibModalInstance.dismiss('cancel');
-                    var elem = {
-                        PagoInicial: vm.abono,
-                        Clv_FacturaMaestro: elem1.Clv_FacturaMaestro
-                    };
-                    vm.animationsEnabled = true;
-                    var modalInstance = $uibModal.open({
-                        animation: vm.animationsEnabled,
-                        ariaLabelledBy: 'modal-title',
-                        ariaDescribedBy: 'modal-body',
-                        templateUrl: 'views/corporativa/pagarCredito.html',
-                        controller: 'PagarCreditoCtrl',
-                        controllerAs: '$ctrl',
-                        backdrop: 'static',
-                        keyboard: false,
-                        size: 'md',
-                        resolve: {
-                            items: function () {
-                                return items;
-                            },
-                            elem: function () {
-                                return elem;
-                            }
-                        }
-                    });
-                }
-            });
+            }
         }
     }
 
@@ -96,5 +90,4 @@ function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStora
     vm.abonoTotal = abonoTotal;
     vm.cancel = cancel;
     init();
-    console.log(items);
 }
