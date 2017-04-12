@@ -10,7 +10,7 @@ angular
 						animation: true,
 						ariaLabelledBy: 'modal-title',
 						ariaDescribedBy: 'modal-body',
-						templateUrl: 'views/facturacion/modalEdoCuenta.html',
+						templateUrl: 'views/facturacion/ModalEdoCuenta.html',
 						controller: 'ModalEdoCuentaCtrl',
 						controllerAs: 'ctrl',
 						backdrop: 'static',

@@ -46,7 +46,7 @@ function ModalAgregarServicioCtrl($uibModal, $uibModalInstance, ordenesFactory, 
 					}
 					else if (vm.selectedTrabajo.Descripcion.toLowerCase().includes('camdo') || vm.selectedTrabajo.Descripcion.toLowerCase().includes('cadig') || vm.selectedTrabajo.Descripcion.toLowerCase().includes('canet')) {
 						items.clv_detalle_orden = vm.clv_detalle_orden;
-						console.log(items);
+						items.isUpdate = false;
 						var modalInstance = $uibModal.open({
 							animation: true,
 							ariaLabelledBy: 'modal-title',

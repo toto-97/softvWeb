@@ -3,7 +3,7 @@ angular
     .module('softvApp')
     .controller('CambioDomicilioOrdenesCtrl', CambioDomicilioOrdenesCtrl);
 
-function CambioDomicilioOrdenesCtrl($uibModalInstance, cajasFactory, items, $rootScope, ngNotify) {
+function CambioDomicilioOrdenesCtrl($uibModalInstance, cajasFactory, items, $rootScope, ngNotify, ordenesFactory) {
     var vm = this;
     vm.cancel = cancel;
     vm.changeCiudad = changeCiudad;
@@ -12,50 +12,56 @@ function CambioDomicilioOrdenesCtrl($uibModalInstance, cajasFactory, items, $roo
     vm.ok = ok;
 
     this.$onInit = function () {
-        cajasFactory.dameCiudades(items.Contrato).then(function (data) {
-            vm.ciudades = data.GetCiudadCAMDOListResult;
-        });
+        if (items.isUpdate) {
+
+        } else {
+            cajasFactory.dameCiudades(items.contrato).then(function (data) {
+                vm.ciudades = data.GetCiudadCAMDOListResult;
+            });
+        }
     }
 
 
     function changeCiudad() {
-        cajasFactory.dameLocalidades(items.Contrato, vm.selectedCiudad.Clv_Ciudad).then(function (data) {
+        cajasFactory.dameLocalidades(items.contrato, vm.selectedCiudad.Clv_Ciudad).then(function (data) {
             vm.localidades = data.GetLocalidadCAMDOListResult;
         });
     }
 
     function changeLocalidad() {
-        cajasFactory.dameColonias(items.Contrato, vm.selectedLocalidad.Clv_Localidad).then(function (data) {
+        cajasFactory.dameColonias(items.contrato, vm.selectedLocalidad.Clv_Localidad).then(function (data) {
             vm.colonias = data.GetColoniaCAMDOListResult;
         });
     }
 
     function changeColonia() {
-        cajasFactory.dameCalles(items.Contrato, vm.selectedColonia.CLV_COLONIA).then(function (data) {
+        cajasFactory.dameCalles(items.contrato, vm.selectedColonia.CLV_COLONIA).then(function (data) {
             vm.calles = data.GetCalleCAMDOListResult;
         });
     }
 
     function ok() {
         var objCAMDOFAC = {
-            'Clv_Sesion': items.Session,
-            'CONTRATO': items.Contrato,
-            'Clv_Calle': vm.selectedCalle.Clv_calle,
-            'NUMERO': vm.numero,
-            'Num_int': vm.numeroInterior,
-            'ENTRECALLES': vm.entreCalles,
-            'Clv_Colonia': vm.selectedColonia.CLV_COLONIA,
-            'Clv_Localidad': vm.selectedLocalidad.Clv_Localidad,
-            'TELEFONO': vm.telefono,
-            'ClvTecnica': 0,
-            'Clv_Ciudad': vm.selectedCiudad.Clv_Ciudad,
-            'Clv_Sector': 0,
-        }
-        cajasFactory.addCamdo(objCAMDOFAC).then(function (data) { });
-        cajasFactory.addAdicionales(items.Session, items.Texto, items.Contrato, items.Tipo).then(function (data) {
-            $uibModalInstance.dismiss('cancel');
-            $rootScope.$emit('realoadPagos', {});
+            clv_detalle: items.clv_detalle_orden,
+            clv_orden: items.clv_orden,
+            contrato: items.contrato,
+            calle: vm.selectedCalle.Clv_calle,
+            numero: vm.numero,
+            entrecalles: vm.entreCalles,
+            colonia: vm.selectedColonia.CLV_COLONIA,
+            telefono: vm.telefono,
+            ciudad: vm.selectedCiudad.Clv_Ciudad,
+            numinterior: vm.numeroInterior,
+            localidad: vm.selectedLocalidad.Clv_Localidad
+        };
+        console.log(objCAMDOFAC);
+        ordenesFactory.addCambioDomicilio(objCAMDOFAC).then(function (data) {
+            console.log(data);
         });
+        // cajasFactory.addAdicionales(items.Session, items.Texto, items.Contrato, items.Tipo).then(function (data) {
+        //     $uibModalInstance.dismiss('cancel');
+        //     $rootScope.$emit('realoadPagos', {});
+        // });
     }
 
     function cancel() {

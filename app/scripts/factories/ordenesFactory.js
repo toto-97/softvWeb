@@ -22,10 +22,45 @@ angular
             addBitacoraReenviar: '/Bitacora/AddReenviarEdoCuenta',
             addOrdenServicio: '/OrdSer/AddOrdSer',
             validaOrden: '/VALIDAOrdenQueja/GetDeepVALIDAOrdenQueja',
-            addDetalleOrden: '/DetOrdSer/AddDetOrdSer'
+            addDetalleOrden: '/DetOrdSer/AddDetOrdSer',
+            addCambioDomicilio: '/CAMDO/AddCAMDO'
         };
 
         var usuarioAtencion = $localStorage.currentUser.idUsuario;
+
+        factory.addCambioDomicilio = function (obj) {
+            var deferred = $q.defer();
+            var Parametros = {
+                'objCAMDO':
+                {
+                    'CLAVE': obj.clv_detalle,
+                    'Clv_Orden': obj.clv_orden,
+                    'CONTRATO': obj.contrato,
+                    'Clv_Calle': obj.calle,
+                    'NUMERO': obj.numero,
+                    'ENTRECALLES': obj.entrecalles,
+                    'Clv_Colonia': obj.colonia,
+                    'TELEFONO': obj.telefono,
+                    'ClvTecnica': 0,
+                    'Clv_Ciudad': obj.ciudad,
+                    'Num_int': obj.numinterior,
+                    'Clv_Sector': 0,
+                    'Clv_Localidad': obj.localidad
+                }
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+            $http.post(globalService.getUrl() + paths.addCambioDomicilio, JSON.stringify(Parametros), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+        };
 
         factory.addDetalleOrden = function (obj) {
             var deferred = $q.defer();
@@ -76,9 +111,8 @@ angular
 
         factory.addOrdenServicio = function (obj) {
             var deferred = $q.defer();
-            var user = $localStorage.currentUser.idUsuario;
             var Parametros = {
-                "objOrdSer":
+                'objOrdSer':
                 {
                     'Clv_TipSer': 0,
                     'Contrato': obj.contrato,
