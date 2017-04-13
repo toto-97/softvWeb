@@ -55,8 +55,8 @@
                   </div>
                   <div class="col-md-3">
 
-                    <select class="form-control input-sm" name="Estatus" ng-disabled="$ctrl.IEstatus" ng-model="$ctrl.Estatus" required-message="'Este campo es obligatorio.'" required validate-on="dirty" ng-change="$ctrl.CambiaEstatus()" ng-options="item as item.Nombre for item in $ctrl.Status track by item.Clave">
-                                      <option value="">Selecciona estatus</option>
+                    <select class="form-control input-sm" name="Estatus" ng-disabled="$ctrl.IEstatus" ng-model="$ctrl.Estatus" ng-class="$ctrl.ISelectEstatus" ng-change="$ctrl.CambiaEstatus()" ng-options="item as item.Nombre for item in $ctrl.Status track by item.Clave">
+                                     <!-- <option value="">Selecciona estatus</option>-->
                         </select>
                   </div>
                 </div>
@@ -246,8 +246,8 @@
           </div>
           <div class="col-md-4">
             <label class="checkbox-inline checkbox-styled checkbox-success">
-           														<input type="checkbox" ng-model="$ctrl.Visita" value="option3" ng-checked="$ctrl.VisitaC"><span>Requirió visita</span>
-           													</label> </div>
+                                      <input type="checkbox" ng-model="$ctrl.Visita" value="option3" ng-checked=""><span>Requirió visita</span>
+                                    </label> </div>
           <div class="col-md-12">
             <b> Problema real:</b>
             <textarea class="form-control input-sm" name="Problema" required-message="'Este campo es obligatorio.'" required validate-on="dirty" ng-disabled="$ctrl.Iprobreal" ng-model="$ctrl.ProblemaReal" placeholder="Redacta brevemente el problema real que derivo la queja">
@@ -261,3 +261,4 @@
 </div>
 </form>
 </div>
+
