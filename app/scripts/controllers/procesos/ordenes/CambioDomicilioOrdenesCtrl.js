@@ -13,7 +13,42 @@ function CambioDomicilioOrdenesCtrl($uibModalInstance, cajasFactory, items, $roo
 
     this.$onInit = function () {
         if (items.isUpdate) {
-
+            cajasFactory.dameCiudades(items.contrato).then(function (data) {
+                vm.ciudades = data.GetCiudadCAMDOListResult;
+                vm.ciudades.forEach(function (item, index) {
+                    if (item.Clv_Ciudad == items.datosCamdo.Clv_Ciudad) {
+                        vm.selectedCiudad = vm.ciudades[index];
+                    }
+                });
+            });
+            cajasFactory.dameLocalidades(items.contrato, items.datosCamdo.Clv_Ciudad).then(function (data) {
+                vm.localidades = data.GetLocalidadCAMDOListResult;
+                vm.localidades.forEach(function (item, index) {
+                    if (item.Clv_Localidad == items.datosCamdo.Clv_Localidad) {
+                        vm.selectedLocalidad = vm.localidades[index];
+                    }
+                });
+            });
+            cajasFactory.dameColonias(items.contrato, items.datosCamdo.Clv_Localidad).then(function (data) {
+                vm.colonias = data.GetColoniaCAMDOListResult;
+                vm.colonias.forEach(function (item, index) {
+                    if (item.CLV_COLONIA == items.datosCamdo.Clv_Colonia) {
+                        vm.selectedColonia = vm.colonias[index];
+                    }
+                });
+            });
+            cajasFactory.dameCalles(items.contrato, items.datosCamdo.Clv_Colonia).then(function (data) {
+                vm.calles = data.GetCalleCAMDOListResult;
+                vm.calles.forEach(function (item, index) {
+                    if (item.Clv_calle == items.datosCamdo.Clv_Calle) {
+                        vm.selectedCalle = vm.calles[index];
+                    }
+                });
+            });
+            vm.numero = items.datosCamdo.NUMERO;
+            vm.numeroInterior = items.datosCamdo.Num_int;
+            vm.telefono = items.datosCamdo.TELEFONO;
+            vm.entreCalles = items.datosCamdo.ENTRECALLES;
         } else {
             cajasFactory.dameCiudades(items.contrato).then(function (data) {
                 vm.ciudades = data.GetCiudadCAMDOListResult;
@@ -54,14 +89,10 @@ function CambioDomicilioOrdenesCtrl($uibModalInstance, cajasFactory, items, $roo
             numinterior: vm.numeroInterior,
             localidad: vm.selectedLocalidad.Clv_Localidad
         };
-        console.log(objCAMDOFAC);
         ordenesFactory.addCambioDomicilio(objCAMDOFAC).then(function (data) {
-            console.log(data);
+            $uibModalInstance.dismiss('cancel');
+            $rootScope.$emit('actualiza_tablaServicios');
         });
-        // cajasFactory.addAdicionales(items.Session, items.Texto, items.Contrato, items.Tipo).then(function (data) {
-        //     $uibModalInstance.dismiss('cancel');
-        //     $rootScope.$emit('realoadPagos', {});
-        // });
     }
 
     function cancel() {

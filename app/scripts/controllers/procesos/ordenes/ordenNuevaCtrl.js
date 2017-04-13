@@ -10,6 +10,7 @@ function OrdenNuevaCtrl($state, ngNotify, $stateParams, $uibModal, ordenesFactor
 	vm.status = 'P';
 	vm.fecha = new Date();
 	vm.observaciones = '';
+	vm.detalleTrabajo = detalleTrabajo;
 
 
 	function agregar() {
@@ -56,7 +57,7 @@ function OrdenNuevaCtrl($state, ngNotify, $stateParams, $uibModal, ordenesFactor
 			ngNotify.set('Coloque un contrato válido', 'error');
 			return;
 		}
-		if(!vm.contrato.includes('-')){
+		if (!vm.contrato.includes('-')) {
 			ngNotify.set('Coloque un contrato válido', 'error');
 			return;
 		}
@@ -90,6 +91,17 @@ function OrdenNuevaCtrl($state, ngNotify, $stateParams, $uibModal, ordenesFactor
 		vm.clv_detalle = detalle;
 	});
 
+	$rootScope.$on('actualiza_tablaServicios', function () {
+		actualizarTablaServicios();
+	});
+
+	function actualizarTablaServicios() {
+		ordenesFactory.consultaTablaServicios(vm.clv_orden).then(function (data) {
+			vm.trabajosTabla = data.GetBUSCADetOrdSerListResult;
+			console.log(data);
+		});
+	}
+
 	function datosContrato(contrato) {
 		ordenesFactory.serviciosCliente(contrato).then(function (data) {
 			vm.servicios = data.GetDameSerDelCliFacListResult;
@@ -111,5 +123,40 @@ function OrdenNuevaCtrl($state, ngNotify, $stateParams, $uibModal, ordenesFactor
 			keyboard: false,
 			size: 'lg'
 		});
+	}
+
+	function detalleTrabajo(trabajo) {
+		switch (trabajo) {
+			case 'Domicilio':
+				ordenesFactory.consultaCambioDomicilio(vm.clv_detalle, vm.clv_orden, vm.contratoBueno).then(function (data) {
+					var items = {
+						clv_detalle_orden: vm.clv_detalle,
+						clv_orden: vm.clv_orden,
+						contrato: vm.contratoBueno,
+						isUpdate: true,
+						datosCamdo: data.GetDeepCAMDOResult
+					};
+					var modalInstance = $uibModal.open({
+						animation: true,
+						ariaLabelledBy: 'modal-title',
+						ariaDescribedBy: 'modal-body',
+						templateUrl: 'views/facturacion/modalCambioDomicilio.html',
+						controller: 'CambioDomicilioOrdenesCtrl',
+						controllerAs: 'ctrl',
+						backdrop: 'static',
+						keyboard: false,
+						size: 'md',
+						resolve: {
+							items: function () {
+								return items;
+							}
+						}
+					});
+				});
+				break;
+
+			default:
+				break;
+		}
 	}
 }

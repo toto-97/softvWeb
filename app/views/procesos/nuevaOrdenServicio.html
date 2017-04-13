@@ -176,6 +176,21 @@
 					<th>Recibir</th>
 					<th>Eliminar</th>
 				</thead>
+				<tbody>
+					<tr ng-repeat="x in $ctrl.trabajosTabla">
+						<td>{{ x.Descripcion }}</td>
+						<td><button class="btn btn-default btn-sm" ng-if="x.Accion != ''" ng-click="$ctrl.detalleTrabajo(x.Accion)">{{ x.Accion }}</button></td>
+						<td>{{ x.Obs }}</td>
+						<td>
+							<label class="col-md-6 col-md-offset-2 checkbox-inline checkbox-styled">
+								<input type="checkbox" name="inlineRadioOptions" ng-model="x.SeRealiza"><span></span>
+							</label>
+						</td>
+						<td>
+							<button type="button" class="btn ink-reaction btn-xs btn-floating-action btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Elimina queja" ng-click="$ctrl.EliminaQueja(x);"><i class="md md-delete"></i></button>
+						</td>
+					</tr>
+				</tbody>
 			</table>
 		</div>
 	</div>

@@ -23,10 +23,75 @@ angular
             addOrdenServicio: '/OrdSer/AddOrdSer',
             validaOrden: '/VALIDAOrdenQueja/GetDeepVALIDAOrdenQueja',
             addDetalleOrden: '/DetOrdSer/AddDetOrdSer',
-            addCambioDomicilio: '/CAMDO/AddCAMDO'
+            addCambioDomicilio: '/CAMDO/AddCAMDO',
+            consultaTablaServicios: '/BUSCADetOrdSer/GetBUSCADetOrdSerList',
+            consultaCambioDomicilio: '/CAMDO/GetDeepCAMDO',
+            getCableModemsCli: '/MuestraGuaBor/GetMUESTRACABLEMODEMSDELCLI_porOpcion'
         };
 
         var usuarioAtencion = $localStorage.currentUser.idUsuario;
+
+        factory.getCableModemsCli = function (contrato) {
+            var deferred = $q.defer();
+            var Parametros = {
+                'Contrato': contrato,
+                'Status': 'P',
+                'Op': 14
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+            $http.post(globalService.getUrl() + paths.getCableModemsCli, JSON.stringify(Parametros), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+        };
+
+        factory.consultaCambioDomicilio = function (detalle, orden, contrato) {
+            var deferred = $q.defer();
+            var Parametros = {
+                'CLAVE': detalle,
+                'Clv_Orden': orden,
+                'CONTRATO': contrato
+
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+            $http.post(globalService.getUrl() + paths.consultaCambioDomicilio, JSON.stringify(Parametros), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+        };
+
+        factory.consultaTablaServicios = function (orden) {
+            var deferred = $q.defer();
+            var Parametros = {
+                'Clv_Orden': orden
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+            $http.post(globalService.getUrl() + paths.consultaTablaServicios, JSON.stringify(Parametros), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+        };
 
         factory.addCambioDomicilio = function (obj) {
             var deferred = $q.defer();

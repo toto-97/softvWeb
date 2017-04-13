@@ -64,6 +64,35 @@ function ModalAgregarServicioCtrl($uibModal, $uibModalInstance, ordenesFactory, 
 							}
 						});
 					}
+					else if (vm.selectedTrabajo.Descripcion.toLowerCase().includes('ipaqu')
+						|| vm.selectedTrabajo.Descripcion.toLowerCase().includes('bpaqu')
+						|| vm.selectedTrabajo.Descripcion.toLowerCase().includes('dpaqu')
+						|| vm.selectedTrabajo.Descripcion.toLowerCase().includes('rpaqu')
+						|| vm.selectedTrabajo.Descripcion.toLowerCase().includes('ipaqut')
+						|| vm.selectedTrabajo.Descripcion.toLowerCase().includes('bpaqt')
+						|| vm.selectedTrabajo.Descripcion.toLowerCase().includes('dpaqt')
+						|| vm.selectedTrabajo.Descripcion.toLowerCase().includes('rpaqt')
+						|| vm.selectedTrabajo.Descripcion.toLowerCase().includes('bpaad')
+						|| vm.selectedTrabajo.Descripcion.toLowerCase().includes('bsedi')) {
+						items.clv_detalle_orden = vm.clv_detalle_orden;
+						var modalInstance = $uibModal.open({
+							animation: true,
+							ariaLabelledBy: 'modal-title',
+							ariaDescribedBy: 'modal-body',
+							templateUrl: 'views/procesos/bajaServicios.html',
+							controller: 'BajaServiciosCtrl',
+							controllerAs: 'ctrl',
+							backdrop: 'static',
+							keyboard: false,
+							size: 'md',
+							resolve: {
+								items: function () {
+									return items;
+								}
+							}
+						});
+					}
+					$uibModalInstance.dismiss('cancel');
 				});
 			}
 		});
