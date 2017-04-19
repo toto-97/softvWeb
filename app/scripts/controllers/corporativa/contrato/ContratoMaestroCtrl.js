@@ -5,7 +5,6 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory) {
 
   function initialData() {
     ContratoMaestroFactory.GetContratoList().then(function (data) {
-      console.log(data);
       vm.Contratos = data.GetContratos_CSResult;
       ContratoMaestroFactory.GetDistribuidores().then(function (data) {
         vm.Distribuidores = data.GetDistribuidoresResult;
