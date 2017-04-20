@@ -11,6 +11,13 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFacto
 	vm.MuestraBanco = false;
 	vm.MuestraAutorizacion = false;
 
+
+
+ 
+
+
+
+
 	this.$onInit = function () {
 		corporativoFactory.singleContrato($stateParams.id).then(function (data) {
 			vm.contratoMaestro = data.GetRelContratosResult[0];
@@ -154,7 +161,7 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFacto
 			controllerAs: '$ctrl',
 			backdrop: 'static',
 			keyboard: false,
-			size: "md",
+			size: "lg",
 			resolve: {
 				detalle: function () {
 					return detalle;

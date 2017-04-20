@@ -11,8 +11,7 @@ angular
 		'blockUI',
 		'angularValidator',
 		'permission', 'permission.ui',
-		'ui.mask',
-		'dndLists'
+		'ui.mask','dndLists'
 
 	])
 	.config(['$provide', '$urlRouterProvider', '$httpProvider', 'cfpLoadingBarProvider', '$qProvider', 'blockUIConfig', function ($provide, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $qProvider, blockUIConfig) {
