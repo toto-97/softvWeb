@@ -29,38 +29,14 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 			ngNotify.set('Los campos no deben de ir nulos, negativos o en 0', 'error');
 		}else {
 			var objPagar = {
-				'contrato': items.Contrato,
-				'credito':metodo,
-				'cajera': $localStorage.currentUser.usuario,
-				'maquina': $localStorage.currentUser.maquina,
-				'sucursal': $localStorage.currentUser.sucursal,
-				'compania': items.Compania,
-				'distribuidor': items.Distribuidor,
-				'sessionPadre': items.SessionPadre,
-				'tipo': 0,
-				'monto': vm.monto,
-				'GLOEFECTIVO2': 0,
-				'GLOCHEQUE2': 0,
-				'GLOCLV_BANCOCHEQUE2': 0,
-				'NUMEROCHEQUE2': '',
-				'GLOTARJETA2': 0,
-				'GLOCLV_BANCOTARJETA2': 0,
-				'NUMEROTARJETA2': '',
-				'TARJETAAUTORIZACION2': '',
-				'CLV_Nota2': 0,
-				'GLONOTA3': 0,
-				'token': $localStorage.currentUser.token1,
-				'NoPagos' : vm.numeroPagos,
-				'PagoInicial': vm.pagoInicial
+				"ClvFacturaMaestro": items.Clv_FacturaMaestro,
+				"Credito": metodo,
+				"NoPago": vm.numeroPagos,
+				"PagoInicial": vm.pagoInicial
 			};
 			console.log(objPagar);
-			pagosMaestrosFactory.grabaFactura(objPagar).then(function(dataGraba) {
-				vm.clvCactura = dataGraba.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro;
-				var elem = {
-					'NoPagos' : vm.numeroPagos,
-					'PagoInicial': vm.pagoInicial,
-					'Clv_FacturaMaestro': vm.clvCactura
-				};
+			pagosMaestrosFactory.actFactura(objPagar).then(function(dataGraba) {
+				console.log(dataGraba.AddActualizaFacturaMaestroResult);
 				$uibModalInstance.dismiss('cancel');
 				vm.animationsEnabled = true;
 				var modalInstance = $uibModal.open({
@@ -79,9 +55,6 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 						},
 						metodo: function() {
 							return metodo;
-						},
-						elem: function() {
-							return elem;
 						}
 					}
 				});
@@ -94,39 +67,15 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 			ngNotify.set('Los campos no deben de ir nulos, negativos o en 0', 'error');
 		}else {
 			var objPagar = {
-				'contrato': items.Contrato,
-				'credito':metodo,
-				'cajera': $localStorage.currentUser.usuario,
-				'maquina': $localStorage.currentUser.maquina,
-				'sucursal': $localStorage.currentUser.sucursal,
-				'compania': items.Compania,
-				'distribuidor': items.Distribuidor,
-				'sessionPadre': items.SessionPadre,
-				'tipo': 0,
-				'monto': vm.monto,
-				'GLOEFECTIVO2': 0,
-				'GLOCHEQUE2': 0,
-				'GLOCLV_BANCOCHEQUE2': 0,
-				'NUMEROCHEQUE2': '',
-				'GLOTARJETA2': 0,
-				'GLOCLV_BANCOTARJETA2': 0,
-				'NUMEROTARJETA2': '',
-				'TARJETAAUTORIZACION2': '',
-				'CLV_Nota2': 0,
-				'GLONOTA3': 0,
-				'token': $localStorage.currentUser.token1,
-				'NoPagos' : 0,
-				'PagoInicial': vm.abono
+				"ClvFacturaMaestro": items.Clv_FacturaMaestro,
+				"Credito": metodo,
+				"NoPago": 0,
+				"PagoInicial": vm.pagoInicial
 			};
 			console.log(objPagar);
-			pagosMaestrosFactory.grabaFactura(objPagar).then(function(dataGraba) {
+			pagosMaestrosFactory.actFactura(objPagar).then(function(dataGraba) {
 				console.log(dataGraba);
-				vm.clvCactura = dataGraba.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro;
-				var elem = {
-					'NoPagos' : 0,
-					'PagoInicial': vm.abono,
-					'Clv_FacturaMaestro': vm.clvCactura
-				};
+				console.log(dataGraba.AddActualizaFacturaMaestroResult);
 				console.log(elem);
 				$uibModalInstance.dismiss('cancel');
 				vm.animationsEnabled = true;
@@ -146,9 +95,6 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 						},
 						metodo: function() {
 							return metodo;
-						},
-						elem: function() {
-							return elem;
 						}
 					}
 				});
@@ -181,5 +127,5 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 	vm.guardarVariable = guardarVariable;
 	vm.operacion = operacion;
     vm.cancel = cancel;
-	vm.monto = items.Monto;
+	vm.monto = items.Importe;
 }

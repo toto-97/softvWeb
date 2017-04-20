@@ -15,10 +15,17 @@ function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStora
 
     function abonoTotal() {
         var pagar = x.Importe - x.TotalAbonado;
-        if (vm.abono > pagar) {
-            vm.abono = pagar;
+        if (vm.minimo == false) {
+            if (vm.abono > pagar) {
+                vm.abono = pagar;
+            }
+        } else {
+            if (vm.abono > vm.monto) {
+                vm.abono = vm.monto;
+            }
         }
     }
+    
     function ok() {
         if (vm.abono == undefined || vm.abono == null || vm.abono == 0 || vm.abono < 0) {
             ngNotify.set('Inserte el abono', 'error');

@@ -10,7 +10,9 @@ angular
 			dimeSiYaGrabeFacMaestro: '/DimeSiYaGrabeUnaFacMaestro/GetDimeSiYaGrabeUnaFacMaestro',
 			nuePagoEfectivoMaestro: '/NUEPago_En_EfectivoDetMaestro/AddNUEPago_En_EfectivoDetMaestro',
 			nuePagoEfectivoPago: '/NUEPago_En_EfectivoDetPago/AddNUEPago_En_EfectivoDetPago',
-			pagoGrabaFactura: '/GuardaPagoFacturaMaestro/GetGuardaPagoFacturaMaestro'
+			pagoGrabaFactura: '/GuardaPagoFacturaMaestro/GetGuardaPagoFacturaMaestro',
+			getMedios: '/ObtieneMediosPago/GetObtieneMediosPagoList',
+			actFactura: '/ActualizaFacturaMaestro/AddActualizaFacturaMaestro'
 		};
 
 		factory.cobraSaldoMaestro = function(contrato) {
@@ -189,6 +191,44 @@ angular
 				}
 			};
 			$http.post(globalService.getUrl() + paths.pagoGrabaFactura, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.getMedios = function() {
+			var deferred = $q.defer();
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.get(globalService.getUrl() + paths.getMedios, config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.actFactura = function(objPagar) {
+			var deferred = $q.defer();
+			var Parametros = {
+				"ClvFacturaMaestro": objPagar.ClvFacturaMaestro,
+				"Credito": objPagar.Credito,
+				"NoPago": objPagar.NoPago,
+				"PagoInicial": objPagar.PagoInicial
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.actFactura, JSON.stringify(Parametros), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response);

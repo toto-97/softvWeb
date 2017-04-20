@@ -97,10 +97,30 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     }
 
     function PagarCredito(x) {
+        console.log(x);
         if (x.Importe <= x.TotalAbonado) {
             ngNotify.set('Ya se saldo el adeudo.', 'error');
         } else {
-            if (x.ACuantosPagos == "Variables") {
+            if (x.ACuantosPagos == "N/A") {
+                vm.animationsEnabled = true;
+                var modalInstance = $uibModal.open({
+                    animation: vm.animationsEnabled,
+                    ariaLabelledBy: 'modal-title',
+                    ariaDescribedBy: 'modal-body',
+                    templateUrl: 'views/corporativa/abrirPago.html',
+                    controller: 'AbrirPagoCtrl',
+                    controllerAs: '$ctrl',
+                    backdrop: 'static',
+                    keyboard: false,
+                    size: 'sm',
+                    resolve: {
+                        items: function () {
+                            return x;
+                        }
+                    }
+                });
+            }
+            else if (x.ACuantosPagos == "Variables") {
                 var monto = (x.Importe - x.PagoInicial) / x.ACuantosPagos;
                 var items = {
                     Contrato: x.ContratoMaestro,
