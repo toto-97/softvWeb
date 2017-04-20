@@ -22,15 +22,27 @@ angular
 		cfpLoadingBarProvider.includeSpinner = false;
 		$qProvider.errorOnUnhandledRejections(false);
 		blockUIConfig.templateUrl = 'views/components/loading.html';
-		$provide.factory('ErrorHttpInterceptor', function ($q, $injector) {
+
+		$provide.factory('ErrorHttpInterceptor', function ($q, $injector, $localStorage, $location) {
 			function notifyError(rejection) {
 				var notify = $injector.get('ngNotify');
+				if (rejection.data === 'Acceso no autorizado, favor de validar autenticación') {
+					delete $localStorage.currentUser;
+					notify.set('Acceso no autorizado, por favor inicia sesión nuevamente.', {
+						type: 'error',
+						duration: 4000
+					});
+					$location.path('/auth/');
+					return;
+				}
+				
 				var content = '¡Se ha generado un error! \n' + rejection.data;
 				notify.set(content, {
 					type: 'error',
 					duration: 4000
 				});
 			}
+
 			return {
 				requestError: function (rejection) {
 					notifyError(rejection);

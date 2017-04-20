@@ -19,10 +19,194 @@ angular
             getColoniaCamdo: '/CAMDO/GetllenaColoniaCamdoList',
             getCalleCamdo: '/CAMDO/GetllenaCalleCamdoList',
             addBitacoraReproceso: '/Bitacora/AddReprocesarEdoCuenta',
-            addBitacoraReenviar: '/Bitacora/AddReenviarEdoCuenta'
+            addBitacoraReenviar: '/Bitacora/AddReenviarEdoCuenta',
+            addOrdenServicio: '/OrdSer/AddOrdSer',
+            validaOrden: '/VALIDAOrdenQueja/GetDeepVALIDAOrdenQueja',
+            addDetalleOrden: '/DetOrdSer/AddDetOrdSer',
+            addCambioDomicilio: '/CAMDO/AddCAMDO',
+            consultaTablaServicios: '/BUSCADetOrdSer/GetBUSCADetOrdSerList',
+            consultaCambioDomicilio: '/CAMDO/GetDeepCAMDO',
+            getCableModemsCli: '/MuestraGuaBor/GetMUESTRACABLEMODEMSDELCLI_porOpcion'
         };
 
         var usuarioAtencion = $localStorage.currentUser.idUsuario;
+
+        factory.getCableModemsCli = function (contrato) {
+            var deferred = $q.defer();
+            var Parametros = {
+                'Contrato': contrato,
+                'Status': 'P',
+                'Op': 14
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+            $http.post(globalService.getUrl() + paths.getCableModemsCli, JSON.stringify(Parametros), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+        };
+
+        factory.consultaCambioDomicilio = function (detalle, orden, contrato) {
+            var deferred = $q.defer();
+            var Parametros = {
+                'CLAVE': detalle,
+                'Clv_Orden': orden,
+                'CONTRATO': contrato
+
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+            $http.post(globalService.getUrl() + paths.consultaCambioDomicilio, JSON.stringify(Parametros), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+        };
+
+        factory.consultaTablaServicios = function (orden) {
+            var deferred = $q.defer();
+            var Parametros = {
+                'Clv_Orden': orden
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+            $http.post(globalService.getUrl() + paths.consultaTablaServicios, JSON.stringify(Parametros), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+        };
+
+        factory.addCambioDomicilio = function (obj) {
+            var deferred = $q.defer();
+            var Parametros = {
+                'objCAMDO':
+                {
+                    'CLAVE': obj.clv_detalle,
+                    'Clv_Orden': obj.clv_orden,
+                    'CONTRATO': obj.contrato,
+                    'Clv_Calle': obj.calle,
+                    'NUMERO': obj.numero,
+                    'ENTRECALLES': obj.entrecalles,
+                    'Clv_Colonia': obj.colonia,
+                    'TELEFONO': obj.telefono,
+                    'ClvTecnica': 0,
+                    'Clv_Ciudad': obj.ciudad,
+                    'Num_int': obj.numinterior,
+                    'Clv_Sector': 0,
+                    'Clv_Localidad': obj.localidad
+                }
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+            $http.post(globalService.getUrl() + paths.addCambioDomicilio, JSON.stringify(Parametros), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+        };
+
+        factory.addDetalleOrden = function (obj) {
+            var deferred = $q.defer();
+            var Parametros = {
+                'objDetOrdSer':
+                {
+                    'Clv_Orden': obj.clave,
+                    'Clv_Trabajo': obj.trabajo,
+                    'Obs': obj.observaciones,
+                    'SeRealiza': obj.seRealiza,
+                }
+
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+            $http.post(globalService.getUrl() + paths.addDetalleOrden, JSON.stringify(Parametros), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+        };
+
+        factory.validaOrden = function (contrato, servicio) {
+            var deferred = $q.defer();
+            var Parametros = {
+                'Contrato': contrato,
+                'TipSer': servicio,
+                'Usuario': $localStorage.currentUser.usuario
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+            $http.post(globalService.getUrl() + paths.validaOrden, JSON.stringify(Parametros), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+        };
+
+        factory.addOrdenServicio = function (obj) {
+            var deferred = $q.defer();
+            var Parametros = {
+                'objOrdSer':
+                {
+                    'Clv_TipSer': 0,
+                    'Contrato': obj.contrato,
+                    'Fec_Sol': obj.fecha,
+                    'Fec_Eje': '',
+                    'Visita1': '',
+                    'Visita2': '',
+                    'Status': 'P',
+                    'Clv_Tecnico': 0,
+                    'IMPRESA': 0,
+                    'Clv_FACTURA': 0,
+                    'Obs': obj.observaciones,
+                    'ListadeArticulos': ''
+                }
+
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+            $http.post(globalService.getUrl() + paths.addOrdenServicio, JSON.stringify(Parametros), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+        };
 
         factory.getPlazas = function () {
             var deferred = $q.defer();

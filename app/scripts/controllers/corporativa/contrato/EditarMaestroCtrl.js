@@ -1,68 +1,78 @@
 'use strict';
+angular.module('softvApp').controller('EditarMaestroCtrl', EditarMaestroCtrl);
 
-function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ngNotify, $state, $stateParams) {
-	this.$onInit = function() {
-		corporativoFactory.singleContrato($stateParams.id).then(function(data) {
+function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactory, $filter, ngNotify, $state, $stateParams) {
+	var vm = this;
+	vm.abrirContratos = abrirContratos;
+	vm.guardarContrato = guardarContrato;
+	vm.CambioTipoPago = CambioTipoPago;
+	vm.MuestraReferencia = false;
+	vm.CambioTipo = CambioTipo;
+	vm.MuestraBanco = false;
+	vm.MuestraAutorizacion = false;
+
+	this.$onInit = function () {
+		corporativoFactory.singleContrato($stateParams.id).then(function (data) {
 			vm.contratoMaestro = data.GetRelContratosResult[0];
-			corporativoFactory.getDistribuidores().then(function(data) {
+			corporativoFactory.getDistribuidores().then(function (data) {
 				vm.distribuidores = data.GetDistribuidoresResult;
-				vm.distribuidores.forEach(function(entry, index) {
+				vm.distribuidores.forEach(function (entry, index) {
 					if (entry.Clv_Plaza == vm.contratoMaestro.Distribuidor) {
 						vm.distribuidor = vm.distribuidores[index];
 					}
 				});
 			});
-			corporativoFactory.getEstados().then(function(data) {
+			corporativoFactory.getEstados().then(function (data) {
 				vm.estados = data.GetMuestraEstadoResult;
-				vm.estados.forEach(function(estado, index) {
+				vm.estados.forEach(function (estado, index) {
 					if (estado.Clv_Estado == vm.contratoMaestro.Estado) {
 						vm.estado = vm.estados[index];
 					}
 				});
 			});
-			corporativoFactory.getCiudades(vm.contratoMaestro.Estado).then(function(data) {
+			corporativoFactory.getCiudades(vm.contratoMaestro.Estado).then(function (data) {
 				vm.ciudades = data.GetMuestraCiudadResult;
-				vm.ciudades.forEach(function(entry, index) {
+				vm.ciudades.forEach(function (entry, index) {
 					if (entry.Clv_Ciudad == vm.contratoMaestro.Ciudad) {
 						vm.ciudad = vm.ciudades[index];
 					}
 				});
 			});
-			corporativoFactory.getLocalidades(vm.contratoMaestro.Ciudad).then(function(data) {
+			corporativoFactory.getLocalidades(vm.contratoMaestro.Ciudad).then(function (data) {
 				vm.localidades = data.GetMuestraLocalidadResult;
-				vm.localidades.forEach(function(entry, index) {
+				vm.localidades.forEach(function (entry, index) {
 					if (entry.Clv_Localidad == vm.contratoMaestro.Localidad) {
 						vm.localidad = vm.localidades[index];
 					}
 				});
 			});
-			corporativoFactory.getColonias(vm.contratoMaestro.Localidad).then(function(data) {
+			corporativoFactory.getColonias(vm.contratoMaestro.Localidad).then(function (data) {
 				vm.colonias = data.GetMuestraColoniaResult;
-				vm.colonias.forEach(function(entry, index) {
+				vm.colonias.forEach(function (entry, index) {
 					if (entry.clv_colonia == vm.contratoMaestro.Colonia) {
 						vm.colonia = vm.colonias[index];
 					}
 				});
 			});
-			corporativoFactory.getCalles(vm.contratoMaestro.Colonia, vm.contratoMaestro.Localidad).then(function(data) {
+			corporativoFactory.getCalles(vm.contratoMaestro.Colonia, vm.contratoMaestro.Localidad).then(function (data) {
 				vm.calles = data.GetMuestraCalleResult;
-				vm.calles.forEach(function(entry, index) {
+				vm.calles.forEach(function (entry, index) {
 					if (entry.Clv_Calle == vm.contratoMaestro.Calle) {
 						vm.calle = vm.calles[index];
 					}
 				});
 			});
-			corporativoFactory.getCortes().then(function(data) {
+			corporativoFactory.getCortes().then(function (data) {
 				vm.cortes = data.GetTiposCortesClientesListResult;
-				vm.cortes.forEach(function(entry, index) {
+				vm.cortes.forEach(function (entry, index) {
 					if (entry.Id == vm.contratoMaestro.TipoCorteCli) {
 						vm.tipocorte = vm.cortes[index];
 					}
 				});
 			});
-			corporativoFactory.getTipoPagos().then(function(data) {
+			corporativoFactory.getTipoPagos().then(function (data) {
 				vm.tipoPagos = data.GetTipoPagosFacturasListResult;
-				vm.tipoPagos.forEach(function(entry, index) {
+				vm.tipoPagos.forEach(function (entry, index) {
 					if (entry.Id == vm.contratoMaestro.TipoPago) {
 						vm.formapago = vm.tipoPagos[index];
 						if (vm.formapago.Cuenta == true) {
@@ -73,6 +83,20 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
 					}
 				});
 			});
+			cajasFactory.dameBancos().then(function (data) {
+				vm.bancos = data.GetMuestraBancosListResult;
+				if (vm.contratoMaestro.ClvBanco) {
+					vm.MuestraBanco = true;
+					vm.bancos.forEach(function (entry, index) {
+						if (vm.contratoMaestro.ClvBanco == entry.Clave) {
+							vm.selectedBanco = vm.bancos[index];
+						}
+					});
+				}
+			});
+			if (vm.contratoMaestro.Referencia2) {
+				vm.MuestraAutorizacion = true;
+			}
 			if (vm.contratoMaestro.Prepago) {
 				vm.prepago = 'prepago';
 				vm.DesReactiva = true;
@@ -106,6 +130,7 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
 			var pattern = /(\d{2})(\d{2})(\d{4})/;
 			date = new Date(date.replace(pattern, '$2/$1/$3'));
 			vm.fecha = date;
+			vm.autorizacion = vm.contratoMaestro.Referencia2;
 		});
 	}
 
@@ -131,7 +156,7 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
 			keyboard: false,
 			size: "md",
 			resolve: {
-				detalle: function() {
+				detalle: function () {
 					return detalle;
 				}
 			}
@@ -139,6 +164,26 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
 	}
 
 	function guardarContrato() {
+		if (vm.MuestraBanco) {
+			if (!vm.selectedBanco) {
+				ngNotify.set('Selecciona un banco por favor.', 'error');
+				return;
+			} else {
+				vm.clvBanco = vm.selectedBanco.Clave;
+			}
+		} else {
+			vm.clvBanco = 0;
+		}
+		if (vm.MuestraAutorizacion) {
+			if (!vm.autorizacion) {
+				ngNotify.set('Indroduce el número de autorización.', 'error');
+				return;
+			} else {
+				vm.Referencia2 = vm.autorizacion;
+			}
+		} else {
+			vm.Referencia2 = '';
+		}
 		if (vm.prepago == 'prepago') {
 			vm.prep = 1;
 			vm.posp = 0;
@@ -188,11 +233,12 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
 				'ReactivarMan': vm.reacMan,
 				'ReactivarPagoFac': vm.reacPag,
 				'TipoPago': vm.formapago.Id,
-				'Referencia': vm.Referencia
+				'Referencia': vm.Referencia,
+				'Referencia2': vm.Referencia2,
+				'ClvBanco': vm.clvBanco
 			}
 		};
-		corporativoFactory.updateContrato(contrato).then(function(data) {
-			console.log(data);
+		corporativoFactory.updateContrato(contrato).then(function (data) {
 			ngNotify.set('Contrato maestro actualizado correctamente.', 'success');
 		});
 	}
@@ -209,19 +255,20 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
 	}
 
 	function CambioTipo(x) {
-
 		if (x.Cuenta == true) {
 			vm.MuestraReferencia = true;
 		} else {
 			vm.MuestraReferencia = false;
 		}
+		if (x.Descripcion == 'Tarjeta') {
+			vm.MuestraBanco = true;
+			vm.MuestraAutorizacion = true;
+		} else if (x.Descripcion == 'Cheque') {
+			vm.MuestraBanco = true;
+			vm.MuestraAutorizacion = false;
+		} else {
+			vm.MuestraBanco = false;
+			vm.MuestraAutorizacion = false;
+		}
 	}
-
-	var vm = this;
-	vm.abrirContratos = abrirContratos;
-	vm.guardarContrato = guardarContrato;
-	vm.CambioTipoPago = CambioTipoPago;
-	vm.MuestraReferencia = false;
-	vm.CambioTipo = CambioTipo;
 }
-angular.module('softvApp').controller('EditarMaestroCtrl', EditarMaestroCtrl);

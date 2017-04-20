@@ -1,18 +1,21 @@
 'use strict';
 
-function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ngNotify, $state) {
-	this.$onInit = function() {
-		corporativoFactory.getDistribuidores().then(function(data) {
+function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactory, $filter, ngNotify, $state) {
+	this.$onInit = function () {
+		corporativoFactory.getDistribuidores().then(function (data) {
 			vm.distribuidores = data.GetDistribuidoresResult;
 		});
-		corporativoFactory.getEstados().then(function(data) {
+		corporativoFactory.getEstados().then(function (data) {
 			vm.estados = data.GetMuestraEstadoResult;
 		});
-		corporativoFactory.getCortes().then(function(data) {
+		corporativoFactory.getCortes().then(function (data) {
 			vm.cortes = data.GetTiposCortesClientesListResult;
 		});
-		corporativoFactory.getTipoPagos().then(function(data) {
+		corporativoFactory.getTipoPagos().then(function (data) {
 			vm.tipoPagos = data.GetTipoPagosFacturasListResult;
+		});
+		cajasFactory.dameBancos().then(function (data) {
+			vm.bancos = data.GetMuestraBancosListResult;
 		});
 	}
 
@@ -39,42 +42,62 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ng
 			keyboard: false,
 			size: "md",
 			resolve: {
-				detalle: function() {
+				detalle: function () {
 					return detalle;
 				}
 			}
 		});
 	}
 
-	$rootScope.$on('contratos_ligados', function(e, contratos) {
+	$rootScope.$on('contratos_ligados', function (e, contratos) {
 		vm.contratos = contratos
 	});
 
 	function cambioEstado() {
-		corporativoFactory.getCiudades(vm.estado.Clv_Estado).then(function(data) {
+		corporativoFactory.getCiudades(vm.estado.Clv_Estado).then(function (data) {
 			vm.ciudades = data.GetMuestraCiudadResult;
 		});
 	}
 
 	function cambioCiudad() {
-		corporativoFactory.getLocalidades(vm.ciudad.Clv_Ciudad).then(function(data) {
+		corporativoFactory.getLocalidades(vm.ciudad.Clv_Ciudad).then(function (data) {
 			vm.localidades = data.GetMuestraLocalidadResult;
 		});
 	}
 
 	function cambioLocalidad() {
-		corporativoFactory.getColonias(vm.localidad.Clv_Localidad).then(function(data) {
+		corporativoFactory.getColonias(vm.localidad.Clv_Localidad).then(function (data) {
 			vm.colonias = data.GetMuestraColoniaResult;
 		});
 	}
 
 	function cambioColonia() {
-		corporativoFactory.getCalles(vm.colonia.clv_colonia, vm.localidad.Clv_Localidad).then(function(data) {
+		corporativoFactory.getCalles(vm.colonia.clv_colonia, vm.localidad.Clv_Localidad).then(function (data) {
 			vm.calles = data.GetMuestraCalleResult;
 		});
 	}
 
 	function guardarContrato() {
+		if (vm.MuestraBanco) {
+			if (!vm.selectedBanco) {
+				ngNotify.set('Selecciona un banco por favor.', 'error');
+				return;
+			} else {
+				vm.clvBanco = vm.selectedBanco.Clave;
+			}
+		}else{
+			vm.clvBanco = 0;
+		}
+		if(vm.MuestraAutorizacion){
+			if(!vm.autorizacion){
+				ngNotify.set('Indroduce el número de autorización.', 'error');
+				return;
+			}else{
+				vm.Referencia2 = vm.autorizacion;
+			}
+		}else{
+			vm.Referencia2 = '';
+		}
 		if (vm.prepago == 'prepago') {
 			vm.prep = 1;
 			vm.posp = 0;
@@ -96,6 +119,7 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ng
 			vm.pagEdo = 0;
 			vm.pagFac = 1;
 		}
+
 		var auxFecha = $filter('date')(vm.fecha, 'dd/MM/yyyy');
 		var contrato = {
 			'objContratoMaestroFac': {
@@ -123,10 +147,12 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ng
 				'ReactivarMan': vm.reacMan,
 				'ReactivarPagoFac': vm.reacPag,
 				'TipoPago': vm.formapago.Id,
-				'Referencia': vm.Referencia
+				'Referencia': vm.Referencia,
+				'Referencia2': vm.Referencia2,
+				'ClvBanco': vm.clvBanco
 			}
 		};
-		corporativoFactory.addMaestro(contrato).then(function(data) {
+		corporativoFactory.addMaestro(contrato).then(function (data) {
 			vm.contratoMaestro = data.AddContratoMaestroFacResult;
 			ngNotify.set('Contrato maestro agregado correctamente, ahora puedes ligar contratos.', 'success');
 			vm.ligados = false;
@@ -147,11 +173,20 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, $filter, ng
 	}
 
 	function CambioTipo(x) {
-
 		if (x.Cuenta == true) {
 			vm.MuestraReferencia = true;
 		} else {
 			vm.MuestraReferencia = false;
+		}
+		if (x.Descripcion == 'Tarjeta') {
+			vm.MuestraBanco = true;
+			vm.MuestraAutorizacion = true;
+		} else if (x.Descripcion == 'Cheque') {
+			vm.MuestraBanco = true;
+			vm.MuestraAutorizacion = false;
+		} else {
+			vm.MuestraBanco = false;
+			vm.MuestraAutorizacion = false;
 		}
 	}
 
