@@ -194,9 +194,9 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 	var vm = this;
 	vm.abrirContratos = abrirContratos;
 	vm.contratos = [];
-	vm.prepago = 'prepago';
+	vm.prepago = 'postpago';
 	vm.reactivacion = 'manual';
-	vm.tipopago = 'estado';
+	vm.tipopago = 'factura';
 	vm.guardarContrato = guardarContrato;
 	vm.cambioEstado = cambioEstado;
 	vm.cambioCiudad = cambioCiudad;
