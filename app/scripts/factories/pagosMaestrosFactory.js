@@ -172,16 +172,7 @@ angular
 				"IpMaquina": objPagar.IpMaquina,
 				"Sucursal": objPagar.Sucursal,
 				"Monto": objPagar.Monto,
-				"GLOEFECTIVO2": objPagar.GLOEFECTIVO2,
-				"GLOCHEQUE2": objPagar.GLOCHEQUE2,
-				"GLOCLV_BANCOCHEQUE2": objPagar.GLOCLV_BANCOCHEQUE2,
-				"NUMEROCHEQUE2": objPagar.NUMEROCHEQUE2,
-				"GLOTARJETA2": objPagar.GLOTARJETA2,
-				"GLOCLV_BANCOTARJETA2": objPagar.GLOCLV_BANCOTARJETA2,
-				"NUMEROTARJETA2": objPagar.NUMEROTARJETA2,
-				"TARJETAAUTORIZACION2": objPagar.TARJETAAUTORIZACION2,
-				"CLV_Nota3": objPagar.CLV_Nota3,
-				"GLONOTA3": objPagar.GLONOTA3,
+				"IdMedioPago": objPagar.IdMedioPago,
 				"IdCompania": objPagar.IdCompania,
 				"IdDistribuidor": objPagar.IdDistribuidor
 			};
@@ -218,10 +209,13 @@ angular
 		factory.actFactura = function(objPagar) {
 			var deferred = $q.defer();
 			var Parametros = {
-				"ClvFacturaMaestro": objPagar.ClvFacturaMaestro,
-				"Credito": objPagar.Credito,
-				"NoPago": objPagar.NoPago,
-				"PagoInicial": objPagar.PagoInicial
+				"objActualizaFacturaMaestro":
+				{
+					"ClvFacturaMaestro": objPagar.ClvFacturaMaestro,
+					"Credito": objPagar.Credito,
+					"NoPago": objPagar.NoPago,
+					"PagoInicial": objPagar.PagoInicial
+				}			
 			};
 			var config = {
 				headers: {

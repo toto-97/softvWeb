@@ -97,11 +97,13 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     }
 
     function PagarCredito(x) {
-        console.log(x);
         if (x.Importe <= x.TotalAbonado) {
             ngNotify.set('Ya se saldo el adeudo.', 'error');
         } else {
             if (x.ACuantosPagos == "N/A") {
+                 var items = {
+                        Modo: 'n'
+                    };
                 vm.animationsEnabled = true;
                 var modalInstance = $uibModal.open({
                     animation: vm.animationsEnabled,
@@ -115,6 +117,12 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                     size: 'sm',
                     resolve: {
                         items: function () {
+                            return items;
+                        },
+                        elem1: function () {
+                            return x.Importe;
+                        },
+                        x: function () {
                             return x;
                         }
                     }
@@ -122,15 +130,12 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
             }
             else if (x.ACuantosPagos == "Variables") {
                 var monto = (x.Importe - x.PagoInicial) / x.ACuantosPagos;
+                var restante = (x.Importe - x.TotalAbonado);
+                if(restante < monto) {
+                    monto = restante;
+                }
                 var items = {
-                    Contrato: x.ContratoMaestro,
-                    Compania: x.IdCompania,
-                    Distribuidor: x.IdDistribuidor,
                     Modo: 'v'
-                };
-                var elem1 = {
-                    PagoInicial: monto,
-                    Clv_FacturaMaestro: x.Clv_FacturaMaestro
                 };
                 vm.animationsEnabled = true;
                 var modalInstance = $uibModal.open({
@@ -148,7 +153,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                             return items;
                         },
                         elem1: function () {
-                            return elem1;
+                            return monto;
                         },
                         x: function () {
                             return x;
@@ -160,16 +165,10 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                 var restante = (x.Importe - x.TotalAbonado);
                 if(restante < monto) {
                     monto = restante;
+                    console.log(monto);
                 }
                 var items = {
-                    Contrato: x.ContratoMaestro,
-                    Compania: x.IdCompania,
-                    Distribuidor: x.IdDistribuidor,
                     Modo: 'f'
-                };
-                var elem1 = {
-                    PagoInicial: monto,
-                    Clv_FacturaMaestro: x.Clv_FacturaMaestro
                 };
                 vm.animationsEnabled = true;
                 var modalInstance = $uibModal.open({
@@ -187,7 +186,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                             return items;
                         },
                         elem1: function () {
-                            return elem1;
+                            return monto;
                         },
                         x: function () {
                             return x;

@@ -1,7 +1,7 @@
 'use strict';
 angular.module('softvApp').controller('EscogerPagoCtrl', EscogerPagoCtrl);
 
-function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, $uibModalInstance, $localStorage, items, metodo, pagosMaestrosFactory) {
+function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, $uibModalInstance, $localStorage, items, metodo, pagosMaestrosFactory, x, elem1) {
 
     function cambio(pago) {
 		if (pago == 1){
@@ -29,12 +29,16 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 			ngNotify.set('Los campos no deben de ir nulos, negativos o en 0', 'error');
 		}else {
 			var objPagar = {
-				"ClvFacturaMaestro": items.Clv_FacturaMaestro,
+				"ClvFacturaMaestro": x.Clv_FacturaMaestro,
 				"Credito": metodo,
 				"NoPago": vm.numeroPagos,
 				"PagoInicial": vm.pagoInicial
 			};
+			var elem = {
+				PagoInicial: vm.pagoInicial,
+			};
 			console.log(objPagar);
+			console.log(elem);
 			pagosMaestrosFactory.actFactura(objPagar).then(function(dataGraba) {
 				console.log(dataGraba.AddActualizaFacturaMaestroResult);
 				$uibModalInstance.dismiss('cancel');
@@ -48,13 +52,13 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 					controllerAs: '$ctrl',
 					backdrop: 'static',
 					keyboard: false,
-					size: 'md',
+					size: 'sm',
 					resolve: {
-						items: function() {
-							return items;
+						elem: function() {
+							return elem;
 						},
-						metodo: function() {
-							return metodo;
+						x: function() {
+							return x;
 						}
 					}
 				});
@@ -67,16 +71,18 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 			ngNotify.set('Los campos no deben de ir nulos, negativos o en 0', 'error');
 		}else {
 			var objPagar = {
-				"ClvFacturaMaestro": items.Clv_FacturaMaestro,
+				"ClvFacturaMaestro": x.Clv_FacturaMaestro,
 				"Credito": metodo,
 				"NoPago": 0,
 				"PagoInicial": vm.pagoInicial
 			};
+			var elem = {
+				PagoInicial: vm.abono,
+			};
 			console.log(objPagar);
+			console.log(elem);
 			pagosMaestrosFactory.actFactura(objPagar).then(function(dataGraba) {
-				console.log(dataGraba);
 				console.log(dataGraba.AddActualizaFacturaMaestroResult);
-				console.log(elem);
 				$uibModalInstance.dismiss('cancel');
 				vm.animationsEnabled = true;
 				var modalInstance = $uibModal.open({
@@ -88,13 +94,13 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 					controllerAs: '$ctrl',
 					backdrop: 'static',
 					keyboard: false,
-					size: 'md',
+					size: 'sm',
 					resolve: {
-						items: function() {
-							return items;
+						elem: function() {
+							return elem;
 						},
-						metodo: function() {
-							return metodo;
+						x: function() {
+							return x;
 						}
 					}
 				});
@@ -127,5 +133,5 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 	vm.guardarVariable = guardarVariable;
 	vm.operacion = operacion;
     vm.cancel = cancel;
-	vm.monto = items.Importe;
+	vm.monto = elem1;
 }
