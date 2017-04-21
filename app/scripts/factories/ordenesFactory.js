@@ -26,10 +26,34 @@ angular
             addCambioDomicilio: '/CAMDO/AddCAMDO',
             consultaTablaServicios: '/BUSCADetOrdSer/GetBUSCADetOrdSerList',
             consultaCambioDomicilio: '/CAMDO/GetDeepCAMDO',
-            getCableModemsCli: '/MuestraGuaBor/GetMUESTRACABLEMODEMSDELCLI_porOpcion'
+            getCableModemsCli: '/MuestraGuaBor/GetMUESTRACABLEMODEMSDELCLI_porOpcion',
+            detalleCableModem: '/MuestraGuaBor/GetMUESTRACONTNET_PorOpcion'
         };
 
         var usuarioAtencion = $localStorage.currentUser.idUsuario;
+
+        factory.detalleCableModem = function (modem) {
+            var deferred = $q.defer();
+            var Parametros = {
+                'ContratoNet': modem.contrato,
+                'Status': '',
+                'Op': modem.op,
+                'ClvOS': modem.orden,
+                'ClvDetOs': modem.detalle
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+            $http.post(globalService.getUrl() + paths.detalleCableModem, JSON.stringify(Parametros), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+        };
 
         factory.getCableModemsCli = function (contrato) {
             var deferred = $q.defer();

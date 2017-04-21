@@ -98,7 +98,6 @@ function OrdenNuevaCtrl($state, ngNotify, $stateParams, $uibModal, ordenesFactor
 	function actualizarTablaServicios() {
 		ordenesFactory.consultaTablaServicios(vm.clv_orden).then(function (data) {
 			vm.trabajosTabla = data.GetBUSCADetOrdSerListResult;
-			console.log(data);
 		});
 	}
 
