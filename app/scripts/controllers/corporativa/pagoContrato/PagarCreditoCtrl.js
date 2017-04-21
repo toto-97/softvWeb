@@ -26,7 +26,7 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 				"Cajera": $localStorage.currentUser.usuario,
 				"IpMaquina": $localStorage.currentUser.maquina,
 				"Sucursal": $localStorage.currentUser.sucursal,
-				"Monto": elem.PagoInicial,
+				"Monto": vm.monto,
 				"IdMedioPago": vm.selectedMedio.IdMedioPago,
 				"IdCompania": x.IdCompania,
 				"IdDistribuidor": x.IdDistribuidor

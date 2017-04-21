@@ -1,0 +1,51 @@
+<div class="modal-header">
+  <button class="close" aria-label="Close" type="button" ng-click="$ctrl.cancel()">×</button>
+  <h4 class="modal-title">Historial de Pagos en Facturas</h4>
+</div>
+<div class="modal-body" style="padding-top:20px;">
+
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Suscriptor</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Telefono</th>
+            <th>Ciudad</th>
+            <th>Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr dir-paginate="x in $ctrl.suscriptores|itemsPerPage:8">
+            <td>{{x.IdSuscriptor}}</td>
+            <td>{{x.Nombre}} {{x.Apellido}}</td>
+            <td>{{x.Email}} </td>
+            <td>{{x.Telefono}}</td>
+            <td>{{x.Ciudad}}</td>
+            <td>
+              <button class="btn  btn-xs btn-info" ng-click="$ctrl.SeleccionarSusc(x)">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+        </dir-pagination-controls>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">cerrar</button>
+
+</div>
