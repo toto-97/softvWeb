@@ -161,7 +161,7 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFacto
 			controllerAs: '$ctrl',
 			backdrop: 'static',
 			keyboard: false,
-			size: "lg",
+			size: "md",
 			resolve: {
 				detalle: function () {
 					return detalle;

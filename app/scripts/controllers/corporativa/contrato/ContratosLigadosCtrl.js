@@ -25,12 +25,17 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
     }
   }
 
-
-
-
   function cancel() {
     $uibModalInstance.dismiss('cancel');
   }
+
+
+
+
+  $rootScope.$on('contrato_proporcional', function (e, contrato) {
+    console.log(contrato);
+    vm.contratos.push(contrato);
+  });
 
   $rootScope.$on('agregar_contrato', function (e, contrato) {
     var aux = 0;
@@ -40,7 +45,27 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
       }
     });
     if (aux == 0) {
-      vm.contratos.push(contrato);
+      var modalInstance = $uibModal.open({
+        animation: true,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: 'views/corporativa/ModalProporcional.html',
+        controller: 'ModalProporcionalCtrl',
+        controllerAs: '$ctrl',
+        backdrop: 'static',
+        //windowClass: 'app-modal-window',
+        keyboard: false,
+        size: "sm",
+        resolve: {
+          contrato: function () {
+            return contrato;
+          }
+        }
+
+      });
+
+    }else{
+      ngNotify.set('El contrato ya se encuentra asignado al contrato maestro', 'error');
     }
   });
 
@@ -70,9 +95,11 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
   function ok() {
     if (vm.contratos.length > 0) {
       var contratos = [];
-      vm.contratos.forEach(function (item) {
+      vm.contratos.forEach(function (item,index) {
         contratos.push({
-          Contrato: item.ContratoBueno
+          Contrato: item.ContratoBueno,          
+          Prioridad:index,
+          Proporcional:item.Proporcional
         });
       });
       corporativoFactory.ligarContratos(detalle.IdContratoMaestro, contratos).then(function (data) {
@@ -89,11 +116,17 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
   function edit() {
     if (vm.contratos.length > 0) {
       var contratos = [];
-      vm.contratos.forEach(function (item) {
+      vm.contratos.forEach(function (item,index) {
+        console.log(item);
         contratos.push({
-          Contrato: item.CONTRATO
+          Contrato: item.CONTRATO,
+          Prioridad:index,
+          Proporcional:item.Proporcional
+
         });
       });
+      console.log(contratos);
+      
       corporativoFactory.UpdateRelContrato(detalle.IdContratoMaestro, contratos, vm.Distribuidor.Clv_Plaza).then(function (data) {
         console.log(data);
         ngNotify.set('Los Contratos fueron ligados correctamente al contrato maestro.', 'success');
@@ -112,9 +145,15 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
 
   function ValidaArchivo() {
     var files = $("#inputFile2").get(0).files;
-    console.log(detalle.IdContratoMaestro, vm.Distribuidor.Clv_Plaza);
+   if(files.length==0){
+ngNotify.set('Se necesita seleccionar un archivo válido', 'error');
+     return;
+   }
 
     ContratoMaestroFactory.UpdateFile(files, detalle.IdContratoMaestro, vm.Distribuidor.Clv_Plaza).then(function (data) {
+      console.log(data);
+       
+
       if (data.ContratosValidos.length > 0) {
         ngNotify.set('Se encontraron ' + data.ContratosValidos.length + ' contratos válidos', 'grimace');
         vm.contratos = [];
@@ -127,6 +166,12 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
           contrato.ContratoBueno = data.ContratosValidos[i].ContratoReal;
           vm.contratos.push(contrato);
         }
+      }
+      else if(data.ContratosValidos===null ){
+ ngNotify.set('No se encontraron contratos válidos en el archivo', 'error');
+      }     
+      else{
+        ngNotify.set('No se encontraron contratos válidos en el archivo', 'error');
       }
 
 
@@ -142,12 +187,12 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
   Init();
   vm.edit = edit;
   vm.ValidaArchivo = ValidaArchivo;
-  
 
-   
-    
-  
 
-  
+
+
+
+
+
 }
 angular.module('softvApp').controller('ContratosLigadosCtrl', ContratosLigadosCtrl);

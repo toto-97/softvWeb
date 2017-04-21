@@ -1,49 +1,3 @@
-<style>
-
-
-.simpleDemo ul[dnd-list],
-.simpleDemo ul[dnd-list] > li {
-    position: relative;
-}
-
-.simpleDemo ul[dnd-list] {
-    min-height: 42px;
-    padding-left: 0px;
-}
-
-.simpleDemo ul[dnd-list] .dndDraggingSource {
-    display: none;
-}
-
-.simpleDemo ul[dnd-list] .dndPlaceholder {
-    display: block;
-    background-color: #ddd;
-    min-height: 42px;
-}
-
-.simpleDemo ul[dnd-list] li {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-top-right-radius: 4px;
-    border-top-left-radius: 4px;
-    display: block;
-    padding: 10px 15px;
-    margin-bottom: -1px;
-}
-
-.simpleDemo ul[dnd-list] li.selected {
-    background-color: #dff0d8;
-    color: #3c763d;
-}
-
-
-</style>
-
-
-
-
-
-
 
 
 
@@ -64,49 +18,17 @@
 
     </div>
 
- <ul dnd-list="$ctrl.contratos" class="simpleDemo">
-    <!-- The dnd-draggable directive makes an element draggable and will
-         transfer the object that was assigned to it. If an element was
-         dragged away, you have to remove it from the original list
-         yourself using the dnd-moved attribute -->
-    <li ng-repeat="item in $ctrl.contratos"
-        dnd-draggable="item"
-        dnd-moved="$ctrl.contratos.splice($index, 1)"
-        dnd-effect-allowed="move"
-        dnd-selected="models.selected = item"
-        ng-class="{'selected': models.selected === item}"
-        >
-        {{$index}}.- {{ item.Nombre }} {{ item.Apellido_Paterno }} {{ item.Apellido_Materno }}
-    </li>
-</ul>
+ 
+
+    </div>
 
 
-
-    <div class="col-md-12" style="overflow-y:scroll; max-height:350px;">
     
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <td>Contrato</td>
-            <td>Cliente</td>
-            <td>Acciones</td>
-          </tr>
-        </thead>
-        <tbody>
-
-          <tr ng-repeat="x in $ctrl.contratos">
-            <td>{{ x.CONTRATO }}</td>
-            <td>{{ x.Nombre }} {{ x.Apellido_Paterno }} {{ x.Apellido_Materno }}</td>
-            <td><button class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-click="$ctrl.eliminarContrato($index)"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-          </tr>
-        </tbody>
-
-      </table>-->
       <br>
-      <ul dnd-list="$ctrl.contratos" class="list-group">
+      <ul dnd-list="$ctrl.contratos" class="list-group" style="max-height: 300px; overflow-y: scroll;">
         <li ng-repeat="item in $ctrl.contratos" dnd-draggable="item" dnd-moved="$ctrl.contratos.splice($index, 1)" dnd-effect-allowed="move"
           dnd-selected="models.selected = item" ng-class="{'selected': models.selected === item}" class="list-group-item">
-          <span class="badge" style="background-color:#d9534f">{{$index + 1}}</span><p><span class="badge">{{item.CONTRATO}}</span> {{ item.Nombre }} {{ item.Apellido_Paterno }} {{ item.Apellido_Materno
+          <span class="badge" style="background-color:#d9534f">{{$index + 1}}</span><p><span class="badge">{{item.CONTRATO}}</span><p ng-if="item.Proporcional==true"><b>PROPORCIONAL</b></p><p ng-if="item.Proporcional==false"></p> {{ item.Nombre }} {{ item.Apellido_Paterno }} {{ item.Apellido_Materno
           }}</p>
         </li>
       </ul>
