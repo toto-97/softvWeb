@@ -3,7 +3,7 @@ angular
 	.module('softvApp')
 	.controller('ModalProporcionalCtrl', function($uibModalInstance, $uibModal, $rootScope, ngNotify ,contrato) {
 		this.$onInit = function() {
-        console.log(contrato);
+       
 		}
 
 		function cancel() {
