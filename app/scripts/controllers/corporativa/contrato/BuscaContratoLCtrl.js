@@ -53,17 +53,15 @@ function BuscaContratoLCtrl($uibModalInstance, atencionFactory, $rootScope, corp
 	}
 
 
-	function Seleccionar(contrato) {
-		alert('asdasdasdasdas');
-		corporativoFactory.validaContrato(contrato.ContratoBueno).then(function(data) {
-			
+	function Seleccionar(contrato) {	
+		corporativoFactory.validaContrato(contrato.ContratoBueno).then(function(data) {			
 			if (data.GetValidaSiContratoExiste_CMResult.Bandera) {
 				ngNotify.set(data.GetValidaSiContratoExiste_CMResult.Msg, 'error');
 			
 			} else {
 				
 				$uibModalInstance.dismiss('cancel');
-				$rootScope.$emit('agregar_contrato', contrato);
+				$rootScope.$broadcast('agregar_contrato', contrato);
 			}
 		});
 	}

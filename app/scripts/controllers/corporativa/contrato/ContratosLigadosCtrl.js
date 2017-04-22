@@ -1,11 +1,10 @@
 'use strict';
 
-function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporativoFactory, detalle, $state, ngNotify, ContratoMaestroFactory) {
+function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope,$rootScope, corporativoFactory, detalle, $state, ngNotify, ContratoMaestroFactory) {
 
   function Init() {
     vm.contratos = [];
     vm.Distribuidor = detalle.Distribuidor;
-
     if (detalle.Action == "EDIT") {
       vm.showokbtn = false;
       vm.showeditbtn = true;
@@ -25,30 +24,32 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
       contrato.Proporcional = detalle.ContratosSoftv[a].Proporcional;
       vm.contratos.push(contrato);
     }
-    console.log(vm.contratos);
+    
   }
 
   function cancel() {
     $uibModalInstance.dismiss('cancel');
-  }
+    }
   $rootScope.$on('contrato_proporcional', function (e, contrato) {
-
     vm.contratos.push(contrato);
   });
+  
+  $scope.$on("agregar_contrato", function(e, contrato) {    
+    ValidaContrato(contrato);
+});
 
-  $rootScope.$on('agregar_contrato', function (e, contrato) {  
-    alert('se emite');  
+
+ function ValidaContrato( contrato) {    
     var aux = 0;
-    vm.contratos.forEach(function (item) {      
+    vm.contratos.forEach(function (item) {
       if (contrato.CONTRATO == item.CONTRATO) {
         aux += 1;
       }
-    });   
-    if (aux > 0) {
-      alert('No habre modal');
-      ngNotify.set('El contrato ya se encuentra asignado al contrato maestro', 'error');      
+    });
+    if (aux > 0) {     
+      ngNotify.set('El contrato ya se encuentra asignado al contrato maestro', 'error');
     }
-    if (aux == 0) {     
+    if (aux == 0) {
       var modalInstance = $uibModal.open({
         animation: true,
         ariaLabelledBy: 'modal-title',
@@ -69,7 +70,7 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $rootScope, corporat
       });
     }
 
-  });
+  };
 
   function clientesModal() {
     var detalle = {};

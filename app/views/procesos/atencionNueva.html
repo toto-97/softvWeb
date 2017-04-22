@@ -110,6 +110,7 @@
 					"></i> Consultar Cobro</button>
       </div>
     </div>
+    <hr>
     <div class="row">
 
       <div class="col-md-12">
@@ -121,8 +122,8 @@
 
           <div class="col-md-4  ">
             <div class="col-md-6">
-              <br>
-              <p>Hora Inicial:</p>
+            
+              <b><i class="md md-av-timer" ></i> Hora Inicial:</b>
             </div>
             <div class="col-md-6">
               <input type="text" ng-model="$ctrl.Hora" class="form-control input-sm" disabled="">
@@ -131,8 +132,8 @@
           </div>
           <div class="col-md-4 ">
             <div class="col-md-4">
-              <br>
-              <p>Fecha</p>
+              
+              <b><i class="md md-today"></i> Fecha</b>
             </div>
             <div class="col-md-8">
               <input type="text" ng-model="$ctrl.Fecha" class="form-control input-sm" disabled="">
@@ -142,7 +143,14 @@
         </div>
         <hr>
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-1" style="background-color: #CDDC39; height: 100%;">
+
+            <i class="md md-phone-in-talk
+
+" style="font-size: 54px;"></i>
+<b style="font-size: 12px;">LLAMADA</b>
+          </div>
+          <div class="col-md-5">
             <strong style="margin-top: 10px;">Clasificación del Problema:</strong>
             <select class="form-control input-sm" ng-model="$ctrl.Problema" ng-options="item as item.descripcion for item in $ctrl.clasificacionProblemas track by item.clvProblema">
 											  <option value=""  disabled="true">selecciona</option>
@@ -151,7 +159,7 @@
             <strong>Reporte del Cliente:</strong>
             <textarea class="form-control input-sm" placeholder="Describe brevemente la problematica del cliente  " ng-model="$ctrl.DescripcionProblema"></textarea>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-5">
             <strong style="margin-top: 10px;">Clasificación de la Solución:</strong>
 
 
