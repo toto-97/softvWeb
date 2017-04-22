@@ -1,6 +1,6 @@
 <div class="modal-header">
   <button class="close" aria-label="Close" type="button" ng-click="$ctrl.cancel()">×</button>
-  <h4 class="modal-title">Historial de Pagos en Facturas</h4>
+  <h4 class="modal-title">Historial de pagos del ticket: <span style="color:red">{{$ctrl.ticket}}</span></h4>
 </div>
 <div class="modal-body" style="padding-top:20px;">
 
@@ -9,29 +9,26 @@
     <div class="col-md-12">
       <table class="table">
         <thead>
-          <tr>
-            <th>Suscriptor</th>
-            <th>Nombre</th>
-            <th>Correo</th>
-            <th>Telefono</th>
-            <th>Ciudad</th>
-            <th>Opciones</th>
+          <tr style="background-color: #B5B6B6;">
+            <th>Clave Pago</th>
+            <th>Sucursal</th>
+            <th>Cajera</th>
+            <th>Caja</th>
+            <th>Medio Pago</th>
+            <th>Importe</th>
+            <th>Fecha</th>
           </tr>
         </thead>
         <tbody>
 
-          <tr dir-paginate="x in $ctrl.suscriptores|itemsPerPage:8">
-            <td>{{x.IdSuscriptor}}</td>
-            <td>{{x.Nombre}} {{x.Apellido}}</td>
-            <td>{{x.Email}} </td>
-            <td>{{x.Telefono}}</td>
-            <td>{{x.Ciudad}}</td>
-            <td>
-              <button class="btn  btn-xs btn-info" ng-click="$ctrl.SeleccionarSusc(x)">
-                  <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
-
-            </td>
+          <tr dir-paginate="z in $ctrl.facturas|itemsPerPage:8">
+            <td>{{z.Clv_Pago}}</td>
+            <td>{{z.Sucursal}}</td>
+            <td>{{z.Cajera}} </td>
+            <td>{{z.Caja}}</td>
+            <td>{{z.MedioPago}}</td>
+            <td>{{z.Importe}}</td>
+            <td>{{z.Hora}}</td>
           </tr>
         </tbody>
       </table>

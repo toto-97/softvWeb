@@ -13,7 +13,8 @@ angular
 			pagoGrabaFactura: '/GuardaPagoFacturaMaestro/GetGuardaPagoFacturaMaestro',
 			getMedios: '/ObtieneMediosPago/GetObtieneMediosPagoList',
 			actFactura: '/ActualizaFacturaMaestro/AddActualizaFacturaMaestro',
-			obtenFacturas: '/ObtieneHistorialPagosFacturaMaestro/GetObtieneHistorialPagosFacturaMaestroList'
+			obtenFacturas: '/ObtieneHistorialPagosFacturaMaestro/GetObtieneHistorialPagosFacturaMaestroList',
+			dameDetalle: '/DameDetalle_FacturaMaestro/GetDameDetalle_FacturaMaestroList'
 		};
 
 		factory.cobraSaldoMaestro = function(contrato) {
@@ -207,10 +208,16 @@ angular
 			return deferred.promise;
 		};
 
-		factory.actFactura = function(clvFactura) {
+		factory.actFactura = function(objPagar) {
 			var deferred = $q.defer();
 			var Parametros = {
-				"ClvFacturaMaestro": clvFactura
+				"objActualizaFacturaMaestro": 
+				{ 
+					"ClvFacturaMaestro": objPagar.ClvFacturaMaestro, 
+					"Credito": objPagar.Credito, 
+					"NoPago": objPagar.NoPago, 
+					"PagoInicial": objPagar.PagoInicial 
+				}       
 			};
 			var config = {
 				headers: {
@@ -226,14 +233,36 @@ angular
 			return deferred.promise;
 		};
 
-		factory.obtenFacturas = function() {
+		factory.obtenFacturas = function(clvFactura) {
 			var deferred = $q.defer();
+			var Parametros = {
+				"ClvFacturaMaestro": clvFactura
+			};
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
 			$http.post(globalService.getUrl() + paths.obtenFacturas, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.dameDetalle = function(clvFactura) {
+			var deferred = $q.defer();
+			var Parametros = {
+				"ClvFacturaMaestro": clvFactura
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.dameDetalle, JSON.stringify(Parametros), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response);

@@ -276,10 +276,31 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
         });
     }
 
+    function detalle(x) {
+        vm.animationsEnabled = true;
+        var modalInstance = $uibModal.open({
+            animation: vm.animationsEnabled,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'views/corporativa/detalle.html',
+            controller: 'DetalleCtrl',
+            controllerAs: '$ctrl',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'md',
+            resolve: {
+                x: function () {
+                    return x;
+                }
+            }
+        });
+    }
+
     var vm = this;
     vm.saldadas = saldadas;
     vm.buscaContrato = buscaContrato;
     vm.PagarCredito = PagarCredito;
     vm.historial = historial;
+    vm.detalle = detalle;
 }
 angular.module('softvApp').controller('RecepcionPagoCtrl', RecepcionPagoCtrl);

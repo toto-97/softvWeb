@@ -2,6 +2,13 @@
 angular.module('softvApp').controller('HistorialCtrl', HistorialCtrl);
 
 function HistorialCtrl($uibModal, ngNotify, inMenu, $uibModalInstance, x, pagosMaestrosFactory) {
+	function initial() {
+		console.log(x);
+		pagosMaestrosFactory.obtenFacturas(x.Clv_FacturaMaestro).then(function (data) {
+			vm.facturas = data.GetObtieneHistorialPagosFacturaMaestroListResult;
+			console.log(vm.facturas);
+		});
+	}
 	
 	function cancel() {
 		$uibModalInstance.dismiss('cancel');
@@ -9,4 +16,6 @@ function HistorialCtrl($uibModal, ngNotify, inMenu, $uibModalInstance, x, pagosM
 
 	var vm = this;
 	vm.cancel = cancel;
+	vm.ticket = x.Ticket;
+	initial();
 }
