@@ -6,12 +6,7 @@
   <div class="row">
     <div class="panel-group" id="accordion3">
       <div class="card panel">
-        <div class="card-head style-primary-light card-head-xs" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1" aria-expanded="false">
-          <header><i class="fa fa-user-circle" aria-hidden="true"></i> Detalle de suscriptor</header>
-          <div class="tools">
-            <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
-          </div>
-        </div>
+       
         <div id="accordion3-1" class="collapse in" aria-expanded="true" style="height: 0px;">
           <div class="panel-body">
             <div class="row card" style="background-color: #f2f3f3">
@@ -156,13 +151,13 @@
         <textarea type="text" class="form-control input-sm " ng-model="$ctrl.ComentarioAgenda"></textarea>
       </div>
     </div>
-    <div class="col-md-4" style="font-size: 10px;">
-      <div class="col-md-6">
+    <div class="col-md-5" style="font-size: 10px;">
+      <div class="col-md-8">
 
         <b>Clasificación del problema</b>
         <select class="form-control input-sm" ng-disabled="$ctrl.IClasproblema" ng-model="$ctrl.Problema" ng-options="item as item.descripcion for item in $ctrl.Problemas track by item.clvProblema"></select>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <b> Prioridad</b>
         <select class="form-control input-sm" name="Prioridad" required-message="'Este campo es obligatorio.'" required validate-on="dirty" ng-disabled="$ctrl.Iprioridad" ng-model="$ctrl.Prioridad" ng-options="item as item.Descripcion for item in $ctrl.Prioridades track by item.clvPrioridadQueja">
         <option value="">selecciona</option>
@@ -181,7 +176,7 @@
       </div>
     </div>
     <div class="col-md-4" style="font-size: 10px;">
-      <div class="col-md-6">
+      <div class="col-md-8">
         <b>Tipo solución</b>
         <select class="form-control input-sm" name="solucion" required-message="'Este campo es obligatorio.'" required validate-on="dirty" ng-disabled="$ctrl.Itrabajo" ng-model="$ctrl.Trabajo" ng-options="item as item.DESCRIPCION for item in $ctrl.Trabajos track by item.CLV_TRABAJO">
                   <option value="">selecciona</option>
@@ -201,6 +196,6 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-default-bright btn-sm" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
-  <button class="btn btn-primary btn-sm" type="button" ng-click="$ctrl.ok()">Aceptar</button>
+  <button class="btn btn-default-bright btn-sm" type="button" ng-click="$ctrl.cancel()">Cerrar</button>
+
 </div>

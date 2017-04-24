@@ -93,7 +93,7 @@ angular
 								vm.Clv_problema = detqueja.clvProblema;
 								vm.ProblemaReal = detqueja.Solucion;
 								//detqueja.Visita
-								vm.Visita = true;
+								vm.Visita = detqueja.Visita;
 								vm.Clv_status = detqueja.Status;
 								for (var t = 0; t < vm.Status.length; t++) {
 									if (vm.Status[t].Clave == vm.Clv_status) {
@@ -105,6 +105,13 @@ angular
 
 								quejasFactory.ObtenTecnicos(vm.GlobalContrato).then(function(data) {
 									vm.Tecnicos = data.GetMuestra_Tecnicos_AlmacenListResult;
+									if (detqueja.Clave_Tecnico != null) {
+										for (var a = 0; a < vm.Tecnicos.length; a++) {
+											if (vm.Tecnicos[a].clv_Tecnico == detqueja.Clave_Tecnico) {
+												vm.Tecnico = vm.Tecnicos[a];
+											}
+										}
+									}
 								});
 
 								atencionFactory.MuestraTrabajos(vm.Servicio).then(function(data) {
@@ -192,6 +199,10 @@ angular
 
 
 		function abrirBonificacion() {
+			var detalle = {};
+			detalle.Block = true;
+			detalle.Queja = object.Clv_Queja;
+
 			var modalInstance = $uibModal.open({
 				animation: vm.animationsEnabled,
 				ariaLabelledBy: 'modal-title',
@@ -203,9 +214,9 @@ angular
 				keyboard: false,
 				size: 'md',
 				resolve: {
-					// contrato: function() {
-					// 	return vm.GlobalContrato;
-					// }
+					detalle: function() {
+						return detalle;
+					}
 				}
 			});
 		}
@@ -233,6 +244,7 @@ angular
 					vm.Iejecucion = 'input-yellow';
 					vm.Ivisita = 'input-normal';
 					vm.Iproceso = 'input-normal';
+					vm.ISelectEstatus = 'input-normal';
 				} else {
 					vm.BtnGuarda = true;
 					vm.FEjecucion = false;
@@ -253,8 +265,8 @@ angular
 				}
 
 			} else if (vm.Estatus.Clave == 'P') {
-				vm.BtnGuarda = true;
-				vm.FEjecucion = false;
+				vm.BtnGuarda = false;
+				vm.FEjecucion = true;
 				vm.FVisita1 = true;
 				vm.FVisita2 = true;
 				vm.FVisita3 = true;
@@ -271,6 +283,7 @@ angular
 				vm.Ivisita2 = 'input-normal';
 				vm.Ivisita3 = 'input-normal';
 				vm.Iproceso = 'input-normal';
+				vm.ISelectEstatus = 'input-yellow';
 			} else if (vm.Estatus.Clave == 'V') {
 				vm.BtnGuarda = true;
 				vm.FEjecucion = true;
@@ -290,6 +303,7 @@ angular
 				vm.Ivisita2 = 'input-yellow';
 				vm.Ivisita3 = 'input-yellow';
 				vm.Iproceso = 'input-normal';
+				vm.ISelectEstatus = 'input-normal';
 			} else if (vm.Estatus.Clave == 'S') {
 				vm.BtnGuarda = true;
 				vm.FEjecucion = true;
@@ -309,6 +323,7 @@ angular
 				vm.Ivisita2 = 'input-normal';
 				vm.Ivisita3 = 'input-normal';
 				vm.Iproceso = 'input-yellow';
+				vm.ISelectEstatus = 'input-normal';
 			} else {
 				alert('Ninguna');
 			}

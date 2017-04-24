@@ -2,19 +2,23 @@
 angular.module('softvApp').controller('ContratoMaestroCtrl', ContratoMaestroCtrl);
 
 function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory) {
+  var vm = this;
+  vm.DetalleContrato = DetalleContrato;
+  vm.BuscarNombrec = BuscarNombrec;
+  vm.BuscarRazonS = BuscarRazonS;
+  vm.BuscarCiudad = BuscarCiudad;
+  vm.ObtenerCiudades = ObtenerCiudades;
+  vm.Buscarporcontrato = Buscarporcontrato;
 
-  function initialData() {
+  this.$onInit = function () {
     ContratoMaestroFactory.GetContratoList().then(function (data) {
-      console.log(data);
       vm.Contratos = data.GetContratos_CSResult;
       ContratoMaestroFactory.GetDistribuidores().then(function (data) {
         vm.Distribuidores = data.GetDistribuidoresResult;
         ContratoMaestroFactory.GetCiudadList(vm.Distribuidores[0].Clv_Plaza).then(function (data) {
           vm.Ciudades = data.GetListaCiudadesPorPlazaResult;
         });
-
       });
-
     });
   }
 
@@ -22,12 +26,10 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory) {
     ContratoMaestroFactory.GetCiudadList(x.Clv_Plaza).then(function (data) {
       vm.Ciudades = data.GetListaCiudadesPorPlazaResult;
     });
-
   }
 
   function Buscarporcontrato() {
     if (vm.contratobusqueda == null) {
-
       return;
     }
     var obj = {
@@ -70,7 +72,6 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory) {
 
   function BuscarCiudad() {
     if (vm.Ciudad.Clv_Ciudad == null) {
-
       return;
     }
     var obj = {
@@ -103,14 +104,5 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory) {
       }
     });
   }
-
-  var vm = this;
-  vm.DetalleContrato = DetalleContrato;
-  vm.BuscarNombrec = BuscarNombrec;
-  vm.BuscarRazonS = BuscarRazonS;
-  vm.BuscarCiudad = BuscarCiudad;
-  vm.ObtenerCiudades = ObtenerCiudades;
-  vm.Buscarporcontrato=Buscarporcontrato;
-  initialData();
 
 }
