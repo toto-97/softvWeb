@@ -10,7 +10,11 @@ angular
 			dimeSiYaGrabeFacMaestro: '/DimeSiYaGrabeUnaFacMaestro/GetDimeSiYaGrabeUnaFacMaestro',
 			nuePagoEfectivoMaestro: '/NUEPago_En_EfectivoDetMaestro/AddNUEPago_En_EfectivoDetMaestro',
 			nuePagoEfectivoPago: '/NUEPago_En_EfectivoDetPago/AddNUEPago_En_EfectivoDetPago',
-			pagoGrabaFactura: '/GuardaPagoFacturaMaestro/GetGuardaPagoFacturaMaestro'
+			pagoGrabaFactura: '/GuardaPagoFacturaMaestro/GetGuardaPagoFacturaMaestro',
+			getMedios: '/ObtieneMediosPago/GetObtieneMediosPagoList',
+			actFactura: '/ActualizaFacturaMaestro/AddActualizaFacturaMaestro',
+			obtenFacturas: '/ObtieneHistorialPagosFacturaMaestro/GetObtieneHistorialPagosFacturaMaestroList',
+			dameDetalle: '/DameDetalle_FacturaMaestro/GetDameDetalle_FacturaMaestroList'
 		};
 
 		factory.cobraSaldoMaestro = function(contrato) {
@@ -164,12 +168,15 @@ angular
 		factory.pagoGrabaFactura = function(objPagar) {
 			var deferred = $q.defer();
 			var Parametros = {
-				'Clv_FacturaMaestro': objPagar.Clv_FacturaMaestro,
-				'ContratoMaestro': objPagar.ContratoMaestro,
-				'Cajera': objPagar.Cajera,
-				'IpMaquina': objPagar.IpMaquina,
-				'Sucursal': objPagar.Sucursal,
-				'Monto': objPagar.Monto,
+				"Clv_FacturaMaestro": objPagar.Clv_FacturaMaestro,
+				"ContratoMaestro": objPagar.ContratoMaestro,
+				"Cajera": objPagar.Cajera,
+				"IpMaquina": objPagar.IpMaquina,
+				"Sucursal": objPagar.Sucursal,
+				"Monto": objPagar.Monto,
+				"IdMedioPago": objPagar.IdMedioPago,
+				"IdCompania": objPagar.IdCompania,
+				"IdDistribuidor": objPagar.IdDistribuidor
 				'GLOEFECTIVO2': objPagar.GLOEFECTIVO2,
 				'GLOCHEQUE2': objPagar.GLOCHEQUE2,
 				'GLOCLV_BANCOCHEQUE2': objPagar.GLOCLV_BANCOCHEQUE2,
@@ -179,9 +186,7 @@ angular
 				'NUMEROTARJETA2': objPagar.NUMEROTARJETA2,
 				'TARJETAAUTORIZACION2': objPagar.TARJETAAUTORIZACION2,
 				'CLV_Nota3': objPagar.CLV_Nota3,
-				'GLONOTA3': objPagar.GLONOTA3,
-				'IdCompania': objPagar.IdCompania,
-				'IdDistribuidor': objPagar.IdDistribuidor
+				'GLONOTA3': objPagar.GLONOTA3
 			};
 			var config = {
 				headers: {
@@ -189,6 +194,85 @@ angular
 				}
 			};
 			$http.post(globalService.getUrl() + paths.pagoGrabaFactura, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.getMedios = function() {
+			var deferred = $q.defer();
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.get(globalService.getUrl() + paths.getMedios, config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.actFactura = function(objPagar) {
+			var deferred = $q.defer();
+			var Parametros = {
+				"objActualizaFacturaMaestro": 
+				{ 
+					"ClvFacturaMaestro": objPagar.ClvFacturaMaestro, 
+					"Credito": objPagar.Credito, 
+					"NoPago": objPagar.NoPago, 
+					"PagoInicial": objPagar.PagoInicial 
+				}       
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.actFactura, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.obtenFacturas = function(clvFactura) {
+			var deferred = $q.defer();
+			var Parametros = {
+				"ClvFacturaMaestro": clvFactura
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.obtenFacturas, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.dameDetalle = function(clvFactura) {
+			var deferred = $q.defer();
+			var Parametros = {
+				"ClvFacturaMaestro": clvFactura
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.dameDetalle, JSON.stringify(Parametros), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response);

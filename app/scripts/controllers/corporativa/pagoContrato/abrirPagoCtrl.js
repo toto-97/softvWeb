@@ -1,7 +1,7 @@
 'use strict';
 angular.module('softvApp').controller('AbrirPagoCtrl', AbrirPagoCtrl);
 
-function AbrirPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, $uibModalInstance, items) {
+function AbrirPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, $uibModalInstance, items, elem1, x) {
 
     function aceptar() {
 		var metodo = vm.tipo
@@ -26,6 +26,12 @@ function AbrirPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, in
                     },
 					metodo: function() {
 						return metodo;
+					},
+					x: function() {
+						return x;
+					},
+					elem1: function() {
+						return elem1;
 					}
                 }
 			});
@@ -48,6 +54,12 @@ function AbrirPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, in
                     },
 					metodo: function() {
 						return metodo;
+					},
+					x: function() {
+						return x;
+					},
+					elem1: function() {
+						return elem1;
 					}
                 }
 			});
