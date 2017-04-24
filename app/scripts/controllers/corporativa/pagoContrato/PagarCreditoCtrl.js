@@ -19,15 +19,15 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 			ngNotify.set('Seleccione el medio de pago', 'error');
 		} else {
 			var objPagar = {
-				"Clv_FacturaMaestro": x.Clv_FacturaMaestro,
-				"ContratoMaestro": x.ContratoMaestro,
-				"Cajera": $localStorage.currentUser.usuario,
-				"IpMaquina": $localStorage.currentUser.maquina,
-				"Sucursal": $localStorage.currentUser.sucursal,
-				"Monto": vm.monto,
-				"IdMedioPago": vm.selectedMedio.IdMedioPago,
-				"IdCompania": x.IdCompania,
-				"IdDistribuidor": x.IdDistribuidor
+				'Clv_FacturaMaestro': x.Clv_FacturaMaestro,
+				'ContratoMaestro': x.ContratoMaestro,
+				'Cajera': $localStorage.currentUser.usuario,
+				'IpMaquina': $localStorage.currentUser.maquina,
+				'Sucursal': $localStorage.currentUser.sucursal,
+				'Monto': vm.monto,
+				'IdMedioPago': vm.selectedMedio.IdMedioPago,
+				'IdCompania': x.IdCompania,
+				'IdDistribuidor': x.IdDistribuidor
 			};
 			pagosMaestrosFactory.actFactura(elem).then(function(dataGraba) {
 				pagosMaestrosFactory.pagoGrabaFactura(objPagar).then(function (data) {

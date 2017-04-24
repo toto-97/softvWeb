@@ -168,25 +168,15 @@ angular
 		factory.pagoGrabaFactura = function(objPagar) {
 			var deferred = $q.defer();
 			var Parametros = {
-				"Clv_FacturaMaestro": objPagar.Clv_FacturaMaestro,
-				"ContratoMaestro": objPagar.ContratoMaestro,
-				"Cajera": objPagar.Cajera,
-				"IpMaquina": objPagar.IpMaquina,
-				"Sucursal": objPagar.Sucursal,
-				"Monto": objPagar.Monto,
-				"IdMedioPago": objPagar.IdMedioPago,
-				"IdCompania": objPagar.IdCompania,
-				"IdDistribuidor": objPagar.IdDistribuidor
-				'GLOEFECTIVO2': objPagar.GLOEFECTIVO2,
-				'GLOCHEQUE2': objPagar.GLOCHEQUE2,
-				'GLOCLV_BANCOCHEQUE2': objPagar.GLOCLV_BANCOCHEQUE2,
-				'NUMEROCHEQUE2': objPagar.NUMEROCHEQUE2,
-				'GLOTARJETA2': objPagar.GLOTARJETA2,
-				'GLOCLV_BANCOTARJETA2': objPagar.GLOCLV_BANCOTARJETA2,
-				'NUMEROTARJETA2': objPagar.NUMEROTARJETA2,
-				'TARJETAAUTORIZACION2': objPagar.TARJETAAUTORIZACION2,
-				'CLV_Nota3': objPagar.CLV_Nota3,
-				'GLONOTA3': objPagar.GLONOTA3
+				'Clv_FacturaMaestro': objPagar.Clv_FacturaMaestro,
+				'ContratoMaestro': objPagar.ContratoMaestro,
+				'Cajera': objPagar.Cajera,
+				'IpMaquina': objPagar.IpMaquina,
+				'Sucursal': objPagar.Sucursal,
+				'Monto': objPagar.Monto,
+				'IdMedioPago': objPagar.IdMedioPago,
+				'IdCompania': objPagar.IdCompania,
+				'IdDistribuidor': objPagar.IdDistribuidor
 			};
 			var config = {
 				headers: {
@@ -221,12 +211,12 @@ angular
 		factory.actFactura = function(objPagar) {
 			var deferred = $q.defer();
 			var Parametros = {
-				"objActualizaFacturaMaestro": 
+				'objActualizaFacturaMaestro': 
 				{ 
-					"ClvFacturaMaestro": objPagar.ClvFacturaMaestro, 
-					"Credito": objPagar.Credito, 
-					"NoPago": objPagar.NoPago, 
-					"PagoInicial": objPagar.PagoInicial 
+					'ClvFacturaMaestro': objPagar.ClvFacturaMaestro, 
+					'Credito': objPagar.Credito, 
+					'NoPago': objPagar.NoPago, 
+					'PagoInicial': objPagar.PagoInicial 
 				}       
 			};
 			var config = {
@@ -246,7 +236,7 @@ angular
 		factory.obtenFacturas = function(clvFactura) {
 			var deferred = $q.defer();
 			var Parametros = {
-				"ClvFacturaMaestro": clvFactura
+				'ClvFacturaMaestro': clvFactura
 			};
 			var config = {
 				headers: {
@@ -265,7 +255,7 @@ angular
 		factory.dameDetalle = function(clvFactura) {
 			var deferred = $q.defer();
 			var Parametros = {
-				"ClvFacturaMaestro": clvFactura
+				'ClvFacturaMaestro': clvFactura
 			};
 			var config = {
 				headers: {
