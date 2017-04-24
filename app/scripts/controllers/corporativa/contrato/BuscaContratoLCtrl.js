@@ -28,7 +28,7 @@ function BuscaContratoLCtrl($uibModalInstance, atencionFactory, $rootScope, corp
 		obje.IdDistribuidor = vm.distribuidor;
 		obje.op = 0;
 		corporativoFactory.buscarCliente(obje).then(function(data) {
-			console.log(data);
+			
 			vm.Clientes = data.GetBuscaByIdDisListResult;
 		});
 	}
@@ -48,18 +48,20 @@ function BuscaContratoLCtrl($uibModalInstance, atencionFactory, $rootScope, corp
 		obje.IdDistribuidor = vm.distribuidor;
 		corporativoFactory.buscarCliente(obje).then(function(data) {
 			vm.Clientes = data.GetBuscaByIdDisListResult;
-			console.log(vm.Clientes);
+			
 		});
 	}
 
 
-	function Seleccionar(contrato) {
-		corporativoFactory.validaContrato(contrato.ContratoBueno).then(function(data) {
+	function Seleccionar(contrato) {	
+		corporativoFactory.validaContrato(contrato.ContratoBueno).then(function(data) {			
 			if (data.GetValidaSiContratoExiste_CMResult.Bandera) {
 				ngNotify.set(data.GetValidaSiContratoExiste_CMResult.Msg, 'error');
+			
 			} else {
+				
 				$uibModalInstance.dismiss('cancel');
-				$rootScope.$emit('agregar_contrato', contrato);
+				$rootScope.$broadcast('agregar_contrato', contrato);
 			}
 		});
 	}

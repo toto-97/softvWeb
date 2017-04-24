@@ -31,13 +31,13 @@
                 <div class="col-md-6">
 
                   <div class="form-group">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                       <b>Plaza:</b>
                       <select class="form-control input-sm" ng-options=" item.razon_social for item in $ctrl.Plazas track by item.id_compania" ng-model="$ctrl.Plaza" ng-change="$ctrl.CambioPlaza($ctrl.Plaza);">
                                               <option value="">Selecciona plaza</option>
                                                </select>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                       <b>Servicio:</b>
                       <select class="form-control input-sm" ng-model="$ctrl.Servicio" ng-change="$ctrl.CambioServicio();" ng-options=" item.Concepto for item in $ctrl.Servicios track by item.Clv_TipSerPrincipal">
                                               <option value="">Selecciona servicio</option>
@@ -66,27 +66,27 @@
 
 
                   <div class="col-md-6">
-                    <b># Reporte:</b>
-                    <input type="number" class="form-control input-sm" ng-model="$ctrl.Reporte">
+                   
+                    <input type="number" class="form-control input-sm" placeholder="#Reporte" ng-model="$ctrl.Reporte">
                     <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaReporte()">Buscar</button>
                     <br>
                   </div>
                   <div class="col-md-6">
                     <form angular-validator-submit="$ctrl.BuscaContrato()" name="contratoForm" novalidate angular-validator>
-                      <b>Contrato:</b>
-                      <input class="form-control input-sm" ng-model="$ctrl.Contrato" type="text" autocomplete="off" required="" name="contrato" validate-on="dirty" placeholder="Contrato" ng-pattern="/^[0-9]+([-][0-9]+)?$/" required-message="'Este campo es obligatorio.'" invalid-message="'Formato de contrato inválido.'">
+                    
+                      <input class="form-control input-sm" ng-model="$ctrl.Contrato" placeholder="#Contrato" type="text" autocomplete="off" required="" name="contrato" validate-on="dirty" placeholder="Contrato" ng-pattern="/^[0-9]+([-][0-9]+)?$/" required-message="'Este campo es obligatorio.'" invalid-message="'Formato de contrato inválido.'">
                       <button class="btn btn-info btn-xs text-left" type="submit">Buscar</button>
                     </form>
                     <br>
                   </div>
 
                   <div class="col-md-6">
-                    <b>SetTopBox:</b>
+                    
                     <input type="number" class="form-control input-sm" placeholder="Serie de STB" ng-model="$ctrl.STB">
                     <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaporSTB()">Buscar</button>
                   </div>
                   <div class="col-md-6">
-                    <b>Ticket:</b>
+                    
                     <input class="form-control input-sm" type="number" placeholder="# de ticket" ng-model="$ctrl.Ticket">
                     <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaporTicket()">Buscar</button>
                   </div>

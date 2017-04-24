@@ -11,6 +11,13 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFacto
 	vm.MuestraBanco = false;
 	vm.MuestraAutorizacion = false;
 
+
+
+ 
+
+
+
+
 	this.$onInit = function () {
 		corporativoFactory.singleContrato($stateParams.id).then(function (data) {
 			vm.contratoMaestro = data.GetRelContratosResult[0];

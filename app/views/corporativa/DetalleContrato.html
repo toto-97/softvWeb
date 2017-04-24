@@ -68,12 +68,22 @@
 				<th class="text-center">Contrato</th>
 				<th class="text-center">Dirección</th>
 				<th class="text-center">Cliente</th>
+				<th class="text-center">Nivel afec.</th>
+				<th class="text-center">Proporcional</th>
 			</thead>
 			<tbody>
-				<tr ng-if="ctrl.contrato.lstCliS.length >0" ng-repeat="x in ctrl.contrato.lstCliS">
+				<tr ng-if="ctrl.contrato.lstCliS.length >0" ng-repeat="x in ctrl.contrato.lstCliS | orderBy:'Nivel'">
 					<td>{{ x.ContratoCom }}</td>
 					<td>{{ x.Direccion }}</td>
 					<td>{{ x.NombreCli }}</td>
+					<td>{{ x.Nivel }}</td>
+					<td>    
+                      <label class="checkbox-inline checkbox-styled checkbox-primary">
+														<input type="checkbox" value="option1" checked="{{ x.Proporcional }}"><span></span>
+								
+
+
+					</td>
 				</tr>
 
 			</tbody>
@@ -82,5 +92,5 @@
 </div>
 </div>
 <div class="modal-footer">
-	<button class="btn btn-default btn-sm" type="button" ng-click="ctrl.cancel()">Cancelar</button>
+	<button class="btn btn-default btn-sm" type="button" ng-click="ctrl.cancel()">Cerrar</button>
 </div>
