@@ -20,7 +20,7 @@ angular
 		factory.cobraSaldoMaestro = function(contrato) {
 			var deferred = $q.defer();
 			var Parametros = {
-				"Contrato":contrato
+				'Contrato':contrato
 			};
 			var config = {
 				headers: {
@@ -39,8 +39,8 @@ angular
 		factory.obtenEdoCuenta = function(contrato,clave) {
 			var deferred = $q.defer();
 			var Parametros = {
-				"Contrato":contrato,
-				"ClvSession":clave
+				'Contrato':contrato,
+				'ClvSession':clave
 			};
 			var config = {
 				headers: {
@@ -59,27 +59,27 @@ angular
 		factory.grabaFactura = function(objPagar) {
 			var deferred = $q.defer();
 			var Parametros = {
-				"ContratoMaestro": objPagar.contrato,
-				"Credito": objPagar.credito,
-				"Cajera": objPagar.cajera, 
-				"IpMaquina": objPagar.maquina,
-				"Sucursal": objPagar.sucursal,
-				"IdCompania": objPagar.compania,
-				"IdDistribuidor": objPagar.distribuidor,
-				"ClvSessionPadre": objPagar.sessionPadre,
-				"Tipo": objPagar.tipo,
-				"Monto": objPagar.monto,
-				"GLOEFECTIVO2": objPagar.GLOEFECTIVO2,
-				"GLOCHEQUE2": objPagar.GLOCHEQUE2,
-				"GLOCLV_BANCOCHEQUE2": objPagar.GLOCLV_BANCOCHEQUE2,
-				"NUMEROCHEQUE2": objPagar.NUMEROCHEQUE2,
-				"GLOTARJETA2": objPagar.GLOTARJETA2,
-				"GLOCLV_BANCOTARJETA2": objPagar.GLOCLV_BANCOTARJETA2,
-				"NUMEROTARJETA2": objPagar.NUMEROTARJETA2,
-				"TARJETAAUTORIZACION2": objPagar.TARJETAAUTORIZACION2,
-				"CLV_Nota2": objPagar.CLV_Nota2,
-				"GLONOTA3": objPagar.GLONOTA3,
-				"ToKen2": objPagar.token,
+				'ContratoMaestro': objPagar.contrato,
+				'Credito': objPagar.credito,
+				'Cajera': objPagar.cajera, 
+				'IpMaquina': objPagar.maquina,
+				'Sucursal': objPagar.sucursal,
+				'IdCompania': objPagar.compania,
+				'IdDistribuidor': objPagar.distribuidor,
+				'ClvSessionPadre': objPagar.sessionPadre,
+				'Tipo': objPagar.tipo,
+				'Monto': objPagar.monto,
+				'GLOEFECTIVO2': objPagar.GLOEFECTIVO2,
+				'GLOCHEQUE2': objPagar.GLOCHEQUE2,
+				'GLOCLV_BANCOCHEQUE2': objPagar.GLOCLV_BANCOCHEQUE2,
+				'NUMEROCHEQUE2': objPagar.NUMEROCHEQUE2,
+				'GLOTARJETA2': objPagar.GLOTARJETA2,
+				'GLOCLV_BANCOTARJETA2': objPagar.GLOCLV_BANCOTARJETA2,
+				'NUMEROTARJETA2': objPagar.NUMEROTARJETA2,
+				'TARJETAAUTORIZACION2': objPagar.TARJETAAUTORIZACION2,
+				'CLV_Nota2': objPagar.CLV_Nota2,
+				'GLONOTA3': objPagar.GLONOTA3,
+				'ToKen2': objPagar.token,
 				'NoPagos' : objPagar.NoPagos,
   				'PagoInicial': objPagar.PagoInicial
 
@@ -101,7 +101,7 @@ angular
 		factory.dimeSiYaGrabeFacMaestro = function(contrato) {
 			var deferred = $q.defer();
 			var Parametros = {
-				"ContratoMae": contrato
+				'ContratoMae': contrato
 			};
 			var config = {
 				headers: {
@@ -120,11 +120,11 @@ angular
 		factory.nuePagoEfectivoMaestro = function(factura,efectivo,cambio) {
 			var deferred = $q.defer();
 			var Parametros = {
-				"objNUEPago_En_EfectivoDetMaestro":
+				'objNUEPago_En_EfectivoDetMaestro':
 					{
-						"Clv_FacturaMaestro": factura,
-						"Efectivo": efectivo ,
-						"Cambio": cambio
+						'Clv_FacturaMaestro': factura,
+						'Efectivo': efectivo ,
+						'Cambio': cambio
 					}
 			};
 			var config = {
@@ -144,11 +144,11 @@ angular
 		factory.nuePagoEfectivoPago = function(pago,efectivo,cambio) {
 			var deferred = $q.defer();
 			var Parametros = {
-				"objNUEPago_En_EfectivoDetPago": 
+				'objNUEPago_En_EfectivoDetPago': 
 				{
-					"Clv_Pago": pago,
-					"Efectivo": efectivo,
-					"Cambio": cambio
+					'Clv_Pago': pago,
+					'Efectivo': efectivo,
+					'Cambio': cambio
 				}
 			};
 			var config = {
@@ -168,15 +168,15 @@ angular
 		factory.pagoGrabaFactura = function(objPagar) {
 			var deferred = $q.defer();
 			var Parametros = {
-				"Clv_FacturaMaestro": objPagar.Clv_FacturaMaestro,
-				"ContratoMaestro": objPagar.ContratoMaestro,
-				"Cajera": objPagar.Cajera,
-				"IpMaquina": objPagar.IpMaquina,
-				"Sucursal": objPagar.Sucursal,
-				"Monto": objPagar.Monto,
-				"IdMedioPago": objPagar.IdMedioPago,
-				"IdCompania": objPagar.IdCompania,
-				"IdDistribuidor": objPagar.IdDistribuidor
+				'Clv_FacturaMaestro': objPagar.Clv_FacturaMaestro,
+				'ContratoMaestro': objPagar.ContratoMaestro,
+				'Cajera': objPagar.Cajera,
+				'IpMaquina': objPagar.IpMaquina,
+				'Sucursal': objPagar.Sucursal,
+				'Monto': objPagar.Monto,
+				'IdMedioPago': objPagar.IdMedioPago,
+				'IdCompania': objPagar.IdCompania,
+				'IdDistribuidor': objPagar.IdDistribuidor
 			};
 			var config = {
 				headers: {
@@ -211,12 +211,12 @@ angular
 		factory.actFactura = function(objPagar) {
 			var deferred = $q.defer();
 			var Parametros = {
-				"objActualizaFacturaMaestro": 
+				'objActualizaFacturaMaestro': 
 				{ 
-					"ClvFacturaMaestro": objPagar.ClvFacturaMaestro, 
-					"Credito": objPagar.Credito, 
-					"NoPago": objPagar.NoPago, 
-					"PagoInicial": objPagar.PagoInicial 
+					'ClvFacturaMaestro': objPagar.ClvFacturaMaestro, 
+					'Credito': objPagar.Credito, 
+					'NoPago': objPagar.NoPago, 
+					'PagoInicial': objPagar.PagoInicial 
 				}       
 			};
 			var config = {
@@ -236,7 +236,7 @@ angular
 		factory.obtenFacturas = function(clvFactura) {
 			var deferred = $q.defer();
 			var Parametros = {
-				"ClvFacturaMaestro": clvFactura
+				'ClvFacturaMaestro': clvFactura
 			};
 			var config = {
 				headers: {
@@ -255,7 +255,7 @@ angular
 		factory.dameDetalle = function(clvFactura) {
 			var deferred = $q.defer();
 			var Parametros = {
-				"ClvFacturaMaestro": clvFactura
+				'ClvFacturaMaestro': clvFactura
 			};
 			var config = {
 				headers: {

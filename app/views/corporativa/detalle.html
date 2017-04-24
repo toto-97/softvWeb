@@ -1,3 +1,10 @@
+<style type="text/css">
+	.scrollDiv {
+		height: 350px;
+		overflow: auto;
+		overflow-x: hidden;
+	}
+</style>
 <div class="modal-header">
   <button class="close" aria-label="Close" type="button" ng-click="$ctrl.cancel()">×</button>
   <h4 class="modal-title">Detalles del ticket: <span style="color:red">{{$ctrl.ticket}}</span></h4>
@@ -6,7 +13,7 @@
 
 
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 scrollDiv">
       <table class="table">
         <thead>
             <tr style="background-color: #B5B6B6;">
@@ -20,7 +27,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr dir-paginate="w in $ctrl.detalles|itemsPerPage:8">
+            <tr ng-repeat="w in $ctrl.detalles">
                 <td style="font-size: 9px;">{{ w.DESCORTA }}</td>
                 <td style="font-size: 9px;">{{ w.importe | currency }}</td>
                 <td style="font-size: 9px;">{{ w.PuntosAplicadosOtros }}</td>
@@ -31,10 +38,6 @@
             </tr>
         </tbody>
     </table>
-      <div>
-        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
-        </dir-pagination-controls>
-      </div>
     </div>
 
 

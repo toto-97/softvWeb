@@ -33,7 +33,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
             'RazonSocial': '',
             'NombreComercial': '',
             'ClvCiudad': vm.contratobusqueda,
-            "Op": 4
+            'Op': 4
         };
         ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
             vm.Contratos = data.GetBusquedaContratoMaestroFacResult[0];
@@ -80,7 +80,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
             'RazonSocial': '',
             'NombreComercial': vm.NombreComer,
             'ClvCiudad': 0,
-            "Op": 2
+            'Op': 2
         }
 
         ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
@@ -126,7 +126,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
             'RazonSocial': vm.RazonS,
             'NombreComercial': '',
             'ClvCiudad': 0,
-            "Op": 1
+            'Op': 1
         };
         ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
             vm.Contratos = data.GetBusquedaContratoMaestroFacResult[0];
@@ -171,7 +171,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
             'RazonSocial': '',
             'NombreComercial': '',
             'ClvCiudad': vm.Ciudades.Clv_Ciudad,
-            "Op": 3
+            'Op': 3
         };
         ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
             vm.Contratos = data.GetBusquedaContratoMaestroFacResult[0];
