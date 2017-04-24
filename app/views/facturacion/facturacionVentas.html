@@ -12,7 +12,7 @@
     font-size: 14px;
   }
 </style>
-<div class="card" style="margin-top:20px;">
+<div class="card animated fadeIn" style="margin-top:20px;">
   <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
     <header>
       <strong style="font-weight:bold; border:none; margin-left:10px;">Ventas</strong>
@@ -312,10 +312,10 @@
                 <div class="row">
                   <div class="col-md-8">
                     <div style="padding-left: 10px;">
-                      <button class="btn btn-default btn-xs" ng-click="ctrl.openAddList()" ng-disabled="ctrl.blockBaja">AGREGAR A LA LISTA</button>
-                      <button class="btn btn-default btn-xs" ng-click="ctrl.openDeleteList()" ng-disabled="ctrl.blockBaja">QUITAR DE LA LISTA</button>
-                      <button class="btn btn-default btn-xs" ng-click="ctrl.openSuspencion()" ng-disabled="ctrl.mostrarSuspencion">SUSPENSIÓN TEMPORAL</button>
-                      <button class="btn btn-warning btn-xs" ng-click="ctrl.openReturn()" ng-disabled="ctrl.blockBaja">COBRAR ADEUDO</button>
+                      <a class="btn btn-default btn-xs" ng-click="ctrl.openAddList()" ng-disabled="ctrl.blockBaja">AGREGAR A LA LISTA</a>
+                      <a class="btn btn-default btn-xs" ng-click="ctrl.openDeleteList()" ng-disabled="ctrl.blockBaja">QUITAR DE LA LISTA</a>
+                      <a class="btn btn-default btn-xs" ng-click="ctrl.openSuspencion()" ng-disabled="ctrl.mostrarSuspencion">SUSPENSIÓN TEMPORAL</a>
+                      <a class="btn btn-warning btn-xs" ng-click="ctrl.openReturn()" ng-disabled="ctrl.blockBaja">COBRAR ADEUDO</a>
                     </div>
                   </div>
                   <div class="col-md-4">

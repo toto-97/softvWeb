@@ -1,4 +1,15 @@
-<div class="row" style="margin-top:10px;">
+<style>
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    padding: 8px 8px;
+    line-height: 1.846153846;
+    vertical-align: top;
+    border-top: 1px solid rgba(189, 193, 193, 0.2);
+}
+
+</style>
+
+<div class="row animated fadeIn fast" style="margin-top:10px;">
 
     <div class="card" style="margin-top:20px;">
         <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
@@ -97,7 +108,7 @@
                 <div class="row">
 
 
-                    <div class="col-md-12" style="padding-left: 25px; padding-right: 25px;">
+                    <div class="col-md-12" style="padding-left: 25px; padding-right: 25px; font-size:10px;">
                         <p class="text-right" style="margin-top: 10px;">
 
                         </p>
@@ -119,7 +130,7 @@
                             </thead>
                             <tbody>
 
-                                <tr ng-show="$ctrl.pagos.length>0" dir-paginate="x in $ctrl.pagos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:5">
+                                <tr ng-show="$ctrl.pagos.length>0" dir-paginate="x in $ctrl.pagos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:10">
                                     
                                     <td>{{x.ContratoMaestro}}</td>
                                     <td>{{x.Clv_FacturaMaestro}}</td>

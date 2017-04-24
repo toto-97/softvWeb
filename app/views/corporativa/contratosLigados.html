@@ -1,6 +1,10 @@
+
+
+
+
 <div class="modal-header">
   <button type="button" class="close" ng-click="$ctrl.cancel()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <h3 class="modal-title" id="modal-title">Contratos Ligados</h3>
+  <h5 class="modal-title" id="modal-title">Contratos Ligados</h5>
 </div>
 <div class="modal-body" id="modal-body">
   <div class="row">
@@ -13,30 +17,57 @@
       <div class="col-md-4"><button class="btn btn-success btn-xs" ng-click="$ctrl.clientesModal()"><i class="fa fa-plus" aria-hidden="true"></i> Añadir</button></div>
 
     </div>
-    <div class="col-md-12" style="overflow-y:scroll; max-height:350px;">
 
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <td>Contrato</td>
-            <td>Cliente</td>
-            <td>Acciones</td>
-          </tr>
-        </thead>
-        <tbody>
+ 
 
-          <tr ng-repeat="x in $ctrl.contratos">
-            <td>{{ x.CONTRATO }}</td>
-            <td>{{ x.Nombre }} {{ x.Apellido_Paterno }} {{ x.Apellido_Materno }}</td>
-            <td><button class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-click="$ctrl.eliminarContrato($index)"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
-          </tr>
-        </tbody>
+    </div>
 
-      </table>
-      <!-- <div style="padding-left: 20px;">
-        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
-        </dir-pagination-controls>
-      </div> -->
+
+    
+      <br>
+      <ul dnd-list="$ctrl.contratos" class="list-group" style="max-height: 300px; overflow-y: scroll;">
+        <li ng-repeat="item in $ctrl.contratos" dnd-draggable="item" dnd-moved="$ctrl.contratos.splice($index, 1)" dnd-effect-allowed="move"
+          dnd-selected="models.selected = item" ng-class="{'selected': models.selected === item}" class="list-group-item">
+          <p style="font-size:12px;"><button type="button" class="btn ink-reaction btn-icon-toggle btn-danger" ng-click="$ctrl.eliminarContrato($index)"><i class="fa fa-trash"></i></button><span class="badge" style="background-color:#d9534f">{{$index + 1}}</span><b>&nbsp&nbsp</b>{{item.CONTRATO}}&nbsp&nbsp&nbsp&nbsp{{ item.Nombre }} {{ item.Apellido_Paterno }} {{ item.Apellido_Materno}}&nbsp&nbsp&nbsp<b ng-if="item.Proporcional==true" style="color: #d9534f">PROPORCIONAL</b>
+          </p>
+         <!-- <span class="badge" style="background-color:#d9534f">{{$index + 1}}</span><p><span class="badge">{{item.CONTRATO}}</span><p ng-if="item.Proporcional==true"><b>PROPORCIONAL</b></p><p ng-if="item.Proporcional==false"></p> {{ item.Nombre }} {{ item.Apellido_Paterno }} {{ item.Apellido_Materno
+          }}</p>-->
+        </li>
+      </ul>
+      <hr>
+      <div class="row"  >
+        <form angular-validator-submit="$ctrl.cambioNivel()" name="contratoForm" novalidate angular-validator>
+        <div class="col-md-3">
+
+          Cambiar nivel de
+        </div>
+        <div class="col-md-2">
+
+ <input type="number" class="form-control input-sm" validate-on="dirty" name="Nivelant" ng-model="$ctrl.Nivelant"  min="1" max="{{$ctrl.contratos.length}}" required nvalid-message="'La prioridad solo es del 1 al {{ $ctrl.contratos.length  }}'" required-message="'Este campo es obligatorio.'" >
+
+        </div>
+        <div class="col-md-3">
+
+  <input type="number" class="form-control input-sm" validate-on="dirty" name="Nivelnue" ng-model="$ctrl.Nivelnue"  min="1" max="{{$ctrl.contratos.length}}" required nvalid-message="'La prioridad solo es del 1 al {{ $ctrl.contratos.length  }}'" required-message="'Este campo es obligatorio.'" >
+
+        </div>
+        <div class="col-md-2">
+
+ <button type="submit"  class="btn ink-reaction btn-flat btn-xs btn-primary" ><i class="md md-swap-horiz
+"></i>Cambiar</button>
+
+
+        </div>
+        <br>
+        Errores de proceso:
+        <div class="col-md-12" style="max-height: 150px; overflow-y:scroll; font-size: 10px; color:red; ">
+         
+           <p ng-repeat="x in $ctrl.FileErrors">*{{x.ContratoCom}}--{{x.Referencia}}</p>
+         
+
+        </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>

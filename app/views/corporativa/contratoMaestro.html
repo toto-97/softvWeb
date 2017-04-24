@@ -1,5 +1,15 @@
-<div class="row" style="margin-top:10px;">
+<style>
+.body{font-size: 10px;}
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    padding: 7px 8px;
+    line-height: 1.846153846;
+    vertical-align: top;
+    border-top: 1px solid rgba(189, 193, 193, 0.2);
+}
 
+</style>
+
+<div class="row animated fadeIn" style="margin-top:10px;">
   <div class="card" style="margin-top:20px;">
     <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
       <header>
@@ -28,6 +38,15 @@
                   <div class="row">
                     <br>
                     <div class="col-md-3">
+                      <p>No.Contrato :</p>
+                      <input type="number" class="form-control input-sm" ng-model="$ctrl.contratobusqueda">
+
+                    </div>
+                     <div class="col-md-1">
+ <br>
+                    <button class="btn btn-info btn-xs" ng-click="$ctrl.Buscarporcontrato();"><i class="fa fa-search"></i> Buscar</button>
+                    </div>
+                    <div class="col-md-3">
 
                       <p>Nombre Comercial :
                         <p>
@@ -49,13 +68,7 @@
                       <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscarRazonS();"><i class="fa fa-search"></i> Buscar</button>
 
                     </div>
-                    <div class="col-md-3">
-                      <p>No.Contrato :</p>
-                      <input type="text" class="form-control input-sm" ng-model="$ctrl.contratobusqueda">
-
-                    </div>
-                    <br>
-                    <button class="btn btn-info btn-xs" ng-click="$ctrl.Buscarporcontrato();"><i class="fa fa-search"></i> Buscar</button>
+                    
                   </div>
                 </uib-tab>
                 <uib-tab index="1" heading="Ubicación">
@@ -96,21 +109,10 @@
         </div>
       </div>
       <!--end .panel -->
-    </div>
 
-
-
-
-
-    <div class="col-md-12">
-      <div class="row">
-
-
-        <div class="col-md-12" style="padding-left: 25px; padding-right: 25px;">
-          <p class="text-right" style="margin-top: 10px;">
-
-          </p>
-          <table class="table">
+ <div class="col-md-12">
+         
+          <table class="table" style="font-size:10px;">
             <thead>
               <tr>
                 <th>#contrato</th>
@@ -122,7 +124,7 @@
             </thead>
             <tbody>
 
-              <tr ng-show="$ctrl.Contratos.length>0" dir-paginate="x in $ctrl.Contratos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:5">
+              <tr ng-show="$ctrl.Contratos.length>0" dir-paginate="x in $ctrl.Contratos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:8">
                 <td>{{x.IdContratoMaestro}}</td>
                 <td>{{x.RazonSocial}}</td>
                 <td>{{x.RFC}}</td>
@@ -140,11 +142,19 @@
           </div>
         </div>
 
-
-
-      </div>
-
     </div>
+
+
+
+
+
+
+
+       
+
+
+
+   
 
 
 
