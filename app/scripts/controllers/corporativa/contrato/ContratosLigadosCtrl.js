@@ -1,6 +1,6 @@
 'use strict';
 
-function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope,$rootScope, corporativoFactory, detalle, $state, ngNotify, ContratoMaestroFactory) {
+function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope, $rootScope, corporativoFactory, detalle, $state, ngNotify, ContratoMaestroFactory) {
 
   function Init() {
     vm.contratos = [];
@@ -14,6 +14,7 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope,$rootScope, c
       vm.showeditbtn = false;
     }
     for (var a = 0; a < detalle.ContratosSoftv.length; a++) {
+
       var contrato = {};
       contrato.CONTRATO = detalle.ContratosSoftv[a].ContratoCom;
       contrato.Nombre = detalle.ContratosSoftv[a].NombreCli;
@@ -24,29 +25,38 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope,$rootScope, c
       contrato.Proporcional = detalle.ContratosSoftv[a].Proporcional;
       vm.contratos.push(contrato);
     }
-    
+    sortByKey(vm.contratos, 'Nivel');
   }
 
   function cancel() {
     $uibModalInstance.dismiss('cancel');
-    }
+  }
   $rootScope.$on('contrato_proporcional', function (e, contrato) {
     vm.contratos.push(contrato);
   });
-  
-  $scope.$on("agregar_contrato", function(e, contrato) {    
+
+  $scope.$on("agregar_contrato", function (e, contrato) {
     ValidaContrato(contrato);
-});
+  });
 
 
- function ValidaContrato( contrato) {    
+  function sortByKey(array, key) {
+    return array.sort(function (a, b) {
+      var x = a[key];
+      var y = b[key];
+      return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+  }
+
+
+  function ValidaContrato(contrato) {
     var aux = 0;
     vm.contratos.forEach(function (item) {
       if (contrato.CONTRATO == item.CONTRATO) {
         aux += 1;
       }
     });
-    if (aux > 0) {     
+    if (aux > 0) {
       ngNotify.set('El contrato ya se encuentra asignado al contrato maestro', 'error');
     }
     if (aux == 0) {
@@ -128,7 +138,8 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope,$rootScope, c
 
         });
       });
-
+      console.log(vm.contratos);
+      console.log(contratos);
 
       corporativoFactory.UpdateRelContrato(detalle.IdContratoMaestro, contratos, vm.Distribuidor.Clv_Plaza).then(function (data) {
 
@@ -154,9 +165,7 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope,$rootScope, c
     }
 
     ContratoMaestroFactory.UpdateFile(files, detalle.IdContratoMaestro, vm.Distribuidor.Clv_Plaza).then(function (data) {
-
-
-
+      console.log(data);
       if (data.ContratosValidos.length > 0) {
         ngNotify.set('Se encontraron ' + data.ContratosValidos.length + ' contratos válidos', 'grimace');
         vm.contratos = [];
@@ -175,15 +184,21 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope,$rootScope, c
             contrato.Apellido_Materno = '';
             contrato.Apellido_Paterno = '';
             contrato.ContratoBueno = data.ContratosValidos[i].ContratoReal;
+            contrato.Nivel = data.ContratosValidos[i].Nivel;
+            contrato.Proporcional = data.ContratosValidos[i].Proporcional2;
+
             vm.contratos.push(contrato);
           }
         }
-      } else if (data.ContratosValidos === null) {
-        ngNotify.set('No se encontraron contratos válidos en el archivo', 'error');
-      } else {
-        ngNotify.set('No se encontraron contratos válidos en el archivo', 'error');
+
+
       }
 
+      if (data.ContratosNoValidos.length > 0) {
+        vm.FileErrors = data.ContratosNoValidos;
+      } else {
+        vm.FileErrors = [];
+      }
 
     });
   }

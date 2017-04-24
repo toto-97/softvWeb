@@ -28,7 +28,7 @@ function BuscaContratoLCtrl($uibModalInstance, atencionFactory, $rootScope, corp
 		obje.IdDistribuidor = vm.distribuidor;
 		obje.op = 0;
 		corporativoFactory.buscarCliente(obje).then(function(data) {
-			console.log(data);
+			
 			vm.Clientes = data.GetBuscaByIdDisListResult;
 		});
 	}
