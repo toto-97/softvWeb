@@ -37,7 +37,6 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         };
         ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
             vm.Contratos = data.GetBusquedaContratoMaestroFacResult[0];
-            console.log(vm.Contratos);
             if (vm.Contratos == undefined) {
                 ngNotify.set('No se encontro el contrato.', 'error');
                 resetBusquedas();
@@ -86,7 +85,6 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
 
         ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
             vm.Contratos = data.GetBusquedaContratoMaestroFacResult[0];
-            console.log(vm.Contratos);
             if (vm.Contratos == undefined) {
                 ngNotify.set('No se encontro el contrato.', 'error');
                 resetBusquedas();
@@ -132,7 +130,6 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         };
         ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
             vm.Contratos = data.GetBusquedaContratoMaestroFacResult[0];
-            console.log(vm.Contratos);
             if (vm.Contratos == undefined) {
                 ngNotify.set('No se encontro el contrato.', 'error');
                 resetBusquedas();
@@ -166,7 +163,6 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
     }
 
     function BuscarCiudad() {
-        console.log(vm.Ciudades.Clv_Ciudad);
         if (vm.Ciudades.Clv_Ciudad == undefined) {
             ngNotify.set('Ingrese distribuidor y ciudad.', 'error');
         }
@@ -179,7 +175,6 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         };
         ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
             vm.Contratos = data.GetBusquedaContratoMaestroFacResult[0];
-            console.log(vm.Contratos);
             if (vm.Contratos == undefined) {
                 ngNotify.set('No se encontro el contrato.', 'error');
                 resetBusquedas();
