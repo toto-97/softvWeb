@@ -28,19 +28,18 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 		if (vm.pagoInicial == undefined || vm.pagoInicial == null || vm.pagoInicial == 0 || vm.pagoInicial < 0 || vm.numeroPagos == undefined || vm.numeroPagos == null || vm.numeroPagos == 0 || vm.numeroPagos < 0) {
 			ngNotify.set('Los campos no deben de ir nulos, negativos o en 0', 'error');
 		}else {
-			var objPagar = {
-				"ClvFacturaMaestro": x.Clv_FacturaMaestro,
-				"Credito": metodo,
-				"NoPago": vm.numeroPagos,
-				"PagoInicial": vm.pagoInicial
-			};
 			var elem = {
-				PagoInicial: vm.pagoInicial,
+				ClvFacturaMaestro: x.Clv_FacturaMaestro,
+				Credito: metodo,
+				NoPago: vm.numeroPagos,
+				PagoInicial: vm.pagoInicial
 			};
-			console.log(objPagar);
-			console.log(elem);
-			pagosMaestrosFactory.actFactura(objPagar).then(function(dataGraba) {
-				console.log(dataGraba.AddActualizaFacturaMaestroResult);
+			// var elem = {
+			// 	PagoInicial: vm.pagoInicial,
+			// };
+			// console.log(objPagar);
+			// pagosMaestrosFactory.actFactura(objPagar).then(function(dataGraba) {
+			// 	console.log(dataGraba.AddActualizaFacturaMaestroResult);
 				$uibModalInstance.dismiss('cancel');
 				vm.animationsEnabled = true;
 				var modalInstance = $uibModal.open({
@@ -62,7 +61,7 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 						}
 					}
 				});
-			});
+			// });
 		}
 	}
 
@@ -70,19 +69,18 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 		if (vm.abono == undefined || vm.abono == null || vm.abono == 0 || vm.abono < 0) {
 			ngNotify.set('Los campos no deben de ir nulos, negativos o en 0', 'error');
 		}else {
-			var objPagar = {
-				"ClvFacturaMaestro": x.Clv_FacturaMaestro,
-				"Credito": metodo,
-				"NoPago": 0,
-				"PagoInicial": vm.pagoInicial
-			};
 			var elem = {
-				PagoInicial: vm.abono,
+				ClvFacturaMaestro: x.Clv_FacturaMaestro,
+				Credito: metodo,
+				NoPago: 0,
+				PagoInicial: vm.abono
 			};
-			console.log(objPagar);
-			console.log(elem);
-			pagosMaestrosFactory.actFactura(objPagar).then(function(dataGraba) {
-				console.log(dataGraba.AddActualizaFacturaMaestroResult);
+			// var elem = {
+			// 	PagoInicial: vm.abono,
+			// };
+			// console.log(objPagar);
+			// pagosMaestrosFactory.actFactura(objPagar).then(function(dataGraba) {
+			// 	console.log(dataGraba.AddActualizaFacturaMaestroResult);
 				$uibModalInstance.dismiss('cancel');
 				vm.animationsEnabled = true;
 				var modalInstance = $uibModal.open({
@@ -104,7 +102,7 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 						}
 					}
 				});
-			});
+			// });
 		}
 	}
 

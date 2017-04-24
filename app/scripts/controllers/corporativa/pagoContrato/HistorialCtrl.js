@@ -3,10 +3,8 @@ angular.module('softvApp').controller('HistorialCtrl', HistorialCtrl);
 
 function HistorialCtrl($uibModal, ngNotify, inMenu, $uibModalInstance, x, pagosMaestrosFactory) {
 	function initial() {
-		console.log(x);
 		pagosMaestrosFactory.obtenFacturas(x.Clv_FacturaMaestro).then(function (data) {
 			vm.facturas = data.GetObtieneHistorialPagosFacturaMaestroListResult;
-			console.log(vm.facturas);
 		});
 	}
 	

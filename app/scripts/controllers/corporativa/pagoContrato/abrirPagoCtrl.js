@@ -73,5 +73,4 @@ function AbrirPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, in
     var vm = this;
     vm.aceptar = aceptar;
     vm.cancel = cancel;
-	console.log(elem1);
 }

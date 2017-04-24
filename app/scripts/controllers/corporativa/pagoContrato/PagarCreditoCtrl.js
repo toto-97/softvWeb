@@ -3,8 +3,6 @@ angular.module('softvApp').controller('PagarCreditoCtrl', PagarCreditoCtrl);
 
 function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibModalInstance, x, $localStorage, pagosMaestrosFactory, elem) {
 	function initialData() {
-		console.log(x);
-		console.log(elem);
 		vm.monto = elem.PagoInicial;
 		pagosMaestrosFactory.getMedios().then(function (data) {
 			data.GetObtieneMediosPagoListResult.unshift({
@@ -31,17 +29,17 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 				"IdCompania": x.IdCompania,
 				"IdDistribuidor": x.IdDistribuidor
 			};
-			console.log(objPagar);
-			pagosMaestrosFactory.pagoGrabaFactura(objPagar).then(function (data) {
-				vm.res = data.GetGuardaPagoFacturaMaestroResult;
-				console.log(vm.res);
-				if (vm.res[0].Clv_Pago < 1) {
-					ngNotify.set('No se grabo la factura', 'error');
-				}else {
-					$uibModalInstance.dismiss('cancel');
-					ngNotify.set('Pago grabado correctamente', 'success');
-					$rootScope.$emit('realoadBrowse', {});
-				}
+			pagosMaestrosFactory.actFactura(elem).then(function(dataGraba) {
+				pagosMaestrosFactory.pagoGrabaFactura(objPagar).then(function (data) {
+					vm.res = data.GetGuardaPagoFacturaMaestroResult;
+					if (vm.res[0].Clv_Pago < 1) {
+						ngNotify.set('No se grabo la factura', 'error');
+					}else {
+						$uibModalInstance.dismiss('cancel');
+						ngNotify.set('Pago grabado correctamente', 'success');
+						$rootScope.$emit('realoadBrowse', {});
+					}
+				});
 			});
 		}
 	}

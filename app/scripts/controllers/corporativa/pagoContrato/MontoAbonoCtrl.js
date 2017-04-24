@@ -4,10 +4,8 @@ angular.module('softvApp').controller('MontoAbonoCtrl', MontoAbonoCtrl);
 function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStorage, elem1, x, pagosMaestrosFactory, ngNotify) {
     function init() {
         vm.monto = (x.Importe - x.PagoInicial) / x.ACuantosPagos;
-        console.log(vm.monto);
         if(elem1 < vm.monto) {
             vm.monto = elem1
-            console.log(vm.monto);
         }
         if (items.Modo == 'f') {
             vm.minimo = true;
@@ -17,7 +15,6 @@ function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStora
     function abonoTotal() {
         var pagar = x.Importe - x.TotalAbonado;
         if (vm.minimo != true) {
-            console.log('pagar');
             if (vm.abono > pagar) {
                 vm.abono = pagar;
             }

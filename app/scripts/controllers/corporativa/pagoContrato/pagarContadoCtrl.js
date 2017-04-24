@@ -35,12 +35,9 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 				"NoPago": 0,
 				"PagoInicial": 0
 			};
-			console.log(objPagar);
 			pagosMaestrosFactory.actFactura(objact).then(function(dataGraba) {
-				console.log(dataGraba.AddActualizaFacturaMaestroResult);
 				pagosMaestrosFactory.pagoGrabaFactura(objPagar).then(function (data) {
 					vm.res = data.GetGuardaPagoFacturaMaestroResult;
-					console.log(vm.res);
 					if (vm.res[0].Clv_Pago < 1) {
 						ngNotify.set('No se grabo la factura', 'error');
 					}else {

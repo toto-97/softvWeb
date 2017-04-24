@@ -224,7 +224,6 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                 var restante = (x.Importe - x.TotalAbonado);
                 if(restante < monto) {
                     monto = restante;
-                    console.log(monto);
                 }
                 var items = {
                     Modo: 'f'
