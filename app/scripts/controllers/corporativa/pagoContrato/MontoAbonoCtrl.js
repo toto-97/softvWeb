@@ -3,10 +3,9 @@ angular.module('softvApp').controller('MontoAbonoCtrl', MontoAbonoCtrl);
 
 function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStorage, elem1, x, pagosMaestrosFactory, ngNotify) {
     function init() {
-        vm.factura = x.Clv_FacturaMaestro;
         vm.monto = (x.Importe - x.PagoInicial) / x.ACuantosPagos;
-        if(elem1.PagoInicial < vm.monto) {
-            vm.monto = elem1.PagoInicial
+        if(elem1 < vm.monto) {
+            vm.monto = elem1
         }
         if (items.Modo == 'f') {
             vm.minimo = true;
@@ -15,10 +14,17 @@ function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStora
 
     function abonoTotal() {
         var pagar = x.Importe - x.TotalAbonado;
-        if (vm.abono > pagar) {
-            vm.abono = pagar;
+        if (vm.minimo != true) {
+            if (vm.abono > pagar) {
+                vm.abono = pagar;
+            }
+        } else {
+            if (vm.abono > vm.monto) {
+                vm.abono = vm.monto;
+            }
         }
     }
+    
     function ok() {
         if (vm.abono == undefined || vm.abono == null || vm.abono == 0 || vm.abono < 0) {
             ngNotify.set('Inserte el abono', 'error');
@@ -26,7 +32,6 @@ function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStora
             $uibModalInstance.dismiss('cancel');
             var elem = {
                 PagoInicial: vm.abono,
-                Clv_FacturaMaestro: elem1.Clv_FacturaMaestro
             };
             vm.animationsEnabled = true;
             var modalInstance = $uibModal.open({
@@ -38,10 +43,10 @@ function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStora
                 controllerAs: '$ctrl',
                 backdrop: 'static',
                 keyboard: false,
-                size: 'md',
+                size: 'sm',
                 resolve: {
-                    items: function () {
-                        return items;
+                    x: function () {
+                        return x;
                     },
                     elem: function () {
                         return elem;
@@ -55,8 +60,7 @@ function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStora
                 $uibModalInstance.dismiss('cancel');
                 var elem = {
                     PagoInicial: vm.abono,
-                    Clv_FacturaMaestro: elem1.Clv_FacturaMaestro
-                };
+                }; 
                 vm.animationsEnabled = true;
                 var modalInstance = $uibModal.open({
                     animation: vm.animationsEnabled,
@@ -67,10 +71,10 @@ function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStora
                     controllerAs: '$ctrl',
                     backdrop: 'static',
                     keyboard: false,
-                    size: 'md',
+                    size: 'sm',
                     resolve: {
-                        items: function () {
-                            return items;
+                        x: function () {
+                            return x;
                         },
                         elem: function () {
                             return elem;

@@ -60,6 +60,16 @@
                                     <button class="btn btn-info btn-xs" ng-click="$ctrl.buscaContrato(4)">Buscar</button>
                                 </div>
                                 <div class="col-md-2">
+                                    <p>Fecha</p>
+                                    <input type="date" ng-model="$ctrl.Fecha" class="form-control input-sm">
+
+                                </div>
+                                <div class="col-md-1">
+                                    <br>
+                                    <button class="btn btn-info btn-xs" ng-click="$ctrl.buscaContrato(1)">Buscar</button>
+                                </div>
+                                <br>
+                                <div class="col-md-2">
                                     <div>
                                         <div class="col-md-12">
                                             <label class="radio-inline radio-styled">
@@ -133,7 +143,9 @@
                                     <td>{{x.ACuantosPagos}}</td>
                                     <td>{{x.TotalAbonado}}</td>
                                     <td>
-                                        <button class="btn ink-reaction btn-floating-action btn-xs btn-success" ng-disabled="$ctrl.pagar" ng-click="$ctrl.PagarCredito(x)"><i class="fa fa-credit-card"></i></button>
+                                        <button class="btn ink-reaction btn-floating-action btn-xs btn-success" ng-disabled="$ctrl.pagar" ng-click="$ctrl.PagarCredito(x)" data-toggle="tooltip" data-placement="top" title="Pagar" data-original-title="Pagar"><i class="fa fa-credit-card"></i></button>
+                                        <button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.historial(x)" data-toggle="tooltip" data-placement="top" title="Ver Historial" data-original-title="Ver Historial"><i class="fa fa-eye"></i></button>
+                                        <button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ng-disabled="$ctrl.generar" ng-click="$ctrl.detalle(x)" data-toggle="tooltip" data-placement="top" title="Ver Detalle" data-original-title="Ver Detalle"><i class="fa fa-list-ul"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
