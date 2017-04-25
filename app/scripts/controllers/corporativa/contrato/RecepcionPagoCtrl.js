@@ -159,7 +159,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
         if (x.Importe <= x.TotalAbonado) {
             ngNotify.set('Ya se saldo el adeudo.', 'error');
         } else {
-            if (x.ACuantosPagos == "N/A") {
+            if (x.ACuantosPagos == 'N/A') {
                 var items = {
                     Modo: 'n'
                 };
@@ -187,7 +187,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                     }
                 });
             }
-            else if (x.ACuantosPagos == "Variables") {
+            else if (x.ACuantosPagos == 'Variables') {
                 var monto = (x.Importe - x.PagoInicial) / x.ACuantosPagos;
                 var restante = (x.Importe - x.TotalAbonado);
                 if(restante < monto) {
