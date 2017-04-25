@@ -119,6 +119,11 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 			vm.pagEdo = 0;
 			vm.pagFac = 1;
 		}
+		if(vm.dolares){
+			vm.FacturacionDolaresAux = 1;
+		}else{
+			vm.FacturacionDolaresAux = 0;
+		}
 
 		var auxFecha = $filter('date')(vm.fecha, 'dd/MM/yyyy');
 		var contrato = {
@@ -149,7 +154,8 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 				'TipoPago': vm.formapago.Id,
 				'Referencia': vm.Referencia,
 				'Referencia2': vm.Referencia2,
-				'ClvBanco': vm.clvBanco
+				'ClvBanco': vm.clvBanco,
+				'FacturacionDolares': vm.FacturacionDolaresAux
 			}
 		};
 		corporativoFactory.addMaestro(contrato).then(function (data) {
@@ -210,5 +216,6 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 	vm.DesReactiva = true;
 	vm.MuestraReferencia = false;
 	vm.CambioTipo = CambioTipo;
+	vm.dolares = false;
 }
 angular.module('softvApp').controller('NuevoMaestroCtrl', NuevoMaestroCtrl);
