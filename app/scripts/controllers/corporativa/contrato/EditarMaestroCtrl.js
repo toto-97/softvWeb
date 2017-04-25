@@ -119,8 +119,8 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFacto
 
 			vm.razon = vm.contratoMaestro.RazonSocial;
 			vm.nombrecomercial = vm.contratoMaestro.NombreComercial;
-			vm.numerointerior = parseInt(vm.contratoMaestro.NumExt);
-			vm.numeroexterior = parseInt(vm.contratoMaestro.NumInt);
+			vm.numerointerior = vm.contratoMaestro.NumInt;
+			vm.numeroexterior = vm.contratoMaestro.NumExt;
 			vm.dolares = vm.contratoMaestro.FacturacionDolares;
 			vm.cp = vm.contratoMaestro.CodigoPostal;
 			vm.rfc = vm.contratoMaestro.RFC;

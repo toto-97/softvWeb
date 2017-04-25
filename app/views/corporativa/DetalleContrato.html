@@ -79,11 +79,9 @@
 					<td>{{ x.Direccion }}</td>
 					<td>{{ x.NombreCli }}</td>
 					<td>{{ x.Nivel }}</td>
-					<td>    
-                      <label class="checkbox-inline checkbox-styled checkbox-primary">
-														<input type="checkbox" value="option1" checked="{{ x.Proporcional }}"><span></span>
-								
-
+					<td>
+						<label class="checkbox-inline checkbox-styled checkbox-primary">
+														<input type="checkbox" value="x.ContratoCom" ng-checked="{{ x.Proporcional }}" disabled><span></span>								
 
 					</td>
 				</tr>
