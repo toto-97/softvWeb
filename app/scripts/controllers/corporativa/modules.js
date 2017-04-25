@@ -42,7 +42,7 @@ function corporativaConf($stateProvider) {
 		{
 			name: 'home.corporativa.maestroEditar',
 			data: {
-				pageTitle: 'SAC | Editar CONTRATO MAESTRO',
+				pageTitle: 'SAC | EDITAR CONTRATO MAESTRO',
 				permissions: {
 					only: ['contratomaestroUpdate'],
 					options: {
@@ -58,7 +58,7 @@ function corporativaConf($stateProvider) {
 		{
 			name: 'home.corporativa.recepcionpago',
 			data: {
-				pageTitle: 'SAC | RECEPCION DE PAGO',
+				pageTitle: 'SAC | RECEPCIÓN DE PAGOS',
 				permissions: {
 					only: ['recepciondepagosSelect'],
 					options: {

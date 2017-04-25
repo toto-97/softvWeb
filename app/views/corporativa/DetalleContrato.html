@@ -47,6 +47,8 @@
 			<p> <b>Días de crédito:</b>{{ctrl.contrato.DiasCredito}} </p>
 			<p> <b>Días de gracia:</b>{{ctrl.contrato.DiasGracia}} </p>
 			<p> <b>Limite de Crédito:</b>{{ctrl.contrato.LimiteCredito}} </p>
+			<p ng-if="ctrl.contrato.FacturacionDolares"><b>Pago en Dolares:  </b> <span class="badge">Si</span></p>
+			<p ng-if="!ctrl.contrato.FacturacionDolares"><b>Pago en Dolares:  </b> <span class="badge">No</span></p>
 		</div>
 		<div class="col-md-6">
 			<p ng-if="ctrl.contrato.PagoEdoCuetna==true"> <b>Tipo de pago:</b> Pago con Edo.Cuenta</p>
@@ -77,11 +79,9 @@
 					<td>{{ x.Direccion }}</td>
 					<td>{{ x.NombreCli }}</td>
 					<td>{{ x.Nivel }}</td>
-					<td>    
-                      <label class="checkbox-inline checkbox-styled checkbox-primary">
-														<input type="checkbox" value="option1" checked="{{ x.Proporcional }}"><span></span>
-								
-
+					<td>
+						<label class="checkbox-inline checkbox-styled checkbox-primary">
+														<input type="checkbox" value="x.ContratoCom" ng-checked="{{ x.Proporcional }}" disabled><span></span>								
 
 					</td>
 				</tr>

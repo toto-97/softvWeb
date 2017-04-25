@@ -17,7 +17,7 @@
         <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Contratos Maestros</small>
       </header>
       <div class="tools">
-        <button class="btn btn-primary btn-sm" type="button" ui-sref="home.corporativa.maestroNuevo"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo</button>
+        <button class="btn btn-primary btn-sm" type="button" ui-sref="home.corporativa.maestroNuevo" permission permission-only="'contratomaestroAdd'"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo</button>
       </div>
     </div>
 
@@ -131,7 +131,7 @@
                 <td>{{x.NombreComercial}}</td>
                 <td>
                   <button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.DetalleContrato(x);"><i class="fa fa-eye"></i></button>
-                  <button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ui-sref="home.corporativa.maestroEditar({id:x.IdContratoMaestro})"><i class="fa fa-edit"></i></button>
+                  <button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ui-sref="home.corporativa.maestroEditar({id:x.IdContratoMaestro})" permission permission-only="'contratomaestroUpdate'"><i class="fa fa-edit"></i></button>
 
               </tr>
             </tbody>
