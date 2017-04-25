@@ -11,13 +11,6 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFacto
 	vm.MuestraBanco = false;
 	vm.MuestraAutorizacion = false;
 
-
-
- 
-
-
-
-
 	this.$onInit = function () {
 		corporativoFactory.singleContrato($stateParams.id).then(function (data) {
 			vm.contratoMaestro = data.GetRelContratosResult[0];
@@ -123,10 +116,12 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFacto
 			} else {
 				vm.reactivacion = 'factura';
 			}
+
 			vm.razon = vm.contratoMaestro.RazonSocial;
 			vm.nombrecomercial = vm.contratoMaestro.NombreComercial;
-			vm.numerointerior = parseInt(vm.contratoMaestro.NumExt);
-			vm.numeroexterior = parseInt(vm.contratoMaestro.NumInt);
+			vm.numerointerior = vm.contratoMaestro.NumInt;
+			vm.numeroexterior = vm.contratoMaestro.NumExt;
+			vm.dolares = vm.contratoMaestro.FacturacionDolares;
 			vm.cp = vm.contratoMaestro.CodigoPostal;
 			vm.rfc = vm.contratoMaestro.RFC;
 			vm.diascredito = vm.contratoMaestro.DiasCredito;
@@ -212,6 +207,11 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFacto
 			vm.pagEdo = 0;
 			vm.pagFac = 1;
 		}
+		if (vm.dolares) {
+			vm.FacturacionDolaresAux = 1;
+		} else {
+			vm.FacturacionDolaresAux = 0;
+		}
 		var auxFecha = $filter('date')(vm.fecha, 'dd/MM/yyyy');
 		var contrato = {
 			'objContratoMaestroFac': {
@@ -242,7 +242,8 @@ function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFacto
 				'TipoPago': vm.formapago.Id,
 				'Referencia': vm.Referencia,
 				'Referencia2': vm.Referencia2,
-				'ClvBanco': vm.clvBanco
+				'ClvBanco': vm.clvBanco,
+				'FacturacionDolares': vm.FacturacionDolaresAux
 			}
 		};
 		corporativoFactory.updateContrato(contrato).then(function (data) {

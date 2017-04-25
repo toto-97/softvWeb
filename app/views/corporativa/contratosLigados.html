@@ -35,7 +35,7 @@
   </ul>
   <hr>
   <div class="row">
-    <form angular-validator-submit="$ctrl.cambioNivel()" name="contratoForm" novalidate angular-validator>
+    <form angular-validator-submit="$ctrl.cambioNivel()" ng-if="$ctrl.contratos.length > 0" name="contratoForm" novalidate angular-validator>
       <div class="col-md-3">
 
         Cambiar nivel de
