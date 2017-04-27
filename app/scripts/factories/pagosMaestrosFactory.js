@@ -6,7 +6,7 @@ angular
 		var paths = {
 			cobraSaldoMaestro: '/CobraSaldoContratoMaestro/GetDeepCobraSaldoContratoMaestro',
 			obtenEdoCuenta: '/ObtieneEdoCuentaSinSaldar/GetObtieneEdoCuentaSinSaldarList',
-			grabaFactura: '/GrabaFacturaCMaestro/GetGrabaFacturaCMaestro',
+			grabaFactura: '/GuardaPagoFacturaMaestro/AddGuardaPagoFacturaMaestro',
 			dimeSiYaGrabeFacMaestro: '/DimeSiYaGrabeUnaFacMaestro/GetDimeSiYaGrabeUnaFacMaestro',
 			nuePagoEfectivoMaestro: '/NUEPago_En_EfectivoDetMaestro/AddNUEPago_En_EfectivoDetMaestro',
 			nuePagoEfectivoPago: '/NUEPago_En_EfectivoDetPago/AddNUEPago_En_EfectivoDetPago',
@@ -60,30 +60,27 @@ angular
 		factory.grabaFactura = function(objPagar) {
 			var deferred = $q.defer();
 			var Parametros = {
-				'ContratoMaestro': objPagar.contrato,
-				'Credito': objPagar.credito,
-				'Cajera': objPagar.cajera, 
-				'IpMaquina': objPagar.maquina,
-				'Sucursal': objPagar.sucursal,
-				'IdCompania': objPagar.compania,
-				'IdDistribuidor': objPagar.distribuidor,
-				'ClvSessionPadre': objPagar.sessionPadre,
-				'Tipo': objPagar.tipo,
-				'Monto': objPagar.monto,
-				'GLOEFECTIVO2': objPagar.GLOEFECTIVO2,
-				'GLOCHEQUE2': objPagar.GLOCHEQUE2,
-				'GLOCLV_BANCOCHEQUE2': objPagar.GLOCLV_BANCOCHEQUE2,
-				'NUMEROCHEQUE2': objPagar.NUMEROCHEQUE2,
-				'GLOTARJETA2': objPagar.GLOTARJETA2,
-				'GLOCLV_BANCOTARJETA2': objPagar.GLOCLV_BANCOTARJETA2,
-				'NUMEROTARJETA2': objPagar.NUMEROTARJETA2,
-				'TARJETAAUTORIZACION2': objPagar.TARJETAAUTORIZACION2,
-				'CLV_Nota2': objPagar.CLV_Nota2,
-				'GLONOTA3': objPagar.GLONOTA3,
-				'ToKen2': objPagar.token,
-				'NoPagos' : objPagar.NoPagos,
-  				'PagoInicial': objPagar.PagoInicial
-
+				'objGuardaPagoFacturaMaestro':{
+					'Clv_FacturaMaestro': objPagar.Clv_FacturaMaestro,
+					'ContratoMaestro': objPagar.contrato,
+					'Cajera': objPagar.cajera,
+					'Caja': objPagar.IpMaquina,
+					'Sucursal': objPagar.sucursal,
+					'Monto': objPagar.monto,
+					'GLOEFECTIVO2': objPagar.GLOEFECTIVO2,
+					'GLOCHEQUE2': objPagar.GLOCHEQUE2,
+					'GLOCLV_BANCOCHEQUE2': objPagar.GLOCLV_BANCOCHEQUE2,
+					'NUMEROCHEQUE2': objPagar.NUMEROCHEQUE2,
+					'GLOTARJETA2': objPagar.GLOTARJETA2,
+					'GLOCLV_BANCOTARJETA2': objPagar.GLOCLV_BANCOTARJETA2,
+					'NUMEROTARJETA2': objPagar.NUMEROTARJETA2,
+					'TARJETAAUTORIZACION2': objPagar.TARJETAAUTORIZACION2,
+					'CLV_Nota3': objPagar.CLV_Nota2,
+					'GLONOTA3': objPagar.GLONOTA3,
+					'IdMedioPago': 10,
+					'IdCompania': objPagar.compania,
+					'IdDistribuidor': objPagar.distribuidor
+				}
 			};
 			var config = {
 				headers: {
