@@ -111,8 +111,6 @@
           </div>
         </div>
 
-
-
         <div class="col-md-12" style="padding-top:10px">
           <label class="col-md-3 control-label blod">
               Generación de orden de servicio:
@@ -125,6 +123,19 @@
           </label>
           <div class="col-md-9">
             <label class="text-left radio-inline radio-styled"><input type="radio" name="cuenta" ng-model="$ctrl.reactivacion" value="factura"><span>Por pago de factura</span></label>
+          </div>
+        </div>
+
+        <div class="col-md-12" ng-if="$ctrl.contratoMaestro.lstCliS.length > 0">
+          <br>
+          <div class="col-md-4">
+              <button type="button" class="btn btn-default btn-block" ng-click="$ctrl.desconexion('desconexion')">Desconexión</button>
+          </div>
+          <div class="col-md-4">
+              <button type="button" class="btn btn-default btn-block" ng-click="$ctrl.desconexion('reconexion')">Reconexión</button>
+          </div>
+          <div class="col-md-4">
+              <button type="button" class="btn btn-default btn-block" ng-click="$ctrl.desconexion('ordenes')">Generar Ordenes</button>
           </div>
         </div>
 
@@ -149,7 +160,7 @@
           <label class="col-md-3 control-label blod">Número Interior:</label>
           <div class="col-md-3" style="padding-left:-10px;">
             <input type="text" name="numerointerior" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.numerointerior">
-          </div>         
+          </div>
         </div>
 
         <div class="col-md-12">

@@ -9,7 +9,8 @@ angular.module('softvApp')
 			GetCiudadList: '/DomicilioFiscal/GetListaCiudadesPorPlaza',
             GetMuestraFacturasMaestroList:'/MuestraFacturasMaestro/GetMuestraFacturasMaestroList',
 			BuscaFacturasMaestro:'/BuscaFacturasMaestro/GetBuscaFacturasMaestroList',
-			UploadFile: '/ContratoMaestroFac/GetLayoutFac'
+			UploadFile: '/ContratoMaestroFac/GetLayoutFac',
+			UploadFileDesconexion: '/ContratoMaestroFac/ValidarContratosLayout'
 		};
 		factory.GetContratoList = function() {
 			var deferred = $q.defer();
@@ -144,6 +145,28 @@ angular.module('softvApp')
 				}
 			};
 			$http.post(globalService.getUrl() + paths.UploadFile, data, config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.UploadFileDesconexion = function(file, contrato, distribuidor) {
+			var deferred = $q.defer();
+			var data = new FormData();
+			for (var i = 0; i < file.length; i++) {
+				data.append('file' + i, file[i]);
+			}
+			data.append('idcontrato', contrato);
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token,
+					'Content-Type': undefined
+				}
+			};
+			$http.post(globalService.getUrl() + paths.UploadFileDesconexion, data, config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response);
