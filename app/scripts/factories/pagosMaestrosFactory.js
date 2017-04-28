@@ -62,11 +62,11 @@ angular
 			var Parametros = {
 				'objGuardaPagoFacturaMaestro':{
 					'Clv_FacturaMaestro': objPagar.Clv_FacturaMaestro,
-					'ContratoMaestro': objPagar.contrato,
-					'Cajera': objPagar.cajera,
-					'Caja': objPagar.IpMaquina,
-					'Sucursal': objPagar.sucursal,
-					'Monto': objPagar.monto,
+					'ContratoMaestro': objPagar.ContratoMaestro,
+					'Cajera': objPagar.Cajera,
+					'Caja': 1,
+					'Sucursal': objPagar.Sucursal,
+					'Monto': objPagar.Monto,
 					'GLOEFECTIVO2': objPagar.GLOEFECTIVO2,
 					'GLOCHEQUE2': objPagar.GLOCHEQUE2,
 					'GLOCLV_BANCOCHEQUE2': objPagar.GLOCLV_BANCOCHEQUE2,
@@ -75,13 +75,14 @@ angular
 					'GLOCLV_BANCOTARJETA2': objPagar.GLOCLV_BANCOTARJETA2,
 					'NUMEROTARJETA2': objPagar.NUMEROTARJETA2,
 					'TARJETAAUTORIZACION2': objPagar.TARJETAAUTORIZACION2,
-					'CLV_Nota3': objPagar.CLV_Nota2,
+					'CLV_Nota3': objPagar.CLV_Nota3,
 					'GLONOTA3': objPagar.GLONOTA3,
-					'IdMedioPago': 10,
-					'IdCompania': objPagar.compania,
-					'IdDistribuidor': objPagar.distribuidor
+					'IdMedioPago': objPagar.IdMedioPago,
+					'IdCompania': objPagar.IdCompania,
+					'IdDistribuidor': objPagar.IdDistribuidor
 				}
 			};
+			console.log(Parametros);
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token

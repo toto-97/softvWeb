@@ -100,35 +100,35 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 		});
 	}
 
-	function ok() {
-		if (vm.selectedMedio.IdMedioPago == 0) {
-			ngNotify.set('Seleccione el medio de pago', 'error');
-		} else {
-			var objPagar = {
-				'Clv_FacturaMaestro': x.Clv_FacturaMaestro,
-				'ContratoMaestro': x.ContratoMaestro,
-				'Cajera': $localStorage.currentUser.usuario,
-				'IpMaquina': $localStorage.currentUser.maquina,
-				'Sucursal': $localStorage.currentUser.sucursal,
-				'Monto': vm.monto,
-				'IdMedioPago': vm.selectedMedio.IdMedioPago,
-				'IdCompania': x.IdCompania,
-				'IdDistribuidor': x.IdDistribuidor
-			};
-			pagosMaestrosFactory.actFactura(elem).then(function(dataGraba) {
-				pagosMaestrosFactory.pagoGrabaFactura(objPagar).then(function (data) {
-					vm.res = data.GetGuardaPagoFacturaMaestroResult;
-					if (vm.res[0].Clv_Pago < 1) {
-						ngNotify.set('No se grabo la factura', 'error');
-					}else {
-						$uibModalInstance.dismiss('cancel');
-						ngNotify.set('Pago grabado correctamente', 'success');
-						$rootScope.$emit('realoadBrowse', {});
-					}
-				});
-			});
-		}
-	}
+	// function ok() {
+	// 	if (vm.selectedMedio.IdMedioPago == 0) {
+	// 		ngNotify.set('Seleccione el medio de pago', 'error');
+	// 	} else {
+	// 		var objPagar = {
+	// 			'Clv_FacturaMaestro': x.Clv_FacturaMaestro,
+	// 			'ContratoMaestro': x.ContratoMaestro,
+	// 			'Cajera': $localStorage.currentUser.usuario,
+	// 			'IpMaquina': $localStorage.currentUser.maquina,
+	// 			'Sucursal': $localStorage.currentUser.sucursal,
+	// 			'Monto': vm.monto,
+	// 			'IdMedioPago': vm.selectedMedio.IdMedioPago,
+	// 			'IdCompania': x.IdCompania,
+	// 			'IdDistribuidor': x.IdDistribuidor
+	// 		};
+	// 		pagosMaestrosFactory.actFactura(elem).then(function(dataGraba) {
+	// 			pagosMaestrosFactory.pagoGrabaFactura(objPagar).then(function (data) {
+	// 				vm.res = data.GetGuardaPagoFacturaMaestroResult;
+	// 				if (vm.res[0].Clv_Pago < 1) {
+	// 					ngNotify.set('No se grabo la factura', 'error');
+	// 				}else {
+	// 					$uibModalInstance.dismiss('cancel');
+	// 					ngNotify.set('Pago grabado correctamente', 'success');
+	// 					$rootScope.$emit('realoadBrowse', {});
+	// 				}
+	// 			});
+	// 		});
+	// 	}
+	// }
 
 	function ok() {
 		if (vm.casePago == undefined || vm.selectedMedio.IdMedioPago == 0) {
@@ -158,10 +158,13 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 							'IdCompania': x.IdCompania,
 							'IdDistribuidor': x.IdDistribuidor
 						};
+						console.log(objPagar);
 						pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
-							vm.factura = dataGraba.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro;
-							pagosMaestrosFactory.nuePagoEfectivoMaestro(vm.factura, vm.efectivo, vm.cambio).then(function (dataNuevo) {
-							});
+							console.log(dataGraba);
+							// vm.pago = dataGraba.GetGuardaPagoFacturaMaestroResult.Clv_Pago;
+							// pagosMaestrosFactory.nuePagoEfectivoPago(vm.pago, vm.efectivo, vm.cambio).then(function (dataNuevo) {
+							// 	console.log(dataNuevo);
+							// });
 							if (dataGraba.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro == 0) {
 								ngNotify.set(dataGraba.GetGrabaFacturaCMaestroResult.Msg, 'error');
 							} else {
@@ -181,16 +184,12 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 					} else {
 						if (vm.dineroCheque == vm.monto) {
 							var objPagar = {
-								'contrato': items.Contrato,
-								'credito': metodo,
-								'cajera': $localStorage.currentUser.usuario,
-								'maquina': $localStorage.currentUser.maquina,
-								'sucursal': $localStorage.currentUser.sucursal,
-								'compania': items.Compania,
-								'distribuidor': items.Distribuidor,
-								'sessionPadre': items.SessionPadre,
-								'tipo': 0,
-								'monto': vm.monto,
+								'Clv_FacturaMaestro': x.Clv_FacturaMaestro,
+								'ContratoMaestro': x.ContratoMaestro,
+								'Cajera': $localStorage.currentUser.usuario,
+								'Caja': $localStorage.currentUser.maquina,
+								'Sucursal': $localStorage.currentUser.sucursal,
+								'Monto': vm.monto,
 								'GLOEFECTIVO2': 0,
 								'GLOCHEQUE2': vm.dineroCheque,
 								'GLOCLV_BANCOCHEQUE2': vm.selectedBancoCheque.Clave,
@@ -199,11 +198,11 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 								'GLOCLV_BANCOTARJETA2': 0,
 								'NUMEROTARJETA2': '',
 								'TARJETAAUTORIZACION2': '',
-								'CLV_Nota2': 0,
+								'CLV_Nota3': 0,
 								'GLONOTA3': 0,
-								'token': $localStorage.currentUser.token1,
-								'NoPagos': 0,
-								'PagoInicial': 0
+								'IdMedioPago': vm.selectedMedio.IdMedioPago,
+								'IdCompania': x.IdCompania,
+								'IdDistribuidor': x.IdDistribuidor
 							};
 							pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
 								if (dataGraba.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro == 0) {
@@ -228,16 +227,12 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 					} else {
 						if (vm.dineroTransferencia == vm.monto) {
 							var objPagar = {
-								'contrato': items.Contrato,
-								'credito': metodo,
-								'cajera': $localStorage.currentUser.usuario,
-								'maquina': $localStorage.currentUser.maquina,
-								'sucursal': $localStorage.currentUser.sucursal,
-								'compania': items.Compania,
-								'distribuidor': items.Distribuidor,
-								'sessionPadre': items.SessionPadre,
-								'tipo': 0,
-								'monto': vm.monto,
+								'Clv_FacturaMaestro': x.Clv_FacturaMaestro,
+								'ContratoMaestro': x.ContratoMaestro,
+								'Cajera': $localStorage.currentUser.usuario,
+								'Caja': $localStorage.currentUser.maquina,
+								'Sucursal': $localStorage.currentUser.sucursal,
+								'Monto': vm.monto,
 								'GLOEFECTIVO2': 0,
 								'GLOCHEQUE2': 0,
 								'GLOCLV_BANCOCHEQUE2': 0,
@@ -246,11 +241,11 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 								'GLOCLV_BANCOTARJETA2': vm.selectedBancoTransferencia.Clave,
 								'NUMEROTARJETA2': vm.cuentaTransferencia,
 								'TARJETAAUTORIZACION2': vm.autorizacionTransferencia,
-								'CLV_Nota2': 0,
+								'CLV_Nota3': 0,
 								'GLONOTA3': 0,
-								'token': $localStorage.currentUser.token1,
-								'NoPagos': 0,
-								'PagoInicial': 0
+								'IdMedioPago': vm.selectedMedio.IdMedioPago,
+								'IdCompania': x.IdCompania,
+								'IdDistribuidor': x.IdDistribuidor
 							};
 							pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
 								if (dataGraba.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro == 0) {
