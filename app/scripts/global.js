@@ -5,12 +5,11 @@ angular
 		var svc = {};
 
 		svc.getUrl = function() {
-			// return 'http://192.168.50.13:64481/SoftvWCFService.svc';
 			return 'http://localhost:64481/SoftvWCFService.svc';
 		};
 
 		svc.getUrlReportes = function() {
-			return 'http://192.168.50.13:64481';
+			return 'http://localhost:64481';
 		};
 
 		return svc;
