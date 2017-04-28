@@ -1,6 +1,30 @@
 'use strict';
+angular
+	.module('softvApp')
+	.controller('NuevoMaestroCtrl', NuevoMaestroCtrl);
 
 function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactory, $filter, ngNotify, $state) {
+	var vm = this;
+	vm.abrirContratos = abrirContratos;
+	vm.contratos = [];
+	vm.prepago = 'postpago';
+	vm.reactivacion = 'manual';
+	vm.tipopago = 'factura';
+	vm.guardarContrato = guardarContrato;
+	vm.cambioEstado = cambioEstado;
+	vm.cambioCiudad = cambioCiudad;
+	vm.cambioLocalidad = cambioLocalidad;
+	vm.cambioColonia = cambioColonia;
+	vm.NumExt = '';
+	vm.ligados = true;
+	vm.guardarBtn = false;
+	vm.helpSave = false;
+	vm.CambioTipoPago = CambioTipoPago;
+	vm.DesReactiva = true;
+	vm.MuestraReferencia = false;
+	vm.CambioTipo = CambioTipo;
+	vm.dolares = false;
+
 	this.$onInit = function () {
 		corporativoFactory.getDistribuidores().then(function (data) {
 			vm.distribuidores = data.GetDistribuidoresResult;
@@ -85,17 +109,17 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 			} else {
 				vm.clvBanco = vm.selectedBanco.Clave;
 			}
-		}else{
+		} else {
 			vm.clvBanco = 0;
 		}
-		if(vm.MuestraAutorizacion){
-			if(!vm.autorizacion){
+		if (vm.MuestraAutorizacion) {
+			if (!vm.autorizacion) {
 				ngNotify.set('Indroduce el número de autorización.', 'error');
 				return;
-			}else{
+			} else {
 				vm.Referencia2 = vm.autorizacion;
 			}
-		}else{
+		} else {
 			vm.Referencia2 = '';
 		}
 		if (vm.prepago == 'prepago') {
@@ -119,9 +143,9 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 			vm.pagEdo = 0;
 			vm.pagFac = 1;
 		}
-		if(vm.dolares){
+		if (vm.dolares) {
 			vm.FacturacionDolaresAux = 1;
-		}else{
+		} else {
 			vm.FacturacionDolaresAux = 0;
 		}
 
@@ -136,8 +160,8 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 				'Localidad': vm.localidad.Clv_Localidad,
 				'Colonia': vm.colonia.clv_colonia,
 				'Calle': vm.calle.Clv_Calle,
-				'NumExt': vm.numerointerior,
-				'NumInt': vm.numeroexterior,
+				'NumExt': vm.numeroexterior,
+				'NumInt': vm.numerointerior,
 				'CodigoPostal': vm.cp,
 				'RFC': vm.rfc,
 				'Prepago': vm.prep,
@@ -195,27 +219,4 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 			vm.MuestraAutorizacion = false;
 		}
 	}
-
-
-	var vm = this;
-	vm.abrirContratos = abrirContratos;
-	vm.contratos = [];
-	vm.prepago = 'postpago';
-	vm.reactivacion = 'manual';
-	vm.tipopago = 'factura';
-	vm.guardarContrato = guardarContrato;
-	vm.cambioEstado = cambioEstado;
-	vm.cambioCiudad = cambioCiudad;
-	vm.cambioLocalidad = cambioLocalidad;
-	vm.cambioColonia = cambioColonia;
-	vm.NumExt = '';
-	vm.ligados = true;
-	vm.guardarBtn = false;
-	vm.helpSave = false;
-	vm.CambioTipoPago = CambioTipoPago;
-	vm.DesReactiva = true;
-	vm.MuestraReferencia = false;
-	vm.CambioTipo = CambioTipo;
-	vm.dolares = false;
 }
-angular.module('softvApp').controller('NuevoMaestroCtrl', NuevoMaestroCtrl);
