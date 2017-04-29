@@ -35,7 +35,18 @@
             }
 
             ContratoMaestroFactory.UploadFileDesconexion(files, vm.contrato.IdContratoMaestro).then(function (data) {
-                console.log(data);
+                if (data.contratosValidos.length == 0) {
+                    ngNotify.set('No se encontraron contratos válidos en el archivo csv.', 'error');
+                } else {
+                    data.contratosValidos.forEach(function (item) {
+                        for (var i = 0; i < vm.contrato.lstCliS.length; i++) {
+                            if (item.ContratoCom == vm.contrato.lstCliS[i].ContratoCom) {
+                                vm.contrato.lstCliS[i].checado = item.Estatus;
+                            }
+                        }
+                    });
+                }
+
             });
         }
 
@@ -60,6 +71,7 @@
 
         function cancel() {
             $uibModalInstance.dismiss('cancel');
+            deseleTodo();
         }
     }
 })();

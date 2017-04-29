@@ -26,6 +26,7 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope, $rootScope, 
       vm.contratos.push(contrato);
     }
     sortByKey(vm.contratos, 'Nivel');
+    console.log(vm.contratos);
   }
 
   function cancel() {
