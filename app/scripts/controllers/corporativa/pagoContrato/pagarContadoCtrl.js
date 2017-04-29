@@ -123,6 +123,12 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 		if (vm.casePago == undefined || vm.selectedMedio.IdMedioPago == 0) {
 			ngNotify.set('Por favor seleccione el medio de pago y llene un metodo de pago.', 'error');
 		} else {
+			var objact = {
+				'ClvFacturaMaestro': x.Clv_FacturaMaestro,
+				'Credito': metodo,
+				'NoPago': 0,
+				'PagoInicial': 0
+			};
 			switch (vm.casePago) {
 				case 1:
 					if (vm.efectivo >= vm.monto) {
@@ -148,9 +154,10 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 							'IdDistribuidor': x.IdDistribuidor
 						};
 						pagosMaestrosFactory.actFactura(objact).then(function(dataAct) {
-							console.log(dataGraba);
+							console.log(dataAct);
 							pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
 								vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
+								console.log(vm.pago);
 								pagosMaestrosFactory.nuePagoEfectivoMaestro(vm.pago, vm.efectivo, vm.cambio).then(function (dataNuevo) {
 								});
 								if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
