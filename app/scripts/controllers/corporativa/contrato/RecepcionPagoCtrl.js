@@ -256,23 +256,9 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     }
 
     function historial(x) {
-        vm.animationsEnabled = true;
-        var modalInstance = $uibModal.open({
-            animation: vm.animationsEnabled,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: 'views/corporativa/historial.html',
-            controller: 'HistorialCtrl',
-            controllerAs: '$ctrl',
-            backdrop: 'static',
-            keyboard: false,
-            size: 'md',
-            resolve: {
-                x: function () {
-                    return x;
-                }
-            }
-        });
+        pagosMaestrosFactory.obtenFacturas(x.Clv_FacturaMaestro).then(function (data) {
+			vm.facturas = data.GetObtieneHistorialPagosFacturaMaestroListResult;
+		});
     }
 
     function detalle(x) {
