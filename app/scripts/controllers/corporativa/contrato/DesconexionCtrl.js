@@ -17,18 +17,20 @@
         vm.ValidaArchivo = ValidaArchivo;
 
         this.$onInit = function () {
-            console.log(contrato);
             if (contrato.tipo == 'desconexion') {
                 vm.titulo = 'Desconexión';
+                vm.proceso = 1;
             } else if (contrato.tipo == 'reconexion') {
                 vm.titulo = 'Reconexión';
+                 vm.proceso = 2;
             } else {
                 vm.titulo = 'Generar Ordenes';
+                 vm.proceso = 3;
             }
         }
 
         function ValidaArchivo() {
-            var files = $("#inputFile2").get(0).files;
+            var files = $('#inputFile2').get(0).files;
             if (files.length == 0) {
                 ngNotify.set('Se necesita seleccionar un archivo válido', 'error');
                 return;
@@ -66,7 +68,30 @@
         }
 
         function ok() {
-            console.log(vm.contrato);
+            var contratos_enviar = {
+                'objprocesa': {
+                    'Contratos': [
+                    ],
+                    'Idcontrato': vm.contrato.IdContratoMaestro,
+                    'Proceso': vm.proceso
+                }
+            };
+
+            vm.contrato.lstCliS.forEach(function (item) {
+                if (item.checado) {
+                    var _contrato = {
+                        'ContratoCom': item.ContratoCom,
+                        'contratoReal': item.ContratoReal,
+                        'Estatus': true,
+                        'detalle': ''
+                    };
+                    contratos_enviar.objprocesa.Contratos.push(_contrato);
+                }
+            });
+            console.log(contratos_enviar);
+            ContratoMaestroFactory.ProcesaDesconexion(contratos_enviar).then(function (data){
+                console.log(data);
+            });
         }
 
         function cancel() {
