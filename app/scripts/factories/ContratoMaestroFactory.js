@@ -10,7 +10,7 @@ angular.module('softvApp')
             GetMuestraFacturasMaestroList:'/MuestraFacturasMaestro/GetMuestraFacturasMaestroList',
 			BuscaFacturasMaestro:'/BuscaFacturasMaestro/GetBuscaFacturasMaestroList',
 			UploadFile: '/ContratoMaestroFac/GetLayoutFac',
-			UploadFileDesconexion: '/ContratoMaestroFac/ValidarContratosLayout'
+			UploadFileDesconexion: '/ContratoMaestroFac/GetValidarContratosLayout'
 		};
 		factory.GetContratoList = function() {
 			var deferred = $q.defer();
