@@ -1,27 +1,44 @@
 'use strict';
 angular.module('softvApp')
-	.factory('ContratoMaestroFactory', function($http, $q, globalService, $localStorage) {
+	.factory('ContratoMaestroFactory', function ($http, $q, globalService, $localStorage) {
 		var factory = {};
 		var paths = {
 			GetContratoList: '/ContratoMaestroFac/GetContratos_CS',
 			BuscarContratos: '/ContratoMaestroFac/GetBusquedaContratoMaestroFac',
 			GetDistribuidores: '/DomicilioFiscal/GetDistribuidores',
 			GetCiudadList: '/DomicilioFiscal/GetListaCiudadesPorPlaza',
-            GetMuestraFacturasMaestroList:'/MuestraFacturasMaestro/GetMuestraFacturasMaestroList',
-			BuscaFacturasMaestro:'/BuscaFacturasMaestro/GetBuscaFacturasMaestroList',
+			GetMuestraFacturasMaestroList: '/MuestraFacturasMaestro/GetMuestraFacturasMaestroList',
+			BuscaFacturasMaestro: '/BuscaFacturasMaestro/GetBuscaFacturasMaestroList',
 			UploadFile: '/ContratoMaestroFac/GetLayoutFac',
-			UploadFileDesconexion: '/ContratoMaestroFac/GetValidarContratosLayout'
+			UploadFileDesconexion: '/ContratoMaestroFac/GetValidarContratosLayout',
+			ProcesaDesconexion: '/ContratoMaestroFac/GetProcesaContratosLayout'
 		};
-		factory.GetContratoList = function() {
+
+		factory.ProcesaDesconexion = function (contratos) {
 			var deferred = $q.defer();
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.get(globalService.getUrl() + paths.GetContratoList, config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.ProcesaDesconexion, JSON.stringify(contratos), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
+				deferred.reject(response);
+			});
+			return deferred.promise;
+		};
+
+		factory.GetContratoList = function () {
+			var deferred = $q.defer();
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.get(globalService.getUrl() + paths.GetContratoList, config).then(function (response) {
+				deferred.resolve(response.data);
+			}).catch(function (response) {
 				deferred.reject(response);
 			});
 			return deferred.promise;
@@ -29,23 +46,23 @@ angular.module('softvApp')
 
 
 
-			factory.GetMuestraFacturasMaestroList = function() {
+		factory.GetMuestraFacturasMaestroList = function () {
 			var deferred = $q.defer();
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.get(globalService.getUrl() + paths.GetMuestraFacturasMaestroList, config).then(function(response) {
+			$http.get(globalService.getUrl() + paths.GetMuestraFacturasMaestroList, config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response);
 			});
 			return deferred.promise;
 		};
 
 
-        factory.BuscaFacturasMaestro = function(objeto) {
+		factory.BuscaFacturasMaestro = function (objeto) {
 			var deferred = $q.defer();
 			var config = {
 				headers: {
@@ -56,23 +73,23 @@ angular.module('softvApp')
 				'Fecha': objeto.Fecha,
 				'Ticket': objeto.Ticket,
 				'ContratoMaestro': objeto.ContratoMaestro,
-				'Cliente':objeto.Cliente,
+				'Cliente': objeto.Cliente,
 				'Op': objeto.Op,
 				'Saldada': objeto.Saldada
 			};
 			console.log(parametros);
-			$http.post(globalService.getUrl() + paths.BuscaFacturasMaestro, JSON.stringify(parametros), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.BuscaFacturasMaestro, JSON.stringify(parametros), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response);
 			});
 			return deferred.promise;
 
 		};
 
-		
 
-		factory.BuscarContratos = function(objeto) {
+
+		factory.BuscarContratos = function (objeto) {
 			var deferred = $q.defer();
 			var config = {
 				headers: {
@@ -85,32 +102,32 @@ angular.module('softvApp')
 				'ClvCiudad': objeto.ClvCiudad,
 				'Op': objeto.Op
 			};
-			$http.post(globalService.getUrl() + paths.BuscarContratos, JSON.stringify(parametros), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.BuscarContratos, JSON.stringify(parametros), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response);
 			});
 			return deferred.promise;
 
 		};
 
-		factory.GetDistribuidores = function() {
+		factory.GetDistribuidores = function () {
 			var deferred = $q.defer();
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.get(globalService.getUrl() + paths.GetDistribuidores, config).then(function(response) {
+			$http.get(globalService.getUrl() + paths.GetDistribuidores, config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response);
 			});
 			return deferred.promise;
 
 		};
 
-		factory.GetCiudadList = function(Clv_Plaza) {
+		factory.GetCiudadList = function (Clv_Plaza) {
 
 			var deferred = $q.defer();
 			var config = {
@@ -121,16 +138,16 @@ angular.module('softvApp')
 			var parametros = {
 				'Clv_Plaza': Clv_Plaza
 			};
-			$http.post(globalService.getUrl() + paths.GetCiudadList, JSON.stringify(parametros), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.GetCiudadList, JSON.stringify(parametros), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response);
 			});
 			return deferred.promise;
 
 		};
 
-		factory.UpdateFile = function(file, contrato, distribuidor) {
+		factory.UpdateFile = function (file, contrato, distribuidor) {
 			var deferred = $q.defer();
 			var data = new FormData();
 			for (var i = 0; i < file.length; i++) {
@@ -144,16 +161,16 @@ angular.module('softvApp')
 					'Content-Type': undefined
 				}
 			};
-			$http.post(globalService.getUrl() + paths.UploadFile, data, config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.UploadFile, data, config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response);
 			});
 
 			return deferred.promise;
 		};
 
-		factory.UploadFileDesconexion = function(file, contrato, distribuidor) {
+		factory.UploadFileDesconexion = function (file, contrato, distribuidor) {
 			var deferred = $q.defer();
 			var data = new FormData();
 			for (var i = 0; i < file.length; i++) {
@@ -166,9 +183,9 @@ angular.module('softvApp')
 					'Content-Type': undefined
 				}
 			};
-			$http.post(globalService.getUrl() + paths.UploadFileDesconexion, data, config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.UploadFileDesconexion, data, config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response);
 			});
 
