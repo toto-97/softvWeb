@@ -18,27 +18,28 @@
 
 <div class="card" style="margin-top:20px;">
   <form angular-validator-submit="$ctrl.Ejecutaqueja()" name="QuejaForm" novalidate angular-validator>
-<div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
-		<header>
-			<strong style="font-weight:bold; border:none; margin-left:10px;">Ejecutar queja</strong>
-			<br /><small class="text-muted" style="font-size:14px; margin-left:10px;"> <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a>><a href="#" class="paginaActiva">Atención telefónica</a></small>
+    <div class="style-default-light card-head" style=" padding-left:5px;">
+      <header>
+        <strong style="font-weight:bold; border:none; margin-left:5px; font-size:18px;">{{$ctrl.Titulo}}</strong>
+        <br /><small class="text-muted" style="font-size:10px; margin-left:5px;"> <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a>><a href="#" class="paginaActiva">Atención telefónica</a></small>
 
-		</header>
-		<div class="tools">
-			<div class="btn-group">
-			 <button type="submit" ng-show="$ctrl.BtnGuarda" class="btn btn-success btn-sm">Guardar</button>
+      </header>
+      <div class="tools">
+        <button type="submit" ng-show="$ctrl.BtnGuarda" class="btn btn-success btn-sm">Guardar</button>
         <button type="button" ui-sref="home.procesos.reportes" class="btn btn-default-bright btn-sm" name="button">Cancelar</button>
-			</div>
-		</div>
-	</div>
-
-    
+      </div>
+    </div>
     <div class="card-body">
 
       <div class="row">
         <div class="panel-group" id="accordion3">
           <div class="card panel">
-           
+            <div class="card-head style-primary-light card-head-xs" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1" aria-expanded="false">
+              <header><i class="fa fa-user-circle" aria-hidden="true"></i> Detalle de suscriptor</header>
+              <div class="tools">
+                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+              </div>
+            </div>
             <div id="accordion3-1" class="collapse in" aria-expanded="true" style="height: 0px;">
               <div class="panel-body">
                 <div class="row card" style="    background-color: #f2f3f3">
@@ -61,7 +62,7 @@
                 </div>
                 <div class="row">
 
-                  <div class="col-md-3" style="font-size:11px;">
+                  <div class="col-md-3" style="font-size:12px;">
 
                     <div class="col-md-12 text-center" style="font-size:14px;">
                       <b><i class="md md-account-box"></i> Suscriptor</b>
@@ -89,7 +90,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-3 form-group" style="font-size:11px;">
+                  <div class="col-md-3 form-group" style="font-size:12px;">
 
                     <div class="col-md-12 text-center " style="font-size:14px;"><b><i class="fa fa-clock-o"></i> Fechas</b></div>
                     <div class="col-md-5 "><b>Fecha solicitud</b></div>
@@ -142,7 +143,7 @@
                       <input type="text" class="form-control input-sm" ng-model="$ctrl.HoraEjecucuionReal" placeholder="hh:mm AA" ui-mask="99:99 AA" model-view-value="true" ng-disabled="true">
                     </div>
                   </div>
-                  <div class="col-md-3" style="font-size:11px;">
+                  <div class="col-md-3" style="font-size:12px;">
 
                     <div class="col-md-12 text-center" style="font-size:14px;"><b><i class="md md-assignment-ind"></i> Asignación</b></div>
                     <div class="col-md-12">
@@ -157,10 +158,10 @@
                     </div>
                     <div class="col-md-12">
                       <br>
-                      <div class="col-md-3">
+                      <div class="col-md-6">
                         <button type="button" class="btn btn-xs btn-success" ng-click="$ctrl.abrirBonificacion()"><i class="fa fa-money"></i> Bonificación</button>
                       </div>
-                      <div class="col-md-3">
+                      <div class="col-md-6">
                         <button type="button" class="btn btn-xs btn-warning" ng-click="$ctrl.DescargaMaterial()"><i class="fa fa-wrench"></i> Descar. Material</button>
                       </div>
 
@@ -175,7 +176,6 @@
 
                   </div>
                   <div class="col-md-3" style="font-size: 10px; margin-top:5px; background-color: #f8f8f8;">
-                    
                     <div class="col-md-12 text-center " style="font-size:14px;"><b><i class="fa fa-calendar"></i> Agenda</b></div>
 
                     <div class="col-md-3">
@@ -212,7 +212,7 @@
 
 
       </div>
-      <div class="row" style="font-size:11px;">
+      <div class="row">
         <div class="col-md-6">
           <div class="col-md-6">
 
@@ -261,4 +261,3 @@
 </div>
 </form>
 </div>
-

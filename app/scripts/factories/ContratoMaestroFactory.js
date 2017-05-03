@@ -37,6 +37,7 @@ angular.module('softvApp')
 				}
 			};
 			$http.get(globalService.getUrl() + paths.GetContratoList, config).then(function (response) {
+				console.log(response);
 				deferred.resolve(response.data);
 			}).catch(function (response) {
 				deferred.reject(response);
@@ -77,8 +78,9 @@ angular.module('softvApp')
 				'Op': objeto.Op,
 				'Saldada': objeto.Saldada
 			};
-			console.log(parametros);
+		
 			$http.post(globalService.getUrl() + paths.BuscaFacturasMaestro, JSON.stringify(parametros), config).then(function (response) {
+				
 				deferred.resolve(response.data);
 			}).catch(function (response) {
 				deferred.reject(response);

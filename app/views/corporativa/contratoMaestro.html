@@ -119,6 +119,8 @@
                 <th>Razón social</th>
                 <th>RFC</th>
                 <th>Nombre Comercial</th>
+                <th>Distribuidor</th>
+                 <th>Estado</th>
                 <th>Acciones</th>
               </tr>
             </thead>
@@ -129,6 +131,8 @@
                 <td>{{x.RazonSocial}}</td>
                 <td>{{x.RFC}}</td>
                 <td>{{x.NombreComercial}}</td>
+                <td>{{x.DistribuidorDes}}</td>
+                <td>{{x.EstadoDes}}</td>
                 <td>
                   <button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.DetalleContrato(x);"><i class="fa fa-eye"></i></button>
                   <button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ui-sref="home.corporativa.maestroEditar({id:x.IdContratoMaestro})" permission permission-only="'contratomaestroUpdate'"><i class="fa fa-edit"></i></button>
