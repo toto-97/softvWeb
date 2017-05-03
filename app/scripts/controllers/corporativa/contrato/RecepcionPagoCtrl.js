@@ -256,8 +256,18 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     }
 
     function historial(x) {
+        console.log(x.Clv_FacturaMaestro);
         pagosMaestrosFactory.obtenFacturas(x.Clv_FacturaMaestro).then(function (data) {
-			vm.facturas = data.GetObtieneHistorialPagosFacturaMaestroListResult;
+			vm.historialPagos = data.GetObtieneHistorialPagosFacturaMaestroListResult;
+            console.log(vm.historial);
+		});
+    }
+
+    function verFactura(clvPago) {
+        console.log(clvPago);
+        pagosMaestrosFactory.verFacturas(clvPago).then(function (data) {
+			vm.facturas = data.GetFacturasPorCliDePagoResult;
+            console.log(vm.facturas);
 		});
     }
 
@@ -286,6 +296,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     vm.buscaContrato = buscaContrato;
     vm.PagarCredito = PagarCredito;
     vm.historial = historial;
+    vm.verFactura = verFactura;
     vm.detalle = detalle;
 }
 angular.module('softvApp').controller('RecepcionPagoCtrl', RecepcionPagoCtrl);
