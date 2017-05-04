@@ -58,8 +58,33 @@ function BajaServiciosCtrl($uibModalInstance, ordenesFactory, items) {
         }
     }
 
-    function ok(){
-        console.log(vm.objModems.selectedItems);
+    function ok() {
+        if (vm.objModems.selectedItems[0].unicaNet > 0) {
+            if (items.descripcion.includes('ipaqu') || items.descripcion.includes('ipaqut')) {
+                console.log('ipaqu');
+            } else if (items.descripcion.includes('bpaqu') || items.descripcion.includes('bpaqt') || items.descripcion.includes('bpaad') || items.descripcion.includes('bsedi')) {
+                console.log('bpaqu');
+            } else if (items.descripcion.includes('dpaqu') || items.descripcion.includes('dpaqt')) {
+                console.log('dpaqu');
+            } else if (items.descripcion.includes('rpaqu') || items.descripcion.includes('rpaqt')) {
+                console.log('rpaqu');
+            }
+            ordenesFactory.addIpaqu().then(function (data) {
+                console.log(data);
+            });
+        } else {
+            if (vm.objModems.selectedItems[0].CONTRATONET > 0) {
+                if(items.descripcion.includes('ipaqu') || items.descripcion.includes('ipaqut')) {
+                    console.log('ipaqu');
+                } else if (items.descripcion.includes('bpaqu') || items.descripcion.includes('bpaqt') || items.descripcion.includes('bpaad') || items.descripcion.includes('bsedi')) {
+                    console.log('bpaqu');
+                } else if (items.descripcion.includes('dpaqu') || items.descripcion.includes('dpaqt')) {
+                    console.log('dpaqu');
+                } else if (items.descripcion.includes('rpaqu') || items.descripcion.includes('rpaqt')) {
+                    console.log('rpaqu');
+                }
+            }
+        }
     }
 
     function cancel() {

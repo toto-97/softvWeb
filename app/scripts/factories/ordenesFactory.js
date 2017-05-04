@@ -27,10 +27,25 @@ angular
             consultaTablaServicios: '/BUSCADetOrdSer/GetBUSCADetOrdSerList',
             consultaCambioDomicilio: '/CAMDO/GetDeepCAMDO',
             getCableModemsCli: '/MuestraGuaBor/GetMUESTRACABLEMODEMSDELCLI_porOpcion',
-            detalleCableModem: '/MuestraGuaBor/GetMUESTRACONTNET_PorOpcion'
+            detalleCableModem: '/MuestraGuaBor/GetMUESTRACONTNET_PorOpcion',
+            addIpaqu: '/IPAQU/AddIPAQU'
         };
 
-        var usuarioAtencion = $localStorage.currentUser.idUsuario;
+        factory.addIpaqu = function (obIpaqu) {
+            var deferred = $q.defer();
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+            $http.post(globalService.getUrl() + paths.addIpaqu, JSON.stringify(obIpaqu), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+        };
 
         factory.detalleCableModem = function (modem) {
             var deferred = $q.defer();
@@ -364,7 +379,7 @@ angular
                 'ClvColonia': objOrd.colonia,
                 'IdCompania': objOrd.compania,
                 'SetupBox': objOrd.setupbox,
-                'ClvUsuario': usuarioAtencion,
+                'ClvUsuario': $localStorage.currentUser.idUsuario,
                 'STATUS': objOrd.status,
                 'Auto': objOrd.auto
             };
@@ -404,7 +419,7 @@ angular
         factory.getColoniasUser = function () {
             var deferred = $q.defer();
             var Parametros = {
-                'IdUsuario': usuarioAtencion
+                'IdUsuario': $localStorage.currentUser.idUsuario
             };
             var config = {
                 headers: {
@@ -431,7 +446,7 @@ angular
                 'NUMERO': obj.numero,
                 'ClvColonia': obj.colonia,
                 'SetupBox': obj.setupbox,
-                'IdUsuario': usuarioAtencion,
+                'IdUsuario': $localStorage.currentUser.idUsuario,
                 'TipoSer': 0,
                 'Op': obj.op
 
