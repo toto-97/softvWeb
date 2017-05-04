@@ -69,12 +69,24 @@ function BajaServiciosCtrl($uibModalInstance, ordenesFactory, items) {
             } else if (items.descripcion.includes('rpaqu') || items.descripcion.includes('rpaqt')) {
                 console.log('rpaqu');
             }
+            var obj = {
+                'objIPAQU':
+                {
+                    'Clave': 731361,
+                    'Clv_Orden': 324750,
+                    'Contratonet': 681,
+                    'Clv_UnicaNet': 686,
+                    'Op': 0,
+                    'Status': 'B'
+                }
+            };
+
             ordenesFactory.addIpaqu().then(function (data) {
                 console.log(data);
             });
         } else {
             if (vm.objModems.selectedItems[0].CONTRATONET > 0) {
-                if(items.descripcion.includes('ipaqu') || items.descripcion.includes('ipaqut')) {
+                if (items.descripcion.includes('ipaqu') || items.descripcion.includes('ipaqut')) {
                     console.log('ipaqu');
                 } else if (items.descripcion.includes('bpaqu') || items.descripcion.includes('bpaqt') || items.descripcion.includes('bpaad') || items.descripcion.includes('bsedi')) {
                     console.log('bpaqu');

@@ -172,7 +172,7 @@ angular.module('softvApp')
 			return deferred.promise;
 		};
 
-		factory.UploadFileDesconexion = function (file, contrato, distribuidor) {
+		factory.UploadFileDesconexion = function (file, contrato) {
 			var deferred = $q.defer();
 			var data = new FormData();
 			for (var i = 0; i < file.length; i++) {
