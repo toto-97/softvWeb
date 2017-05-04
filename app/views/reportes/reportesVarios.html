@@ -1132,16 +1132,10 @@
 
 	<!-- R E P O R T E   P D F -->
 
-		<div id="panleReporte" class="col-md-12" style="padding-left: 25px; padding-right: 25px; padding-top: 25px"  ng-hide="$ctrl.preporte">
-					
-
-			<div class="col-md-9">
-				<iframe ng-src="{{$ctrl.reporteUrl}}" style="position:absolute;top:0px;width:98%;height:100vh;" frameborder=0>				
-        		</iframe>
-
-
+			<div class="col-md-9" ng-hide="$ctrl.preporte" style="height: 650px">
+				<iframe ng-src="{{$ctrl.reporteUrl}}" style="position:absolute;top:0px;width:98%;height:100%;" frameborder= 0>				
+	        	</iframe>
 			</div>
-		</div>
 
 
 
