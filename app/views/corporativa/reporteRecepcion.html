@@ -10,7 +10,6 @@
 </style>
 
 <div class="row animated fadeIn fast" style="margin-top:10px;">
-
     <div class="card" style="margin-top:20px;">
         <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
             <header>
@@ -35,7 +34,6 @@
                                 <div class="col-md-2">
                                     <p>Contrato Maestro</p>
                                     <input type="text" class="form-control input-sm" ng-model="$ctrl.ContratoMaestro">
-
                                 </div>
                                 <div class="col-md-1">
                                     <br>
@@ -44,7 +42,6 @@
                                 <div class="col-md-2">
                                     <p>Ticket</p>
                                     <input type="text" ng-model="$ctrl.Ticket" class="form-control input-sm">
-
                                 </div>
                                 <div class="col-md-1">
                                     <br>
@@ -53,20 +50,35 @@
                                 <div class="col-md-2">
                                     <p>Cliente</p>
                                     <input type="text" class="form-control input-sm " ng-model="$ctrl.Cliente">
-
                                 </div>
                                 <div class="col-md-1">
                                     </br>
                                     <button class="btn btn-info btn-xs" ng-click="$ctrl.buscaContrato(4)">Buscar</button>
                                 </div>
                                 <div class="col-md-2">
+                                    <p>Contrato Cliente</p>
+                                    <input type="text" class="form-control input-sm " ng-model="$ctrl.ContratoCliente">
+                                </div>
+                                <div class="col-md-1">
+                                    </br>
+                                    <button class="btn btn-info btn-xs" ng-click="$ctrl.buscaContrato(7)">Buscar</button>
+                                </div>
+                                <div class="col-md-2">
                                     <p>Fecha de Facturación</p>
                                     <input type="date" ng-model="$ctrl.Fecha" class="form-control input-sm">
-
                                 </div>
                                 <div class="col-md-1">
                                     <br>
                                     <button class="btn btn-info btn-xs" ng-click="$ctrl.buscaContrato(1)">Buscar</button>
+                                </div>
+                                <br>
+                                <div class="col-md-2">
+                                    <p>Fecha de Pago</p>
+                                    <input type="date" ng-model="$ctrl.FechaPago" class="form-control input-sm">
+                                </div>
+                                <div class="col-md-1">
+                                    <br>
+                                    <button class="btn btn-info btn-xs" ng-click="$ctrl.buscaContrato(6)">Buscar</button>
                                 </div>
                                 <br>
                                 <div class="col-md-2">
@@ -83,8 +95,6 @@
                                             </label>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
@@ -94,23 +104,13 @@
                 <!--end .panel -->
             </div>
 
-
-
-
-
             <div class="col-md-12">
                 <div class="row">
-
-
                     <div class="col-md-12" style="padding-left: 25px; padding-right: 25px; font-size:10px;">
-                        <p class="text-right" style="margin-top: 10px;">
-
-                        </p>
-                        <table class="table">
+                        <table class="table table-striped table-hover table-condensed export-table">
                             <thead>
                                 <tr>
                                     <th>Contrato maestro</th>
-                                    <th>Clave Factura</th>
                                     <th>Ticket</th>
                                     <th>Cliente</th>
                                     <th>Tipo</th>
@@ -121,24 +121,67 @@
                                     <th>Pagos</th>
                                     <th>Total Abonado</th>
                                     <th>Saldo Pendiente</th>
+                                    <th>Sucursal</th>
+                                    <th>Cajera</th>
+                                    <th>Caja</th>
+                                    <th>Medio Pago</th>
+                                    <th>Importe</th>
+                                    <th>Fecha</th>
+                                    <th>Importe</th>
+                                    <th>Monto</th>
+                                    <th>Saldo Pendiente</th>
+                                    <th>Saldada</th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <input st-search="SAN" placeholder="SAN" class="input-sm form-control" type="search"/>
+                                    </th>  
+                                    <th>
+                                        <input st-search="Estado" placeholder="Estado" class="input-sm form-control" type="search"/>
+                                    </th>   
+                                    <th>
+                                        <input st-search="Beam" placeholder="Beam" class="input-sm form-control" type="search"/>
+                                    </th>
+                                    <th>
+                                        <input st-search="SatellitedID" placeholder="Satellite" class="input-sm form-control" type="search"/>
+                                    </th>
+                                    <th>
+                                        <input st-search="PlanServ" placeholder="Plan de Servicio" class="input-sm form-control media" type="search"/>
+                                    </th>    
+                                    <th>
+                                        <input st-search="ESN" placeholder="ESN" class="input-sm form-control" type="search"/>
+                                    </th>  
+                                    <th>
+                                        <input st-search="IdSuscriptor" placeholder="Id Suscriptor" class="input-sm form-control media" type="search" />
+                                    </th>      
+                                    <th>
+                                        <input st-search="EstadoFap" placeholder="Estado Fap" class="input-sm form-control" type="search"/ >
+                                    </th>   
                                 </tr>
                             </thead>
                             <tbody>
-
                                 <tr ng-show="$ctrl.pagos.length>0" dir-paginate="x in $ctrl.pagos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:10">
-                                    
                                     <td>{{x.ContratoMaestro}}</td>
-                                    <td>{{x.Clv_FacturaMaestro}}</td>
                                     <td>{{x.Ticket}}</td>
                                     <td>{{x.Cliente}}</td>
                                     <td>{{x.Tipo}}</td>
-                                    <td>{{x.Fecha}}</td>
-                                    <td>{{x.shortFechaVencimiento}}</td>
-                                    <td>{{x.Importe}}</td>
+                                    <td>{{x.FechaFacturacion}}</td>
+                                    <td>{{x.FechaVencimiento}}</td>
+                                    <td>{{x.ImporteFactura}}</td>
                                     <td>{{x.PagoInicial}}</td>
                                     <td>{{x.ACuantosPagos}}</td>
                                     <td>{{x.TotalAbonado}}</td>
-                                    <td>{{x.Importe - x.TotalAbonado}}</td>
+                                    <td>{{x.ImporteFactura - x.TotalAbonado}}</td>
+                                    <td>{{x.Sucursal}}</td>
+                                    <td>{{x.Cajera}}</td>
+                                    <td>{{x.Caja}}</td>
+                                    <td>{{x.MedioPago}}</td>
+                                    <td>{{x.ImportePago}}</td>
+                                    <td>{{x.FechaPago}}</td>
+                                    <td>{{x.ImporteFacCliente}}</td>
+                                    <td>{{x.MontoAbono}}</td>
+                                    <td>{{x.PorPagar}}</td>
+                                    <td>{{x.Saldada2}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -147,20 +190,8 @@
                             </dir-pagination-controls>
                         </div>
                     </div>
-
-
-
                 </div>
-
             </div>
-
-
-
-
-
-
         </div>
-
     </div>
-
 </div>

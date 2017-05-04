@@ -50,7 +50,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
         var parametros;
         if (opcion == 2) {
             if (vm.Ticket == undefined || vm.Ticket == '') {
-                ngNotify.set('Seleccione una fecha.', 'error');
+                ngNotify.set('Seleccione un ticket.', 'error');
             } else {
                 parametros = {
                     'Fecha': '',
@@ -66,7 +66,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
             }
         } else if (opcion == 3) {
             if (vm.ContratoMaestro == undefined || vm.ContratoMaestro == '') {
-                ngNotify.set('Seleccione una fecha.', 'error');
+                ngNotify.set('Seleccione un contrato.', 'error');
             } else {
                 parametros = {
                     'Fecha': '',
@@ -82,7 +82,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
             }
         } else if (opcion == 4) {
             if (vm.Cliente == undefined || vm.Cliente == '') {
-                ngNotify.set('Seleccione una fecha.', 'error');
+                ngNotify.set('Seleccione un cliente.', 'error');
             } else {
                 parametros = {
                     'Fecha': '',

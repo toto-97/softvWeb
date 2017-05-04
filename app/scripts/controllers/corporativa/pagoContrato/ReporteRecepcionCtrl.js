@@ -1,7 +1,7 @@
 'use strict';
-angular.module('softvApp').controller('ReportesRecepcionCtrl', ReportesRecepcionCtrl);
+angular.module('softvApp').controller('ReporteRecepcionCtrl', ReporteRecepcionCtrl);
 
-function ReportesRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory) {
+function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory) {
 
     function saldadas() {
         var parametros;
@@ -16,8 +16,9 @@ function ReportesRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory
                 'IdMedioPago': 0,
                 'ContratoCompania': 0
             };
+            console.log(parametros);
             pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
-                vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult[0];
+                vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
                 console.log(vm.pagos);
             });
             vm.pagar = true;
@@ -32,8 +33,9 @@ function ReportesRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory
                 'IdMedioPago': 0,
                 'ContratoCompania': 0
             };
+            console.log(parametros);
             pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
-                vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult[0];
+                vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
                 console.log(vm.pagos);
             });
             vm.pagar = false;
@@ -44,120 +46,127 @@ function ReportesRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory
         var parametros;
         if (opcion == 2) {
             if (vm.Ticket == undefined || vm.Ticket == '') {
-                ngNotify.set('Seleccione una fecha.', 'error');
+                ngNotify.set('Seleccione un ticket.', 'error');
             } else {
                 parametros = {
                     'Fecha': '',
-                    'Ticket': '',
-                    'ContratoMaestro': 15,
+                    'Ticket': vm.Ticket,
+                    'ContratoMaestro': 0,
                     'Cliente': '',
-                    'Op': 3,
+                    'Op': opcion,
                     'Saldada2': 0,
                     'IdMedioPago': 0,
                     'ContratoCompania': 0
                 };
-                ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
-                    vm.pagos = data.GetBuscaFacturasMaestroListResult;
+                console.log(parametros);
+                pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
+                    vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
+                    console.log(vm.pagos);
                 });
             }
         } else if (opcion == 3) {
             if (vm.ContratoMaestro == undefined || vm.ContratoMaestro == '') {
-                ngNotify.set('Seleccione una fecha.', 'error');
+                ngNotify.set('Seleccione un contrato.', 'error');
             } else {
                 parametros = {
                     'Fecha': '',
                     'Ticket': '',
-                    'ContratoMaestro': 15,
+                    'ContratoMaestro': vm.ContratoMaestro,
                     'Cliente': '',
-                    'Op': 3,
+                    'Op': opcion,
                     'Saldada2': 0,
                     'IdMedioPago': 0,
                     'ContratoCompania': 0
                 };
-                ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
-                    vm.pagos = data.GetBuscaFacturasMaestroListResult;
+                console.log(parametros);
+                pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
+                    vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
+                    console.log(vm.pagos);
                 });
             }
         } else if (opcion == 4) {
             if (vm.Cliente == undefined || vm.Cliente == '') {
-                ngNotify.set('Seleccione una fecha.', 'error');
+                ngNotify.set('Seleccione un cliente.', 'error');
             } else {
                 parametros = {
                     'Fecha': '',
                     'Ticket': '',
-                    'ContratoMaestro': 15,
-                    'Cliente': '',
-                    'Op': 3,
+                    'ContratoMaestro': 0,
+                    'Cliente': vm.Cliente,
+                    'Op': opcion,
                     'Saldada2': 0,
                     'IdMedioPago': 0,
                     'ContratoCompania': 0
                 };
-                ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
-                    vm.pagos = data.GetBuscaFacturasMaestroListResult;
+                console.log(parametros);
+                pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
+                    vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
+                    console.log(vm.pagos);
                 });
             }
         } else if (opcion == 1) {
              if (vm.Fecha == undefined || vm.Fecha == '') {
-                ngNotify.set('Seleccione una fecha.', 'error');
+                ngNotify.set('Seleccione una fecha de facturación.', 'error');
             } else {
                 vm.auxFechaInicio = $filter('date')(vm.Fecha, 'dd/MM/yyyy');
                 parametros = {
-                    'Fecha': '',
+                    'Fecha': vm.auxFechaInicio,
                     'Ticket': '',
-                    'ContratoMaestro': 15,
+                    'ContratoMaestro': 0,
                     'Cliente': '',
-                    'Op': 3,
+                    'Op': opcion,
                     'Saldada2': 0,
                     'IdMedioPago': 0,
                     'ContratoCompania': 0
                 };
-                ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
-                    vm.pagos = data.GetBuscaFacturasMaestroListResult;
+                console.log(parametros);
+                pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
+                    vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
+                    console.log(vm.pagos);
                 });
             }
         } else if (opcion == 6) {
-             if (vm.Fecha == undefined || vm.Fecha == '') {
-                ngNotify.set('Seleccione una fecha.', 'error');
+             if (vm.FechaPago == undefined || vm.Fecha == '') {
+                ngNotify.set('Seleccione una fecha de pago.', 'error');
             } else {
-                vm.auxFechaInicio = $filter('date')(vm.Fecha, 'dd/MM/yyyy');
+                vm.auxFechaPago = $filter('date')(vm.FechaPago, 'dd/MM/yyyy');
                 parametros = {
-                    'Fecha': '',
+                    'Fecha': vm.auxFechaPago,
                     'Ticket': '',
-                    'ContratoMaestro': 15,
+                    'ContratoMaestro': 0,
                     'Cliente': '',
-                    'Op': 3,
+                    'Op': opcion,
                     'Saldada2': 0,
                     'IdMedioPago': 0,
                     'ContratoCompania': 0
                 };
-                ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
-                    vm.pagos = data.GetBuscaFacturasMaestroListResult;
+                console.log(parametros);
+                pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
+                    vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
+                    console.log(vm.pagos);
                 });
             }
         } else if (opcion == 7) {
-             if (vm.Fecha == undefined || vm.Fecha == '') {
-                ngNotify.set('Seleccione una fecha.', 'error');
+             if (vm.ContratoCliente == undefined || vm.Fecha == '') {
+                ngNotify.set('Seleccione un contrato de cliente.', 'error');
             } else {
-                vm.auxFechaInicio = $filter('date')(vm.Fecha, 'dd/MM/yyyy');
                 parametros = {
                     'Fecha': '',
                     'Ticket': '',
                     'ContratoMaestro': 15,
                     'Cliente': '',
-                    'Op': 3,
+                    'Op': opcion,
                     'Saldada2': 0,
                     'IdMedioPago': 0,
-                    'ContratoCompania': 0
+                    'ContratoCompania': vm.ContratoCliente
                 };
-                ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
-                    vm.pagos = data.GetBuscaFacturasMaestroListResult;
+                console.log(parametros);
+                pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
+                    vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
+                    console.log(vm.pagos);
                 });
             }
         }
-        // ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
-        //     vm.pagos = data.GetBuscaFacturasMaestroListResult;
-
-        // });
         vm.Ticket = '';
         vm.ContratoMaestro = '';
         vm.Cliente = '';
