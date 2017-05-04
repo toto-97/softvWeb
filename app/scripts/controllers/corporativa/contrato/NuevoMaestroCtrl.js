@@ -179,7 +179,14 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 				'Referencia': vm.Referencia,
 				'Referencia2': vm.Referencia2,
 				'ClvBanco': vm.clvBanco,
-				'FacturacionDolares': vm.FacturacionDolaresAux
+				'FacturacionDolares': vm.FacturacionDolaresAux,
+				'EntreCalles':vm.EntreCalles,
+				'Pais':vm.Pais,
+				'Fax':vm.Fax,
+				'Tel':vm.Telefono,
+				'Email':vm.Email
+
+
 			}
 		};
 		corporativoFactory.addMaestro(contrato).then(function (data) {
