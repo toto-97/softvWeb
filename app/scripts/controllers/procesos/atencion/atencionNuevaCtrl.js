@@ -186,12 +186,6 @@ angular
 
 		}
 
-
-
-
-
-
-
 		$rootScope.$on('cliente_seleccionado', function(e, detalle) {
 
 			var contrato = detalle.ContratoBueno;
