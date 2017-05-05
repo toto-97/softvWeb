@@ -132,15 +132,13 @@
                                     <th>Saldo Pendiente</th>
                                     <th>Saldada</th>
                                 </tr>
-                            </thead>
-                            <tfoot>
                                 <tr>
                                     <th>
                                         <input st-search="SAN" placeholder="Contrato maestro" class="input-sm form-control" type="search"/>
-                                    </th>  
+                                    </th>
                                     <th>
                                         <input st-search="Estado" placeholder="Ticket" class="input-sm form-control" type="search"/>
-                                    </th>   
+                                    </th>
                                     <th>
                                         <input st-search="Beam" placeholder="Cliente" class="input-sm form-control" type="search"/>
                                     </th>
@@ -149,22 +147,22 @@
                                     </th>
                                     <th>
                                         <input st-search="PlanServ" placeholder="Fecha de Facturación" class="input-sm form-control media" type="search"/>
-                                    </th>    
+                                    </th>
                                     <th>
                                         <input st-search="ESN" placeholder="Fecha de Vencimiento" class="input-sm form-control" type="search"/>
-                                    </th>  
+                                    </th>
                                     <th>
                                         <input st-search="IdSuscriptor" placeholder="Importe" class="input-sm form-control media" type="search" />
-                                    </th>      
+                                    </th>
                                     <th>
                                         <input st-search="EstadoFap" placeholder="Pago Inicial" class="input-sm form-control" type="search"/ >
                                     </th>
                                     <th>
                                         <input st-search="SAN" placeholder="Pagos" class="input-sm form-control" type="search"/>
-                                    </th>  
+                                    </th>
                                     <th>
                                         <input st-search="Estado" placeholder="Total Abonado" class="input-sm form-control" type="search"/>
-                                    </th>   
+                                    </th>
                                     <th>
                                         <input st-search="Beam" placeholder="Saldo Pendiente" class="input-sm form-control" type="search"/>
                                     </th>
@@ -173,33 +171,33 @@
                                     </th>
                                     <th>
                                         <input st-search="PlanServ" placeholder="Cajera" class="input-sm form-control media" type="search"/>
-                                    </th>    
+                                    </th>
                                     <th>
                                         <input st-search="ESN" placeholder="Caja" class="input-sm form-control" type="search"/>
-                                    </th>  
+                                    </th>
                                     <th>
                                         <input st-search="IdSuscriptor" placeholder="Medio Pago" class="input-sm form-control media" type="search" />
-                                    </th>      
+                                    </th>
                                     <th>
                                         <input st-search="EstadoFap" placeholder="Importe" class="input-sm form-control" type="search"/ >
                                     </th>
                                     <th>
                                         <input st-search="SAN" placeholder="Fecha" class="input-sm form-control" type="search"/>
-                                    </th>  
+                                    </th>
                                     <th>
                                         <input st-search="Estado" placeholder="Importe" class="input-sm form-control" type="search"/>
-                                    </th>   
+                                    </th>
                                     <th>
                                         <input st-search="Beam" placeholder="Monto" class="input-sm form-control" type="search"/>
                                     </th>
                                      <th>
                                         <input st-search="Estado" placeholder="Saldo Pendiente" class="input-sm form-control" type="search"/>
-                                    </th>   
+                                    </th>
                                     <th>
                                         <input st-search="Beam" placeholder="Saldada" class="input-sm form-control" type="search"/>
                                     </th>
                                 </tr>
-                            </tfoot>
+                            </thead>
                             <tbody>
                                 <tr ng-show="$ctrl.pagos.length>0" dir-paginate="x in $ctrl.pagos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:10">
                                     <td>{{x.ContratoMaestro}}</td>
