@@ -50,7 +50,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
         var parametros;
         if (opcion == 2) {
             if (vm.Ticket == undefined || vm.Ticket == '') {
-                ngNotify.set('Seleccione una fecha.', 'error');
+                ngNotify.set('Seleccione un ticket.', 'error');
             } else {
                 parametros = {
                     'Fecha': '',
@@ -66,7 +66,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
             }
         } else if (opcion == 3) {
             if (vm.ContratoMaestro == undefined || vm.ContratoMaestro == '') {
-                ngNotify.set('Seleccione una fecha.', 'error');
+                ngNotify.set('Seleccione un contrato.', 'error');
             } else {
                 parametros = {
                     'Fecha': '',
@@ -82,7 +82,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
             }
         } else if (opcion == 4) {
             if (vm.Cliente == undefined || vm.Cliente == '') {
-                ngNotify.set('Seleccione una fecha.', 'error');
+                ngNotify.set('Seleccione un cliente.', 'error');
             } else {
                 parametros = {
                     'Fecha': '',
@@ -256,23 +256,19 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     }
 
     function historial(x) {
-        vm.animationsEnabled = true;
-        var modalInstance = $uibModal.open({
-            animation: vm.animationsEnabled,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: 'views/corporativa/historial.html',
-            controller: 'HistorialCtrl',
-            controllerAs: '$ctrl',
-            backdrop: 'static',
-            keyboard: false,
-            size: 'md',
-            resolve: {
-                x: function () {
-                    return x;
-                }
-            }
-        });
+        console.log(x.Clv_FacturaMaestro);
+        pagosMaestrosFactory.obtenFacturas(x.Clv_FacturaMaestro).then(function (data) {
+			vm.historialPagos = data.GetObtieneHistorialPagosFacturaMaestroListResult;
+            console.log(vm.historial);
+		});
+    }
+
+    function verFactura(clvPago) {
+        console.log(clvPago);
+        pagosMaestrosFactory.verFacturas(clvPago).then(function (data) {
+			vm.facturas = data.GetFacturasPorCliDePagoResult;
+            console.log(vm.facturas);
+		});
     }
 
     function detalle(x) {
@@ -300,6 +296,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     vm.buscaContrato = buscaContrato;
     vm.PagarCredito = PagarCredito;
     vm.historial = historial;
+    vm.verFactura = verFactura;
     vm.detalle = detalle;
 }
 angular.module('softvApp').controller('RecepcionPagoCtrl', RecepcionPagoCtrl);

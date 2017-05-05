@@ -86,23 +86,7 @@ function corporativaConf($stateProvider) {
 			templateUrl: 'views/corporativa/pagoContratoMaestro.html',
 			controller: 'PagoContratoMaestroCtrl',
 			controllerAs: '$ctrl'
-		},
-		{
-			name: 'home.corporativa.reportesCortes',
-			data: {
-				pageTitle: 'SAC | REPORTES',
-				permissions: {
-					only: ['contratomaestroSelect'],
-					options: {
-						reload: false
-					}
-				}
-			},
-			url: '/corporativa/reportesCortesCorporativa',
-			templateUrl: 'views/corporativa/reportesCortesCorporativa.html',
-			controller: 'reportesCortesCorporativaCtrl',
-			controllerAs: '$ctrl'
-			}
+		}
 	];
 	states.forEach(function(state) {
 		$stateProvider.state(state);
