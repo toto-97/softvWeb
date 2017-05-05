@@ -17,7 +17,8 @@
     "angular-permission": "^5.1.0",
     "tg-angular-validator": "^1.2.9",
     "angular-ui-mask": "^1.8.7",
-    "angular-drag-and-drop-lists": "^2.1.0"
+    "angular-drag-and-drop-lists": "^2.1.0",
+    "angular-smart-table": "^2.1.8"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.0",

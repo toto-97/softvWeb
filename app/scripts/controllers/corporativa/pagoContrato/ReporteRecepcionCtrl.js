@@ -1,7 +1,29 @@
 'use strict';
-angular.module('softvApp').controller('ReporteRecepcionCtrl', ReporteRecepcionCtrl);
+angular.module('softvApp').controller('ReporteRecepcionCtrl', ReporteRecepcionCtrl)
+.filter('myStrictFilter', function($filter){
+    return function(input, predicate){
+        return $filter('filter')(input, predicate, true);
+    }
+})
+.filter('unique', function() {
+    return function (arr, field) {
+        var o = {}, i, l = arr.length, r = [];
+        for(i=0; i<l;i+=1) {
+            o[arr[i][field]] = arr[i];
+        }
+        for(i in o) {
+            r.push(o[i]);
+        }
+        return r;
+    };
+  });
 
 function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory) {
+
+    vm.displayCollection = [].concat(vm.pagos);
+
+    vm.predicates = ['ContratoMaestro', 'Ticket', 'Cliente', 'Tipo', 'FechaFacturacion','FechaVencimiento','ImporteFactura','PagoInicial','ACuantosPagos','TotalAbonado','pendiente','Sucursal','Cajera','Caja','MedioPago','ImportePago','FechaPago','ImporteFacCliente','MontoAbono','PorPagar','Saldada2'];
+    vm.selectedPredicate = vm.predicates[0];
 
     function saldadas() {
         var parametros;
@@ -171,8 +193,7 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory)
         vm.ContratoMaestro = '';
         vm.Cliente = '';
         $('.buscarContrato').collapse('hide');
-	}
-    
+	}    
     
     var vm = this;
     vm.buscaContrato = buscaContrato;
