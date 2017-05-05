@@ -1,3 +1,10 @@
+<style type="text/css">
+  .scrollDiv {
+    height: 300px;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+</style>
 <div class="modal-header">
   <button type="button" class="close" ng-click="$ctrl.cancel()" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <h5 class="modal-title" id="modal-title">Contratos Ligados</h5>
@@ -7,7 +14,7 @@
     <div class="col-md-12">
       <div class="col-md-4">
         <input type="file" id="inputFile2" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-        <button class="btn btn-info btn-xs" ng-click="$ctrl.ValidaArchivo();">Validar contratos</button>
+        <button class="btn btn-success btn-xs" ng-click="$ctrl.ValidaArchivo();">Validar contratos</button>
       </div>
       <div class="col-md-4"></div>
       <div class="col-md-4"><button class="btn btn-success btn-xs" ng-click="$ctrl.clientesModal()"><i class="fa fa-plus" aria-hidden="true"></i> Añadir</button></div>
@@ -18,21 +25,37 @@
 
   </div>
 
-
-
   <br>
-  <ul dnd-list="$ctrl.contratos" class="list-group" style="max-height: 300px; overflow-y: scroll;">
-    <li ng-repeat="item in $ctrl.contratos" dnd-draggable="item" dnd-moved="$ctrl.contratos.splice($index, 1)" dnd-effect-allowed="move"
-      dnd-selected="models.selected = item" ng-class="{'selected': models.selected === item}" class="list-group-item">
-      <p style="font-size:12px;"><button type="button" class="btn ink-reaction btn-icon-toggle btn-danger" ng-click="$ctrl.eliminarContrato($index)"><i class="fa fa-trash"></i></button>
-        <span
-          class="badge" style="background-color:#d9534f">{{$index + 1}}</span><b>&nbsp&nbsp</b>{{item.CONTRATO}}&nbsp&nbsp&nbsp&nbsp{{ item.Nombre }} {{ item.Apellido_Paterno
-          }} {{ item.Apellido_Materno}}&nbsp&nbsp&nbsp<b ng-if="item.Proporcional==true" style="color: #d9534f">PROPORCIONAL</b>
-      </p>
-      <!-- <span class="badge" style="background-color:#d9534f">{{$index + 1}}</span><p><span class="badge">{{item.CONTRATO}}</span><p ng-if="item.Proporcional==true"><b>PROPORCIONAL</b></p><p ng-if="item.Proporcional==false"></p> {{ item.Nombre }} {{ item.Apellido_Paterno }} {{ item.Apellido_Materno
-          }}</p>-->
-    </li>
-  </ul>
+  <div class="col-md-12 scrollDiv">
+    <table class="table">
+      <thead>
+        <tr>
+          <td>Prioridad</td>
+          <td>Contrato</td>
+          <td>Nombre</td>
+          <td>Proporcional</td>
+          <td>Eliminar</td>
+        </tr>
+      </thead>
+      <tbody dnd-list="$ctrl.contratos">
+        <tr ng-repeat="item in $ctrl.contratos" dnd-draggable="item" dnd-moved="$ctrl.contratos.splice($index, 1)" dnd-effect-allowed="move"
+          dnd-selected="models.selected = item" ng-class="{'selected': models.selected === item}">
+          <td><span class="label label-danger">{{ $index + 1 }}</span></td>
+          <td>{{item.CONTRATO}}</td>
+          <td>{{item.Nombre }} {{ item.Apellido_Paterno }} {{ item.Apellido_Materno}}</td>
+          <td class="text-center">
+            <label class="checkbox-inline checkbox-styled checkbox-primary">
+								<input type="checkbox" ng-model="item.Proporcional" value="{{ item.CONTRATO }}" ng-checked="item.Proporcional"><span></span>
+            </label>
+          </td>
+          <td>
+            <button type="button" class="btn ink-reaction btn-icon-toggle btn-danger" ng-click="$ctrl.eliminarContrato($index)"><i class="fa fa-trash"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
   <hr>
   <div class="row">
     <form angular-validator-submit="$ctrl.cambioNivel()" ng-if="$ctrl.contratos.length > 0" name="contratoForm" novalidate angular-validator>

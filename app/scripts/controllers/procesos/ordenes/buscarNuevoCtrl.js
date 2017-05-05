@@ -1,7 +1,12 @@
-'use strict';
-angular
-	.module('softvApp')
-	.controller('BuscarNuevoCtrl', function($state, ngNotify, ordenesFactory, $uibModalInstance, $rootScope) {
+(function () {
+	'use strict';
+
+	angular
+		.module('softvApp')
+		.controller('BuscarNuevoCtrl', BuscarNuevoCtrl);
+
+	BuscarNuevoCtrl.inject = ['$state', 'ngNotify', 'ordenesFactory', '$uibModalInstance', '$rootScope'];
+	function BuscarNuevoCtrl($state, ngNotify, ordenesFactory, $uibModalInstance, $rootScope) {
 		var vm = this;
 		$('.buscarContrato').collapse('show');
 		vm.buscarNombres = buscarNombres;
@@ -9,12 +14,12 @@ angular
 		vm.sinRegistros = false;
 		vm.conRegistros = true;
 		vm.buscarSetupbox = buscarSetupbox;
-		vm.buscarContrato =buscarContrato;
-		vm.seleccionar =seleccionar;
+		vm.buscarContrato = buscarContrato;
+		vm.seleccionar = seleccionar;
 		vm.cancel = cancel;
 		initial()
 
-		function initial(){
+		function initial() {
 			var obj = {
 				contrato: '',
 				nombre: '',
@@ -27,7 +32,7 @@ angular
 				// clvUsuario:vm.selectedUsuario.Clave,
 				op: 3
 			};
-			ordenesFactory.buscarClientes(obj).then(function(data) {
+			ordenesFactory.buscarClientes(obj).then(function (data) {
 				vm.ordenes = data.GetuspBuscaContratoSeparado2ListResult;
 			});
 			// ordenesFactory.getColoniasUser().then(function(data) {
@@ -44,7 +49,7 @@ angular
 		function buscarContrato() {
 			if (vm.contrato == undefined || vm.contrato == '') {
 				ngNotify.set('Introduce un contrato valido.', 'error');
-			}else {
+			} else {
 				$('.buscarContrato').collapse('hide');
 				var obj = {
 					contrato: vm.contrato,
@@ -58,12 +63,12 @@ angular
 					// clvUsuario:vm.selectedUsuario.Clave,
 					op: 0
 				};
-				ordenesFactory.buscarClientes(obj).then(function(data) {
+				ordenesFactory.buscarClientes(obj).then(function (data) {
 					vm.ordenes = data.GetuspBuscaContratoSeparado2ListResult;
 					if (vm.ordenes.length == 0) {
 						vm.sinRegistros = true;
 						vm.conRegistros = false;
-					}else {
+					} else {
 						vm.sinRegistros = false;
 						vm.conRegistros = true;
 					}
@@ -74,9 +79,9 @@ angular
 		function buscarNombres() {
 			if (vm.nombre == undefined && vm.paterno == undefined && vm.materno == undefined) {
 				ngNotify.set('Introduce un nombre valido.', 'error');
-			}else if (vm.nombre == '' && vm.paterno == '' && vm.materno == '') {
+			} else if (vm.nombre == '' && vm.paterno == '' && vm.materno == '') {
 				ngNotify.set('Introduce un nombre valido.', 'error');
-			}else {
+			} else {
 				$('.buscarContrato').collapse('hide');
 				// if (vm.paterno == undefined) {
 				// 	vm.paterno = '';
@@ -93,12 +98,12 @@ angular
 					// clvUsuario:vm.selectedUsuario.Clave,
 					op: 1
 				};
-				ordenesFactory.buscarClientes(obj).then(function(data) {
+				ordenesFactory.buscarClientes(obj).then(function (data) {
 					vm.ordenes = data.GetuspBuscaContratoSeparado2ListResult;
 					if (vm.ordenes.length == 0) {
 						vm.sinRegistros = true;
 						vm.conRegistros = false;
-					}else {
+					} else {
 						vm.sinRegistros = false;
 						vm.conRegistros = true;
 					}
@@ -109,9 +114,9 @@ angular
 		function buscarDomicilio() {
 			if (vm.calle == undefined && vm.numero == undefined && vm.colonia == undefined) {
 				ngNotify.set('Introduce un domicilio valido.', 'error');
-			}else if (vm.calle == '' && vm.numero == '' && vm.colonia == '') {
+			} else if (vm.calle == '' && vm.numero == '' && vm.colonia == '') {
 				ngNotify.set('Introduce un domicilio valido.', 'error');
-			}else {
+			} else {
 				$('.buscarContrato').collapse('hide');
 				var obj = {
 					contrato: '',
@@ -125,12 +130,12 @@ angular
 					// clvUsuario:vm.selectedUsuario.Clave,
 					op: 2
 				};
-				ordenesFactory.buscarClientes(obj).then(function(data) {
+				ordenesFactory.buscarClientes(obj).then(function (data) {
 					vm.ordenes = data.GetuspBuscaContratoSeparado2ListResult;
 					if (vm.ordenes.length == 0) {
 						vm.sinRegistros = true;
 						vm.conRegistros = false;
-					}else {
+					} else {
 						vm.sinRegistros = false;
 						vm.conRegistros = true;
 					}
@@ -141,7 +146,7 @@ angular
 		function buscarSetupbox() {
 			if (vm.setupbox == undefined || vm.setupbox == '') {
 				ngNotify.set('Introduce un setupbox valido.', 'error');
-			}else {
+			} else {
 				$('.buscarContrato').collapse('hide');
 				var obj = {
 					contrato: '',
@@ -155,12 +160,12 @@ angular
 					// clvUsuario:vm.selectedUsuario.Clave,
 					op: 5
 				};
-				ordenesFactory.buscarClientes(obj).then(function(data) {
+				ordenesFactory.buscarClientes(obj).then(function (data) {
 					vm.ordenes = data.GetuspBuscaContratoSeparado2ListResult;
 					if (vm.ordenes.length == 0) {
 						vm.sinRegistros = true;
 						vm.conRegistros = false;
-					}else {
+					} else {
 						vm.sinRegistros = false;
 						vm.conRegistros = true;
 					}
@@ -171,5 +176,5 @@ angular
 		function cancel() {
 			$uibModalInstance.dismiss('cancel');
 		}
-
-	});
+	}
+})();
