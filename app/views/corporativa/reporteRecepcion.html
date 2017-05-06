@@ -107,30 +107,30 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-12  table-responsive" style="padding-left: 25px; padding-right: 25px; font-size:10px;">
-                        <table st-safe-src="$ctrl.pagos" st-table="displayCollection" st-set-filter="myStrictFilter" class="table table-striped table-hover table-condensed">
+                        <table st-safe-src="$ctrl.pagos" st-table="$ctrl.displayCollection" class="table table-striped table-hover table-condensed">
                             <thead>
                                 <tr>
-                                    <th>Contrato maestro</th>
-                                    <th>Ticket</th>
-                                    <th>Cliente</th>
-                                    <th>Tipo</th>
-                                    <th>Fecha de Facturación</th>
-                                    <th>Fecha de Vencimiento</th>
-                                    <th>Importe</th>
-                                    <th>Pago Inicial</th>
-                                    <th>Pagos</th>
-                                    <th>Total Abonado</th>
-                                    <th>Saldo Pendiente</th>
-                                    <th>Sucursal</th>
-                                    <th>Cajera</th>
-                                    <th>Caja</th>
-                                    <th>Medio Pago</th>
-                                    <th>Importe</th>
-                                    <th>Fecha</th>
-                                    <th>Importe</th>
-                                    <th>Monto</th>
-                                    <th>Saldo Pendiente</th>
-                                    <th>Saldada</th>
+                                    <th st-sort="ContratoMaestro">Contrato maestro</th>
+                                    <th st-sort="Ticket">Ticket</th>
+                                    <th st-sort="Cliente">Cliente</th>
+                                    <th st-sort="Tipo">Tipo</th>
+                                    <th st-sort="FechaFacturacion">Fecha de Facturación</th>
+                                    <th st-sort="FechaVencimiento">Fecha de Vencimiento</th>
+                                    <th st-sort="ImporteFactura">Importe</th>
+                                    <th st-sort="PagoInicial">Pago Inicial</th>
+                                    <th st-sort="ACuantosPagos">Pagos</th>
+                                    <th st-sort="TotalAbonado">Total Abonado</th>
+                                    <th st-sort="pendiente">Saldo Pendiente</th>
+                                    <th st-sort="Sucursal">Sucursal</th>
+                                    <th st-sort="Cajera">Cajera</th>
+                                    <th st-sort="Caja">Caja</th>
+                                    <th st-sort="MedioPago">Medio Pago</th>
+                                    <th st-sort="ImportePago">Importe</th>
+                                    <th st-sort="FechaPago">Fecha</th>
+                                    <th st-sort="ImporteFacCliente">Importe</th>
+                                    <th st-sort="MontoAbono">Monto</th>
+                                    <th st-sort="PorPagar">Saldo Pendiente</th>
+                                    <th st-sort="Saldada2">Saldada</th>
                                 </tr>
                                 <tr>
                                     <th>
@@ -194,12 +194,12 @@
                                         <input st-search="PorPagar" placeholder="Saldo Pendiente" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
-                                        <input st-search="Beam" placeholder="Saldada" class="input-sm form-control" type="search"/>
+                                        <input st-search="Saldada2" placeholder="Saldada" class="input-sm form-control" type="search"/>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-show="$ctrl.pagos.length>0" dir-paginate="x in $ctrl.pagos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:10">
+                                <tr ng-show="$ctrl.pagos.length>0" dir-paginate="x in $ctrl.displayCollection|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:10">
                                     <td>{{x.ContratoMaestro}}</td>
                                     <td>{{x.Ticket}}</td>
                                     <td>{{x.Cliente}}</td>
