@@ -36,13 +36,13 @@
                     <tr>
                         <th>Contrato</th>
                         <th>Nombre</th>
-                        <th>Acciones</th>
+                        <th>{{ $ctrl.titulo }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="x in $ctrl.contrato.lstCliS | filter:$ctrl.search">
                         <td>{{ x.ContratoCom }}</td>
-                        <td>{{ x.NombreCli }} <span class="label label-info" ng-if="x.Proporcional">Proporcional</span></td>
+                        <td>{{ x.NombreCli }}</td>
                         <td class="text-center">
                             <label class="checkbox-inline checkbox-styled checkbox-primary">
 								<input type="checkbox" ng-model="x.checado" value="{{ x.ContratoCom }}" ng-checked="x.checado"><span></span>

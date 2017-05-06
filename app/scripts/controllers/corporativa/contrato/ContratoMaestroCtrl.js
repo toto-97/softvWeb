@@ -39,6 +39,7 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory) {
       "Op": 4
     };
     ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
+      console.log(data);
       vm.Contratos = data.GetBusquedaContratoMaestroFacResult;
     });
   }
@@ -52,8 +53,7 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory) {
       "Op": 2
     }
 
-    ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
-      console.log(data);
+    ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {     
       vm.Contratos = data.GetBusquedaContratoMaestroFacResult;
     });
   }
