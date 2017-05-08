@@ -40,7 +40,7 @@
                                     <button class="btn btn-info btn-xs" ng-click="$ctrl.buscaContrato(3)">Buscar</button>
                                 </div>
                                 <div class="col-md-2">
-                                    <p>Ticket</p>
+                                    <p>Factura</p>
                                     <input type="text" ng-model="$ctrl.Ticket" class="form-control input-sm">
                                 </div>
                                 <div class="col-md-1">
@@ -48,7 +48,7 @@
                                     <button class="btn btn-info btn-xs" ng-click="$ctrl.buscaContrato(2)">Buscar</button>
                                 </div>
                                 <div class="col-md-2">
-                                    <p>Cliente</p>
+                                    <p>Nombre Comercial</p>
                                     <input type="text" class="form-control input-sm " ng-model="$ctrl.Cliente">
                                 </div>
                                 <div class="col-md-1">
@@ -106,13 +106,20 @@
 
             <div class="col-md-12">
                 <div class="row">
+                    <div class="btn-group">
+                        <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Exportar tabla</button>
+                        <ul class="dropdown-menu primary" role="menu">
+                            <li><a class="btn btn-csv btn-sm" ng-hide="$ctrl.todoAsCsv" ng-click="$ctrl.crearTodoAsCsv()"  style="white-space: normal"><img src="images/pdf.png" width="24px"> PDF</a></li>
+                            <li><a class="btn btn-csv btn-sm" ng-hide="$ctrl.todoAsCsv" ng-click="$ctrl.crearTodoAsCsv()"  style="white-space: normal"><img src="images/xls.png" width="24px"> CSV</a></li>
+                        </ul>
+                    </div>
                     <div class="col-md-12  table-responsive" style="padding-left: 25px; padding-right: 25px; font-size:10px;">
                         <table st-safe-src="$ctrl.pagos" st-table="$ctrl.displayCollection" class="table table-striped table-hover table-condensed">
                             <thead>
                                 <tr>
                                     <th st-sort="ContratoMaestro">Contrato maestro</th>
-                                    <th st-sort="Ticket">Ticket</th>
-                                    <th st-sort="Cliente">Cliente</th>
+                                    <th st-sort="Ticket">Factura</th>
+                                    <th st-sort="Cliente">Nombre Comercial</th>
                                     <th st-sort="Tipo">Tipo</th>
                                     <th st-sort="FechaFacturacion">Fecha de Facturación</th>
                                     <th st-sort="FechaVencimiento">Fecha de Vencimiento</th>
@@ -137,10 +144,10 @@
                                         <input st-search="ContratoMaestro" placeholder="Contrato maestro" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
-                                        <input st-search="Ticket" placeholder="Ticket" class="input-sm form-control" type="search"/>
+                                        <input st-search="Ticket" placeholder="Factura" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
-                                        <input st-search="Cliente" placeholder="Cliente" class="input-sm form-control" type="search"/>
+                                        <input st-search="Cliente" placeholder="Nombre Comercial" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
                                         <input st-search="Tipo" placeholder="Tipo" class="input-sm form-control" type="search"/>
@@ -206,20 +213,20 @@
                                     <td>{{x.Tipo}}</td>
                                     <td>{{x.FechaFacturacion}}</td>
                                     <td>{{x.FechaVencimiento}}</td>
-                                    <td>{{x.ImporteFactura}}</td>
-                                    <td>{{x.PagoInicial}}</td>
+                                    <td>{{x.ImporteFactura | currency}}</td>
+                                    <td>{{x.PagoInicial | currency}}</td>
                                     <td>{{x.ACuantosPagos}}</td>
-                                    <td>{{x.TotalAbonado}}</td>
-                                    <td>{{x.ImporteFactura - x.TotalAbonado}}</td>
+                                    <td>{{x.TotalAbonado | currency}}</td>
+                                    <td>{{x.ImporteFactura - x.TotalAbonado | currency}}</td>
                                     <td>{{x.Sucursal}}</td>
                                     <td>{{x.Cajera}}</td>
                                     <td>{{x.Caja}}</td>
                                     <td>{{x.MedioPago}}</td>
-                                    <td>{{x.ImportePago}}</td>
+                                    <td>{{x.ImportePago | currency}}</td>
                                     <td>{{x.FechaPago}}</td>
-                                    <td>{{x.ImporteFacCliente}}</td>
-                                    <td>{{x.MontoAbono}}</td>
-                                    <td>{{x.PorPagar}}</td>
+                                    <td>{{x.ImporteFacCliente | currency}}</td>
+                                    <td>{{x.MontoAbono | currency}}</td>
+                                    <td>{{x.PorPagar | currency}}</td>
                                     <td>{{x.Saldada2}}</td>
                                 </tr>
                             </tbody>
@@ -229,6 +236,12 @@
                             </dir-pagination-controls>
                         </div>
                     </div>
+                    <!--<div class="col-sm-3">
+                        <button class="btn btn-csv btn-sm " ng-hide="$ctrl.todoAsCsv" ng-click="$ctrl.crearTodoAsCsv()"  style="white-space: normal"> Exportar todo <br/> como CSV </button>
+                    </div>-->
+                    <button class="btn btn-default" id="csvDos" ng-hide="$ctrl.csvDosHide" csv-column-order="$ctrl.predicates"  ng-csv="$ctrl.arrayReporte" filename="{{ $ctrl.filename }}.csv" field-separator="," decimal-separator="."  add-bom="true">
+                        esconder botón visible data as csv
+                    </button>
                 </div>
             </div>
         </div>

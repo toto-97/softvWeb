@@ -18,7 +18,7 @@ angular.module('softvApp').controller('ReporteRecepcionCtrl', ReporteRecepcionCt
     };
 });
 
-function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory) {
+function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory, $timeout) {
 
     function saldadas() {
         var parametros;
@@ -222,7 +222,57 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory)
         $('.buscarContrato').collapse('hide');
 	}
     
+    function crearTodoAsCsv() {
+      $timeout(function() {
+        for (var i = 0; i < vm.pagos.length; i++) 
+            { 
+                delete vm.pagos[i].BaseIdUser;
+                delete vm.pagos[i].BaseRemoteIp;
+                delete vm.pagos[i].$$hashKey;
+            } 
+
+            initArray();
+       
+          for (var i = 0; i < vm.pagos.length; i++) 
+            {   
+                vm.arrayReporte.push(vm.pagos[i]);   
+            } 
+        
+        angular.element('#csvDos').triggerHandler('click'); 
+      });
+    }
+
+    function initArray (){
+        vm.arrayReporte = []; 
+        vm.arrayReporte =     [{
+            'ContratoMaestro': 'Contrato Maestro',
+            'Ticket': 'Ticket',
+            'Cliente': 'Cliente',
+            'Tipo': 'Tipo',
+            'FechaFacturacion': 'Fecha de Facturacion',
+            'FechaVencimiento': 'Fecha de Vencimiento',
+            'ImporteFactura': 'Importe de la Factura',
+            'PagoInicial': 'Pago Inicial',
+            'ACuantosPagos': 'Pagos',
+            'TotalAbonado': 'Total Abonado',
+            'pendiente': 'pendiente',
+            'Sucursal': 'Sucursal', 
+            'Cajera': 'Cajera',
+            'Caja': 'Caja',
+            'MedioPago': 'Medio de Pago',
+            'ImportePago': 'Importe de Pago',
+            'FechaPago': 'Fecha de Pago',
+            'ImporteFacCliente': 'Importe de Facactura Cliente',
+            'MontoAbono': 'Monto Abono',
+            'PorPagar': 'Por Pagar',
+            'Saldada2': 'Saldada2' 
+        }];
+    }
+
     var vm = this;
     vm.buscaContrato = buscaContrato;
     vm.saldadas = saldadas;
+    vm.crearTodoAsCsv = crearTodoAsCsv;
+    vm.filename = 'Reporte_de_pagos';
+    vm.csvDosHide = true;
 }

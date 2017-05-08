@@ -12,7 +12,9 @@ angular
 		'angularValidator',
 		'permission', 'permission.ui',
 		'ui.mask','dndLists',
-		'smart-table'
+		'smart-table',
+		'ngSanitize',
+		'ngCsv'
 
 	])
 	.config(['$provide', '$urlRouterProvider', '$httpProvider', 'cfpLoadingBarProvider', '$qProvider', 'blockUIConfig', function ($provide, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $qProvider, blockUIConfig) {
