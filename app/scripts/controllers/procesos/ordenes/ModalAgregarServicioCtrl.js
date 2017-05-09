@@ -81,6 +81,7 @@
 							|| vm.selectedTrabajo.Descripcion.toLowerCase().includes('bsedi')) {
 							items.clv_detalle_orden = vm.clv_detalle_orden;
 							items.descripcion = vm.selectedTrabajo.Descripcion.toLowerCase();
+							items.servicio = vm.selectedServicio;
 							var modalInstance = $uibModal.open({
 								animation: true,
 								ariaLabelledBy: 'modal-title',
