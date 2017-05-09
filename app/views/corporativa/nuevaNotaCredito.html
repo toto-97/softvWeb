@@ -1,0 +1,86 @@
+<div class="card animated fadeIn" style="margin-top:20px;">
+
+  <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
+    <header>
+      <strong style="font-weight:bold; border:none; margin-left:10px; font-size: 16px;">Nueva nota de crédito</strong>
+      <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Nueva nota</small>
+    </header>
+    <div class="tools">
+      <button class="btn ink-reaction btn-flat btn-xs btn-primary" ui-sref="home.corporativa.notas" type="button">regresar</button>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+
+      <h4>Selecciona contrato maestro</h4>
+      <input type="text" class="form-control input-sm" ng-model="$ctrl.Contrato">
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="col-md-12">
+          <label class="col-md-3 control-label blod">Ticket:</label>
+          <div class="col-md-9" style="padding-left:-10px;">
+            <input type="text" name="razon" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.razon" required-message="'Este campo es obligatorio.'"
+              required>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <label class="col-md-3 control-label blod">Caja:</label>
+          <div class="col-md-9" style="padding-left:-10px;">
+            <input type="text" name="razon" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.razon" required-message="'Este campo es obligatorio.'"
+              required>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <label class="col-md-3 control-label blod">Cajero:</label>
+          <div class="col-md-9" style="padding-left:-10px;">
+            <input type="text" name="razon" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.razon" required-message="'Este campo es obligatorio.'"
+              required>
+          </div>
+        </div>
+         <div class="col-md-12">
+          <label class="col-md-3 control-label blod">Usuario:</label>
+          <div class="col-md-9" style="padding-left:-10px;">
+            <input type="text" name="razon" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.razon" required-message="'Este campo es obligatorio.'"
+              required>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-6">
+            <div class="col-md-12">
+          <label class="col-md-3 control-label blod">Fecha Generación:</label>
+          <div class="col-md-9" style="padding-left:-10px;">
+            <input type="text" name="razon" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.razon" required-message="'Este campo es obligatorio.'"
+              required>
+          </div>
+        </div>
+
+         <div class="col-md-12">
+          <label class="col-md-3 control-label blod">Fecha caducidad:</label>
+          <div class="col-md-9" style="padding-left:-10px;">
+            <input type="text" name="razon" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.razon" required-message="'Este campo es obligatorio.'"
+              required>
+          </div>
+        </div>
+         <div class="col-md-12">
+          <label class="col-md-3 control-label blod">Observaciones:</label>
+          <div class="col-md-9" style="padding-left:-10px;">
+            <textarea type="text" placeholder="Observaciones" name="observaciones" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.Observaciones" required-message="'Este campo es obligatorio.'"
+              required></textarea>
+          </div>
+        </div>
+       
+
+      </div>
+
+
+    </div>
+
+
+
+  </div>
+
+
+</div>
