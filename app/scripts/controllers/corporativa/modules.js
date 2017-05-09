@@ -86,6 +86,22 @@ function corporativaConf($stateProvider) {
 			templateUrl: 'views/corporativa/pagoContratoMaestro.html',
 			controller: 'PagoContratoMaestroCtrl',
 			controllerAs: '$ctrl'
+		}, 
+		{
+		name: 'home.corporativa.reporteRecepcion',
+		data: {
+			pageTitle: 'SOFTV | REPORTES CONTRATO MAESTRO',
+			permissions: {
+				only: ['recepciondepagosSelect'],
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/reporteRecepcion', 
+		templateUrl: 'views/corporativa/reporteRecepcion.html', 
+		controller: 'ReporteRecepcionCtrl', 
+		controllerAs: '$ctrl' 
 		},
 		{
 			name: 'home.corporativa.reportesCortes',
