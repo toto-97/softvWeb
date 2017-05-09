@@ -47,6 +47,9 @@ module.exports = function(config) {
       'bower_components/tg-angular-validator/dist/angular-validator.js',
       'bower_components/angular-ui-mask/dist/mask.js',
       'bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js',
+      'bower_components/angular-smart-table/dist/smart-table.js',
+      'bower_components/angular-sanitize/angular-sanitize.js',
+      'bower_components/ng-csv/build/ng-csv.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

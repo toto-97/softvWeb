@@ -259,7 +259,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
         console.log(x.Clv_FacturaMaestro);
         pagosMaestrosFactory.obtenFacturas(x.Clv_FacturaMaestro).then(function (data) {
 			vm.historialPagos = data.GetObtieneHistorialPagosFacturaMaestroListResult;
-            console.log(vm.historial);
+            console.log(vm.historialPagos);
 		});
     }
 

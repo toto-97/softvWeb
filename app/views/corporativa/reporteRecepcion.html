@@ -40,7 +40,7 @@
                                     <button class="btn btn-info btn-xs" ng-click="$ctrl.buscaContrato(3)">Buscar</button>
                                 </div>
                                 <div class="col-md-2">
-                                    <p>Ticket</p>
+                                    <p>Factura</p>
                                     <input type="text" ng-model="$ctrl.Ticket" class="form-control input-sm">
                                 </div>
                                 <div class="col-md-1">
@@ -48,7 +48,7 @@
                                     <button class="btn btn-info btn-xs" ng-click="$ctrl.buscaContrato(2)">Buscar</button>
                                 </div>
                                 <div class="col-md-2">
-                                    <p>Cliente</p>
+                                    <p>Nombre Comercial</p>
                                     <input type="text" class="form-control input-sm " ng-model="$ctrl.Cliente">
                                 </div>
                                 <div class="col-md-1">
@@ -106,120 +106,127 @@
 
             <div class="col-md-12">
                 <div class="row">
+                    <div class="btn-group">
+                        <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Exportar tabla</button>
+                        <ul class="dropdown-menu primary" role="menu">
+                            <li><a class="btn btn-csv btn-sm" ng-hide="$ctrl.todoAsCsv" ng-click="$ctrl.crearTodoAsCsv()"  style="white-space: normal"><img src="images/pdf.png" width="24px"> PDF</a></li>
+                            <li><a class="btn btn-csv btn-sm" ng-hide="$ctrl.todoAsCsv" ng-click="$ctrl.crearTodoAsCsv()"  style="white-space: normal"><img src="images/xls.png" width="24px"> CSV</a></li>
+                        </ul>
+                    </div>
                     <div class="col-md-12  table-responsive" style="padding-left: 25px; padding-right: 25px; font-size:10px;">
-                        <table class="table table-striped table-hover table-condensed">
+                        <table st-safe-src="$ctrl.pagos" st-table="$ctrl.displayCollection" class="table table-striped table-hover table-condensed">
                             <thead>
                                 <tr>
-                                    <th>Contrato maestro</th>
-                                    <th>Ticket</th>
-                                    <th>Cliente</th>
-                                    <th>Tipo</th>
-                                    <th>Fecha de Facturación</th>
-                                    <th>Fecha de Vencimiento</th>
-                                    <th>Importe</th>
-                                    <th>Pago Inicial</th>
-                                    <th>Pagos</th>
-                                    <th>Total Abonado</th>
-                                    <th>Saldo Pendiente</th>
-                                    <th>Sucursal</th>
-                                    <th>Cajera</th>
-                                    <th>Caja</th>
-                                    <th>Medio Pago</th>
-                                    <th>Importe</th>
-                                    <th>Fecha</th>
-                                    <th>Importe</th>
-                                    <th>Monto</th>
-                                    <th>Saldo Pendiente</th>
-                                    <th>Saldada</th>
+                                    <th st-sort="ContratoMaestro">Contrato maestro</th>
+                                    <th st-sort="Ticket">Factura</th>
+                                    <th st-sort="Cliente">Nombre Comercial</th>
+                                    <th st-sort="Tipo">Tipo</th>
+                                    <th st-sort="FechaFacturacion">Fecha de Facturación</th>
+                                    <th st-sort="FechaVencimiento">Fecha de Vencimiento</th>
+                                    <th st-sort="ImporteFactura">Importe</th>
+                                    <th st-sort="PagoInicial">Pago Inicial</th>
+                                    <th st-sort="ACuantosPagos">Pagos</th>
+                                    <th st-sort="TotalAbonado">Total Abonado</th>
+                                    <th st-sort="pendiente">Saldo Pendiente</th>
+                                    <th st-sort="Sucursal">Sucursal</th>
+                                    <th st-sort="Cajera">Cajera</th>
+                                    <th st-sort="Caja">Caja</th>
+                                    <th st-sort="MedioPago">Medio Pago</th>
+                                    <th st-sort="ImportePago">Importe</th>
+                                    <th st-sort="FechaPago">Fecha</th>
+                                    <th st-sort="ImporteFacCliente">Importe</th>
+                                    <th st-sort="MontoAbono">Monto</th>
+                                    <th st-sort="PorPagar">Saldo Pendiente</th>
+                                    <th st-sort="Saldada2">Saldada</th>
                                 </tr>
                                 <tr>
                                     <th>
-                                        <input st-search="SAN" placeholder="Contrato maestro" class="input-sm form-control" type="search"/>
+                                        <input st-search="ContratoMaestro" placeholder="Contrato maestro" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
-                                        <input st-search="Estado" placeholder="Ticket" class="input-sm form-control" type="search"/>
+                                        <input st-search="Ticket" placeholder="Factura" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
-                                        <input st-search="Beam" placeholder="Cliente" class="input-sm form-control" type="search"/>
+                                        <input st-search="Cliente" placeholder="Nombre Comercial" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
-                                        <input st-search="SatellitedID" placeholder="Tipo" class="input-sm form-control" type="search"/>
+                                        <input st-search="Tipo" placeholder="Tipo" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
-                                        <input st-search="PlanServ" placeholder="Fecha de Facturación" class="input-sm form-control media" type="search"/>
+                                        <input st-search="FechaFacturacion" placeholder="Fecha de Facturación" class="input-sm form-control media" type="search"/>
                                     </th>
                                     <th>
-                                        <input st-search="ESN" placeholder="Fecha de Vencimiento" class="input-sm form-control" type="search"/>
+                                        <input st-search="FechaVencimiento" placeholder="Fecha de Vencimiento" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
-                                        <input st-search="IdSuscriptor" placeholder="Importe" class="input-sm form-control media" type="search" />
+                                        <input st-search="ImporteFactura" placeholder="Importe" class="input-sm form-control media" type="search" />
                                     </th>
                                     <th>
-                                        <input st-search="EstadoFap" placeholder="Pago Inicial" class="input-sm form-control" type="search"/ >
+                                        <input st-search="PagoInicial" placeholder="Pago Inicial" class="input-sm form-control" type="search"/ >
                                     </th>
                                     <th>
-                                        <input st-search="SAN" placeholder="Pagos" class="input-sm form-control" type="search"/>
+                                        <input st-search="ACuantosPagos" placeholder="Pagos" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
-                                        <input st-search="Estado" placeholder="Total Abonado" class="input-sm form-control" type="search"/>
+                                        <input st-search="TotalAbonado" placeholder="Total Abonado" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
-                                        <input st-search="Beam" placeholder="Saldo Pendiente" class="input-sm form-control" type="search"/>
+                                        <input st-search="pendiente" placeholder="Saldo Pendiente" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
-                                        <input st-search="SatellitedID" placeholder="Sucursal" class="input-sm form-control" type="search"/>
+                                        <input st-search="Sucursal" placeholder="Sucursal" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
-                                        <input st-search="PlanServ" placeholder="Cajera" class="input-sm form-control media" type="search"/>
+                                        <input st-search="Cajera" placeholder="Cajera" class="input-sm form-control media" type="search"/>
                                     </th>
                                     <th>
-                                        <input st-search="ESN" placeholder="Caja" class="input-sm form-control" type="search"/>
+                                        <input st-search="Caja" placeholder="Caja" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
-                                        <input st-search="IdSuscriptor" placeholder="Medio Pago" class="input-sm form-control media" type="search" />
+                                        <input st-search="MedioPago" placeholder="Medio Pago" class="input-sm form-control media" type="search" />
                                     </th>
                                     <th>
-                                        <input st-search="EstadoFap" placeholder="Importe" class="input-sm form-control" type="search"/ >
+                                        <input st-search="ImportePago" placeholder="Importe" class="input-sm form-control" type="search"/ >
                                     </th>
                                     <th>
-                                        <input st-search="SAN" placeholder="Fecha" class="input-sm form-control" type="search"/>
+                                        <input st-search="FechaPago" placeholder="Fecha" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
-                                        <input st-search="Estado" placeholder="Importe" class="input-sm form-control" type="search"/>
+                                        <input st-search="ImporteFacCliente" placeholder="Importe" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
-                                        <input st-search="Beam" placeholder="Monto" class="input-sm form-control" type="search"/>
+                                        <input st-search="MontoAbono" placeholder="Monto" class="input-sm form-control" type="search"/>
                                     </th>
                                      <th>
-                                        <input st-search="Estado" placeholder="Saldo Pendiente" class="input-sm form-control" type="search"/>
+                                        <input st-search="PorPagar" placeholder="Saldo Pendiente" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
-                                        <input st-search="Beam" placeholder="Saldada" class="input-sm form-control" type="search"/>
+                                        <input st-search="Saldada2" placeholder="Saldada" class="input-sm form-control" type="search"/>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-show="$ctrl.pagos.length>0" dir-paginate="x in $ctrl.pagos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:10">
+                                <tr ng-show="$ctrl.pagos.length>0" dir-paginate="x in $ctrl.displayCollection|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:10">
                                     <td>{{x.ContratoMaestro}}</td>
                                     <td>{{x.Ticket}}</td>
                                     <td>{{x.Cliente}}</td>
                                     <td>{{x.Tipo}}</td>
                                     <td>{{x.FechaFacturacion}}</td>
                                     <td>{{x.FechaVencimiento}}</td>
-                                    <td>{{x.ImporteFactura}}</td>
-                                    <td>{{x.PagoInicial}}</td>
+                                    <td>{{x.ImporteFactura | currency}}</td>
+                                    <td>{{x.PagoInicial | currency}}</td>
                                     <td>{{x.ACuantosPagos}}</td>
-                                    <td>{{x.TotalAbonado}}</td>
-                                    <td>{{x.ImporteFactura - x.TotalAbonado}}</td>
+                                    <td>{{x.TotalAbonado | currency}}</td>
+                                    <td>{{x.ImporteFactura - x.TotalAbonado | currency}}</td>
                                     <td>{{x.Sucursal}}</td>
                                     <td>{{x.Cajera}}</td>
                                     <td>{{x.Caja}}</td>
                                     <td>{{x.MedioPago}}</td>
-                                    <td>{{x.ImportePago}}</td>
+                                    <td>{{x.ImportePago | currency}}</td>
                                     <td>{{x.FechaPago}}</td>
-                                    <td>{{x.ImporteFacCliente}}</td>
-                                    <td>{{x.MontoAbono}}</td>
-                                    <td>{{x.PorPagar}}</td>
+                                    <td>{{x.ImporteFacCliente | currency}}</td>
+                                    <td>{{x.MontoAbono | currency}}</td>
+                                    <td>{{x.PorPagar | currency}}</td>
                                     <td>{{x.Saldada2}}</td>
                                 </tr>
                             </tbody>
@@ -229,6 +236,12 @@
                             </dir-pagination-controls>
                         </div>
                     </div>
+                    <!--<div class="col-sm-3">
+                        <button class="btn btn-csv btn-sm " ng-hide="$ctrl.todoAsCsv" ng-click="$ctrl.crearTodoAsCsv()"  style="white-space: normal"> Exportar todo <br/> como CSV </button>
+                    </div>-->
+                    <button class="btn btn-default" id="csvDos" ng-hide="$ctrl.csvDosHide" csv-column-order="$ctrl.predicates"  ng-csv="$ctrl.arrayReporte" filename="{{ $ctrl.filename }}.csv" field-separator="," decimal-separator="."  add-bom="true">
+                        esconder botón visible data as csv
+                    </button>
                 </div>
             </div>
         </div>
