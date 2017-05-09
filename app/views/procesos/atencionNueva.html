@@ -39,21 +39,35 @@
     </div>
   </div>
   <div class="card-body">
-
+    <div class="card row " style="padding: 5px;">
+      <div class="col-md-2">
+        <h4>Buscar Cliente</h4>
+      </div>
+      <div class="col-md-2"><input type="text" ng-model="$ctrl.contratoSelected" class="form-control" placeholder="Ingresa contrato"></div>
+      <div class="col-md-2"> <button ng-disabled="{{$ctrl.bloquearContrato}}" ng-click="$ctrl.BuscaCliente()" class="btn ink-reaction btn-floating-action btn-sm btn-danger"><i class="fa fa-search"></i></button></div>
+      <div class="col-md-2">
+       <b><i class="md md-av-timer" ></i> Hora Inicial:</b>
+          <input type="text" ng-model="$ctrl.Hora" class="form-control input-sm" disabled="">
+      </div>
+      <div class="col-md-2">
+<b><i class="md md-today"></i> Fecha</b>
+          <input type="text" ng-model="$ctrl.Fecha" class="form-control input-sm" disabled="">
+      </div>
+    </div>
 
 
     <div class="row">
-      <div class="col-md-3">
-        <div class="col-md-4">
+      <div class="col-md-3" >
+        <div class="col-md-6">
           <strong class="" style="margin-top: 10px;">#Llamada:</strong>
         </div>
-        <div class="col-md-8">
-          <input id="textinput" name="textinput" type="text" ng-model="$ctrl.NumeroLlamada" class="form-control input-sm" disabled="">
+        <div class="col-md-6">
+          <input id="textinput" name="textinput" style="color:red !important; font-weight: bold;" type="text" ng-model="$ctrl.NumeroLlamada" class="form-control input-sm" disabled="">
         </div>
-        <div class="col-md-4">
+        <div class="col-md-12">
           <strong class="" style="margin-top: 10px;">Tipo de servicio:</strong>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-12">
           <select class="form-control input-sm" ng-model="$ctrl.selectedServicio" ng-change="$ctrl.CambioServicio($ctrl.selectedServicio)"
             ng-options="v.Concepto for v in $ctrl.servicios track by v.Clv_TipSerPrincipal"></select>
         </div>
@@ -71,18 +85,10 @@
         </div>
       </div>
 
-      <div class="col-md-3 form-group">
-        <div class="col-md-3">
-          <strong style="margin-top: 10px;">Contrato:</strong>
-        </div>
-        <div class="col-md-6">
-          <input type="text" class="form-control input-sm" ng-disabled="{{$ctrl.bloquearContrato}}" ng-keydown="$ctrl.EnterContrato($event)"
-            ng-model="$ctrl.contrato">
-        </div>
-        <div class="col-md-3">
-          <button type="button" ng-disabled="{{$ctrl.bloquearContrato}}" ng-click="$ctrl.BuscaCliente()" class="btn btn-raised btn-xs btn-default">.....</button>
-        </div>
-
+      <div class="col-md-3 form-group" >
+        <div class="col-md-12 text-center" style="font-size:14px; color: #06599a;">
+           <b > Suscriptor</b>
+          </div>
         <div class="col-md-12">
           <p><b>Nombre: </b>{{$ctrl.NombreCliente}} </p>
         </div>
@@ -92,8 +98,8 @@
           <p><b>Ciudad: </b>{{$ctrl.Ciudad}}</p>
         </div>
       </div>
-      <div class="col-md-4 ">
-        <b><h5>Servicios asignados</h5></b>
+      <div class="col-md-3 text-center" style="font-size:14px; color: #06599a;">
+        <b >Servicios<b>
         <div class=" card wrapper text-center">
           <p ng-repeat="x in $ctrl.ServiciosCliente" style="font-size:10px;">{{x.Servicio}}</p>
         </div>
@@ -101,7 +107,10 @@
 
 
       </div>
-      <div class="col-md-2">
+     
+
+      <div class="col-md-3">
+        <br>
         <button type="button" style="font-size: 10px;" class="btn btn-danger btn-block" ng-click="$ctrl.generaReporte()"><i class="fa fa-flag"></i> Generar Reporte</button>
         <button type="button" style="font-size: 10px;" class="btn btn-default-bright btn-block" ng-click="$ctrl.abrirPagos()"><i class="fa fa-money"></i> Historial de Pagos</button>
         <button type="button" style="font-size: 10px;" class="btn btn-default-bright btn-block" ng-click="$ctrl.openHistorial()"><i class="fa fa-clock-o
@@ -113,97 +122,66 @@
     <hr>
     <div class="row">
 
-      <div class="col-md-12">
-
-        <div class="row">
-          <div class="col-md-4">
-            <p class="text-danger">Usuario que generó: {{$ctrl.UsuarioGenero}}</p>
-          </div>
-
-          <div class="col-md-4  ">
-            <div class="col-md-6">
-            
-              <b><i class="md md-av-timer" ></i> Hora Inicial:</b>
-            </div>
-            <div class="col-md-6">
-              <input type="text" ng-model="$ctrl.Hora" class="form-control input-sm" disabled="">
-
-            </div>
-          </div>
-          <div class="col-md-4 ">
-            <div class="col-md-4">
-              
-              <b><i class="md md-today"></i> Fecha</b>
-            </div>
-            <div class="col-md-8">
-              <input type="text" ng-model="$ctrl.Fecha" class="form-control input-sm" disabled="">
-
-            </div>
-          </div>
-        </div>
-        <hr>
-        <div class="row">
-          <div class="col-md-1" style="background-color: #CDDC39; height: 100%;">
-
-            <i class="md md-phone-in-talk
-
-" style="font-size: 54px;"></i>
-<b style="font-size: 12px;">LLAMADA</b>
-          </div>
-          <div class="col-md-5">
-            <strong style="margin-top: 10px;">Clasificación del Problema:</strong>
-            <select class="form-control input-sm" ng-model="$ctrl.Problema" ng-options="item as item.descripcion for item in $ctrl.clasificacionProblemas track by item.clvProblema">
+      <div class="col-md-4">
+        <strong style="margin-top: 10px;">Clasificación del Problema:</strong>
+        <select class="form-control input-sm" ng-model="$ctrl.Problema" ng-options="item as item.descripcion for item in $ctrl.clasificacionProblemas track by item.clvProblema">
 											  <option value=""  disabled="true">selecciona</option>
 											  </select>
-            <br>
-            <strong>Reporte del Cliente:</strong>
-            <textarea class="form-control input-sm" placeholder="Describe brevemente la problematica del cliente  " ng-model="$ctrl.DescripcionProblema"></textarea>
-          </div>
-          <div class="col-md-5">
-            <strong style="margin-top: 10px;">Clasificación de la Solución:</strong>
+        <br>
+        <strong>Reporte del Cliente:</strong>
+        <textarea class="form-control input-sm" placeholder="Describe brevemente la problematica del cliente  " ng-model="$ctrl.DescripcionProblema"></textarea>
+      </div>
+      <div class="col-md-4">
+        <strong style="margin-top: 10px;">Clasificación de la Solución:</strong>
 
 
-            <select class="form-control input-sm" ng-model="$ctrl.Trabajo" ng-options="item as item.DESCRIPCION for item in $ctrl.Trabajos track by item.CLV_TRABAJO">
+        <select class="form-control input-sm" ng-model="$ctrl.Trabajo" ng-options="item as item.DESCRIPCION for item in $ctrl.Trabajos track by item.CLV_TRABAJO">
 												 <option value=""  disabled="true">selecciona</option>
 											  </select>
 
-            <br>
-            <strong style="margin-top: 10px;">Problema Real:</strong>
-            <textarea class="form-control input-sm" placeholder="Describe brevemente la solución del problema" ng-model="$ctrl.DescripcionSolucion"></textarea>
-          </div>
-
-        </div>
-
-
+        <br>
+        <strong style="margin-top: 10px;">Problema Real:</strong>
+        <textarea class="form-control input-sm" placeholder="Describe brevemente la solución del problema" ng-model="$ctrl.DescripcionSolucion"></textarea>
       </div>
-      <div class="col-md-4">
+        <div class="col-md-4">
 
-        <div class="row" ng-show="$ctrl.PanelCaptura" style="background-color: #e5e6e6; padding:10px; font-size:10px;">
-          <p><b>Capture los datos para realizar el reporte</b></p><br>
-          <label>Departamento Responsable</label>
-          <select ng-model="$ctrl.Departamento" class="form-control input-sm" ng-options="item as item.Concepto for item in $ctrl.Departamentos track by item.Clave">
+    <div class="row card" ng-show="$ctrl.PanelCaptura">
+      <div class="card-head card-head-xs style-warning">
+         <header><i class="fa fa-flag"></i> Generación de reporte</header>
+      </div>
+      <div class="card-body">
+        <label>Departamento Responsable</label>
+      <select ng-model="$ctrl.Departamento" class="form-control input-sm" ng-options="item as item.Concepto for item in $ctrl.Departamentos track by item.Clave">
 									  <option value="">Selecciona </option>
 									 </select><br>
-          <label>Tipo de prioridad</label>
-          <select ng-model="$ctrl.Prioridad" class="form-control input-sm" ng-options="item as item.Descripcion for item in $ctrl.Prioridades track by item.clvPrioridadQueja">
+      <label>Tipo de prioridad</label>
+      <select ng-model="$ctrl.Prioridad" class="form-control input-sm" ng-options="item as item.Descripcion for item in $ctrl.Prioridades track by item.clvPrioridadQueja">
 										<option value="">Selecciona </option>
 									</select><br>
-          <button class="btn btn-success btn-xs" ng-click="$ctrl.ValidaOrdenQuejas();">Guardar reporte</button>
-          <button class="btn btn-default-bright btn-xs" ng-click="$ctrl.CancelaReporte();">Cancelar reporte</button>
-        </div>
+      <button class="btn btn-success btn-xs" ng-click="$ctrl.ValidaOrdenQuejas();">Guardar reporte</button>
+      <button class="btn btn-default-bright btn-xs" ng-click="$ctrl.CancelaReporte();">Cancelar reporte</button>
       </div>
+      
+    </div>
+  </div>
+
     </div>
 
 
-
-
-
-
-
-
-
-
   </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+</div>
 </div>
 <!--end cardbody-->
 </div>
