@@ -4,12 +4,12 @@ angular.module('softvApp')
 		var factory = {};
 		var paths = {
 
-			mostrarDistribuidorByUsuario: "/compania/GetDistribuidorByUsuario",
-			mostrarSucursalByUsuario: "/ContratoMaestroFac/GetSucursalByUsuario",
-			getXml: "/ContratoMaestroFac/GetCreateXmlBeforeReporteCorporativa",
+			mostrarDistribuidorByUsuario: '/compania/GetDistribuidorByUsuario',
+			mostrarSucursalByUsuario: '/ContratoMaestroFac/GetSucursalByUsuario',
+			getXml: '/ContratoMaestroFac/GetCreateXmlBeforeReporteCorporativa',
 			//----------- Reportes Resumen	
-			ReporteGeneral: "/ContratoMaestroFac/GetReporte_General",
-			Reporte_ResIngresoSucursal: "/ContratoMaestroFac/GetReporte_ResumenIngresoSucursal"
+			ReporteGeneral: '/ContratoMaestroFac/GetReporte_General',
+			Reporte_ResIngresoSucursal: '/ContratoMaestroFac/GetReporte_ResumenIngresoSucursal'
 		};
 
 

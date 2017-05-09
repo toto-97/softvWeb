@@ -43,7 +43,7 @@ function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStora
                 controllerAs: '$ctrl',
                 backdrop: 'static',
                 keyboard: false,
-                size: 'sm',
+                size: 'md',
                 resolve: {
                     x: function () {
                         return x;
@@ -71,7 +71,7 @@ function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStora
                     controllerAs: '$ctrl',
                     backdrop: 'static',
                     keyboard: false,
-                    size: 'sm',
+                    size: 'md',
                     resolve: {
                         x: function () {
                             return x;
