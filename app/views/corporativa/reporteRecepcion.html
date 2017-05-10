@@ -109,8 +109,8 @@
                     <div class="btn-group">
                         <button class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Exportar tabla</button>
                         <ul class="dropdown-menu primary" role="menu">
-                            <li><a class="btn btn-csv btn-sm" ng-hide="$ctrl.todoAsCsv" ng-click="$ctrl.crearTodoAsCsv()"  style="white-space: normal"><img src="images/pdf.png" width="24px"> PDF</a></li>
-                            <li><a class="btn btn-csv btn-sm" ng-hide="$ctrl.todoAsCsv" ng-click="$ctrl.crearTodoAsCsv()"  style="white-space: normal"><img src="images/xls.png" width="24px"> CSV</a></li>
+                            <li><a class="btn btn-sm " ng-click="$ctrl.createPdfTodo('todo')"  style="white-space: normal"><img src="images/pdf.png" width="24px"> PDF</a></li>
+                            <li><a class="btn btn-sm" ng-hide="$ctrl.todoAsCsv" ng-click="$ctrl.crearTodoAsCsv()"  style="white-space: normal"><img src="images/xls.png" width="24px"> CSV</a></li>
                         </ul>
                     </div>
                     <div class="col-md-12  table-responsive" style="padding-left: 25px; padding-right: 25px; font-size:10px;">
