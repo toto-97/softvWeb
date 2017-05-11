@@ -12,10 +12,72 @@
 
   <div class="card-body">
     <div class="row">
+      <div class="col-md-3">
+        <div class="col-md-6">
+          Contrato maestro
+          <input type="text" class="form-control input-sm" placeholder="No.Contrato" ng-model="$ctrl.Contrato">
+        </div>
+        <div class="col-md-6">
+          <br>
+          <button class="btn ink-reaction btn-flat btn-xs btn-primary" ng-click="$ctrl.abrirContratos()"><i class="fa fa-search"></i> Buscar</button>
+        </div>
 
-      <h4>Selecciona contrato maestro</h4>
-      <input type="text" class="form-control input-sm" ng-model="$ctrl.Contrato">
-    </div>
+      </div>
+      <div class="col-md-5 form-horizontal">
+       
+          <div class="form-group">
+            <label for="regular13" class="col-sm-4 control-label">Nombre comercial</label>
+            <div class="col-sm-8">
+              {{$ctrl.DetalleContrato.NombreComercial}}
+              <div class="form-control-line"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="regular13" class="col-sm-4 control-label">RFC:</label>
+            <div class="col-sm-8">
+              {{$ctrl.DetalleContrato.RFC}}
+              <div class="form-control-line"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="regular13" class="col-sm-4 control-label">Distribuidor:</label>
+            <div class="col-sm-8">
+              {{$ctrl.DetalleContrato.DistribuidorDes}}
+              <div class="form-control-line"></div>
+            </div>
+          </div>
+       </div>
+        <div class="col-md-3 form-horizontal">
+          <div class="col-md-12">
+          <div class="form-group">
+            <label for="regular13" class="col-sm-4 control-label">Calle y número:</label>
+            <div class="col-sm-8">
+              {{$ctrl.DetalleContrato.CalleDes}} No.Int #{{$ctrl.DetalleContrato.NumInt}} No.Ext #{{$ctrl.DetalleContrato.NumExt}}
+              <div
+                class="form-control-line"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="regular13" class="col-sm-4 control-label">Colonia:</label>
+          <div class="col-sm-8">
+            {{$ctrl.DetalleContrato.ColoniaDes}}
+            <div class="form-control-line"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="regular13" class="col-sm-4 control-label">Estado:</label>
+          <div class="col-sm-8">
+            {{$ctrl.DetalleContrato.EstadoDes}}
+            <div class="form-control-line"></div>
+          </div>
+        </div>
+
+      </div>
+</div>
+
+   
+
     <div class="row">
       <div class="col-md-6">
         <div class="col-md-12">
@@ -39,7 +101,7 @@
               required>
           </div>
         </div>
-         <div class="col-md-12">
+        <div class="col-md-12">
           <label class="col-md-3 control-label blod">Usuario:</label>
           <div class="col-md-9" style="padding-left:-10px;">
             <input type="text" name="razon" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.razon" required-message="'Este campo es obligatorio.'"
@@ -49,7 +111,7 @@
 
       </div>
       <div class="col-md-6">
-            <div class="col-md-12">
+        <div class="col-md-12">
           <label class="col-md-3 control-label blod">Fecha Generación:</label>
           <div class="col-md-9" style="padding-left:-10px;">
             <input type="text" name="razon" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.razon" required-message="'Este campo es obligatorio.'"
@@ -57,24 +119,58 @@
           </div>
         </div>
 
-         <div class="col-md-12">
+        <div class="col-md-12">
           <label class="col-md-3 control-label blod">Fecha caducidad:</label>
           <div class="col-md-9" style="padding-left:-10px;">
             <input type="text" name="razon" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.razon" required-message="'Este campo es obligatorio.'"
               required>
           </div>
         </div>
-         <div class="col-md-12">
+        <div class="col-md-12">
           <label class="col-md-3 control-label blod">Observaciones:</label>
           <div class="col-md-9" style="padding-left:-10px;">
-            <textarea type="text" placeholder="Observaciones" name="observaciones" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.Observaciones" required-message="'Este campo es obligatorio.'"
-              required></textarea>
+            <textarea type="text" placeholder="Observaciones" name="observaciones" validate-on="dirty" class="form-control input-sm"
+              ng-model="$ctrl.Observaciones" required-message="'Este campo es obligatorio.'" required></textarea>
           </div>
         </div>
-       
+
 
       </div>
+      <div class="row">
+        <div class="col-md-9">
+          <table class="table">
+            <thead>
+              <th>DESCRIPCION</th>
+              <th>IMPORTE PAGADO</th>
+              <th>IMPORTE PARA NOTA</th>
+            </thead>
+            <tbody>
 
+            </tbody>
+
+          </table>
+        </div>
+        <div class="col-md-3">
+          <div class="col-md-6">
+            <b>Monto</b>
+          </div>
+          <div class="col-md-6">
+            <input type="text" class="form-control input-sm" placeholder="$">
+          </div>
+          <div class="col-md-6">
+            <b>Saldo</b>
+          </div>
+          <div class="col-md-6">
+            <input type="text" class="form-control input-sm" placeholder="$">
+          </div>
+          <div class="col-md-12">
+            <br>
+            <button class="btn btn-warning btn-sm">Pagos realizados</button>
+          </div>
+        </div>
+
+
+      </div>
 
     </div>
 
