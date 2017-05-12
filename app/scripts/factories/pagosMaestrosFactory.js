@@ -4,7 +4,7 @@ angular
 	.factory('pagosMaestrosFactory', function($http, $q, globalService, $localStorage) {
 		var factory = {};
 		var paths = {
-			cobraSaldoMaestro: '/CobraSaldoContratoMaestro/GetDeepCobraSaldoContratoMaestro',
+			cobraSaldoMaestro: '/CobraContratoMaestro/GetCobraContratoMaestro',
 			obtenEdoCuenta: '/ObtieneEdoCuentaSinSaldar/GetObtieneEdoCuentaSinSaldarList',
 			grabaFactura: '/GuardaPagoFacturaMaestro/AddGuardaPagoFacturaMaestro',
 			dimeSiYaGrabeFacMaestro: '/DimeSiYaGrabeUnaFacMaestro/GetDimeSiYaGrabeUnaFacMaestro',
@@ -14,7 +14,7 @@ angular
 			getMedios: '/ObtieneMediosPago/GetObtieneMediosPagoList',
 			actFactura: '/ActualizaFacturaMaestro/AddActualizaFacturaMaestro',
 			obtenFacturas: '/ObtieneHistorialPagosFacturaMaestro/GetObtieneHistorialPagosFacturaMaestroList',
-			dameDetalle: '/DameDetalle_FacturaMaestro/GetDameDetalle_FacturaMaestroList',
+			dameDetalle: '/DetalleContratosMaestros/GetDetalleContratosMaestrosList',
 			verFacturas: '/ContratoMaestroFac/GetFacturasPorCliDePago',
 			buscarPagos: '/BuscaFacturasMaestroConsulta/GetBuscaFacturasMaestroConsultaList'
 		};
@@ -22,7 +22,7 @@ angular
 		factory.cobraSaldoMaestro = function(contrato) {
 			var deferred = $q.defer();
 			var Parametros = {
-				'Contrato':contrato
+				'ContratoMaestro':contrato
 			};
 			var config = {
 				headers: {
@@ -252,10 +252,10 @@ angular
 			return deferred.promise;
 		};
 
-		factory.dameDetalle = function(clvFactura) {
+		factory.dameDetalle = function(clvSesionPadre) {
 			var deferred = $q.defer();
 			var Parametros = {
-				'ClvFacturaMaestro': clvFactura
+				'Clv_SessionPadre': clvSesionPadre
 			};
 			var config = {
 				headers: {
