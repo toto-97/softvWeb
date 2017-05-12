@@ -158,7 +158,8 @@
                                             <td style="font-size: 9px;">{{ x.Nombre }}</td>
                                             <td style="font-size: 9px;">{{ x.Importe |currency }}</td>
                                             <td style="font-size: 9px;">
-                                                <button class="btn ink-reaction btn-floating-action btn-xs btn-success" ng-disabled="$ctrl.pagar" ng-click="$ctrl.PagarCredito(x)" data-toggle="tooltip" data-placement="top" title="Pagar" data-original-title="Pagar"><i class="fa fa-credit-card"></i></button>
+                                                <button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ng-click="$ctrl.abrirDetalle(x)" data-toggle="tooltip"
+                                                    data-placement="top" title="Detalle" data-original-title="Detalle"><i class="fa fa-list"></i></button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -177,173 +178,14 @@
                                         <td style="font-size: 15px;" ng-if="$last"><strong>{{ x.Total | currency }}</strong></td>
                                     </tr>
                                 </table>
-                                <p class="text-right" style="padding-right: 10px;">
-                                    <button class="btn btn-lg btn-success btn-sm" ng-click="$ctrl.abrirPago()" ng-disabled="$ctrl.blockPagar"><i class="fa fa-money" aria-hidden="true"></i> PAGAR</button>
+                                <p class="btn-group text-right" style="padding-right: 10px;">
+                                    <button class="btn btn-lg btn-default btn-sm" ng-click="$ctrl.abrirPago($ctrl.Contratos)" ng-disabled="$ctrl.blockPagar"><i class="fa fa-money" aria-hidden="true"></i> generar factura</button>
+                                    <button class="btn btn-lg btn-default btn-sm" ng-click="$ctrl.abrirPago()" ng-disabled="$ctrl.blockPagar"><i class="fa fa-eye" aria-hidden="true"></i> ver estado de cuenta</button>
                                 </p>
                             </div>
                         </div>
 
                     </div>
-
-                    <!--<div class="panel-group" id="conceptosCliente" style="margin-top: -20px;">
-                    <div class="card panel" ng-style="{'background-color': $ctrl.color}">
-                        <div class="card-head card-head-xs collapsed" data-toggle="collapse" data-parent="#conceptosCliente" data-target="#conceptosCliente-1"
-                            aria-expanded="false" ng-click="$ctrl.showConceptos = !$ctrl.showConceptos">
-                            <header class="text-primary-dark" style="font-size: 12px;" ng-show="$ctrl.showConceptos">Detalle de Pagos</header>
-                            <div class="tools">
-                                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
-                            </div>
-                        </div>
-                        <div id="conceptosCliente-1" class="collapse conceptosCliente row" aria-expanded="false" style="margin-top: 20px">
-                            <div class="table-responsive col-md-9" style="padding-left: 20px; width: 70%">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr style="background-color: #B5B6B6;">
-                                            <th style="font-size: 10px;">Concepto</th>
-                                            <th style="font-size: 10px;">Importe</th>
-                                            <th style="font-size: 10px;">Puntos APPO</th>
-                                            <th style="font-size: 10px;">Puntos APA</th>
-                                            <th style="font-size: 10px;">Puntos APPA</th>
-                                            <th style="font-size: 10px;">Puntos Combo</th>
-                                            <th style="font-size: 10px;">Importe a Bonificar</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="x in $ctrl.detallePago">
-                                            <td style="font-size: 9px;">{{ x.DESCORTA }}</td>
-                                            <td style="font-size: 9px;">{{ x.importe | currency }}</td>
-                                            <td style="font-size: 9px;">{{ x.PuntosAplicadosOtros }}</td>
-                                            <td style="font-size: 9px;">{{ x.puntosAplicadosAnt }}</td>
-                                            <td style="font-size: 9px;">{{ x.PuntosAplicadosPagoAdelantado }}</td>
-                                            <td style="font-size: 9px;">{{ x.DescuentoNet }}</td>
-                                            <td style="font-size: 9px;">{{ x.importeBonifica }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="col-md-3">
-                                <h4 class="text-muted">Descripcion</h4>
-                                <label class="col-sm-3 control-label text-right">Saldo</label>
-                                <div class="col-sm-8">
-                                    <input type="number"
-                                    style="font-size: 12px;"
-                                    class="form-control"
-                                    ng-model="$ctrl.saldo.Saldo"
-                                    disabled>
-                                </div>
-                                <h5 class="text-muted">Estados de Cuenta por Saldar</h5>
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Fecha</th>
-                                            <th>Importe</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="x in $ctrl.edoCuenta" style="font-size: 10px;">
-                                            <td>{{x.Fecha}}</td>
-                                            <td>{{x.TotalRegular}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="col-md-3 col-md-offset-9 text-center">
-                                <table class="table">
-                                    <tr ng-repeat="x in $ctrl.sumaPagos">
-                                        <td style="font-size: 11px;" ng-if="!$last"><strong>{{ x.Descripcion }}</strong></td>
-                                        <td style="font-size: 15px;" ng-if="$last"><strong>{{ x.Descripcion }}</strong></td>
-                                        <td style="font-size: 11px;" ng-if="!$last"> {{ x.Total | currency }} </td>
-                                        <td style="font-size: 15px;" ng-if="$last"><strong>{{ x.Total | currency }}</strong></td>
-                                    </tr>
-                                </table>
-                                <p class="text-right" style="padding-right: 10px;">
-                                    <button class="btn btn-lg btn-success btn-sm" ng-click="$ctrl.abrirPago()" ng-disabled="$ctrl.blockPagar"><i class="fa fa-money" aria-hidden="true"></i> PAGAR</button>
-                                </p>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-end .panel -->
-
-                    <!--<div class="panel-group" id="conceptosCliente" style="margin-top: -20px;">
-                    <div class="card panel" ng-style="{'background-color': ctrl.color}">
-                        <div class="card-head card-head-xs collapsed" data-toggle="collapse" data-parent="#conceptosCliente" data-target="#conceptosCliente-1"
-                            aria-expanded="false" ng-click="ctrl.showConceptos = !ctrl.showConceptos">
-                            <header class="text-primary-dark" style="font-size: 12px;" ng-show="ctrl.showConceptos">Detalle de Pagos</header>
-                            <div class="tools">
-                                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
-                            </div>
-                        </div>
-                        <div id="conceptosCliente-1" class="collapse conceptosCliente" aria-expanded="false" style="margin-top: -20px">
-                            <div class="table-responsive" style="padding-left: 8px; width: 95%">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr style="background-color: #B5B6B6;">
-                                            <th style="font-size: 10px;">Aparato</th>
-                                            <th style="font-size: 10px;">Concepto</th>
-                                            <th style="font-size: 10px;">Pagos Adelantados</th>
-                                            <th style="font-size: 10px;">Tv's Extra</th>
-                                            <th style="font-size: 10px;">Meses Cortesia</th>
-                                            <th style="font-size: 10px;">Meses a Pagar</th>
-                                            <th style="font-size: 10px;">Importe</th>
-                                            <th style="font-size: 10px;" title="Periodo Pagado Inicial">Periodo PI</th>
-                                            <th style="font-size: 10px;" title="Periodo Pagado Final">Periodo PF</th>
-                                            <th style="font-size: 10px;" title="Puntos Aplicados Por Pago Oportuno">Puntos APPO</th>
-                                            <th style="font-size: 10px;" title="Puntos Aplicados Por Antiguedad">Puntos APA</th>
-                                            <th style="font-size: 10px;" title="Puntos Aplicados Por Pagos Adelantados">Puntos APPA</th>
-                                            <th style="font-size: 10px;">Puntos Combo</th>
-                                            <th style="font-size: 10px;">Importe a Bonificar</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="x in ctrl.detallePago" class="sizeTr" ng-click="ctrl.guardaconcepto(x,$index)" ng-class="x.isChecked == true ? 'esmeralda':''">
-                                            <td class="sizeTd" style="font-size: 9px; width:100px;">{{ x.MacCableModem }}</td>
-                                            <td class="sizeTd" style="font-size: 9px; width:170px;">{{ x.DESCORTA }} <button class="btn ink-reaction btn-icon-toggle btn-primary btn-xs "
-                                                    ng-click="ctrl.InformacionCobro(x);"><i class="md md-help"></i></buttontn> </td>
-                                            <td class="sizeTd" style="font-size: 9px;"><button class="btn btn-default btn-xs" ng-if="x.Pagos_Adelantados != null" ng-disabled="ctrl.blockBaja" ng-click="ctrl.adelantaPagos(x)">{{ x.Pagos_Adelantados }}</button></td>
-                                            <td class="sizeTd" style="font-size: 9px;">{{ x.tvAdic }}</td>
-                                            <td class="sizeTd" style="font-size: 9px;">{{ x.Meses_Cortesia }}</td>
-                                            <td class="sizeTd" style="font-size: 9px;">{{ x.mesesApagar }}</td>
-                                            <td class="sizeTd" style="font-size: 9px;">{{ x.importe | currency }}</td>
-                                            <td class="sizeTd" style="font-size: 9px;">{{ x.periodoPagadoIni }}</td>
-                                            <td class="sizeTd" style="font-size: 9px;">{{ x.periodoPagadoFin }}</td>
-                                            <td class="sizeTd" style="font-size: 9px;">{{ x.PuntosAplicadosOtros }}</td>
-                                            <td class="sizeTd" style="font-size: 9px;">{{ x.puntosAplicadosAnt }}</td>
-                                            <td class="sizeTd" style="font-size: 9px;">{{ x.PuntosAplicadosPagoAdelantado }}</td>
-                                            <td class="sizeTd" style="font-size: 9px;">{{ x.bonificacion }}</td>
-                                            <td class="sizeTd" style="font-size: 9px;">{{ x.importeBonifica }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div style="padding-left: 10px;">
-                                    <button class="btn btn-info btn-xs" ng-click="ctrl.openAddList()" ng-disabled="ctrl.blockBaja">AGREGAR A LA LISTA</button>
-                                    <button class="btn btn-danger btn-xs" ng-click="ctrl.openDeleteList()" ng-disabled="ctrl.blockBaja">QUITAR DE LA LISTA</button>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <table class="table">
-                                    <tr ng-repeat="x in ctrl.sumaPagos">
-                                        <td style="font-size: 11px;" ng-if="!$last"><strong>{{ x.Descripcion }}</strong></td>
-                                        <td style="font-size: 15px;" ng-if="$last"><strong>{{ x.Descripcion }}</strong></td>
-                                        <td style="font-size: 11px;" ng-if="!$last"> {{ x.Total | currency }} </td>
-                                        <td style="font-size: 15px;" ng-if="$last"><strong>{{ x.Total | currency }}</strong></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="row" style="padding-right:20px;">
-                            <p class="text-right">
-                                <button class="btn btn-lg btn-success btn-sm" ng-click="ctrl.openPay('C')" ng-disabled="ctrl.blockPagar"><i class="fa fa-money" aria-hidden="true"></i> PAGAR</button>
-                            </p>
-                        </div>
-                    </div>
-                    <!-end .panel -->
-
-
                 </div>
             </div>
             <!--end .row -->
