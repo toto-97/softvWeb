@@ -178,28 +178,27 @@ angular
     }
 
 
-    function abrirBonificacion() {
-      var detalle = {};
-      detalle.Block = true;
-      detalle.Queja = object.Clv_Queja;
-
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        ariaLabelledBy: 'modal-title',
-        ariaDescribedBy: 'modal-body',
-        templateUrl: 'views/procesos/ModalBonificacion.html',
-        controller: 'ModalBonificacionCtrl',
-        controllerAs: 'ctrl',
-        backdrop: 'static',
-        keyboard: false,
-        size: 'md',
-        resolve: {
-          detalle: function () {
-            return detalle;
-          }
-        }
-      });
-    }
+   function abrirBonificacion() {
+			var detalle = {};
+			detalle.Block = true;
+			detalle.Queja = vm.clv_queja;
+			var modalInstance = $uibModal.open({
+				animation: vm.animationsEnabled,
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: 'views/procesos/ModalBonificacion.html',
+				controller: 'ModalBonificacionCtrl',
+				controllerAs: 'ctrl',
+				backdrop: 'static',
+				keyboard: false,
+				size: 'md',
+				resolve: {
+					detalle: function() {
+						return detalle;
+					}
+				}
+			});
+		}
 
 
     function ValidaFecha(date) {

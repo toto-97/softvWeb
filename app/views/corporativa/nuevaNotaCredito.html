@@ -1,5 +1,5 @@
 <div class="card animated fadeIn" style="margin-top:20px;">
-
+ <form angular-validator-submit="$ctrl.guardar()"  name="contratoForm" novalidate angular-validator>
   <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
     <header>
       <strong style="font-weight:bold; border:none; margin-left:10px; font-size: 16px;">Nueva nota de crédito</strong>
@@ -7,176 +7,213 @@
     </header>
     <div class="tools">
       <button class="btn ink-reaction btn-flat btn-xs btn-primary" ui-sref="home.corporativa.notas" type="button">regresar</button>
+      <button class="btn ink-reaction btn-flat btn-xs btn-primary"  type="submit">guardar</button>
     </div>
   </div>
 
   <div class="card-body">
-    <div class="row">
-      <div class="col-md-3">
-        <div class="col-md-6">
-          Contrato maestro
-          <input type="text" class="form-control input-sm" placeholder="No.Contrato" ng-model="$ctrl.Contrato">
+    
+      
+      
+     <div class="row">
+       <div class="col-md-4">
+         <div class="col-md-4">
+            Contrato maestro
+         </div>
+        <div class="col-md-4">         
+          <input type="number" class="form-control input-sm" placeholder="No.Contrato" ng-model="$ctrl.Contrato" ng-keypress="$ctrl.enter($event)">
         </div>
-        <div class="col-md-6">
-          <br>
-          <button class="btn ink-reaction btn-flat btn-xs btn-primary" ng-click="$ctrl.abrirContratos()"><i class="fa fa-search"></i> Buscar</button>
+        <div class="col-md-4">
+         
+          <button class="btn ink-reaction btn-flat btn-xs btn-primary" ng-click="$ctrl.abrirContratos()" type="button"><i class="fa fa-search"></i> Buscar</button>
         </div>
 
       </div>
-      <div class="col-md-5 form-horizontal">
-       
-          <div class="form-group">
-            <label for="regular13" class="col-sm-4 control-label">Nombre comercial</label>
-            <div class="col-sm-8">
-              {{$ctrl.DetalleContrato.NombreComercial}}
-              <div class="form-control-line"></div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="regular13" class="col-sm-4 control-label">RFC:</label>
-            <div class="col-sm-8">
-              {{$ctrl.DetalleContrato.RFC}}
-              <div class="form-control-line"></div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="regular13" class="col-sm-4 control-label">Distribuidor:</label>
-            <div class="col-sm-8">
-              {{$ctrl.DetalleContrato.DistribuidorDes}}
-              <div class="form-control-line"></div>
-            </div>
+       <div class="col-md-2 text-right" ng-show="$ctrl.MuestraDet">
+        <b class="text-danger"> Estatus</b>
+       </div>
+       <div class="col-md-3" ng-show="$ctrl.MuestraDet">
+         <select  ng-model="$ctrl.Status" ng-disabled="true"  class="form-control input-sm" ng-options="item as item.Status for item in $ctrl.StatusList track by item.Clv_Status">
+         <option value="">Selecciona</option>
+         </select>
+       </div>
+       <div class="col-md-3">
+         <div class="col-md-4"><b class="text-danger">No.Nota</b></div>
+          <div class="col-md-8">
+            <input type="text" ng-disabled="true" ng-model="$ctrl.clvnota" class="form-control input-sm">
           </div>
        </div>
-        <div class="col-md-3 form-horizontal">
-          <div class="col-md-12">
-          <div class="form-group">
-            <label for="regular13" class="col-sm-4 control-label">Calle y número:</label>
-            <div class="col-sm-8">
-              {{$ctrl.DetalleContrato.CalleDes}} No.Int #{{$ctrl.DetalleContrato.NumInt}} No.Ext #{{$ctrl.DetalleContrato.NumExt}}
-              <div
-                class="form-control-line"></div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="regular13" class="col-sm-4 control-label">Colonia:</label>
-          <div class="col-sm-8">
-            {{$ctrl.DetalleContrato.ColoniaDes}}
-            <div class="form-control-line"></div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="regular13" class="col-sm-4 control-label">Estado:</label>
-          <div class="col-sm-8">
-            {{$ctrl.DetalleContrato.EstadoDes}}
-            <div class="form-control-line"></div>
-          </div>
-        </div>
-
-      </div>
-</div>
-
-   
-
-    <div class="row">
-      <div class="col-md-6">
-        <div class="col-md-12">
-          <label class="col-md-3 control-label blod">Ticket:</label>
-          <div class="col-md-9" style="padding-left:-10px;">
-            <input type="text" name="razon" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.razon" required-message="'Este campo es obligatorio.'"
-              required>
-          </div>
-        </div>
-        <div class="col-md-12">
-          <label class="col-md-3 control-label blod">Caja:</label>
-          <div class="col-md-9" style="padding-left:-10px;">
-            <input type="text" name="razon" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.razon" required-message="'Este campo es obligatorio.'"
-              required>
-          </div>
-        </div>
-        <div class="col-md-12">
-          <label class="col-md-3 control-label blod">Cajero:</label>
-          <div class="col-md-9" style="padding-left:-10px;">
-            <input type="text" name="razon" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.razon" required-message="'Este campo es obligatorio.'"
-              required>
-          </div>
-        </div>
-        <div class="col-md-12">
-          <label class="col-md-3 control-label blod">Usuario:</label>
-          <div class="col-md-9" style="padding-left:-10px;">
-            <input type="text" name="razon" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.razon" required-message="'Este campo es obligatorio.'"
-              required>
-          </div>
-        </div>
-
-      </div>
-      <div class="col-md-6">
-        <div class="col-md-12">
-          <label class="col-md-3 control-label blod">Fecha Generación:</label>
-          <div class="col-md-9" style="padding-left:-10px;">
-            <input type="text" name="razon" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.razon" required-message="'Este campo es obligatorio.'"
-              required>
-          </div>
-        </div>
-
-        <div class="col-md-12">
-          <label class="col-md-3 control-label blod">Fecha caducidad:</label>
-          <div class="col-md-9" style="padding-left:-10px;">
-            <input type="text" name="razon" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.razon" required-message="'Este campo es obligatorio.'"
-              required>
-          </div>
-        </div>
-        <div class="col-md-12">
-          <label class="col-md-3 control-label blod">Observaciones:</label>
-          <div class="col-md-9" style="padding-left:-10px;">
-            <textarea type="text" placeholder="Observaciones" name="observaciones" validate-on="dirty" class="form-control input-sm"
-              ng-model="$ctrl.Observaciones" required-message="'Este campo es obligatorio.'" required></textarea>
-          </div>
-        </div>
+     </div>
 
 
-      </div>
-      <div class="row">
-        <div class="col-md-9">
-          <table class="table">
-            <thead>
-              <th>DESCRIPCION</th>
-              <th>IMPORTE PAGADO</th>
-              <th>IMPORTE PARA NOTA</th>
-            </thead>
-            <tbody>
+<hr>
 
-            </tbody>
+      <div class="row" ng-show="$ctrl.MuestraDet">        
+       
+        <div class="col-md-6">
+         <div class="col-md-12">
+            
+            <label class="col-md-3 control-label blod">Nombre Comercial:</label>
+            <div class="col-md-9" style="padding-left:-10px;">
+              <input type="text" ng-disabled="true" 
+               class="form-control input-sm"  
+               ng-value="$ctrl.DetalleContrato.NombreComercial"               
+               >
+             
+            </div>
+          </div>
+             <div class="col-md-12">
+            
 
-          </table>
-        </div>
-        <div class="col-md-3">
-          <div class="col-md-6">
-            <b>Monto</b>
+            <label class="col-md-3 control-label blod">Razón social:</label>
+            <div class="col-md-9" style="padding-left:-10px;">
+              <input type="text" ng-disabled="true" 
+               class="form-control input-sm"  
+               ng-value="$ctrl.DetalleContrato.RazonSocial"               
+               >               
+             
+            </div>
           </div>
-          <div class="col-md-6">
-            <input type="text" class="form-control input-sm" placeholder="$">
+           <div class="col-md-12">
+          
+            <label class="col-md-3 control-label blod">RFC:</label>
+            <div class="col-md-9" style="padding-left:-10px;">
+              <input type="text" ng-disabled="true" 
+               class="form-control input-sm"  
+               ng-value="$ctrl.DetalleContrato.RFC">
+              
+            </div>
           </div>
-          <div class="col-md-6">
-            <b>Saldo</b>
+            <div class="col-md-12">
+           
+            <label class="col-md-3 control-label blod">Distribuidor:</label>
+            <div class="col-md-9" style="padding-left:-10px;">
+              <input type="text" ng-disabled="true" 
+               class="form-control input-sm"  
+               ng-value="$ctrl.DetalleContrato.DistribuidorDes">
+             
+            </div>
           </div>
-          <div class="col-md-6">
-            <input type="text" class="form-control input-sm" placeholder="$">
-          </div>
+       
+
+       <!-- <div class="col-md-12">
+           <b>Nombre Comercial: </b>{{$ctrl.DetalleContrato.NombreComercial}}<br>
+           <b>RFC: </b>{{$ctrl.DetalleContrato.RFC}}<br>
+          <b>Distribuidor: </b>{{$ctrl.DetalleContrato.DistribuidorDes}}</br>
+          <b>Dirección: </b>  {{$ctrl.DetalleContrato.CalleDes}} No.Int #{{$ctrl.DetalleContrato.NumInt}} No.Ext #{{$ctrl.DetalleContrato.NumExt}}<br>
+        </div>-->
           <div class="col-md-12">
             <br>
-            <button class="btn btn-warning btn-sm">Pagos realizados</button>
+            <label class="col-md-3 control-label blod">Ticket:</label>
+            <div class="col-md-9" style="padding-left:-10px;">
+              <select class="form-control input-sm" ng-model="$ctrl.factura" ng-change="$ctrl.cambioFactura()" ng-options="item as item.FACTURAS for item in $ctrl.facturas track by item.CLV_FACTURA">
+          <option value="">seleccion</option>
+          </select>
+            </div>
           </div>
-        </div>
+          <div class="col-md-12">
+            <label class="col-md-3 control-label blod">Caja:</label>
+            <div class="col-md-9" style="padding-left:-10px;">
+              <input type="text" ng-disabled="true" name="razon" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.Caja" required-message="'Este campo es obligatorio.'"
+                required>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <label class="col-md-3 control-label blod">Cajero:</label>
+            <div class="col-md-9" style="padding-left:-10px;">
+              <select class="form-control input-sm" ng-model="$ctrl.scajero" ng-options="item as item.NOMBRE for item in $ctrl.Cajero track by item.CLV_USUARIO">
+          <option value="">selecciona</option>
+          </select>
 
+            </div>
+          </div>
+          <div class="col-md-12">
+            <label class="col-md-3 control-label blod">Usuario:</label>
+            <div class="col-md-9" style="padding-left:-10px;">
+              <input type="text" ng-disabled="true" name="Usuario" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.usuario" required-message="'Este campo es obligatorio.'"
+                required>
+            </div>
+          </div>
+             <div class="col-md-12">
+            <label class="col-md-3 control-label blod">Fecha Generación:</label>
+            <div class="col-md-9" style="padding-left:-10px;">
+              <input type="text" ng-disabled="true" class="form-control input-sm" 
+               ng-model="$ctrl.FechaG">
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <label class="col-md-3 control-label blod">Fecha caducidad:</label>
+            <div class="col-md-9" style="padding-left:-10px;">
+              <input type="text" ng-disabled="true" class="form-control input-sm" ng-model="$ctrl.FechaC">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <label class="col-md-3 control-label blod">Observaciones:</label>
+            <div class="col-md-9" style="padding-left:-10px;">
+              <textarea type="text" placeholder="Observaciones" name="observaciones" validate-on="dirty" class="form-control input-sm"
+                ng-model="$ctrl.Observaciones" required-message="'Este campo es obligatorio.'" required></textarea>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-6">
+         <table class="table">
+              <thead style="background-color: khaki;">
+                <th>DESCRIPCION</th>
+                <th>IMPORTE PAGADO</th>
+                <th>IMPORTE PARA NOTA</th>                
+                
+              </thead>
+              <tbody >
+                <!-- ng-keyup="$ctrl.validaMonto(x,x.cantidad)"-->
+              <tr ng-repeat="x in $ctrl.DetalleNota">
+                 <td>{{x.descripcion}}</td>
+                 <td>${{x.importe}}</td>
+                 <td>
+                     <ng-form name="urlForm">
+                   <input type="number" 
+                  name="cant"  
+                  ng-model="x.cantidad"  
+                  class="form-control input-sm"
+                  required
+                   min="0" 
+                   ng-change="$ctrl.calcular()"            
+                   validate-on="dirty"
+                   max="{{x.importe}}"
+                    >
+                    <span class="alert error text-danger" ng-show="urlForm.cant.$error.required">campo requerido</span>
+                    <span class="alert error text-danger" ng-show="urlForm.cant.$error.max">cantidad invalida</span>
+                  
+                     </ng-form>
+                    </td>
+              </tr>
+              </tbody>
+
+            </table>
+            <div class="row">
+              <div class="col-md-6" class="text-right"><b  class="text-danger">Monto: $</b></div>
+              <div class="col-md-6">
+                <input ng-disabled="true" class="form-control input-sm" ng-model="$ctrl.sumatotal">
+              </div>
+            </div>
+
+
+        </div>
+        
+          
+           
+        
+         
+
+
+        
 
       </div>
 
-    </div>
 
 
+    
 
+</form>
   </div>
-
-
-</div>

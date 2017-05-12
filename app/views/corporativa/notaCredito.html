@@ -26,33 +26,33 @@
                   
                     <div class="col-md-3">
                       <p>No.Folio :</p>
-                      <input type="number" class="form-control input-sm" ng-model="$ctrl.contratobusqueda">
+                      <input type="number" class="form-control input-sm" ng-model="$ctrl.folio">
 
                     </div>
                      <div class="col-md-1">
  <br>
-                    <button class="btn btn-info btn-xs" ng-click="$ctrl.Buscarporcontrato();"><i class="fa fa-search"></i> Buscar</button>
+                    <button class="btn btn-info btn-xs" ng-click="$ctrl.buscar(1);"><i class="fa fa-search"></i> Buscar</button>
                     </div>
                     <div class="col-md-3">
 
                       <p>No.Contrato:
                         <p>
-                          <input type="text" class="form-control input-sm" ng-model="$ctrl.NombreComer">
+                          <input type="text" class="form-control input-sm" ng-model="$ctrl.contrato">
 
                     </div>
                     <div class="col-md-1">
                       <br>
-                      <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscarNombrec();"><i class="fa fa-search"></i> Buscar</button>
+                      <button class="btn btn-info btn-xs" ng-click="$ctrl.buscar(2);"><i class="fa fa-search"></i> Buscar</button>
 
                     </div>
                     <div class="col-md-3">
-                      <p>Razón social :</p>
-                      <input type="text" class="form-control input-sm" ng-model="$ctrl.RazonS">
+                      <p>Fecha :</p>
+                      <input type="date" class="form-control input-sm" ng-model="$ctrl.fecha">
 
                     </div>
                     <div class="col-md-1">
                       <br>
-                      <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscarRazonS();"><i class="fa fa-search"></i> Buscar</button>
+                      <button class="btn btn-info btn-xs" ng-click="$ctrl.buscar(3);"><i class="fa fa-search"></i> Buscar</button>
 
                     </div>
                     
