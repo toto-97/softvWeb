@@ -29,17 +29,17 @@ angular
             getCableModemsCli: '/MuestraGuaBor/GetMUESTRACABLEMODEMSDELCLI_porOpcion',
             detalleCableModem: '/MuestraGuaBor/GetMUESTRACONTNET_PorOpcion',
             addIpaqu: '/IPAQU/AddIPAQU',
-            gaurdaMotivoCancelacion: '/GuardaMotivoCanServ/GetDeepGuardaMotivoCanServ'
+            guardaMotivoCancelacion: '/GuardaMotivoCanServ/GetDeepGuardaMotivoCanServ'
         };
 
-        factory.gaurdaMotivoCancelacion = function (objeto) {
+        factory.guardaMotivoCancelacion = function (objeto) {
             var deferred = $q.defer();
             var config = {
                 headers: {
                     'Authorization': $localStorage.currentUser.token
                 }
             };
-            $http.post(globalService.getUrl() + paths.gaurdaMotivoCancelacion, JSON.stringify(objeto), config).then(function (response) {
+            $http.post(globalService.getUrl() + paths.guardaMotivoCancelacion, JSON.stringify(objeto), config).then(function (response) {
                 deferred.resolve(response.data);
             }).catch(function (response) {
                 deferred.reject(response.data);

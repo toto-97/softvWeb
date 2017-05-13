@@ -17,6 +17,29 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         });
     }
 
+    function reloadTable() {
+        console.log('reload');
+        console.log(vm.Contratos.IdContratoMaestro);
+        console.log(vm.saldo.Clv_SessionPadre);
+        pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
+            if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
+                vm.blockBaja = true;
+                vm.blockPagar = true;
+            } else {
+                vm.blockBaja = false;
+                vm.blockPagar = false;
+            }
+            vm.detallePago = detallePago.GetDetalleContratosMaestrosListResult.lista;
+            console.log(vm.detallePago);
+            vm.sumaPagos = detallePago.GetDetalleContratosMaestrosListResult.datosdetalle;
+            vm.detallePagoAux = vm.detallePago;
+        });
+    }
+
+    $rootScope.$on('table', function () {
+        reloadTable();
+    });
+
     function ObtenerCiudades(x) {
         ContratoMaestroFactory.GetCiudadList(x.Clv_Plaza).then(function (data) {
             vm.Ciudades = data.GetListaCiudadesPorPlazaResult;
@@ -43,25 +66,19 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
             } else {
                 vm.muestraCliente = true;
                 pagosMaestrosFactory.cobraSaldoMaestro(vm.Contratos.IdContratoMaestro).then(function (data) {
-
-                    vm.saldo = data.GetDeepCobraSaldoContratoMaestroResult;
-                    cajasFactory.dameDetallePago(vm.saldo.ClvSession).then(function (detallePago) {
-                        if (detallePago.GetDameDetalleListResult.length == 0) {
+                    vm.saldo = data.GetCobraContratoMaestroResult;
+                    pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
+                        if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
                             vm.blockBaja = true;
                             vm.blockPagar = true;
                         } else {
                             vm.blockBaja = false;
                             vm.blockPagar = false;
                         }
-                        vm.detallePago = detallePago.GetDameDetalleListResult;
+                        vm.detallePago = detallePago.GetDetalleContratosMaestrosListResult.lista;
+                        vm.sumaPagos = detallePago.GetDetalleContratosMaestrosListResult.datosdetalle;
                         vm.detallePagoAux = vm.detallePago;
                     });
-                    cajasFactory.dameSumaPago(vm.saldo.ClvSession).then(function (sumaPago) {
-                        vm.sumaPagos = sumaPago.GetSumaDetalleListResult;
-                    });
-                    // cajasFactory.obtenEdoCuenta(vm.Contratos.IdContratoMaestro,vm.saldo.ClvSession).then(function(data) {
-                    //     vm.edoCuenta = data.GetObtieneEdoCuentaSinSaldarListResult;
-                    // });
                 });
                 resetBusquedas();
                 $('.datosCliente').collapse('show');
@@ -91,24 +108,19 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
             } else {
                 vm.muestraCliente = true;
                 pagosMaestrosFactory.cobraSaldoMaestro(vm.Contratos.IdContratoMaestro).then(function (data) {
-                    vm.saldo = data.GetDeepCobraSaldoContratoMaestroResult;
-                    cajasFactory.dameDetallePago(vm.saldo.ClvSession).then(function (detallePago) {
-                        if (detallePago.GetDameDetalleListResult.length == 0) {
+                    vm.saldo = data.GetCobraContratoMaestroResult;
+                    pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
+                        if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
                             vm.blockBaja = true;
                             vm.blockPagar = true;
                         } else {
                             vm.blockBaja = false;
                             vm.blockPagar = false;
                         }
-                        vm.detallePago = detallePago.GetDameDetalleListResult;
+                        vm.detallePago = detallePago.GetDetalleContratosMaestrosListResult.lista;
+                        vm.sumaPagos = detallePago.GetDetalleContratosMaestrosListResult.datosdetalle;
                         vm.detallePagoAux = vm.detallePago;
                     });
-                    cajasFactory.dameSumaPago(vm.saldo.ClvSession).then(function (sumaPago) {
-                        vm.sumaPagos = sumaPago.GetSumaDetalleListResult;
-                    });
-                    // cajasFactory.obtenEdoCuenta(vm.Contratos.IdContratoMaestro,vm.saldo.ClvSession).then(function(data) {
-                    //     vm.edoCuenta = data.GetObtieneEdoCuentaSinSaldarListResult;
-                    // });
                 });
                 resetBusquedas();
                 $('.datosCliente').collapse('show');
@@ -136,24 +148,19 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
             } else {
                 vm.muestraCliente = true;
                 pagosMaestrosFactory.cobraSaldoMaestro(vm.Contratos.IdContratoMaestro).then(function (data) {
-                    vm.saldo = data.GetDeepCobraSaldoContratoMaestroResult;
-                    cajasFactory.dameDetallePago(vm.saldo.ClvSession).then(function (detallePago) {
-                        if (detallePago.GetDameDetalleListResult.length == 0) {
+                    vm.saldo = data.GetCobraContratoMaestroResult;
+                    pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
+                        if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
                             vm.blockBaja = true;
                             vm.blockPagar = true;
                         } else {
                             vm.blockBaja = false;
                             vm.blockPagar = false;
                         }
-                        vm.detallePago = detallePago.GetDameDetalleListResult;
+                        vm.detallePago = detallePago.GetDetalleContratosMaestrosListResult.lista;
+                        vm.sumaPagos = detallePago.GetDetalleContratosMaestrosListResult.datosdetalle;
                         vm.detallePagoAux = vm.detallePago;
                     });
-                    cajasFactory.dameSumaPago(vm.saldo.ClvSession).then(function (sumaPago) {
-                        vm.sumaPagos = sumaPago.GetSumaDetalleListResult;
-                    });
-                    // cajasFactory.obtenEdoCuenta(vm.Contratos.IdContratoMaestro,vm.saldo.ClvSession).then(function(data) {
-                    //     vm.edoCuenta = data.GetObtieneEdoCuentaSinSaldarListResult;
-                    // });
                 });
                 resetBusquedas();
                 $('.datosCliente').collapse('show');
@@ -181,24 +188,19 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
             } else {
                 vm.muestraCliente = true;
                 pagosMaestrosFactory.cobraSaldoMaestro(vm.Contratos.IdContratoMaestro).then(function (data) {
-                    vm.saldo = data.GetDeepCobraSaldoContratoMaestroResult;
-                    cajasFactory.dameDetallePago(vm.saldo.ClvSession).then(function (detallePago) {
-                        if (detallePago.GetDameDetalleListResult.length == 0) {
+                    vm.saldo = data.GetCobraContratoMaestroResult;
+                    pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
+                        if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
                             vm.blockBaja = true;
                             vm.blockPagar = true;
                         } else {
                             vm.blockBaja = false;
                             vm.blockPagar = false;
                         }
-                        vm.detallePago = detallePago.GetDameDetalleListResult;
+                        vm.detallePago = detallePago.GetDetalleContratosMaestrosListResult.lista;
+                        vm.sumaPagos = detallePago.GetDetalleContratosMaestrosListResult.datosdetalle;
                         vm.detallePagoAux = vm.detallePago;
                     });
-                    cajasFactory.dameSumaPago(vm.saldo.ClvSession).then(function (sumaPago) {
-                        vm.sumaPagos = sumaPago.GetSumaDetalleListResult;
-                    });
-                    // cajasFactory.obtenEdoCuenta(vm.Contratos.IdContratoMaestro,vm.saldo.ClvSession).then(function(data) {
-                    //     vm.edoCuenta = data.GetObtieneEdoCuentaSinSaldarListResult;
-                    // });
                 });
                 resetBusquedas();
                 $('.datosCliente').collapse('show');
@@ -222,68 +224,47 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         vm.Ciudad = '';
     }
 
-    function abrirPago() {
-        pagosMaestrosFactory.dimeSiYaGrabeFacMaestro(vm.Contratos.IdContratoMaestro).then(function (data) {
-            if (data.GetDimeSiYaGrabeUnaFacMaestroResult.Valida == 0) {
-                cajasFactory.sumaTotalDetalle(vm.saldo.ClvSession).then(function (data) {
-                    var items = {
-                        Contrato: vm.Contratos.IdContratoMaestro,
-                        Compania: vm.saldo.IdCompania,
-                        Distribuidor: vm.saldo.IdDistribuidor,
-                        Session: vm.saldo.ClvSession,
-                        SessionPadre: vm.saldo.ClvSessionPadre,
-                        Monto: data.GetDeepSumaTotalDetalleResult.Monto
-                    };
-                    vm.animationsEnabled = true;
-                    var modalInstance = $uibModal.open({
-                        animation: vm.animationsEnabled,
-                        ariaLabelledBy: 'modal-title',
-                        ariaDescribedBy: 'modal-body',
-                        templateUrl: 'views/corporativa/abrirPago.html',
-                        controller: 'AbrirPagoCtrl',
-                        controllerAs: '$ctrl',
-                        backdrop: 'static',
-                        keyboard: false,
-                        size: 'sm',
-                        resolve: {
-                            items: function () {
-                                return items;
-                            }
-                        }
-                    });
-                });
-            } else {
-                cajasFactory.sumaTotalDetalle(vm.saldo.ClvSession).then(function (data) {
-                    var items = {
-                        Contrato: vm.Contratos.IdContratoMaestro,
-                        Compania: vm.saldo.IdCompania,
-                        Distribuidor: vm.saldo.IdDistribuidor,
-                        Session: vm.saldo.ClvSession,
-                        SessionPadre: vm.saldo.ClvSessionPadre,
-                        Monto: data.GetDeepSumaTotalDetalleResult.Monto
-                    };
-                    vm.animationsEnabled = true;
-                    var modalInstance = $uibModal.open({
-                        animation: vm.animationsEnabled,
-                        ariaLabelledBy: 'modal-title',
-                        ariaDescribedBy: 'modal-body',
-                        templateUrl: 'views/corporativa/yaPago.html',
-                        controller: 'YaPagoCtrl',
-                        controllerAs: '$ctrl',
-                        backdrop: 'static',
-                        keyboard: false,
-                        size: 'md',
-                        resolve: {
-                            items: function () {
-                                return items;
-                            }
-                        }
-                    });
-                });
+    function abrirPago(x) {
+        console.log(x);
+        vm.animationsEnabled = true;
+        var modalInstance = $uibModal.open({
+            animation: vm.animationsEnabled,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'views/corporativa/yaPago.html',
+            controller: 'YaPagoCtrl',
+            controllerAs: '$ctrl',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'md',
+            resolve: {
+                items: function () {
+                    return x;
+                }
             }
         });
     }
 
+    function abrirDetalle(x) {
+        console.log(x);
+        vm.animationsEnabled = true;
+        var modalInstance = $uibModal.open({
+            animation: vm.animationsEnabled,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'views/corporativa/abrirDetalle.html',
+            controller: 'AbrirDetalleCtrl',
+            controllerAs: '$ctrl',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'lg',
+            resolve: {
+                x: function () {
+                    return x;
+                }
+            }
+        });
+    }
 
     var vm = this;
     $('.buscarContrato').collapse();
@@ -293,5 +274,6 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
     vm.ObtenerCiudades = ObtenerCiudades;
     vm.Buscarporcontrato = Buscarporcontrato;
     vm.abrirPago = abrirPago;
+    vm.abrirDetalle = abrirDetalle;
     initialData();
 }
