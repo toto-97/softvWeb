@@ -106,13 +106,12 @@ function nuevaNotaCreditoCtrl($uibModal, $state, $rootScope, ngNotify, ContratoM
   }
 
   function guardar() {
-    //$localStorage.currentUser.idUsuario
     var obj = {
       'ContratoMaestro': vm.Contrato,
       'Factura': vm.factura.CLV_FACTURA,
       'Fecha_deGeneracion': vm.FechaG,
       'Usuario_Captura': $localStorage.currentUser.usuario,
-      'Usuario_Autorizo': '',
+      'Usuario_Autorizo': $localStorage.currentUser.idUsuario,
       'Fecha_Caducidad': vm.FechaC,
       'Monto': vm.sumatotal,
       'Status': "A",
@@ -126,16 +125,25 @@ function nuevaNotaCreditoCtrl($uibModal, $state, $rootScope, ngNotify, ContratoM
 
     ContratoMaestroFactory.GetAddNotaCredito(obj).then(function (data) {
       console.log(data);
-      vm.Clv_NotadeCredito=data.GetAddNotaCreditoResult[0].Clv_NotadeCredito;
-    ContratoMaestroFactory.GetGuarda_DetalleNota(vm.factura.CLV_FACTURA,vm.Clv_NotadeCredito).then(function(data){
-      ngNotify.set('La nota de crédito se ha guardado correctamente', 'success');
-    });
+      vm.Clv_NotadeCredito = data.GetAddNotaCreditoResult[0].Clv_NotadeCredito;
+      ContratoMaestroFactory.GetGuarda_DetalleNota(vm.factura.CLV_FACTURA, vm.Clv_NotadeCredito).then(function (data) {
+        ngNotify.set('La nota de crédito se ha guardado correctamente', 'success');
+        if (vm.revertir == true) {
+          alert('revertir');
+          ContratoMaestroFactory.GetProcedimientoCancelar(vm.factura.CLV_FACTURA).then(function (data) {
+            console.log(data);
+            ngNotify.set(data.GetProcedimientoCancelarResult[0].Msg, 'success');
+          })
+        }
+        ContratoMaestroFactory.AddMovSist(vm.Contrato, vm.sumatotal).then(function (data) {
+          console.log(data);
 
-      /*ContratoMaestroFactory.AddMovSist(vm.Contrato, vm.sumatotal).then(function (data) {
-        console.log(data);
-       // DeleteNotasDeCredito_ContraMaeFac
-      });*/
-
+          ContratoMaestroFactory.DeleteNotasDeCredito_ContraMaeFac(vm.factura.CLV_FACTURA, vm.Clv_NotadeCredito)
+            .then(function (data) {
+              console.log(data);
+            });
+        });
+      });
     });
 
   }
@@ -145,8 +153,6 @@ function nuevaNotaCreditoCtrl($uibModal, $state, $rootScope, ngNotify, ContratoM
     vm.DetalleNota.forEach(function (element) {
       console.log(element.cantidad);
       vm.sumatotal += (element.cantidad == undefined) ? 0 : element.cantidad
-
-
     });
 
 

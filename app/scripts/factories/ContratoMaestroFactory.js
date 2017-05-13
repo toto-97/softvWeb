@@ -21,7 +21,9 @@ angular.module('softvApp')
       GetAddNotaCredito: '/NotasDeCredito_ContraMaeFac/GetAddNotaCredito',
       AddMovSist: '/MovSist/AddMovSist',
       DeleteNotasDeCredito_ContraMaeFac: '/NotasDeCredito_ContraMaeFac/DeleteNotasDeCredito_ContraMaeFac',
-      GetGuarda_DetalleNota:'/NotasDeCredito_ContraMaeFac/GetGuarda_DetalleNota'
+      GetGuarda_DetalleNota: '/NotasDeCredito_ContraMaeFac/GetGuarda_DetalleNota',
+      GetNotasDeCredito_ContraMaeFacList: '/NotasDeCredito_ContraMaeFac/GetNotasDeCredito_ContraMaeFacList',
+      GetProcedimientoCancelar:'/NotasDeCredito_ContraMaeFac/GetProcedimientoCancelar'
 
     };
 
@@ -341,7 +343,7 @@ angular.module('softvApp')
         'Fecha': data.Fecha,
         'ContratoMaestro': data.ContratoMaestro
       }
-
+      console.log(JSON.stringify(parametros));
 
       $http.post(globalService.getUrl() + paths.FiltrosBusquedaNotasDeCredito, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
@@ -353,9 +355,32 @@ angular.module('softvApp')
     };
 
 
-    
 
-     factory.GetGuarda_DetalleNota = function (factura, nota) {
+
+    factory.GetNotasDeCredito_ContraMaeFacList = function (nota) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'Clv_NotadeCredito': nota
+      }
+      $http.post(globalService.getUrl() + paths.GetNotasDeCredito_ContraMaeFacList, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
+
+
+
+
+
+    factory.GetGuarda_DetalleNota = function (factura, nota) {
 
       var deferred = $q.defer();
       var config = {
@@ -377,6 +402,26 @@ angular.module('softvApp')
     };
 
 
+
+
+factory.GetProcedimientoCancelar = function (factura) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'Factura': factura,
+        'Op': 0,
+      }
+      $http.post(globalService.getUrl() + paths.GetProcedimientoCancelar, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
 
     factory.DeleteNotasDeCredito_ContraMaeFac = function (factura, nota) {
 
