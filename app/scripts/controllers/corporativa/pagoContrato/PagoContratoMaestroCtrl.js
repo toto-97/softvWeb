@@ -224,7 +224,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         vm.Ciudad = '';
     }
 
-    function abrirPago(x) {
+    function abrirPago(x, y) {
         console.log(x);
         vm.animationsEnabled = true;
         var modalInstance = $uibModal.open({
@@ -238,8 +238,11 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
             keyboard: false,
             size: 'md',
             resolve: {
-                items: function () {
+                x: function () {
                     return x;
+                },
+                y: function () {
+                    return y;
                 }
             }
         });

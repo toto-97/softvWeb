@@ -16,7 +16,8 @@ angular
 			obtenFacturas: '/ObtieneHistorialPagosFacturaMaestro/GetObtieneHistorialPagosFacturaMaestroList',
 			dameDetalle: '/DetalleContratosMaestros/GetDetalleContratosMaestrosList',
 			verFacturas: '/ContratoMaestroFac/GetFacturasPorCliDePago',
-			buscarPagos: '/BuscaFacturasMaestroConsulta/GetBuscaFacturasMaestroConsultaList'
+			buscarPagos: '/BuscaFacturasMaestroConsulta/GetBuscaFacturasMaestroConsultaList',
+			generaFactura: '/GrabaFacturaCMaestro/GetGrabaFacturaCMaestro'
 		};
 
 		factory.cobraSaldoMaestro = function(contrato) {
@@ -308,6 +309,36 @@ angular
 				}
 			};
 			$http.post(globalService.getUrl() + paths.buscarPagos, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.generaFactura = function(obj) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'ContratoMaestro': obj.ContratoMaestro,
+				'Credito': obj.Credito,
+				'Cajera': obj.Cajera,
+				'IpMaquina': obj.IpMaquina,
+				'Sucursal': obj.Sucursal,
+				'IdCompania': obj.IdCompania,
+				'IdDistribuidor': obj.IdDistribuidor,
+				'ClvSessionPadre': obj.ClvSessionPadre,
+				'Tipo': obj.Tipo,
+				'ToKen2': obj.ToKen2,
+				'NoPagos' : obj.NoPagos,
+				'PagoInicial': obj.PagoInicial
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.generaFactura, JSON.stringify(Parametros), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response);
