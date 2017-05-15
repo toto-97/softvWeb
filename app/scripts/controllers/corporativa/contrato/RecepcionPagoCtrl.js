@@ -3,6 +3,7 @@
 function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, ngNotify, $state, ContratoMaestroFactory, pagosMaestrosFactory) {
     this.$onInit = function () {
         ContratoMaestroFactory.GetMuestraFacturasMaestroList().then(function (data) {
+            console.log(data);
             vm.pagos = data.GetMuestraFacturasMaestroListResult;
 
         });

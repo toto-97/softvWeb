@@ -23,7 +23,10 @@ angular.module('softvApp')
       DeleteNotasDeCredito_ContraMaeFac: '/NotasDeCredito_ContraMaeFac/DeleteNotasDeCredito_ContraMaeFac',
       GetGuarda_DetalleNota: '/NotasDeCredito_ContraMaeFac/GetGuarda_DetalleNota',
       GetNotasDeCredito_ContraMaeFacList: '/NotasDeCredito_ContraMaeFac/GetNotasDeCredito_ContraMaeFacList',
-      GetProcedimientoCancelar:'/NotasDeCredito_ContraMaeFac/GetProcedimientoCancelar'
+      GetProcedimientoCancelar:'/NotasDeCredito_ContraMaeFac/GetProcedimientoCancelar',
+      GetCrearNotaCreditoCM:'/CrearNotaCredito/GetCrearNotaCreditoCM',
+      ConceptosTicketNotasCredito:'/ConceptosTicketNotasCredito/GetConceptosTicketNotasCreditoCM'
+    
 
     };
 
@@ -435,16 +438,54 @@ factory.GetProcedimientoCancelar = function (factura) {
         'Factura': factura,
         'Clv_NotadeCredito': nota,
       }
-
-
       $http.post(globalService.getUrl() + paths.DeleteNotasDeCredito_ContraMaeFac, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
         deferred.reject(response);
       });
       return deferred.promise;
-
     };
+
+     factory.GetCrearNotaCreditoCM = function (factura) {
+
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'Clv_Factura': factura        
+      }
+      $http.post(globalService.getUrl() + paths.GetCrearNotaCreditoCM, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
+      factory.ConceptosTicketNotasCredito = function (factura) {
+
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'Clv_Factura': factura        
+      }
+      $http.post(globalService.getUrl() + paths.ConceptosTicketNotasCredito, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
+
+    
 
 
 
