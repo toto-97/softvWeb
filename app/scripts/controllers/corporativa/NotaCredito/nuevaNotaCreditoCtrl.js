@@ -10,6 +10,24 @@ function nuevaNotaCreditoCtrl($uibModal, $state, $rootScope, ngNotify, ContratoM
 
   }
 
+    function abrirTicket() {
+
+    var modalInstance = $uibModal.open({
+      animation: true,
+      ariaLabelledBy: 'modal-title',
+      ariaDescribedBy: 'modal-body',
+      templateUrl: 'views/corporativa/ModalTicketNota.html',
+      controller: 'ModalTicketNotaCtrl',
+      controllerAs: 'ctrl',
+      backdrop: 'static',
+      keyboard: false,
+      size: "sm",
+      resolve: {}
+    });
+  }
+
+
+
   function abrirContratos() {
 
     var modalInstance = $uibModal.open({
@@ -171,5 +189,6 @@ function nuevaNotaCreditoCtrl($uibModal, $state, $rootScope, ngNotify, ContratoM
   vm.calcular = calcular
   vm.guardar = guardar;
   vm.sumatotal = 0;
+  vm.abrirTicket=abrirTicket;
   Init()
 }
