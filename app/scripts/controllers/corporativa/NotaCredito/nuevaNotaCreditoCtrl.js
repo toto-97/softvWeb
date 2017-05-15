@@ -6,11 +6,13 @@ function nuevaNotaCreditoCtrl($uibModal, $state, $rootScope, ngNotify, ContratoM
   function Init() {
     ContratoMaestroFactory.StatusNotadeCredito().then(function (data) {
       vm.StatusList = data.GetStatusNotadeCreditoListResult;
+      vm.StatusList.Clv_Status="A";
     });
 
   }
 
-    function abrirTicket() {
+   
+ function abrirTicket(factura) {
 
     var modalInstance = $uibModal.open({
       animation: true,
@@ -22,10 +24,13 @@ function nuevaNotaCreditoCtrl($uibModal, $state, $rootScope, ngNotify, ContratoM
       backdrop: 'static',
       keyboard: false,
       size: "sm",
-      resolve: {}
+     resolve: {
+        factura: function () {
+          return factura;
+        }
+      }
     });
   }
-
 
 
   function abrirContratos() {
@@ -159,9 +164,14 @@ function nuevaNotaCreditoCtrl($uibModal, $state, $rootScope, ngNotify, ContratoM
           ContratoMaestroFactory.DeleteNotasDeCredito_ContraMaeFac(vm.factura.CLV_FACTURA, vm.Clv_NotadeCredito)
             .then(function (data) {
               console.log(data);
+              
+              
             });
         });
       });
+      vm.mostrarbtn=false;
+      vm.clvnota=vm.Clv_NotadeCredito;
+      abrirTicket(vm.Clv_NotadeCredito);
     });
 
   }
@@ -190,5 +200,7 @@ function nuevaNotaCreditoCtrl($uibModal, $state, $rootScope, ngNotify, ContratoM
   vm.guardar = guardar;
   vm.sumatotal = 0;
   vm.abrirTicket=abrirTicket;
+  vm.mostrarbtn=true;
   Init()
+  vm.clvnota=0;
 }

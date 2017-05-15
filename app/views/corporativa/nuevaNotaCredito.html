@@ -7,8 +7,8 @@
       </header>
       <div class="tools">
         <button class="btn ink-reaction btn-flat btn-xs btn-primary" ui-sref="home.corporativa.notas" type="button">regresar</button>
-        <button class="btn ink-reaction btn-flat btn-xs btn-primary" type="submit">guardar</button>
-         <button class="btn ink-reaction btn-flat btn-xs btn-warning" ng-click="$ctrl.abrirTicket()" type="button">ticket</button>
+        <button class="btn ink-reaction btn-flat btn-xs btn-primary" ng-show="$ctrl.mostrarbtn" type="submit">guardar</button>
+         
       </div>
     </div>
 
@@ -35,7 +35,7 @@
         </div>
         <div class="col-md-3" ng-show="$ctrl.MuestraDet">
           <select ng-model="$ctrl.Status" ng-disabled="true" class="form-control input-sm" ng-options="item as item.Status for item in $ctrl.StatusList track by item.Clv_Status">
-         <option value="">Selecciona</option>
+         <option value="" selected>Activa</option>
          </select>
         </div>
         <div class="col-md-3">
@@ -97,8 +97,14 @@
             <br>
             <label class="col-md-3 control-label blod">Ticket:</label>
             <div class="col-md-9" style="padding-left:-10px;">
-              <select class="form-control input-sm" ng-model="$ctrl.factura" ng-change="$ctrl.cambioFactura()" ng-options="item as item.FACTURAS for item in $ctrl.facturas track by item.CLV_FACTURA">
-          <option value="">seleccion</option>
+              <select class="form-control input-sm"
+               ng-model="$ctrl.factura"
+               name="ticket"
+                required ng-change="$ctrl.cambioFactura()"
+                required-message="'Este campo es obligatorio.'"
+                validate-on="dirty"
+                 ng-options="item as item.FACTURAS for item in $ctrl.facturas track by item.CLV_FACTURA">
+          <option value="">selecciona</option>
           </select>
             </div>
           </div>

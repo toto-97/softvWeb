@@ -1,13 +1,13 @@
 'use strict';
 angular
   .module('softvApp')
-  .controller('ModalTicketNotaCtrl', function ($uibModalInstance, $uibModal, $rootScope, ngNotify, ContratoMaestroFactory) {
+  .controller('ModalTicketNotaCtrl', function ($uibModalInstance, $uibModal, $rootScope, ngNotify, ContratoMaestroFactory,factura) {
     this.$onInit = function () {
-
-      ContratoMaestroFactory.GetCrearNotaCreditoCM(5).then(function (response) {
+      alert(factura);
+      ContratoMaestroFactory.GetCrearNotaCreditoCM(factura).then(function (response) {
           console.log(response);
         vm.det=response.GetCrearNotaCreditoCMResult[0];
-        ContratoMaestroFactory.ConceptosTicketNotasCredito(5).then(function (data) {
+        ContratoMaestroFactory.ConceptosTicketNotasCredito(factura).then(function (data) {
             vm.conceptos=data.GetConceptosTicketNotasCreditoCMResult;
           console.log(data);
         });
