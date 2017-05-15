@@ -118,7 +118,41 @@ function corporativaConf($stateProvider) {
 			templateUrl: 'views/corporativa/reportesCortesCorporativa.html',
 			controller: 'reportesCortesCorporativaCtrl',
 			controllerAs: '$ctrl'
+			},
+			{
+			name: 'home.corporativa.notas',
+			data: {
+				pageTitle: 'SAC | NOTA DE CREDITO',
+				permissions: {
+					only: ['contratomaestroSelect'],
+					options: {
+						reload: false
+					}
+				}
+			},
+			url: '/corporativa/notacredito',
+			templateUrl: 'views/corporativa/notaCredito.html',
+			controller: 'notaCreditoCtrl',
+			controllerAs: '$ctrl'
+			},
+            {
+			name: 'home.corporativa.nuevanota',
+			data: {
+				pageTitle: 'SAC |NUEVA NOTA DE CREDITO',
+				permissions: {
+					only: ['contratomaestroSelect'],
+					options: {
+						reload: false
+					}
+				}
+			},
+			url: '/corporativa/nuevanota',
+			templateUrl: 'views/corporativa/nuevaNotaCredito.html',
+			controller: 'nuevaNotaCreditoCtrl',
+			controllerAs: '$ctrl'
 			}
+
+			
 	];
 	states.forEach(function(state) {
 		$stateProvider.state(state);
