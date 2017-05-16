@@ -33,10 +33,8 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                 'IdMedioPago': 0,
                 'ContratoCompania': 0
             };
-            console.log(parametros);
             pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                 vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
-                console.log(vm.pagos);
             });
             vm.pagar = true;
             vm.displayCollection = [].concat(vm.pagos);
@@ -54,10 +52,8 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                 'IdMedioPago': 0,
                 'ContratoCompania': 0
             };
-            console.log(parametros);
             pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                 vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
-                console.log(vm.pagos);
             });
             vm.pagar = false;
             vm.displayCollection = [].concat(vm.pagos);
@@ -83,10 +79,8 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'IdMedioPago': 0,
                     'ContratoCompania': 0
                 };
-                console.log(parametros);
                 pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
-                    console.log(vm.pagos);
                 });
                 vm.displayCollection = [].concat(vm.pagos);
 
@@ -107,10 +101,8 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'IdMedioPago': 0,
                     'ContratoCompania': 0
                 };
-                console.log(parametros);
                 pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
-                    console.log(vm.pagos);
                 });
                 vm.displayCollection = [].concat(vm.pagos);
 
@@ -131,10 +123,8 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'IdMedioPago': 0,
                     'ContratoCompania': 0
                 };
-                console.log(parametros);
                 pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
-                    console.log(vm.pagos);
                 });
                 vm.displayCollection = [].concat(vm.pagos);
 
@@ -156,10 +146,8 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'IdMedioPago': 0,
                     'ContratoCompania': 0
                 };
-                console.log(parametros);
                 pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
-                    console.log(vm.pagos);
                 });
                 vm.displayCollection = [].concat(vm.pagos);
 
@@ -181,10 +169,8 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'IdMedioPago': 0,
                     'ContratoCompania': 0
                 };
-                console.log(parametros);
                 pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
-                    console.log(vm.pagos);
                 });
                 vm.displayCollection = [].concat(vm.pagos);
 
@@ -205,10 +191,8 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'IdMedioPago': 0,
                     'ContratoCompania': vm.ContratoCliente
                 };
-                console.log(parametros);
                 pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
-                    console.log(vm.pagos);
                 });
                 vm.displayCollection = [].concat(vm.pagos);
 

@@ -227,7 +227,7 @@ angular.module('softvApp')
       var parametros = {
         'ClvFactura': factura,
         'ClvNota': 0
-      }
+      };
       $http.post(globalService.getUrl() + paths.GetDetalle_NotasdeCreditoList, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -249,7 +249,7 @@ angular.module('softvApp')
       var parametros = {
         'ClvFactura': factura,
         'Op': 0
-      }
+      };
       $http.post(globalService.getUrl() + paths.GetCalcula_monto, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -310,17 +310,16 @@ angular.module('softvApp')
       };
 
       var parametros = {
-        "objMovSist": {
-          "usuario": $localStorage.currentUser.usuario,
-          "contrato": factura,
-          "Sistema": "Facturación",
-          "Pantalla": "FrmNotasdeCredito",
-          "control": "Se Hizo una Nueva nota de Crédito",
-          "valorant": 0,
-          "valornuevo": monto
+        'objMovSist': {
+          'usuario': $localStorage.currentUser.usuario,
+          'contrato': factura,
+          'Sistema': 'Facturación',
+          'Pantalla': 'FrmNotasdeCredito',
+          'control': 'Se Hizo una Nueva nota de Crédito',
+          'valorant': 0,
+          'valornuevo': monto
         }
-      }
-      console.log(JSON.stringify(obj));
+      };
       $http.post(globalService.getUrl() + paths.AddMovSist, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -347,7 +346,7 @@ angular.module('softvApp')
         'Clv_NotadeCredito': data.Clv_NotadeCredito,
         'Fecha': data.Fecha,
         'ContratoMaestro': data.ContratoMaestro
-      }
+      };
       console.log(JSON.stringify(parametros));
 
       $http.post(globalService.getUrl() + paths.FiltrosBusquedaNotasDeCredito, JSON.stringify(parametros), config).then(function (response) {
@@ -371,7 +370,7 @@ angular.module('softvApp')
       };
       var parametros = {
         'Clv_NotadeCredito': nota
-      }
+      };
       $http.post(globalService.getUrl() + paths.GetNotasDeCredito_ContraMaeFacList, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -396,7 +395,7 @@ angular.module('softvApp')
       var parametros = {
         'Factura': factura,
         'Clv_NotadeCredito': nota,
-      }
+      };
       $http.post(globalService.getUrl() + paths.GetGuarda_DetalleNota, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -419,7 +418,7 @@ factory.GetProcedimientoCancelar = function (factura) {
       var parametros = {
         'Factura': factura,
         'Op': 0,
-      }
+      };
       $http.post(globalService.getUrl() + paths.GetProcedimientoCancelar, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -439,7 +438,7 @@ factory.GetProcedimientoCancelar = function (factura) {
       var parametros = {
         'Factura': factura,
         'Clv_NotadeCredito': nota,
-      }
+      };
       $http.post(globalService.getUrl() + paths.DeleteNotasDeCredito_ContraMaeFac, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -461,7 +460,7 @@ factory.GetProcedimientoCancelar = function (factura) {
       };
       var parametros = {
         'Clv_Factura': factura        
-      }
+      };
       $http.post(globalService.getUrl() + paths.GetCrearNotaCreditoCM, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -480,7 +479,7 @@ factory.GetProcedimientoCancelar = function (factura) {
       };
       var parametros = {
         'Clv_Factura': factura        
-      }
+      };
       $http.post(globalService.getUrl() + paths.ConceptosTicketNotasCredito, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {

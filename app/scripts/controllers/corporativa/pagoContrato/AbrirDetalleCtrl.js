@@ -6,17 +6,14 @@ function AbrirDetalleCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
     function initialData() {
         cajasFactory.dameDetallePago(x.Clv_Session).then(function (detallePago) {
             vm.detallePago = detallePago.GetDameDetalleListResult;
-            console.log(vm.detallePago);
         });
         cajasFactory.dameSumaPago(x.Clv_Session).then(function (sumaPago) {
             vm.sumaPagos = sumaPago.GetSumaDetalleListResult;
-            console.log(vm.sumaPagos);
         });
         cajasFactory.dameSuscriptor(x.Contrato).then(function (suscriptor) {
             vm.Suscriptor = suscriptor.GetDameTiposClientesListResult[0];
         });
         cajasFactory.muestraServicios(x.Contrato).then(function (data) {
-            console.log(data);
             data.GetMuestraServiciosFACListResult.unshift({
                 'DescripcionFac': '----------------',
                 'Clv_Servicio': 0
