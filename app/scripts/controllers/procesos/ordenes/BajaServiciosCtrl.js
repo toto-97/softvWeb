@@ -5,8 +5,8 @@
         .module('softvApp')
         .controller('BajaServiciosCtrl', BajaServiciosCtrl);
 
-    BajaServiciosCtrl.inject = ['$uibModalInstance', 'ordenesFactory', 'items'];
-    function BajaServiciosCtrl($uibModalInstance, ordenesFactory, items) {
+    BajaServiciosCtrl.inject = ['$uibModalInstance', 'ordenesFactory', 'items', ' $rootScope'];
+    function BajaServiciosCtrl($uibModalInstance, ordenesFactory, items, $rootScope) {
         var vm = this;
         vm.cancel = cancel;
         vm.transfer = transfer;
@@ -67,13 +67,13 @@
             vm.objModems.selectedItems.forEach(function (element) {
                 if (element.unicaNet > 0) {
                     if (items.descripcion.includes('ipaqu') || items.descripcion.includes('ipaqut')) {
-                        vm.satus = 'I';
+                        vm.status = 'I';
                     } else if (items.descripcion.includes('bpaqu') || items.descripcion.includes('bpaqt') || items.descripcion.includes('bpaad') || items.descripcion.includes('bsedi')) {
-                        vm.satus = 'B';
+                        vm.status = 'B';
                     } else if (items.descripcion.includes('dpaqu') || items.descripcion.includes('dpaqt')) {
-                        vm.satus = 'S';
+                        vm.status = 'S';
                     } else if (items.descripcion.includes('rpaqu') || items.descripcion.includes('rpaqt')) {
-                        vm.satus = 'I';
+                        vm.status = 'I';
                     }
                     var obj = {
                         'objIPAQU':
@@ -83,18 +83,23 @@
                             'Contratonet': element.CONTRATONET,
                             'Clv_UnicaNet': element.unicaNet,
                             'Op': 0,
-                            'Status': vm.satus
+                            'Status': vm.status
                         }
                     };
                     ordenesFactory.addIpaqu(obj).then(function (data) {
-                        console.log(data);
-                        if (vm.status == 'B'){
-                            ordenesFactory.gaurdaMotivoCancelacion().then(function (){
-                                console.log(data);
+                        if (vm.status == 'B') {
+                            var orden = {
+                                'Clv_Orden': items.clv_orden,
+                                'Clv_TipSer': items.servicio.clv_tipser,
+                                'ContratoNet': element.CONTRATONET,
+                                'Clv_UnicaNet':element.unicaNet,
+                                'Op': 0
+                            };
+                            ordenesFactory.guardaMotivoCancelacion(orden).then(function () {
                                 $uibModalInstance.dismiss('cancel');
-                            $rootScope.$emit('actualiza_tablaServicios');
+                                $rootScope.$emit('actualiza_tablaServicios');
                             });
-                            
+
                         }
                     });
                 } else {

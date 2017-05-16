@@ -162,8 +162,10 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         }
 
         ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
+
             vm.Contratos = data.GetBusquedaContratoMaestroFacResult;
             console.log(vm.Contratos)
+
             if (vm.Contratos == undefined) {
                 ngNotify.set('No se encontro el contrato.', 'error');
                 resetBusquedas();

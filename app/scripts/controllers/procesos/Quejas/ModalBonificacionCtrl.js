@@ -4,18 +4,8 @@ angular
 	.controller('ModalBonificacionCtrl', function($uibModalInstance, $uibModal, $rootScope, ngNotify, $localStorage, $state, detalle, quejasFactory) {
 
 		function initialData() {	
-			origen = detalle.Origen;			
-			if (origen == 'browser'){		
-				vm.BtnGuardaBonificacion = true;
-				vm.BtnEliminaBonificacion = true;
-			}else if(origen == 'btnEjec'){			
-				if (detalle.Status == 'E' || detalle.contratoBloqueado == 1)
-				{
-					vm.BtnGuardaBonificacion = false;
-					vm.BtnEliminaBonificacion = false;
-				}
-			}
-
+		  alert(detalle.Block);
+          vm.bloquear=detalle.Block;
 			quejasFactory.DameBonificacion(detalle.Queja).then(function(data) {
 				//console.log(data);
 				vm.bonificacion = data.GetDameBonificacionListResult[0];	

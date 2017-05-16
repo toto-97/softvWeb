@@ -352,7 +352,8 @@ angular
 
 		function abrirBonificacion(object) {
 			var detalle = {};
-			detalle.Block = true;
+			detalle.Block = false;
+			alert(object.Clv_Queja);
 			detalle.Queja = object.Clv_Queja;
 			var modalInstance = $uibModal.open({
 				animation: vm.animationsEnabled,

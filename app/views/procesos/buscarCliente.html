@@ -8,7 +8,7 @@
     <div class="card panel">
       <div class="card-head card-head-xs collapsed " data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1"
         aria-expanded="false">
-        <header><i class="fa fa-search"></i> Buscar Reporte</header>
+        <header><i class="fa fa-search"></i> Buscar Cliente</header>
         <div class="tools">
           <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
         </div>
@@ -21,6 +21,7 @@
                 <i class="md md-receipt"></i> Suscriptor
               </uib-tab-heading>
               <div class="row">
+                <br>
                 <div class="col-md-3">
                   <div class="col-md-12">
                     <div class="input-group">
@@ -30,7 +31,6 @@
                         </span>
                     </div>
                   </div>
-
                 </div>
                 <div class="col-md-3">
                   <input type="text" class="form-control" ng-model="$ctrl.nombre" placeholder="Nombre">
@@ -53,33 +53,27 @@
                 <i class="md md-receipt"></i> Domicilio
               </uib-tab-heading>
               <div class="row">
+                <br>
                 <div class="col-md-3">
                   <input type="text" class="form-control" ng-model="$ctrl.calle" placeholder="Calle">
                 </div>
                 <div class="col-md-3">
                   <input type="text" class="form-control" ng-model="$ctrl.numero" placeholder="Número">
                 </div>
-                <div class="col-md-3">
-                  <input type="text" class="form-control" ng-model="$ctrl.numero" placeholder="Número">
-                </div>
-                <div class="col-md-10 col-md-offset-1">
-                  <p class="text-muted" style="font-size: 17px;">Colonia</p>
-                  <select class="form-control" ng-model="$ctrl.selectedColonia" ng-options="v.nombre for v in $ctrl.colonias|orderBy:'nombre' track by v.clvColonia"></select>
-                </div>
-                 <button class="btn btn-primary btn-xs" ng-click="$ctrl.buscarDomicilio()">Buscar</button>
+                <button class="btn btn-primary btn-xs" ng-click="$ctrl.buscarDomicilio()">Buscar</button>
               </div>
             </uib-tab>
             <uib-tab>
-                 <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-          <input type="text" class="form-control" ng-model="$ctrl.setupbox" placeholder="Set Up Box">
-        </div>
-        <div class="col-md-10 col-md-offset-1">
-          <p class="text-right">
-            <button class="btn btn-primary btn-xs" ng-click="$ctrl.buscarSetupbox()">Buscar</button>
-          </p>
-        </div>
-      </div>
+              <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                  <input type="text" class="form-control" ng-model="$ctrl.setupbox" placeholder="Set Up Box">
+                </div>
+                <div class="col-md-10 col-md-offset-1">
+                  <p class="text-right">
+                    <button class="btn btn-primary btn-xs" ng-click="$ctrl.buscarSetupbox()">Buscar</button>
+                  </p>
+                </div>
+              </div>
 
             </uib-tab>
           </uib-tabset>
@@ -92,7 +86,7 @@
 
 
   <div class="row">
-   
+
     <div class="col-md-12 table-responsive panel form-element-padding">
       <table class="table-bordered table table-striped table-hover" style="font-size: 9px;">
         <thead>
