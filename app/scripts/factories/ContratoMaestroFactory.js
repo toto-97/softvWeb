@@ -501,7 +501,7 @@ factory.GetProcedimientoCancelar = function (factura) {
         'ContratoMaestro':ContratoMaestro,
         'Referencia':Referencia        
       }
-      $http.post(globalService.getUrl() + paths.GetGeneraRefBanamexMaestro, JSON.stringify(parametros), config).then(function (response) {
+      $http.post(globalService.getUrl() + paths.ReporteEstadoCuentaNuevo, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
         deferred.reject(response);
