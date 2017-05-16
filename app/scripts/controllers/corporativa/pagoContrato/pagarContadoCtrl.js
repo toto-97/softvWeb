@@ -154,10 +154,8 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 							'IdDistribuidor': x.IdDistribuidor
 						};
 						pagosMaestrosFactory.actFactura(objact).then(function(dataAct) {
-							console.log(dataAct);
 							pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
 								vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
-								console.log(vm.pago);
 								pagosMaestrosFactory.nuePagoEfectivoMaestro(vm.pago, vm.efectivo, vm.cambio).then(function (dataNuevo) {
 								});
 								if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {

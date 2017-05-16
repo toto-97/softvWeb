@@ -39,7 +39,6 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 			// };
 			// console.log(objPagar);
 			pagosMaestrosFactory.actFactura(elem).then(function(dataGraba) {
-				console.log(dataGraba.AddActualizaFacturaMaestroResult);
 				$uibModalInstance.dismiss('cancel');
 				vm.animationsEnabled = true;
 				var modalInstance = $uibModal.open({
@@ -80,7 +79,6 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 			// };
 			// console.log(objPagar);
 			pagosMaestrosFactory.actFactura(elem).then(function(dataGraba) {
-				console.log(dataGraba.AddActualizaFacturaMaestroResult);
 				$uibModalInstance.dismiss('cancel');
 				vm.animationsEnabled = true;
 				var modalInstance = $uibModal.open({
