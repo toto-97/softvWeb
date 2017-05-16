@@ -19,14 +19,12 @@ function YaPagoCtrl($uibModal, inMenu, $uibModalInstance, ngNotify, $localStorag
             'PagoInicial': 0
         };
         pagosMaestrosFactory.generaFactura(obj).then(function (data) {
-            vm.res = data.GetDeepGrabaFacturasCMaestroResult;
-            if (vm.res.Clv_FacturaSalida == 0) {
-                ngNotify.set(vm.res.Msg, 'error')
+            if (data.GetGrabaFacturaCMaestroResult.BndError == 1) {
+                ngNotify.set(data.GetGrabaFacturaCMaestroResult.Msg, 'error')
             } else {
                 ngNotify.set('Se genero la factura correctamente.', 'success')
                 $uibModalInstance.dismiss('cancel');
             }
-            console.log(vm.res);
         });
     }
 

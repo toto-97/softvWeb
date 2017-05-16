@@ -158,12 +158,9 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 							'IdCompania': x.IdCompania,
 							'IdDistribuidor': x.IdDistribuidor
 						};
-						console.log(objPagar);
 						pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
-							console.log(dataGraba);
 							vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
 							pagosMaestrosFactory.nuePagoEfectivoPago(vm.pago, vm.efectivo, vm.cambio).then(function (dataNuevo) {
-								console.log(dataNuevo);
 							});
 							if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
 								ngNotify.set('No se grabo la factura', 'error');
