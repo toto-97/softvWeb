@@ -501,7 +501,7 @@ angular.module('softvApp')
         'ClvSessionPadre': ClvSessionPadre,
         'ContratoMaestro': ContratoMaestro,
         'Referencia': Referencia
-      }
+      };
       $http.post(globalService.getUrl() + paths.ReporteEstadoCuentaNuevo, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -509,7 +509,7 @@ angular.module('softvApp')
       });
       return deferred.promise;
 
-    }
+    };
 
 
 
@@ -531,7 +531,7 @@ angular.module('softvApp')
           'OpCorreo': OpCorreo
         }
 
-      }
+      };
       $http.post(globalService.getUrl() + paths.TblNotasMaestraOpciones, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -557,7 +557,7 @@ angular.module('softvApp')
       var parametros = {
         'ContratoMaestro': ContratoMaestro,
         'Importe': Importe
-      }
+      };
       $http.post(globalService.getUrl() + paths.GetGeneraRefBanamexMaestro, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
