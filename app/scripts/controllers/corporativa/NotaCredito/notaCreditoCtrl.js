@@ -70,8 +70,30 @@ function notaCreditoCtrl($uibModal, $state, $rootScope, ngNotify, ContratoMaestr
   }
 
 
+  function opcionesNota(opcion,nota){
+   if(opcion==1){
+     ContratoMaestroFactory.TblNotasMaestraOpciones(nota,0,1,0).then(function(data){
+      console.log(data);
+       ngNotify.set('La nota se ha refacturado correctamente.', 'success');
+     });     
+
+   }else if(opcion==2){
+     ContratoMaestroFactory.TblNotasMaestraOpciones(nota,0,0,1).then(function(data){
+       console.log(data);
+       ngNotify.set('La nota se ha reimpreso correctamente.', 'success');
+     }); 
+
+   }else{
+
+   }
+
+
+  }
+
+
   var vm = this;
   InitalData();
   vm.buscar = buscar;
   vm.DetalleNota=DetalleNota;
+  vm.opcionesNota=opcionesNota;
 }
