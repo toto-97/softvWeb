@@ -337,6 +337,36 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
             }
         });
     }
+    
+    function edocta(){
+        console.log(vm.Contratos.IdContratoMaestro);        
+        ContratoMaestroFactory.ReporteEstadoCuentaNuevo(vm.saldo.Clv_SessionPadre,vm.Contratos.IdContratoMaestro,"").then(function(data){
+            console.log(data);
+            var options = {};
+            options.Id = data.GetReporteEdoCuenta_CMResult[0].lineaTR;
+			options.IdEstadoCuenta = 0;
+			options.Contrato = 0;
+			options.Tipo = 3;
+			var modalInstance = $uibModal.open({
+				animation: true,
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: 'views/facturacion/ModalEdoCuenta.html',
+				controller: 'ModalNuevoEdoctaCtrl',
+				controllerAs: 'ctrl',
+				backdrop: 'static',
+				keyboard: false,
+				size: 'lg',
+				resolve: {
+					options: function () {
+						return options;
+					}
+				}
+			});
+
+
+        });
+    }
 
     var vm = this;
     $('.buscarContrato').collapse();
@@ -348,5 +378,6 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
     vm.abrirPago = abrirPago;
     vm.abrirDetalle = abrirDetalle;
     vm.tablaContrato = tablaContrato;
+    vm.edocta=edocta;
     initialData();
 }

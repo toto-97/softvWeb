@@ -23,12 +23,13 @@ angular.module('softvApp')
       DeleteNotasDeCredito_ContraMaeFac: '/NotasDeCredito_ContraMaeFac/DeleteNotasDeCredito_ContraMaeFac',
       GetGuarda_DetalleNota: '/NotasDeCredito_ContraMaeFac/GetGuarda_DetalleNota',
       GetNotasDeCredito_ContraMaeFacList: '/NotasDeCredito_ContraMaeFac/GetNotasDeCredito_ContraMaeFacList',
-      GetProcedimientoCancelar:'/NotasDeCredito_ContraMaeFac/GetProcedimientoCancelar',
-      GetCrearNotaCreditoCM:'/CrearNotaCredito/GetCrearNotaCreditoCM',
-      ConceptosTicketNotasCredito:'/ConceptosTicketNotasCredito/GetConceptosTicketNotasCreditoCM',
-      GetGeneraRefBanamexMaestro:'/GeneraRefBanamexMaestro/GetGeneraRefBanamexMaestro',
-      ReporteEstadoCuentaNuevo:'/ReporteEstadoCuentaNuevo/GetReporteEdoCuenta_CM'
-    
+      GetProcedimientoCancelar: '/NotasDeCredito_ContraMaeFac/GetProcedimientoCancelar',
+      GetCrearNotaCreditoCM: '/CrearNotaCredito/GetCrearNotaCreditoCM',
+      ConceptosTicketNotasCredito: '/ConceptosTicketNotasCredito/GetConceptosTicketNotasCreditoCM',
+      GetGeneraRefBanamexMaestro: '/GeneraRefBanamexMaestro/GetGeneraRefBanamexMaestro',
+      ReporteEstadoCuentaNuevo: '/ReporteEstadoCuentaNuevo/GetReporteEdoCuenta_CM',
+      TblNotasMaestraOpciones: '/TblNotasMaestraOpciones/AddTblNotasMaestraOpciones'
+
 
     };
 
@@ -408,7 +409,7 @@ angular.module('softvApp')
 
 
 
-factory.GetProcedimientoCancelar = function (factura) {
+    factory.GetProcedimientoCancelar = function (factura) {
       var deferred = $q.defer();
       var config = {
         headers: {
@@ -450,7 +451,7 @@ factory.GetProcedimientoCancelar = function (factura) {
 
 
 
-     factory.GetCrearNotaCreditoCM = function (factura) {
+    factory.GetCrearNotaCreditoCM = function (factura) {
 
       var deferred = $q.defer();
       var config = {
@@ -459,7 +460,7 @@ factory.GetProcedimientoCancelar = function (factura) {
         }
       };
       var parametros = {
-        'Clv_Factura': factura        
+        'Clv_Factura': factura
       };
       $http.post(globalService.getUrl() + paths.GetCrearNotaCreditoCM, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
@@ -469,7 +470,7 @@ factory.GetProcedimientoCancelar = function (factura) {
       return deferred.promise;
     };
 
-      factory.ConceptosTicketNotasCredito = function (factura) {
+    factory.ConceptosTicketNotasCredito = function (factura) {
 
       var deferred = $q.defer();
       var config = {
@@ -478,7 +479,7 @@ factory.GetProcedimientoCancelar = function (factura) {
         }
       };
       var parametros = {
-        'Clv_Factura': factura        
+        'Clv_Factura': factura
       };
       $http.post(globalService.getUrl() + paths.ConceptosTicketNotasCredito, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
@@ -489,8 +490,8 @@ factory.GetProcedimientoCancelar = function (factura) {
     };
 
 
-   factory.ReporteEstadoCuentaNuevo= function (ClvSessionPadre,ContratoMaestro,Referencia) {
-         var deferred = $q.defer();
+    factory.ReporteEstadoCuentaNuevo = function (ClvSessionPadre, ContratoMaestro, Referencia) {
+      var deferred = $q.defer();
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
@@ -498,20 +499,54 @@ factory.GetProcedimientoCancelar = function (factura) {
       };
       var parametros = {
         'ClvSessionPadre': ClvSessionPadre,
-        'ContratoMaestro':ContratoMaestro,
-        'Referencia':Referencia        
+        'ContratoMaestro': ContratoMaestro,
+        'Referencia': Referencia
       }
-      $http.post(globalService.getUrl() + paths.GetGeneraRefBanamexMaestro, JSON.stringify(parametros), config).then(function (response) {
+      $http.post(globalService.getUrl() + paths.ReporteEstadoCuentaNuevo, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
         deferred.reject(response);
       });
       return deferred.promise;
 
-   }
+    }
 
 
-  factory.GetGeneraRefBanamexMaestro = function (ContratoMaestro,Importe) {
+
+
+
+    factory.TblNotasMaestraOpciones = function (nota,cancelar, OpReimprimir,OpCorreo) {
+
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'objTblNotasMaestraOpciones': {
+          'Clv_NotaMaestra': nota,
+          'OpCancelar': 0,
+          'OpReimprimir':OpReimprimir ,
+          'OpCorreo': OpCorreo
+        }
+
+      }
+      $http.post(globalService.getUrl() + paths.TblNotasMaestraOpciones, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
+
+
+
+
+
+
+    factory.GetGeneraRefBanamexMaestro = function (ContratoMaestro, Importe) {
 
       var deferred = $q.defer();
       var config = {
@@ -521,7 +556,7 @@ factory.GetProcedimientoCancelar = function (factura) {
       };
       var parametros = {
         'ContratoMaestro': ContratoMaestro,
-        'Importe':Importe        
+        'Importe': Importe
       }
       $http.post(globalService.getUrl() + paths.GetGeneraRefBanamexMaestro, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
