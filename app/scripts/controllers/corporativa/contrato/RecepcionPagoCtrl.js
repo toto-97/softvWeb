@@ -63,6 +63,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                 };
                 ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroListResult;
+                    console.log(data);
                 });
             }
         } else if (opcion == 3) {

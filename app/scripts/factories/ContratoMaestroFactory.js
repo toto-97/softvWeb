@@ -25,7 +25,9 @@ angular.module('softvApp')
       GetNotasDeCredito_ContraMaeFacList: '/NotasDeCredito_ContraMaeFac/GetNotasDeCredito_ContraMaeFacList',
       GetProcedimientoCancelar:'/NotasDeCredito_ContraMaeFac/GetProcedimientoCancelar',
       GetCrearNotaCreditoCM:'/CrearNotaCredito/GetCrearNotaCreditoCM',
-      ConceptosTicketNotasCredito:'/ConceptosTicketNotasCredito/GetConceptosTicketNotasCreditoCM'
+      ConceptosTicketNotasCredito:'/ConceptosTicketNotasCredito/GetConceptosTicketNotasCreditoCM',
+      GetGeneraRefBanamexMaestro:'/GeneraRefBanamexMaestro/GetGeneraRefBanamexMaestro',
+      ReporteEstadoCuentaNuevo:'/ReporteEstadoCuentaNuevo/GetReporteEdoCuenta_CM'
     
 
     };
@@ -445,6 +447,9 @@ factory.GetProcedimientoCancelar = function (factura) {
       return deferred.promise;
     };
 
+
+
+
      factory.GetCrearNotaCreditoCM = function (factura) {
 
       var deferred = $q.defer();
@@ -484,8 +489,47 @@ factory.GetProcedimientoCancelar = function (factura) {
     };
 
 
-    
+   factory.ReporteEstadoCuentaNuevo= function (ClvSessionPadre,ContratoMaestro,Referencia) {
+         var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'ClvSessionPadre': ClvSessionPadre,
+        'ContratoMaestro':ContratoMaestro,
+        'Referencia':Referencia        
+      }
+      $http.post(globalService.getUrl() + paths.GetGeneraRefBanamexMaestro, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
 
+   }
+
+
+  factory.GetGeneraRefBanamexMaestro = function (ContratoMaestro,Importe) {
+
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'ContratoMaestro': ContratoMaestro,
+        'Importe':Importe        
+      }
+      $http.post(globalService.getUrl() + paths.GetGeneraRefBanamexMaestro, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
 
 
 
