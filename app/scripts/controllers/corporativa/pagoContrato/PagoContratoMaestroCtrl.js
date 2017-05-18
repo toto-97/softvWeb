@@ -351,7 +351,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
 				animation: true,
 				ariaLabelledBy: 'modal-title',
 				ariaDescribedBy: 'modal-body',
-				templateUrl: 'views/facturacion/ModalEdoCuenta.html',
+				templateUrl: 'views/facturacion/modalEdoCuenta.html',
 				controller: 'ModalNuevoEdoctaCtrl',
 				controllerAs: 'ctrl',
 				backdrop: 'static',
