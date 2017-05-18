@@ -5,6 +5,7 @@ function DetalleCtrl($uibModal, ngNotify, inMenu, $uibModalInstance, x, pagosMae
 	function initial() {
 		pagosMaestrosFactory.dameDetalleFactura(x.Clv_FacturaMaestro).then(function (data) {
 			vm.detalles = data.GetDameDetalle_FacturaMaestroListResult;
+			console.log(vm.detalles);
 		});
 	}
 	

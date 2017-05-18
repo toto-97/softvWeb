@@ -122,7 +122,6 @@
                                     <th st-sort="Cliente">Nombre Comercial</th>
                                     <th st-sort="Tipo">Tipo</th>
                                     <th st-sort="FechaFacturacion">Fecha de Facturación</th>
-                                    <th st-sort="FechaVencimiento">Fecha de Vencimiento</th>
                                     <th st-sort="ImporteFactura">Importe</th>
                                     <th st-sort="PagoInicial">Pago Inicial</th>
                                     <th st-sort="ACuantosPagos">Pagos</th>
@@ -134,6 +133,7 @@
                                     <th st-sort="MedioPago">Medio Pago</th>
                                     <th st-sort="ImportePago">Importe</th>
                                     <th st-sort="FechaPago">Fecha</th>
+                                    <th st-sort="FechaPago">Contrato</th>
                                     <th st-sort="ImporteFacCliente">Importe</th>
                                     <th st-sort="MontoAbono">Monto</th>
                                     <th st-sort="PorPagar">Saldo Pendiente</th>
@@ -154,9 +154,6 @@
                                     </th>
                                     <th>
                                         <input st-search="FechaFacturacion" placeholder="Fecha de Facturación" class="input-sm form-control media" type="search"/>
-                                    </th>
-                                    <th>
-                                        <input st-search="FechaVencimiento" placeholder="Fecha de Vencimiento" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
                                         <input st-search="ImporteFactura" placeholder="Importe" class="input-sm form-control media" type="search" />
@@ -192,6 +189,9 @@
                                         <input st-search="FechaPago" placeholder="Fecha" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
+                                        <input st-search="Contrato" placeholder="Contrato" class="input-sm form-control" type="search"/>
+                                    </th>
+                                    <th>
                                         <input st-search="ImporteFacCliente" placeholder="Importe" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
@@ -212,7 +212,6 @@
                                     <td>{{x.Cliente}}</td>
                                     <td>{{x.Tipo}}</td>
                                     <td>{{x.FechaFacturacion}}</td>
-                                    <td>{{x.FechaVencimiento}}</td>
                                     <td>{{x.ImporteFactura | currency}}</td>
                                     <td>{{x.PagoInicial | currency}}</td>
                                     <td>{{x.ACuantosPagos}}</td>
@@ -224,6 +223,7 @@
                                     <td>{{x.MedioPago}}</td>
                                     <td>{{x.ImportePago | currency}}</td>
                                     <td>{{x.FechaPago}}</td>
+                                    <td>{{x.Contrato}}</td>
                                     <td>{{x.ImporteFacCliente | currency}}</td>
                                     <td>{{x.MontoAbono | currency}}</td>
                                     <td>{{x.PorPagar | currency}}</td>
