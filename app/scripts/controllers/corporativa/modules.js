@@ -140,7 +140,7 @@ function corporativaConf($stateProvider) {
 		data: {
 			pageTitle: 'SAC | NOTA DE CREDITO',
 			permissions: {
-				only: ['contratomaestroSelect'],
+				only: ['notasdecreditoSelect'],
 				options: {
 					reload: false
 				}
@@ -156,7 +156,7 @@ function corporativaConf($stateProvider) {
 		data: {
 			pageTitle: 'SAC |NUEVA NOTA DE CREDITO',
 			permissions: {
-				only: ['contratomaestroSelect'],
+				only: ['notasdecreditoAdd'],
 				options: {
 					reload: false
 				}
