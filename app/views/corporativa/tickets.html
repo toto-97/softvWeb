@@ -13,7 +13,7 @@
 
 		</header>
 	</div>
-	<div class="card-body">
+	
     <div class="card-body">
             <div class="panel-group" id="accordion3">
                 <div class="card panel">
@@ -29,14 +29,11 @@
                             
                                     <div class="row">
                                         <br/>
-                                        <div class="col-md-3">
-                                          <div class="col-md-6">
-                                       <input type="number" class="form-control input-sm" placeholder="serie" ng-model="$ctrl.serie">
-										  </div>
-										  <div class="col-md-6">
+                                        <div class="col-md-2">                                         
+										  
 
-											  <input type="number" class="form-control input-sm" placeholder="Folio" ng-model="$ctrl.folio">
-										  </div>
+											  <input type="text" class="form-control input-sm" placeholder="Serie y Folio" ng-model="$ctrl.folio">
+										
                                             
                                         </div>
                                         <div class="col-md-1">
@@ -68,7 +65,11 @@
 
 										</div>
                                     </div>
-                               
+
+							
+
+
+							   
 
 
 
@@ -82,7 +83,44 @@
         </div>
 
 
-		</div>
+			
+                                <div class="col-md-12 table-responsive">
+         
+          <table class="table" style="font-size:10px;">
+            <thead>
+              <tr>
+                <th>Contrato Maestro</th>
+                <th>Factura</th>
+                <th>Ticket</th>
+                <th>Fecha</th>
+                <th>Fecha Vencimiento</th>
+                <th>Importe</th>
+                 <th>Cliente</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr  dir-paginate="x in $ctrl.Tickets|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:8">
+                <td>{{x.ContratoMaestro}}</td>
+                <td>{{x.Clv_FacturaMaestro}}</td>
+                <td>{{x.Ticket}}</td>
+                <td>{{x.Fecha}}</td>
+                <td>{{x.FechaVencimiento}}</td>
+                <td>{{x.Importe}}</td>
+                <td>{{x.Cliente}}</td>
+                <td>
+                  <button class="btn ink-reaction btn-floating-action btn-xs btn-default-bright" ng-click="$ctrl.opcionTicket(1,x);"><i class="fa fa-print"></i></button>
+                  <button class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-click="$ctrl.opcionTicket(2,x);"><i class="fa fa-ban"></i></button>
+
+              </tr>
+            </tbody>
+          </table>
+          <div style="padding-left: 20px;">
+            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+            </dir-pagination-controls>
+          </div>
+        </div>
 		
 </div>
 </div>

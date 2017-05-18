@@ -5,9 +5,13 @@
     .module('softvApp')
     .controller('ticketsCorporativaCtrl', ticketsCtrl);
 
-  ticketsCtrl.inject = ['ContratoMaestroFactory'];
+  ticketsCtrl.inject = [''];
 
-  function ticketsCtrl() {
+  function ticketsCtrl(ContratoMaestroFactory, $filter,$uibModal) {
+
+    function Init() {
+      Buscar(0);
+    }
 
     function Buscar(opc) {
 
@@ -15,9 +19,9 @@
 
       if (opc == 1) {
         parametros = {
-          'Fecha': vm.fecha,
+          'Fecha': $filter('date')(vm.fecha, 'dd/MM/yyyy'),
           'Ticket': '',
-          'ContratoMaestro': '',
+          'ContratoMaestro': 0,
           'Cliente': '',
           'Op': 1,
           'Saldada': 0
@@ -27,7 +31,7 @@
         parametros = {
           'Fecha': '',
           'Ticket': vm.folio,
-          'ContratoMaestro': '',
+          'ContratoMaestro': 0,
           'Cliente': '',
           'Op': 2,
           'Saldada': 0
@@ -67,15 +71,66 @@
           'Saldada': 0
         };
       }
-
+      console.log(parametros);
       ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
         console.log(data);
+        vm.Tickets = data.GetBuscaFacturasMaestroListResult;
       });
+    }
+
+    function opcionTicket(opc,ticket) {
+      if (opc == 1) {
+        ticket.op='PRINT';
+       
+          var modalInstance = $uibModal.open({
+            animation: true,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'views/corporativa/modalMotivoCanMaestro.html',
+            controller: 'modalMotivoCanMaestroCtrl',
+            controllerAs: '$ctrl',
+            backdrop: 'static',
+            keyboard: false,
+            class: 'modal-backdrop fade',
+            size: 'md',
+            resolve: {
+              ticket: function () {
+                return ticket;
+              }
+            }
+          });
+
+      } else {
+        
+       ticket.op='CAN';
+         var modalInstance = $uibModal.open({
+          animation: true,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'views/facturacion/modalCancelarTicket.html',
+          controller: 'modalCancelaTicketCtrl',
+          controllerAs: '$ctrl',
+          backdrop: 'static',
+          keyboard: false,
+          class: 'modal-backdrop fade',
+          size: 'md',
+          resolve: {
+            ticket: function () {
+              return ticket;
+            }
+          }
+        });
+      
+
+      }
+
+     
     }
 
 
     var vm = this;
     vm.Buscar = Buscar;
-
+    Init();
+    vm.opcionTicket = opcionTicket;
   }
 })();
