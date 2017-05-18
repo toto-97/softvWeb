@@ -17,7 +17,8 @@ angular
 			dameDetalle: '/DetalleContratosMaestros/GetDetalleContratosMaestrosList',
 			verFacturas: '/ContratoMaestroFac/GetFacturasPorCliDePago',
 			buscarPagos: '/BuscaFacturasMaestroConsulta/GetBuscaFacturasMaestroConsultaList',
-			generaFactura: '/GrabaFacturaCMaestro/GetGrabaFacturaCMaestro'
+			generaFactura: '/GrabaFacturaCMaestro/GetGrabaFacturaCMaestro',
+			dameDetalleFactura: '/DameDetalle_FacturaMaestro/GetDameDetalle_FacturaMaestroList'
 		};
 
 		factory.cobraSaldoMaestro = function(contrato) {
@@ -338,6 +339,25 @@ angular
 				}
 			};
 			$http.post(globalService.getUrl() + paths.generaFactura, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.dameDetalleFactura = function(clvSesionPadre) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'ClvFacturaMaestro': clvSesionPadre
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.dameDetalleFactura, JSON.stringify(Parametros), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response);

@@ -30,11 +30,11 @@ function AbrirDetalleCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
             if (vm.selectedService.Clv_Txt == 'CADIG' || vm.selectedService.Clv_Txt == 'CADI2' || vm.selectedService.Clv_Txt == 'CADI3' || vm.selectedService.Clv_Txt == 'CANET') {
                 cajasFactory.consultaCamdo(x.Clv_Session, x.Contrato).then(function (data) {
                     if (data.GetCAMDOFACResult.Existe == false) {
-                        $uibModalInstance.dismiss('cancel');
                         var items = {};
-                        items.Clv_Session = x.Clv_Session;
+                        items.Session = x.Clv_Session;
                         items.Contrato = x.Contrato;
                         items.Texto = vm.selectedService.Clv_Txt;
+                        items.Tipo = vm.Suscriptor.Clv_TipoCliente;
                         vm.animationsEnabled = true;
                         var modalInstance = $uibModal.open({
                             animation: vm.animationsEnabled,
@@ -107,10 +107,10 @@ function AbrirDetalleCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
             if (vm.selectAparato != '') {
                 cajasFactory.quitarDetalle(x.Contrato, x.Clv_Session, vm.selectAparato.CLV_DETALLE, vm.Suscriptor.Clv_TipoCliente).then(function (data) {
                     if (data.GetQuitarDetalleListResult[0].Error == 0) {
-                        cajasFactory.dameDetallePago(vm.session).then(function (detallePago) {
+                        cajasFactory.dameDetallePago(x.Clv_Session).then(function (detallePago) {
                             vm.detallePago = detallePago.GetDameDetalleListResult;
                         });
-                        cajasFactory.dameSumaPago(vm.session).then(function (sumaPago) {
+                        cajasFactory.dameSumaPago(x.Clv_Session).then(function (sumaPago) {
                             vm.sumaPagos = sumaPago.GetSumaDetalleListResult;
                         });
                         cajasFactory.addBitacora(x.Contrato, vm.selectAparato.Pagos_Adelantado).then(function (data) { });
