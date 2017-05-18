@@ -56,7 +56,6 @@ angular.module('softvApp')
         }
       };
       $http.get(globalService.getUrl() + paths.GetContratoList, config).then(function (response) {
-        console.log(response);
         deferred.resolve(response.data);
       }).catch(function (response) {
         deferred.reject(response);
@@ -290,7 +289,6 @@ angular.module('softvApp')
           'Authorization': $localStorage.currentUser.token
         }
       };
-      console.log(JSON.stringify(data));
       $http.post(globalService.getUrl() + paths.GetAddNotaCredito, JSON.stringify(data), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -348,7 +346,6 @@ angular.module('softvApp')
         'Fecha': data.Fecha,
         'ContratoMaestro': data.ContratoMaestro
       };
-      console.log(JSON.stringify(parametros));
 
       $http.post(globalService.getUrl() + paths.FiltrosBusquedaNotasDeCredito, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
