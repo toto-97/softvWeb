@@ -3,7 +3,7 @@ angular.module('softvApp').controller('DetalleCtrl', DetalleCtrl);
 
 function DetalleCtrl($uibModal, ngNotify, inMenu, $uibModalInstance, x, pagosMaestrosFactory) {
 	function initial() {
-		pagosMaestrosFactory.dameDetalle(x.Clv_FacturaMaestro).then(function (data) {
+		pagosMaestrosFactory.dameDetalleFactura(x.Clv_FacturaMaestro).then(function (data) {
 			vm.detalles = data.GetDameDetalle_FacturaMaestroListResult;
 		});
 	}
