@@ -22,6 +22,7 @@
     vm.abrirTicket = abrirTicket;
     vm.mostrarbtn = true;
     vm.clvnota = 0;
+    vm.revertir=false;
 
     this.$onInit = function () {
       ContratoMaestroFactory.StatusNotadeCredito().then(function (data) {
@@ -131,6 +132,7 @@
           vm.DetalleNota = data.GetDetalle_NotasdeCreditoListResult;
           ContratoMaestroFactory.GetCalcula_monto(vm.factura.CLV_FACTURA).then(function (data) {
             vm.Monto = data.GetCalcula_montoResult.Monto;
+          calcular();
           });
 
 
@@ -183,7 +185,7 @@
     function calcular() {
       vm.sumatotal = 0;
       vm.DetalleNota.forEach(function (element) {
-        vm.sumatotal += (element.cantidad == undefined) ? 0 : element.cantidad
+        vm.sumatotal += (element.importe == undefined) ? 0 : element.importe
       });
     }
 
