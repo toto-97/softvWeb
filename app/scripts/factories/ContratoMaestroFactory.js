@@ -23,12 +23,19 @@ angular.module('softvApp')
       DeleteNotasDeCredito_ContraMaeFac: '/NotasDeCredito_ContraMaeFac/DeleteNotasDeCredito_ContraMaeFac',
       GetGuarda_DetalleNota: '/NotasDeCredito_ContraMaeFac/GetGuarda_DetalleNota',
       GetNotasDeCredito_ContraMaeFacList: '/NotasDeCredito_ContraMaeFac/GetNotasDeCredito_ContraMaeFacList',
-      GetProcedimientoCancelar:'/NotasDeCredito_ContraMaeFac/GetProcedimientoCancelar',
-      GetCrearNotaCreditoCM:'/CrearNotaCredito/GetCrearNotaCreditoCM',
-      ConceptosTicketNotasCredito:'/ConceptosTicketNotasCredito/GetConceptosTicketNotasCreditoCM',
-      GetGeneraRefBanamexMaestro:'/GeneraRefBanamexMaestro/GetGeneraRefBanamexMaestro',
-      ReporteEstadoCuentaNuevo:'/ReporteEstadoCuentaNuevo/GetReporteEdoCuenta_CM'
-    
+      GetProcedimientoCancelar: '/NotasDeCredito_ContraMaeFac/GetProcedimientoCancelar',
+      GetCrearNotaCreditoCM: '/CrearNotaCredito/GetCrearNotaCreditoCM',
+      ConceptosTicketNotasCredito: '/ConceptosTicketNotasCredito/GetConceptosTicketNotasCreditoCM',
+      GetGeneraRefBanamexMaestro: '/GeneraRefBanamexMaestro/GetGeneraRefBanamexMaestro',
+      ReporteEstadoCuentaNuevo: '/ReporteEstadoCuentaNuevo/GetReporteEdoCuenta_CM',
+      TblNotasMaestraOpciones: '/TblNotasMaestraOpciones/AddTblNotasMaestraOpciones',
+      ValidaCancelacionFactura: '/ValidaCancelacionFactura/GetValidaCancelacionFacturaCM',
+      MUESTRAMOTIVOS: '/MUESTRAMOTIVOS/GetMUESTRAMOTIVOSList',
+      GuardaMotivos: '/GuardaMotivos/GetGuardaMotivosCM',
+      AddBitacoraTickets: '/Bitacora/AddBitacoraTickets',
+      TblFacturasOpcionesCM: '/TblFacturasOpciones/AddTblFacturasOpcionesCM',
+      Sp_DameDetalleFacturaMaestra: '/Sp_DameDetalleFacturaMaestra/GetSp_DameDetalleFacturaMaestraList'
+
 
     };
 
@@ -55,7 +62,7 @@ angular.module('softvApp')
         }
       };
       $http.get(globalService.getUrl() + paths.GetContratoList, config).then(function (response) {
-        console.log(response);
+
         deferred.resolve(response.data);
       }).catch(function (response) {
         deferred.reject(response);
@@ -228,6 +235,7 @@ angular.module('softvApp')
         'ClvFactura': factura,
         'ClvNota': 0
       };
+      console.log(JSON.stringify(parametros));
       $http.post(globalService.getUrl() + paths.GetDetalle_NotasdeCreditoList, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -289,7 +297,7 @@ angular.module('softvApp')
           'Authorization': $localStorage.currentUser.token
         }
       };
-      console.log(JSON.stringify(data));
+
       $http.post(globalService.getUrl() + paths.GetAddNotaCredito, JSON.stringify(data), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -347,7 +355,7 @@ angular.module('softvApp')
         'Fecha': data.Fecha,
         'ContratoMaestro': data.ContratoMaestro
       };
-      console.log(JSON.stringify(parametros));
+
 
       $http.post(globalService.getUrl() + paths.FiltrosBusquedaNotasDeCredito, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
@@ -408,7 +416,7 @@ angular.module('softvApp')
 
 
 
-factory.GetProcedimientoCancelar = function (factura) {
+    factory.GetProcedimientoCancelar = function (factura) {
       var deferred = $q.defer();
       var config = {
         headers: {
@@ -450,7 +458,7 @@ factory.GetProcedimientoCancelar = function (factura) {
 
 
 
-     factory.GetCrearNotaCreditoCM = function (factura) {
+    factory.GetCrearNotaCreditoCM = function (factura) {
 
       var deferred = $q.defer();
       var config = {
@@ -459,7 +467,7 @@ factory.GetProcedimientoCancelar = function (factura) {
         }
       };
       var parametros = {
-        'Clv_Factura': factura        
+        'Clv_Factura': factura
       };
       $http.post(globalService.getUrl() + paths.GetCrearNotaCreditoCM, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
@@ -469,7 +477,7 @@ factory.GetProcedimientoCancelar = function (factura) {
       return deferred.promise;
     };
 
-      factory.ConceptosTicketNotasCredito = function (factura) {
+    factory.ConceptosTicketNotasCredito = function (factura) {
 
       var deferred = $q.defer();
       var config = {
@@ -478,7 +486,7 @@ factory.GetProcedimientoCancelar = function (factura) {
         }
       };
       var parametros = {
-        'Clv_Factura': factura        
+        'Clv_Factura': factura
       };
       $http.post(globalService.getUrl() + paths.ConceptosTicketNotasCredito, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
@@ -488,9 +496,31 @@ factory.GetProcedimientoCancelar = function (factura) {
       return deferred.promise;
     };
 
+    factory.MUESTRAMOTIVOS = function (op) {
 
-   factory.ReporteEstadoCuentaNuevo= function (ClvSessionPadre,ContratoMaestro,Referencia) {
-         var deferred = $q.defer();
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'Op': op
+      };
+      $http.post(globalService.getUrl() + paths.MUESTRAMOTIVOS, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
+
+
+
+
+    factory.ReporteEstadoCuentaNuevo = function (ClvSessionPadre, ContratoMaestro, Referencia) {
+      var deferred = $q.defer();
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
@@ -498,20 +528,54 @@ factory.GetProcedimientoCancelar = function (factura) {
       };
       var parametros = {
         'ClvSessionPadre': ClvSessionPadre,
-        'ContratoMaestro':ContratoMaestro,
-        'Referencia':Referencia        
-      }
-      $http.post(globalService.getUrl() + paths.GetGeneraRefBanamexMaestro, JSON.stringify(parametros), config).then(function (response) {
+        'ContratoMaestro': ContratoMaestro,
+        'Referencia': Referencia
+      };
+      $http.post(globalService.getUrl() + paths.ReporteEstadoCuentaNuevo, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
         deferred.reject(response);
       });
       return deferred.promise;
 
-   }
+    };
 
 
-  factory.GetGeneraRefBanamexMaestro = function (ContratoMaestro,Importe) {
+
+
+
+    factory.TblNotasMaestraOpciones = function (nota, cancelar, OpReimprimir, OpCorreo) {
+
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'objTblNotasMaestraOpciones': {
+          'Clv_NotaMaestra': nota,
+          'OpCancelar': 0,
+          'OpReimprimir': OpReimprimir,
+          'OpCorreo': OpCorreo
+        }
+
+      };
+      $http.post(globalService.getUrl() + paths.TblNotasMaestraOpciones, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
+
+
+
+
+
+
+    factory.GetGeneraRefBanamexMaestro = function (ContratoMaestro, Importe) {
 
       var deferred = $q.defer();
       var config = {
@@ -521,8 +585,8 @@ factory.GetProcedimientoCancelar = function (factura) {
       };
       var parametros = {
         'ContratoMaestro': ContratoMaestro,
-        'Importe':Importe        
-      }
+        'Importe': Importe
+      };
       $http.post(globalService.getUrl() + paths.GetGeneraRefBanamexMaestro, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -530,6 +594,134 @@ factory.GetProcedimientoCancelar = function (factura) {
       });
       return deferred.promise;
     };
+
+    factory.ValidaCancelacionFactura = function (factura) {
+
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'ClvFactura': factura,
+
+      };
+      $http.post(globalService.getUrl() + paths.ValidaCancelacionFactura, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
+
+    factory.GuardaMotivos = function (factura, Motivo) {
+
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+
+      var parametros = {
+        'ClvFactura': factura,
+        'ClvMotivo': Motivo,
+        'Usuario': $localStorage.currentUser.usuario
+      };
+      console.log(JSON.stringify(parametros));
+      $http.post(globalService.getUrl() + paths.GuardaMotivos, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
+    factory.AddBitacoraTickets = function (factura, contrato, op) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+
+      var parametros = {
+        'objBitacora': {
+          'Usuario': $localStorage.currentUser.usuario,
+          'ContratoCom': '' + contrato + '',
+          'Op': op,
+          'ClvFactura': factura
+        }
+
+      };
+      console.log(JSON.stringify(parametros));
+      $http.post(globalService.getUrl() + paths.AddBitacoraTickets, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
+    factory.Sp_DameDetalleFacturaMaestra = function (clv_sesion) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+
+      var parametros = {
+        'ClvSessionPadre': clv_sesion
+      };
+      console.log(JSON.stringify(parametros));
+      $http.post(globalService.getUrl() + paths.Sp_DameDetalleFacturaMaestra, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
+
+
+
+
+    factory.TblFacturasOpcionesCM = function (factura, cancelar, reimprimir) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+
+      var parametros = {
+        'objTblFacturasOpcionesCM': {
+          'Clv_Factura': factura,
+          'OpCancelar': cancelar,
+          'OpReimprimir': reimprimir,
+          'OpCorreo': 0
+        }
+
+      };
+      console.log(JSON.stringify(parametros));
+      $http.post(globalService.getUrl() + paths.TblFacturasOpcionesCM, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
+
+
+
+
+
+
+
 
 
 

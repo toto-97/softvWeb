@@ -17,6 +17,12 @@ angular
 					vm.urlReal = $sce.trustAsResourceUrl(vm.url);
 				});
 			}
+			else if (options.Tipo == 3) {				
+					var id = options.Id;
+					vm.url = globalService.getUrlReportes() + '/Reportes/' + id;
+					vm.urlReal = $sce.trustAsResourceUrl(vm.url);
+				
+			}
 
 		}
 

@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <button class="close" aria-label="Close" type="button">×</button>
+  <h4 class="modal-title"><i class="fa fa-thumb-tack"></i> Motivo de cancelación</h4>
+</div>
+<div class="modal-body" style="    font-size: 11px;">
+
+selecciona el motivo de la cancelación 
+<select class="form-control input-sm" 
+ng-model="$ctrl.motcan"
+ng-options="item.Descripcion for item in $ctrl.motivos track by item.Clv_Motivo">
+    <option value="">Selecciona un motivo</option>
+</select>
+
+<div class="modal-footer">  
+  <button class="btn btn-info btn-sm" type="button" ng-click="$ctrl.ok()">Aceptar</button>
+</div>
+
