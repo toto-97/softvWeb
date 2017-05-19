@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <button class="close" aria-label="Close" type="button">×</button>
+  <button class="close" aria-label="Close" type="button" ng-click="$ctrl.cancel()">×</button>
   <h4 class="modal-title"><i class="fa fa-thumb-tack"></i> Detalle Nota de crédito No.</h4>
 </div>
 <div class="modal-body" style="    font-size: 11px;">
@@ -151,7 +151,8 @@
             <div class="row">
               <div class="col-md-6" class="text-right"><b  class="text-danger">Monto: $</b></div>
               <div class="col-md-6">
-                <input ng-disabled="true" class="form-control input-sm" ng-model="$ctrl.sumatotal">
+                <b>{{$ctrl.sumatotal|currency}}</b>
+               
               </div>
             </div>
 

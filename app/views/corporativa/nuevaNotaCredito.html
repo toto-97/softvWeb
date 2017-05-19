@@ -153,16 +153,16 @@
           </div>
           <div class="col-md-12">
             <br>
-            <div class="col-md-8">
+            <!--<div class="col-md-8">
               <b class="text-danger"> Revertir el proceso que genero el ticket al que se esta aplicando la nota de crédito</b>
 
-            </div>
-            <div class="col-md-4">
+            </div>-->
+         <!--   <div class="col-md-4">
               <label class="checkbox-inline checkbox-styled checkbox-primary">
 														<input type="checkbox" ng-model="$ctrl.revertir" ><span></span>
 													</label>
 
-            </div>
+            </div>-->
 
 
           </div>
@@ -172,15 +172,15 @@
             <thead style="background-color: khaki;">
               <th>DESCRIPCION</th>
               <th>IMPORTE PAGADO</th>
-              <th>IMPORTE PARA NOTA</th>
-
+              <!--<th>IMPORTE PARA NOTA</th>
+-->
             </thead>
             <tbody>
               <!-- ng-keyup="$ctrl.validaMonto(x,x.cantidad)"-->
               <tr ng-repeat="x in $ctrl.DetalleNota">
                 <td>{{x.descripcion}}</td>
                 <td>${{x.importe}}</td>
-                <td>
+               <!-- <td>
                   <ng-form name="urlForm">
                     <input type="number" name="cant" ng-model="x.cantidad" class="form-control input-sm" required min="0" ng-change="$ctrl.calcular()"
                       validate-on="dirty" max="{{x.importe}}">
@@ -188,15 +188,19 @@
                     <span class="alert error text-danger" ng-show="urlForm.cant.$error.max">cantidad invalida</span>
 
                   </ng-form>
-                </td>
+                </td>-->
               </tr>
             </tbody>
 
           </table>
           <div class="row">
-            <div class="col-md-6" class="text-right"><b class="text-danger">Monto: $</b></div>
+            <div class="col-md-6" class="text-right">
+              <b class="text-danger">Monto: $</b></div>
             <div class="col-md-6">
-              <input ng-disabled="true" class="form-control input-sm" ng-model="$ctrl.sumatotal">
+              <label class="text-danger"><b>
+                {{$ctrl.sumatotal | currency}}</b>
+              </label>
+             
             </div>
           </div>
 

@@ -82,9 +82,9 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                 vm.muestraCliente = true;
                 pagosMaestrosFactory.cobraSaldoMaestro(vm.Contratos.IdContratoMaestro).then(function (data) {
                     vm.saldo = data.GetCobraContratoMaestroResult;
-                    console.log(vm.saldo);
+                   
                     pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
-                        console.log(detallePago);
+                        
                         if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
                             vm.blockBaja = true;
                             vm.blockPagar = true;
@@ -95,6 +95,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                         vm.detallePago = detallePago.GetDetalleContratosMaestrosListResult.lista;
                         vm.sumaPagos = detallePago.GetDetalleContratosMaestrosListResult.datosdetalle;
                         vm.detallePagoAux = vm.detallePago;
+                        DetalleFactura(vm.saldo.Clv_SessionPadre);
                     });
                 });
                 resetBusquedas();
@@ -103,6 +104,13 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
             }
         });
         vm.displayCollection = [].concat(vm.Contratos);
+    }
+
+    function DetalleFactura(clv_session){
+        ContratoMaestroFactory.Sp_DameDetalleFacturaMaestra(clv_session).then(function(result){
+            console.log(result);
+             vm.detalleFactura=result.GetSp_DameDetalleFacturaMaestraListResult;
+        });
     }
 
     function Buscarporcontrato() {
@@ -125,9 +133,9 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                 vm.muestraCliente = true;
                 pagosMaestrosFactory.cobraSaldoMaestro(vm.Contratos.IdContratoMaestro).then(function (data) {
                     vm.saldo = data.GetCobraContratoMaestroResult;
-                    console.log(vm.saldo);
+                    
                     pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
-                        console.log(detallePago);
+                       
                         if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
                             vm.blockBaja = true;
                             vm.blockPagar = true;
@@ -135,6 +143,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                             vm.blockBaja = false;
                             vm.blockPagar = false;
                         }
+                        DetalleFactura(vm.saldo.Clv_SessionPadre);
                         vm.detallePago = detallePago.GetDetalleContratosMaestrosListResult.lista;
                         vm.sumaPagos = detallePago.GetDetalleContratosMaestrosListResult.datosdetalle;
                         vm.detallePagoAux = vm.detallePago;
@@ -164,8 +173,6 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
 
             vm.Contratos = data.GetBusquedaContratoMaestroFacResult;
-            console.log(vm.Contratos)
-
             if (vm.Contratos == undefined) {
                 ngNotify.set('No se encontro el contrato.', 'error');
                 resetBusquedas();
@@ -216,7 +223,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                 vm.muestraCliente = false;
                 pagosMaestrosFactory.cobraSaldoMaestro(vm.Contratos.IdContratoMaestro).then(function (data) {
                     vm.saldo = data.GetCobraContratoMaestroResult;
-                    console.log(data.GetCobraContratoMaestroResult);
+                    
                     pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
                         if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
                             vm.blockBaja = true;
@@ -339,9 +346,9 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
     }
     
     function edocta(){
-        console.log(vm.Contratos.IdContratoMaestro);        
+        
         ContratoMaestroFactory.ReporteEstadoCuentaNuevo(vm.saldo.Clv_SessionPadre,vm.Contratos.IdContratoMaestro,"").then(function(data){
-            console.log(data);
+           
             var options = {};
             options.Id = data.GetReporteEdoCuenta_CMResult[0].lineaTR;
 			options.IdEstadoCuenta = 0;
