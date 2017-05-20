@@ -133,9 +133,9 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                 vm.muestraCliente = true;
                 pagosMaestrosFactory.cobraSaldoMaestro(vm.Contratos.IdContratoMaestro).then(function (data) {
                     vm.saldo = data.GetCobraContratoMaestroResult;
-
+                     console.log( vm.saldo);
                     pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
-
+                        console.log(detallePago);
                         if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
                             vm.blockBaja = true;
                             vm.blockPagar = true;
@@ -214,6 +214,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
             'Op': 1
         };
         ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
+            console.log(data);
             vm.Contratos = data.GetBusquedaContratoMaestroFacResult;
             if (vm.Contratos == undefined) {
                 ngNotify.set('No se encontro el contrato.', 'error');

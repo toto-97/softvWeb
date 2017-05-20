@@ -210,8 +210,10 @@
                                             <td>{{y.Contrato}}</td>
                                             <td>{{y.Importe | currency}}</td>
                                             <td>{{y.PorPagar | currency}} </td>
-                                            <td>{{y.Monto | currency}}</td>
-                                            <td><input type="checkbox" name="" value="{{y.Saldada}}" ng-disabled="true"><br></td>
+                                            <td>{{y.Monto | currency}}</td>                                           
+                                            <td>
+                                            
+                                              <input type="checkbox" name="" ng-checked="{{y.Saldada}}" ng-disabled="true"><br></td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -338,7 +340,8 @@
                                         <td>{{y.Importe | currency}}</td>
                                         <td>{{y.PorPagar | currency}} </td>
                                         <td>{{y.Monto | currency}}</td>
-                                        <td><input type="checkbox" name="" value="{{y.Saldada}}" ng-disabled="true"><br></td>
+                                   
+                                        <td><input type="checkbox" name="" ng-checked="{{y.Saldada}}" ng-disabled="true"><br></td>
                                     </tr>
                                 </tbody>
                             </table>

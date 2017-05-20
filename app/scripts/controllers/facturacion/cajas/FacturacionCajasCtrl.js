@@ -380,16 +380,19 @@ angular
 						if (data.GetBusCliPorContrato_FacListResult.length > 0) {
 							$('.buscarContrato').collapse('hide');
 							vm.Cliente = data.GetBusCliPorContrato_FacListResult[0];
+
 							cajasFactory.ValidaSaldoContrato(vm.Cliente.Contrato).then(function(data) {
 								if (data.GetValidaSaldoContratoResult.tieneSaldo > 0) {
 									vm.ArrastraSaldo = true;
 									cajasFactory.CobraSaldo(vm.Cliente.Contrato).then(function(cobra) {
 										vm.session = cobra.GetDeepCobraSaldoResult.ClvSession;
 										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 0).then(function(op1) {
+
 											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
 												abrirModalPregunta(0, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
 											}
 										});
+										console.log(vm.Cliente.Contrato);
 										cajasFactory.preguntaCajas(vm.Cliente.Contrato, 2).then(function(op1) {
 											if (op1.GetDeepuspHaz_PreguntaResult.Pregunta != null) {
 												abrirModalPregunta(2, op1.GetDeepuspHaz_PreguntaResult.Pregunta, op1.GetDeepuspHaz_PreguntaResult.MesesAdelantados);
