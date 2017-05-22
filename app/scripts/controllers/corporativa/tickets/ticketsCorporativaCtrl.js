@@ -7,7 +7,7 @@
 
   ticketsCtrl.inject = [''];
 
-  function ticketsCtrl(ContratoMaestroFactory, $filter,$uibModal) {
+  function ticketsCtrl(ContratoMaestroFactory, $filter, $uibModal,ngNotify) {
 
     function Init() {
       Buscar(0);
@@ -78,32 +78,37 @@
       });
     }
 
-    function opcionTicket(opc,ticket) {
+    function opcionTicket(opc, ticket) {
       if (opc == 1) {
-        ticket.op='PRINT';
-       
-          var modalInstance = $uibModal.open({
-            animation: true,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: 'views/corporativa/modalMotivoCanMaestro.html',
-            controller: 'modalMotivoCanMaestroCtrl',
-            controllerAs: '$ctrl',
-            backdrop: 'static',
-            keyboard: false,
-            class: 'modal-backdrop fade',
-            size: 'md',
-            resolve: {
-              ticket: function () {
-                return ticket;
-              }
-            }
-          });
+        ticket.op = 'PRINT';
 
+        var modalInstance = $uibModal.open({
+          animation: true,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'views/corporativa/modalMotivoCanMaestro.html',
+          controller: 'modalMotivoCanMaestroCtrl',
+          controllerAs: '$ctrl',
+          backdrop: 'static',
+          keyboard: false,
+          class: 'modal-backdrop fade',
+          size: 'md',
+          resolve: {
+            ticket: function () {
+              return ticket;
+            }
+          }
+        });
+
+      } else if (opc == 3) {
+
+        ContratoMaestroFactory.TblFacturasOpcionesCM(ticket.Clv_FacturaMaestro, 0, 0,1).then(function (data) {
+          ngNotify.set("El email se ha enviado  exitosamente")
+        });
       } else {
-        
-       ticket.op='CAN';
-         var modalInstance = $uibModal.open({
+
+        ticket.op = 'CAN';
+        var modalInstance = $uibModal.open({
           animation: true,
           ariaLabelledBy: 'modal-title',
           ariaDescribedBy: 'modal-body',
@@ -120,11 +125,11 @@
             }
           }
         });
-      
+
 
       }
 
-     
+
     }
 
 

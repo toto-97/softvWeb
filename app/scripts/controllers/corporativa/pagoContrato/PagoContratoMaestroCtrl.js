@@ -84,7 +84,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                     vm.saldo = data.GetCobraContratoMaestroResult;
 
                     pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
-
+    console.log(detallePago);
                         if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
                             vm.blockBaja = true;
                             vm.blockPagar = true;

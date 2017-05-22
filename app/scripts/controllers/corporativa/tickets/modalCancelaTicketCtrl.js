@@ -13,7 +13,7 @@ angular
     function ok() {
 
       ContratoMaestroFactory.ValidaCancelacionFactura(ticket.Clv_FacturaMaestro).then(function (data) {
-        if (data.GetValidaCancelacionFacturaCMResult[0].Res == 0) {
+        if (data.GetValidaCancelacionFacturaCMResult[0].Res == 1) {
           ngNotify.set(data.GetValidaCancelacionFacturaCMResult[0].Msg, "error");
         } else {
           $uibModalInstance.dismiss('cancel');
