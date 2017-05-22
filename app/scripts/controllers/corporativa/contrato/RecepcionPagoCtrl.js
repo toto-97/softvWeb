@@ -8,7 +8,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
 
         });
     }
-    
+
     function saldadas() {
         var parametros;
         if (vm.pendientes == 1) {
@@ -63,7 +63,6 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                 };
                 ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroListResult;
-                    console.log(data);
                 });
             }
         } else if (opcion == 3) {
@@ -99,7 +98,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                 });
             }
         } else if (opcion == 1) {
-             if (vm.Fecha == undefined || vm.Fecha == '') {
+            if (vm.Fecha == undefined || vm.Fecha == '') {
                 ngNotify.set('Seleccione una fecha.', 'error');
             } else {
                 vm.auxFechaInicio = $filter('date')(vm.Fecha, 'dd/MM/yyyy');
@@ -136,7 +135,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
         } else {
             vm.seleccion = 2;
             vm.auxFechaInicio = $filter('date')(fechaBusqueda, 'dd/MM/yyyy');
-            desgloseFactory.busquedaDesglose(vm.seleccion, $localStorage.currentUser.usuario, vm.auxFechaInicio).then(function(data) {
+            desgloseFactory.busquedaDesglose(vm.seleccion, $localStorage.currentUser.usuario, vm.auxFechaInicio).then(function (data) {
                 if (data.GetBuscaDesgloseDeMonedaListResult.length == 0) {
                     ngNotify.set('No se encontraron registros.', 'error');
                     vm.sinDatos = true;
@@ -158,119 +157,123 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     }
 
     function PagarCredito(x) {
-        if (x.Importe <= x.TotalAbonado) {
-            ngNotify.set('Ya se saldo el adeudo.', 'error');
-        } else {
-            if (x.ACuantosPagos == 'N/A') {
-                var items = {
-                    Modo: 'n'
-                };
-                vm.animationsEnabled = true;
-                var modalInstance = $uibModal.open({
-                    animation: vm.animationsEnabled,
-                    ariaLabelledBy: 'modal-title',
-                    ariaDescribedBy: 'modal-body',
-                    templateUrl: 'views/corporativa/abrirPago.html',
-                    controller: 'AbrirPagoCtrl',
-                    controllerAs: '$ctrl',
-                    backdrop: 'static',
-                    keyboard: false,
-                    size: 'sm',
-                    resolve: {
-                        items: function () {
-                            return items;
-                        },
-                        elem1: function () {
-                            return x.Importe;
-                        },
-                        x: function () {
-                            return x;
-                        }
-                    }
-                });
-            }
-            else if (x.ACuantosPagos == 'Variables') {
-                var monto = (x.Importe - x.PagoInicial) / x.ACuantosPagos;
-                var restante = (x.Importe - x.TotalAbonado);
-                if(restante < monto) {
-                    monto = restante;
-                }
-                var items = {
-                    Modo: 'v'
-                };
-                vm.animationsEnabled = true;
-                var modalInstance = $uibModal.open({
-                    animation: vm.animationsEnabled,
-                    ariaLabelledBy: 'modal-title',
-                    ariaDescribedBy: 'modal-body',
-                    templateUrl: 'views/corporativa/montoAbono.html',
-                    controller: 'MontoAbonoCtrl',
-                    controllerAs: '$ctrl',
-                    backdrop: 'static',
-                    keyboard: false,
-                    size: 'sm',
-                    resolve: {
-                        items: function () {
-                            return items;
-                        },
-                        elem1: function () {
-                            return monto;
-                        },
-                        x: function () {
-                            return x;
-                        }
-                    }
-                });
+        if (x.Status == "Activa") {
+            if (x.Importe <= x.TotalAbonado) {
+                ngNotify.set('Ya se saldo el adeudo.', 'error');
             } else {
-                var monto = (x.Importe - x.PagoInicial) / x.ACuantosPagos;
-                var restante = (x.Importe - x.TotalAbonado);
-                if(restante < monto) {
-                    monto = restante;
-                }
-                var items = {
-                    Modo: 'f'
-                };
-                vm.animationsEnabled = true;
-                var modalInstance = $uibModal.open({
-                    animation: vm.animationsEnabled,
-                    ariaLabelledBy: 'modal-title',
-                    ariaDescribedBy: 'modal-body',
-                    templateUrl: 'views/corporativa/montoAbono.html',
-                    controller: 'MontoAbonoCtrl',
-                    controllerAs: '$ctrl',
-                    backdrop: 'static',
-                    keyboard: false,
-                    size: 'sm',
-                    resolve: {
-                        items: function () {
-                            return items;
-                        },
-                        elem1: function () {
-                            return monto;
-                        },
-                        x: function () {
-                            return x;
+                if (x.ACuantosPagos == 'N/A') {
+                    var items = {
+                        Modo: 'n'
+                    };
+                    vm.animationsEnabled = true;
+                    var modalInstance = $uibModal.open({
+                        animation: vm.animationsEnabled,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'views/corporativa/abrirPago.html',
+                        controller: 'AbrirPagoCtrl',
+                        controllerAs: '$ctrl',
+                        backdrop: 'static',
+                        keyboard: false,
+                        size: 'sm',
+                        resolve: {
+                            items: function () {
+                                return items;
+                            },
+                            elem1: function () {
+                                return x.Importe;
+                            },
+                            x: function () {
+                                return x;
+                            }
                         }
+                    });
+                }
+                else if (x.ACuantosPagos == 'Variables') {
+                    var monto = (x.Importe - x.PagoInicial) / x.ACuantosPagos;
+                    var restante = (x.Importe - x.TotalAbonado);
+                    if (restante < monto) {
+                        monto = restante;
                     }
-                });
+                    var items = {
+                        Modo: 'v'
+                    };
+                    vm.animationsEnabled = true;
+                    var modalInstance = $uibModal.open({
+                        animation: vm.animationsEnabled,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'views/corporativa/montoAbono.html',
+                        controller: 'MontoAbonoCtrl',
+                        controllerAs: '$ctrl',
+                        backdrop: 'static',
+                        keyboard: false,
+                        size: 'sm',
+                        resolve: {
+                            items: function () {
+                                return items;
+                            },
+                            elem1: function () {
+                                return monto;
+                            },
+                            x: function () {
+                                return x;
+                            }
+                        }
+                    });
+                } else {
+                    var monto = (x.Importe - x.PagoInicial) / x.ACuantosPagos;
+                    var restante = (x.Importe - x.TotalAbonado);
+                    if (restante < monto) {
+                        monto = restante;
+                    }
+                    var items = {
+                        Modo: 'f'
+                    };
+                    vm.animationsEnabled = true;
+                    var modalInstance = $uibModal.open({
+                        animation: vm.animationsEnabled,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'views/corporativa/montoAbono.html',
+                        controller: 'MontoAbonoCtrl',
+                        controllerAs: '$ctrl',
+                        backdrop: 'static',
+                        keyboard: false,
+                        size: 'sm',
+                        resolve: {
+                            items: function () {
+                                return items;
+                            },
+                            elem1: function () {
+                                return monto;
+                            },
+                            x: function () {
+                                return x;
+                            }
+                        }
+                    });
+                }
             }
+        } else {
+            ngNotify.set('La factura ya ha sido cancelada.', 'error');
         }
     }
 
     function historial(x) {
         console.log(x.Clv_FacturaMaestro);
         pagosMaestrosFactory.obtenFacturas(x.Clv_FacturaMaestro).then(function (data) {
-			vm.historialPagos = data.GetObtieneHistorialPagosFacturaMaestroListResult;
+            vm.historialPagos = data.GetObtieneHistorialPagosFacturaMaestroListResult;
             console.log(vm.historialPagos);
-		});
+        });
     }
 
     function verFactura(clvPago) {
         console.log(clvPago);
         pagosMaestrosFactory.verFacturas(clvPago).then(function (data) {
-			vm.facturas = data.GetFacturasPorCliDePagoResult;
+            vm.facturas = data.GetFacturasPorCliDePagoResult;
             console.log(vm.facturas);
-		});
+        });
     }
 
     function detalle(x) {
