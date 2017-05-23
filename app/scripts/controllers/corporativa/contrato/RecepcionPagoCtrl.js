@@ -271,6 +271,12 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
         });
     }
 
+    function enterContrato(event, opcion) {
+        if (event.which === 13) {
+            buscaContrato(opcion);
+        }
+    }
+
     var vm = this;
     vm.saldadas = saldadas;
     vm.buscaContrato = buscaContrato;
@@ -278,5 +284,6 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     vm.historial = historial;
     vm.verFactura = verFactura;
     vm.detalle = detalle;
+    vm.enterContrato = enterContrato;
 }
 angular.module('softvApp').controller('RecepcionPagoCtrl', RecepcionPagoCtrl);
