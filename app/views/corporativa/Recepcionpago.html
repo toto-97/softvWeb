@@ -132,6 +132,7 @@
                         <th>Importe</th>
                         <th>Total Abonado</th>
                         <th>Saldo Pendiente</th>
+                        <th>Status</th>
                         <th>Opciones</th>
                         <th></th>
                       </tr>
@@ -146,6 +147,7 @@
                         <td>{{x.Importe | currency}}</td>
                         <td>{{x.TotalAbonado | currency}}</td>
                         <td>{{x.Importe - x.TotalAbonado | currency}}</td>
+                        <td>{{x.Status}}</td>
                         <td>
                           <button class="btn ink-reaction btn-floating-action btn-xs btn-success" ng-disabled="$ctrl.pagar" ng-click="$ctrl.PagarCredito(x)"
                             data-toggle="tooltip" data-placement="top" title="Pagar" data-original-title="Pagar"><i class="fa fa-credit-card"></i></button>
@@ -259,6 +261,7 @@
                                     <th>Importe</th>
                                     <th>Total Abonado</th>
                                     <th>Saldo Pendiente</th>
+                                    <th>Status</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -272,6 +275,7 @@
                                     <td>{{x.Importe | currency}}</td>
                                     <td>{{x.TotalAbonado | currency}}</td>
                                     <td>{{x.Importe - x.TotalAbonado | currency}}</td>
+                                    <td>{{x.Status}}</td>
                                     <td>
                                         <button class="btn ink-reaction btn-floating-action btn-xs btn-success" ng-disabled="$ctrl.pagar" ng-click="$ctrl.PagarCredito(x)" data-toggle="tooltip" data-placement="top" title="Pagar" data-original-title="Pagar"><i class="fa fa-credit-card"></i></button>
                                         <button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ng-disabled="$ctrl.generar" ng-click="$ctrl.detalle(x)" data-toggle="tooltip" data-placement="top" title="Ver Detalle" data-original-title="Ver Detalle"><i class="fa fa-list-ul"></i></button>
