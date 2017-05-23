@@ -201,7 +201,7 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
             }
         }
         vm.Ticket = '';
-        vm.ContratoMaestro = '';
+        vm.ContratoMaestro = null;
         vm.Cliente = '';
         $('.buscarContrato').collapse('hide');
     }
@@ -352,6 +352,12 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
         img.src = url;
     }
 
+    function enterContrato(event, opcion) {
+        if (event.which === 13) {
+            buscaContrato(opcion);
+        }
+    }
+
     // this.$onInit = function () {
     //     getImageDataURL();
     // }
@@ -366,4 +372,5 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
     vm.csvDosHide = true;
     var img = new Image();
     img.crossOrigin = "";
+    vm.enterContrato = enterContrato;
 }
