@@ -115,10 +115,6 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
                 });
             }
         }
-        // ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
-        //     vm.pagos = data.GetBuscaFacturasMaestroListResult;
-
-        // });
         vm.Ticket = '';
         vm.ContratoMaestro = '';
         vm.Cliente = '';
@@ -128,27 +124,6 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     $rootScope.$on('realoadBrowse', function () {
         reloadTables();
     });
-
-    function buscarFecha(opcion) {
-        if (fechaBusqueda == undefined || fechaBusqueda == '') {
-            ngNotify.set('Seleccione una fecha.', 'error');
-        } else {
-            vm.seleccion = 2;
-            vm.auxFechaInicio = $filter('date')(fechaBusqueda, 'dd/MM/yyyy');
-            desgloseFactory.busquedaDesglose(vm.seleccion, $localStorage.currentUser.usuario, vm.auxFechaInicio).then(function (data) {
-                if (data.GetBuscaDesgloseDeMonedaListResult.length == 0) {
-                    ngNotify.set('No se encontraron registros.', 'error');
-                    vm.sinDatos = true;
-                    vm.desglose = '';
-                    vm.showPaginator = false;
-                } else {
-                    vm.sinDatos = false;
-                    vm.desglose = data.GetBuscaDesgloseDeMonedaListResult;
-                    vm.showPaginator = true;
-                }
-            });
-        }
-    }
 
     function reloadTables() {
         ContratoMaestroFactory.GetMuestraFacturasMaestroList().then(function (data) {
