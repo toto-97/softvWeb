@@ -122,9 +122,14 @@
         }
         if (vm.contratoMaestro.ReactivarMan) {
           vm.reactivacion = 'manual';
+          vm.bloqueageneracion=false;
         } else {
           vm.reactivacion = 'factura';
+          vm.bloqueageneracion=true;
         }
+
+
+
 
         vm.razon = vm.contratoMaestro.RazonSocial;
         vm.nombrecomercial = vm.contratoMaestro.NombreComercial;

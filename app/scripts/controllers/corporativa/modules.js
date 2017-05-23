@@ -122,7 +122,7 @@ function corporativaConf($stateProvider) {
 	{
 		name: 'home.corporativa.tickets',
 		data: {
-			pageTitle: 'SAC | TICKETS',
+			pageTitle: 'SAC | FACTURAS',
 			permissions: {
 				only: ['ticketsSelect'],
 				options: {

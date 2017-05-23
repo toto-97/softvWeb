@@ -207,10 +207,11 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr dir-paginate="x in $ctrl.displayCollection|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:5">
-                              <td style="font-size: 9px;">{{ x.ContratoCompuesto }}</td>
+                      <!--      ng-if="x.Importe!=null"-->
+                            <tr  dir-paginate="x in $ctrl.displayCollection|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:5">
+                              <td  style="font-size: 9px;">{{ x.ContratoCompuesto }}</td>
                               <td style="font-size: 9px;">{{ x.Nombre }}</td>
-                              <td style="font-size: 9px;">{{ x.Importe |currency }}</td>
+                              <td  style="font-size: 9px;">{{ x.Importe |currency }}</td>
                               <td style="font-size: 9px;">
                                 <button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ng-click="$ctrl.abrirDetalle(x)" data-toggle="tooltip"
                                   data-placement="top" title="Detalle" data-original-title="Detalle"><i class="fa fa-list"></i></button>

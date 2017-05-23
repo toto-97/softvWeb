@@ -34,7 +34,10 @@ angular.module('softvApp')
       GuardaMotivos: '/GuardaMotivos/GetGuardaMotivosCM',
       AddBitacoraTickets: '/Bitacora/AddBitacoraTickets',
       TblFacturasOpcionesCM: '/TblFacturasOpciones/AddTblFacturasOpcionesCM',
-      Sp_DameDetalleFacturaMaestra: '/Sp_DameDetalleFacturaMaestra/GetSp_DameDetalleFacturaMaestraList'
+      Sp_DameDetalleFacturaMaestra: '/Sp_DameDetalleFacturaMaestra/GetSp_DameDetalleFacturaMaestraList',
+      uspHaz_Pregunta: '/uspHaz_Pregunta/GetDeepuspHaz_Pregunta_CM',
+      GetDeeAfirmacionPregunta_CM:'/uspHaz_Pregunta/GetDeeAfirmacionPregunta_CM'
+
 
 
     };
@@ -686,10 +689,60 @@ angular.module('softvApp')
     };
 
 
+factory.GetDeeAfirmacionPregunta_CM = function (contrato,MesesAdelantados,op,ClvSession) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+
+      var parametros = {
+        'Contrato': contrato,
+        'MesesAdelantados': MesesAdelantados,
+        'Op':op,
+        'ClvSession':ClvSession,
+        'Op2':1
+
+      };
+      console.log(JSON.stringify(parametros));
+      $http.post(globalService.getUrl() + paths.GetDeeAfirmacionPregunta_CM, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
 
 
 
-    factory.TblFacturasOpcionesCM = function (factura, cancelar, reimprimir) {
+
+
+    factory.uspHaz_Pregunta = function (contrato,op) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+
+      var parametros = {
+        'Contrato': contrato,
+        'Op': op
+      };
+      console.log(JSON.stringify(parametros));
+      $http.post(globalService.getUrl() + paths.uspHaz_Pregunta, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
+
+
+
+    factory.TblFacturasOpcionesCM = function (factura, cancelar, reimprimir, correo) {
       var deferred = $q.defer();
       var config = {
         headers: {
@@ -702,7 +755,7 @@ angular.module('softvApp')
           'Clv_Factura': factura,
           'OpCancelar': cancelar,
           'OpReimprimir': reimprimir,
-          'OpCorreo': 0
+          'OpCorreo': correo
         }
 
       };
