@@ -6,6 +6,7 @@
     .controller('nuevaNotaCreditoCtrl', nuevaNotaCreditoCtrl);
 
   nuevaNotaCreditoCtrl.inject = ['$uibModal', '$state', '$rootScope', 'ngNotify', 'ContratoMaestroFactory', '$localStorage', '$filter'];
+
   function nuevaNotaCreditoCtrl($uibModal, $state, $rootScope, ngNotify, ContratoMaestroFactory, $localStorage, $filter) {
     var vm = this;
     vm.abrirContratos = abrirContratos;
@@ -22,7 +23,8 @@
     vm.abrirTicket = abrirTicket;
     vm.mostrarbtn = true;
     vm.clvnota = 0;
-    vm.revertir=false;
+    vm.revertir = false;
+    vm.Detallefactura = Detallefactura;
 
     this.$onInit = function () {
       ContratoMaestroFactory.StatusNotadeCredito().then(function (data) {
@@ -68,6 +70,20 @@
       });
     }
 
+     $rootScope.$on('actualiza_detalle', function (e, obj) {       
+     
+          ContratoMaestroFactory.GetDetalle_NotasdeCreditoList( obj.clv_session).then(function (data) {
+            vm.DetalleNota = data.GetDetalle_NotasdeCreditoListResult;
+            calcular();
+          });
+          ContratoMaestroFactory.GetCalcula_monto(vm.factura.CLV_FACTURA).then(function (data) {
+            vm.Monto = data.GetCalcula_montoResult.Monto;
+            
+          });
+     
+    });
+
+
     $rootScope.$on('contrato_nota', function (e, contrato) {
       vm.DetalleContrato = contrato;
       vm.Contrato = contrato.IdContratoMaestro;
@@ -107,6 +123,7 @@
               vm.Cajero = [];
               vm.usuario = $localStorage.currentUser.usuario
               facturas(vm.Contrato);
+              
             } else {
               ngNotify.set('No se encontró un contrato  con la clave proporcionada', 'error');
             }
@@ -119,6 +136,30 @@
     }
 
 
+    function Detallefactura(obj) {
+      var options = {};
+      options.clv_session = vm.clv_session;
+      options.Clv_FacturaCli = obj.Clv_FacturaCli;
+      options.contratocom = obj.ContratoCompuesto;
+      var modalInstance = $uibModal.open({
+        animation: true,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: 'views/corporativa/ModalDetalleFacCli.html',
+        controller: 'ModalDetalleFacCliCtrl',
+        controllerAs: '$ctrl',
+        backdrop: 'static',
+        keyboard: false,
+        size: "lg",
+        resolve: {
+          options: function () {
+            return options;
+          }
+        }
+      });
+    }
+
+
     function cambioFactura() {
       ContratoMaestroFactory.GetObtieneDatosTicketList(vm.factura.CLV_FACTURA).then(function (data) {
         vm.Caja = data.GetObtieneDatosTicketListResult.Caja[0].NOMBRE;
@@ -128,15 +169,26 @@
         vm.Cajero = data.GetObtieneDatosTicketListResult.Cajero;
         vm.usuario = $localStorage.currentUser.usuario
 
-        ContratoMaestroFactory.GetDetalle_NotasdeCreditoList(vm.factura.CLV_FACTURA).then(function (data) {
-          vm.DetalleNota = data.GetDetalle_NotasdeCreditoListResult;
-          ContratoMaestroFactory.GetCalcula_monto(vm.factura.CLV_FACTURA).then(function (data) {
-            vm.Monto = data.GetCalcula_montoResult.Monto;
-          calcular();
+
+        ContratoMaestroFactory.DetalleContratosFM(vm.factura.CLV_FACTURA).then(function (result) {
+          console.log(result);
+          vm.clv_session = result.GetDetalleContratosFMListResult.ListaDos[0].Clv_Session;
+          vm.contratos = result.GetDetalleContratosFMListResult.ListaUno;
+          ContratoMaestroFactory.GetDetalle_NotasdeCreditoList(vm.clv_session).then(function (data) {
+            vm.DetalleNota = data.GetDetalle_NotasdeCreditoListResult;
+            calcular();
           });
-
-
+          ContratoMaestroFactory.GetCalcula_monto(vm.factura.CLV_FACTURA).then(function (data) {
+            console.log(datas);
+            vm.Monto = data.GetCalcula_montoResult.Monto;
+            
+          });
+          
         });
+
+
+
+
 
       });
 
@@ -160,9 +212,10 @@
         'Contrato_Aplicar': 0,
       }
 
+
       ContratoMaestroFactory.GetAddNotaCredito(obj).then(function (data) {
         vm.Clv_NotadeCredito = data.GetAddNotaCreditoResult[0].Clv_NotadeCredito;
-        ContratoMaestroFactory.GetGuarda_DetalleNota(vm.factura.CLV_FACTURA, vm.Clv_NotadeCredito).then(function (data) {
+        ContratoMaestroFactory.GetGuarda_DetalleNota(vm.clv_session, vm.Clv_NotadeCredito).then(function (data) {
           ngNotify.set('La nota de crédito se ha guardado correctamente', 'success');
           if (vm.revertir == true) {
             ContratoMaestroFactory.GetProcedimientoCancelar(vm.factura.CLV_FACTURA).then(function (data) {
@@ -171,8 +224,7 @@
           }
           ContratoMaestroFactory.AddMovSist(vm.Contrato, vm.sumatotal).then(function (data) {
             ContratoMaestroFactory.DeleteNotasDeCredito_ContraMaeFac(vm.factura.CLV_FACTURA, vm.Clv_NotadeCredito)
-              .then(function (data) {
-              });
+              .then(function (data) {});
           });
         });
         vm.mostrarbtn = false;
@@ -185,6 +237,7 @@
     function calcular() {
       vm.sumatotal = 0;
       vm.DetalleNota.forEach(function (element) {
+        console.log(element);
         vm.sumatotal += (element.importe == undefined) ? 0 : element.importe
       });
     }

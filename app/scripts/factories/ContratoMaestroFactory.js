@@ -36,8 +36,10 @@ angular.module('softvApp')
       TblFacturasOpcionesCM: '/TblFacturasOpciones/AddTblFacturasOpcionesCM',
       Sp_DameDetalleFacturaMaestra: '/Sp_DameDetalleFacturaMaestra/GetSp_DameDetalleFacturaMaestraList',
       uspHaz_Pregunta: '/uspHaz_Pregunta/GetDeepuspHaz_Pregunta_CM',
-      GetDeeAfirmacionPregunta_CM:'/uspHaz_Pregunta/GetDeeAfirmacionPregunta_CM'
-
+      GetDeeAfirmacionPregunta_CM: '/uspHaz_Pregunta/GetDeeAfirmacionPregunta_CM',
+      DetalleContratosFM: '/DetalleContratosFM/GetDetalleContratosFMList',
+      DameDetalle_FacturaporCli: '/DameDetalle_FacturaporCli/GetDameDetalle_FacturaporCliList',
+      GetAgregaDetalleNotaDeCreditoMaestroList: '/AgregaDetalleNotaDeCreditoMaestro/GetAgregaDetalleNotaDeCreditoMaestroList'
 
 
     };
@@ -226,7 +228,7 @@ angular.module('softvApp')
 
 
 
-    factory.GetDetalle_NotasdeCreditoList = function (factura) {
+    factory.GetDetalle_NotasdeCreditoList = function (clv_session) {
 
       var deferred = $q.defer();
       var config = {
@@ -235,8 +237,8 @@ angular.module('softvApp')
         }
       };
       var parametros = {
-        'ClvFactura': factura,
-        'ClvNota': 0
+        'Clv_Session': clv_session,
+
       };
       console.log(JSON.stringify(parametros));
       $http.post(globalService.getUrl() + paths.GetDetalle_NotasdeCreditoList, JSON.stringify(parametros), config).then(function (response) {
@@ -300,7 +302,7 @@ angular.module('softvApp')
           'Authorization': $localStorage.currentUser.token
         }
       };
-
+    
       $http.post(globalService.getUrl() + paths.GetAddNotaCredito, JSON.stringify(data), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -407,6 +409,8 @@ angular.module('softvApp')
         'Factura': factura,
         'Clv_NotadeCredito': nota,
       };
+    console.log(JSON.stringify(parametros));
+     
       $http.post(globalService.getUrl() + paths.GetGuarda_DetalleNota, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -689,7 +693,7 @@ angular.module('softvApp')
     };
 
 
-factory.GetDeeAfirmacionPregunta_CM = function (contrato,MesesAdelantados,op,ClvSession) {
+    factory.GetDeeAfirmacionPregunta_CM = function (contrato, MesesAdelantados, op, ClvSession) {
       var deferred = $q.defer();
       var config = {
         headers: {
@@ -700,9 +704,9 @@ factory.GetDeeAfirmacionPregunta_CM = function (contrato,MesesAdelantados,op,Clv
       var parametros = {
         'Contrato': contrato,
         'MesesAdelantados': MesesAdelantados,
-        'Op':op,
-        'ClvSession':ClvSession,
-        'Op2':1
+        'Op': op,
+        'ClvSession': ClvSession,
+        'Op2': 1
 
       };
       console.log(JSON.stringify(parametros));
@@ -718,7 +722,7 @@ factory.GetDeeAfirmacionPregunta_CM = function (contrato,MesesAdelantados,op,Clv
 
 
 
-    factory.uspHaz_Pregunta = function (contrato,op) {
+    factory.uspHaz_Pregunta = function (contrato, op) {
       var deferred = $q.defer();
       var config = {
         headers: {
@@ -739,6 +743,33 @@ factory.GetDeeAfirmacionPregunta_CM = function (contrato,MesesAdelantados,op,Clv
       return deferred.promise;
     };
 
+
+
+
+    factory.GetAgregaDetalleNotaDeCreditoMaestroList = function (ContratoCom, ClvSession, ClvFacturaCli, claves) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+
+      var parametros = {
+        'ObjDetalle': {
+          'ContratoCom': ContratoCom,
+          'ClvSession': ClvSession,
+          'ClvFacturaCli': ClvFacturaCli
+        },
+        'lstDetalle': claves
+      };
+      console.log(JSON.stringify(parametros));      
+      $http.post(globalService.getUrl() + paths.GetAgregaDetalleNotaDeCreditoMaestroList, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
 
 
 
@@ -767,6 +798,53 @@ factory.GetDeeAfirmacionPregunta_CM = function (contrato,MesesAdelantados,op,Clv
       });
       return deferred.promise;
     };
+
+
+    factory.DetalleContratosFM = function (factura) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+
+      var parametros = {
+        'Clv_FacturaMaestro': factura
+
+      };
+      console.log(JSON.stringify(parametros));
+      $http.post(globalService.getUrl() + paths.DetalleContratosFM, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
+
+    factory.DameDetalle_FacturaporCli = function (factura, session) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+
+      var parametros = {
+        'Clv_FacturaCli': factura,
+        'Clv_Session': session
+
+      };
+      console.log(JSON.stringify(parametros));
+      $http.post(globalService.getUrl() + paths.DameDetalle_FacturaporCli, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
+
 
 
 

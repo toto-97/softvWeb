@@ -56,13 +56,24 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
     reloadTable();
   });
 
- $rootScope.$on('reload_detalle', function (e,contrato) {
-     alert(contrato);
-     console.log(contrato);
-    vm.contratobusqueda=contrato;
-    Buscarporcontrato(false);
+  $rootScope.$on('reload_detalle', function (e, obj) {
+
+    pagosMaestrosFactory.dameDetalle(obj.clv_session).then(function (detallePago) {
+      console.log(detallePago);
+      if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
+        vm.blockBaja = true;
+        vm.blockPagar = true;
+      } else {
+        vm.blockBaja = false;
+        vm.blockPagar = false;
+      }
+      vm.detallePago = detallePago.GetDetalleContratosMaestrosListResult.lista;
+      vm.sumaPagos = detallePago.GetDetalleContratosMaestrosListResult.datosdetalle;
+      vm.detallePagoAux = vm.detallePago;
+    });
+DetalleFactura(obj.clv_session);
   });
-  
+
 
   function ObtenerCiudades(x) {
     ContratoMaestroFactory.GetCiudadList(x.Clv_Plaza).then(function (data) {
@@ -92,7 +103,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         vm.muestraCliente = true;
         pagosMaestrosFactory.cobraSaldoMaestro(vm.Contratos.IdContratoMaestro).then(function (data) {
           vm.saldo = data.GetCobraContratoMaestroResult;
-          HacerPregunta(vm.saldo.Clv_Session, 900);
+          HacerPregunta(vm.saldo.Clv_SessionPadre, 900);
           pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
             console.log(detallePago);
             if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
@@ -127,7 +138,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
 
 
   function Buscarporcontrato(preguntar) {
-  
+    alert('buscar contrato');
     if (vm.contratobusqueda == null || vm.contratobusqueda == undefined || vm.contratobusqueda == '') {
       ngNotify.set('Ingrese el contrato', 'error');
     }
@@ -150,13 +161,13 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
 
         vm.muestraCliente = true;
         pagosMaestrosFactory.cobraSaldoMaestro(vm.Contratos.IdContratoMaestro).then(function (data) {
-         
+
           vm.saldo = data.GetCobraContratoMaestroResult;
           console.log(vm.saldo);
-          if(preguntar){
-HacerPregunta(vm.saldo.Clv_Session, 900);
+          if (preguntar) {
+            HacerPregunta(vm.saldo.Clv_SessionPadre, 900);
           }
-           
+
           pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
             console.log(detallePago);
             if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
@@ -400,28 +411,27 @@ HacerPregunta(vm.saldo.Clv_Session, 900);
   }
 
   function enterContrato(event) {
-        if (event.which === 13) {
-    Buscarporcontrato(true); 
-        }
+    if (event.which === 13) {
+      Buscarporcontrato(true);
+    }
   }
 
   function enterNombre(event) {
     if (event.which === 13) {
-        BuscarNombrec();
+      BuscarNombrec();
     }
   }
 
   function enterRazon(event) {
     if (event.which === 13) {
-    BuscarRazonS();
+      BuscarRazonS();
     }
   }
 
   function HacerPregunta(clv_session, option) {
-
     var object = {};
     object.clv_session = clv_session;
-    object.contrato=vm.Contratos.IdContratoMaestro;
+    object.contrato = vm.Contratos.IdContratoMaestro;
     object.option = option;
     var modalInstance = $uibModal.open({
       animation: true,
