@@ -201,7 +201,7 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
             }
         }
         vm.Ticket = '';
-        vm.ContratoMaestro = '';
+        vm.ContratoMaestro = null;
         vm.Cliente = '';
         $('.buscarContrato').collapse('hide');
     }
