@@ -59,7 +59,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
   $rootScope.$on('reload_detalle', function (e, obj) {
 
     pagosMaestrosFactory.dameDetalle(obj.clv_session).then(function (detallePago) {
-      console.log(detallePago);
+     
       if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
         vm.blockBaja = true;
         vm.blockPagar = true;
@@ -105,7 +105,7 @@ DetalleFactura(obj.clv_session);
           vm.saldo = data.GetCobraContratoMaestroResult;
           HacerPregunta(vm.saldo.Clv_SessionPadre, 900);
           pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
-            console.log(detallePago);
+           
             if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
               vm.blockBaja = true;
               vm.blockPagar = true;
@@ -129,7 +129,7 @@ DetalleFactura(obj.clv_session);
 
   function DetalleFactura(clv_session) {
     ContratoMaestroFactory.Sp_DameDetalleFacturaMaestra(clv_session).then(function (result) {
-      console.log(result);
+      
       vm.detalleFactura = result.GetSp_DameDetalleFacturaMaestraListResult;
     });
   }
@@ -138,7 +138,7 @@ DetalleFactura(obj.clv_session);
 
 
   function Buscarporcontrato(preguntar) {
-    alert('buscar contrato');
+   
     if (vm.contratobusqueda == null || vm.contratobusqueda == undefined || vm.contratobusqueda == '') {
       ngNotify.set('Ingrese el contrato', 'error');
     }
@@ -163,13 +163,13 @@ DetalleFactura(obj.clv_session);
         pagosMaestrosFactory.cobraSaldoMaestro(vm.Contratos.IdContratoMaestro).then(function (data) {
 
           vm.saldo = data.GetCobraContratoMaestroResult;
-          console.log(vm.saldo);
+         
           if (preguntar) {
             HacerPregunta(vm.saldo.Clv_SessionPadre, 900);
           }
 
           pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
-            console.log(detallePago);
+            
             if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
               vm.blockBaja = true;
               vm.blockPagar = true;
@@ -248,7 +248,7 @@ DetalleFactura(obj.clv_session);
       'Op': 1
     };
     ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
-      console.log(data);
+    
       vm.Contratos = data.GetBusquedaContratoMaestroFacResult;
       if (vm.Contratos == undefined) {
         ngNotify.set('No se encontro el contrato.', 'error');

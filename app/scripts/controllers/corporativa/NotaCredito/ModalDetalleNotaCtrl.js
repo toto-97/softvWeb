@@ -6,10 +6,11 @@
     .controller('ModalDetalleNotaCtrl', ModalDetalleNotaCtrl);
 
   ModalDetalleNotaCtrl.inject = ['$uibModalInstance', '$uibModal', '$rootScope', 'nota', 'ngNotify', 'ContratoMaestroFactory'];
+
   function ModalDetalleNotaCtrl($uibModalInstance, $uibModal, $rootScope, nota, ngNotify, ContratoMaestroFactory) {
     var vm = this;
     vm.nota = nota;
-    vm.cancel=cancel;
+    vm.cancel = cancel;
 
     this.$onInit = function () {
       ContratoMaestroFactory.GetNotasDeCredito_ContraMaeFacList(nota).then(function (data) {
@@ -29,11 +30,11 @@
           'ClvCiudad': vm.ContratoMaestro,
           'Op': 4
         };
-        console.log(vm.detalle.Factura);
+
         ContratoMaestroFactory.BuscarContratos(parametros).then(function (data) {
           vm.DetalleContrato = data.GetBusquedaContratoMaestroFacResult[0];
           ContratoMaestroFactory.GetDetalle_NotasdeCreditoList(vm.detalle.Factura).then(function (data) {
-            console.log(data);
+
             vm.DetalleNota = data.GetDetalle_NotasdeCreditoListResult;
           });
         });

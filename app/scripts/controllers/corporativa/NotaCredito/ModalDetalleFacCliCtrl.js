@@ -14,7 +14,7 @@
     this.$onInit = function () {
      
    ContratoMaestroFactory.DameDetalle_FacturaporCli(options.Clv_FacturaCli, options.clv_session).then(function (response) {
-       console.log(response);
+     
         vm.conceptos=response.GetDameDetalle_FacturaporCliListResult;
 
       });

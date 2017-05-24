@@ -1,3 +1,5 @@
 [0412/123409.560:ERROR:settings.cc(261)] Settings magic is not 1129342067
 [0420/095222:ERROR:tcp_listen_socket.cc(76)] Could not bind socket to 127.0.0.1:6004
 [0420/095222:ERROR:node_debugger.cc(86)] Cannot start debugger server
+[0524/114215:ERROR:tcp_listen_socket.cc(76)] Could not bind socket to 127.0.0.1:6004
+[0524/114215:ERROR:node_debugger.cc(86)] Cannot start debugger server

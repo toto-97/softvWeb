@@ -17,7 +17,7 @@
       ContratoMaestroFactory.uspHaz_Pregunta(object.contrato, 900).then(function (data) {
         vm.pregunta = data.GetDeepuspHaz_Pregunta_CMResult.Pregunta;
         vm.MesesAdelantados = data.GetDeepuspHaz_Pregunta_CMResult.MesesAdelantados;
-        console.log(data);
+        
       });
     }
 
@@ -28,7 +28,7 @@
     function ok() {
        ContratoMaestroFactory.GetDeeAfirmacionPregunta_CM(object.contrato,
        vm.MesesAdelantados,900,object.clv_session).then(function(data){
-        console.log(data);
+       
         $uibModalInstance.dismiss('cancel');
         $rootScope.$broadcast('reload_detalle', object);
          
