@@ -13,6 +13,7 @@
     vm.opcionesNota = opcionesNota;
 
 
+
     this.$onInit = function () {
       buscar(0);
     }
@@ -77,6 +78,10 @@
         }
       });
     }
+
+
+
+ 
 
 
     function opcionesNota(opcion, nota) {

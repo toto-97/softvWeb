@@ -8,7 +8,7 @@
       <div class="tools">
         <button class="btn btn-default btn-sm" ui-sref="home.corporativa.notas" type="button"><i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</button>
         <button class="btn btn-primary btn-sm" ng-show="$ctrl.mostrarbtn" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-         
+
       </div>
     </div>
 
@@ -97,13 +97,8 @@
             <br>
             <label class="col-md-3 control-label blod">Ticket:</label>
             <div class="col-md-9" style="padding-left:-10px;">
-              <select class="form-control input-sm"
-               ng-model="$ctrl.factura"
-               name="ticket"
-                required ng-change="$ctrl.cambioFactura()"
-                required-message="'Este campo es obligatorio.'"
-                validate-on="dirty"
-                 ng-options="item as item.FACTURAS for item in $ctrl.facturas track by item.CLV_FACTURA">
+              <select class="form-control input-sm" ng-model="$ctrl.factura" name="ticket" required ng-change="$ctrl.cambioFactura()" required-message="'Este campo es obligatorio.'"
+                validate-on="dirty" ng-options="item as item.FACTURAS for item in $ctrl.facturas track by item.CLV_FACTURA">
           <option value="">selecciona</option>
           </select>
             </div>
@@ -157,7 +152,7 @@
               <b class="text-danger"> Revertir el proceso que genero el ticket al que se esta aplicando la nota de crédito</b>
 
             </div>-->
-         <!--   <div class="col-md-4">
+            <!--   <div class="col-md-4">
               <label class="checkbox-inline checkbox-styled checkbox-primary">
 														<input type="checkbox" ng-model="$ctrl.revertir" ><span></span>
 													</label>
@@ -168,19 +163,22 @@
           </div>
         </div>
         <div class="col-md-6">
-          <table class="table">
-            <thead style="background-color: khaki;">
-              <th>DESCRIPCION</th>
-              <th>IMPORTE PAGADO</th>
-              <!--<th>IMPORTE PARA NOTA</th>
+          <uib-tabset active="activeJustified" justified="true">
+            <uib-tab index="0" heading="Detalle">
+              <div class="row" style="overflow-y: scroll; max-height: 400px;">
+                <table class="table">
+                  <thead style="background-color: khaki;">
+                    <th>DESCRIPCION</th>
+                    <th>IMPORTE PAGADO</th>
+                    <!--<th>IMPORTE PARA NOTA</th>
 -->
-            </thead>
-            <tbody>
-              <!-- ng-keyup="$ctrl.validaMonto(x,x.cantidad)"-->
-              <tr ng-repeat="x in $ctrl.DetalleNota">
-                <td>{{x.descripcion}}</td>
-                <td>${{x.importe}}</td>
-               <!-- <td>
+                  </thead>
+                  <tbody>
+                    <!-- ng-keyup="$ctrl.validaMonto(x,x.cantidad)"-->
+                    <tr ng-repeat="x in $ctrl.DetalleNota">
+                      <td>{{x.descripcion}}</td>
+                      <td>${{x.importe}}</td>
+                      <!-- <td>
                   <ng-form name="urlForm">
                     <input type="number" name="cant" ng-model="x.cantidad" class="form-control input-sm" required min="0" ng-change="$ctrl.calcular()"
                       validate-on="dirty" max="{{x.importe}}">
@@ -189,10 +187,35 @@
 
                   </ng-form>
                 </td>-->
-              </tr>
-            </tbody>
+                    </tr>
+                  </tbody>
 
-          </table>
+                </table>
+              </div>
+            </uib-tab>
+            <uib-tab index="1" heading="Contratos">
+              <div class="row" style="overflow-y: scroll; max-height: 400px;">
+                <table class="table">
+                  <thead>
+                    <th>Contrato</th>
+                    <th>Importe</th>
+                    <th></th>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="x in $ctrl.contratos">
+                      <td>{{x.ContratoCompuesto}}</td>
+                      <td>{{x.Importe|currency}}</td>
+                      <td><button class="btn btn-xs btn-info " ng-click="$ctrl.Detallefactura(x)">Detalle</button></td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </div>
+
+            </uib-tab>
+
+
+          </uib-tabset>
           <div class="row">
             <div class="col-md-6" class="text-right">
               <b class="text-danger">Monto: $</b></div>
@@ -200,26 +223,10 @@
               <label class="text-danger"><b>
                 {{$ctrl.sumatotal | currency}}</b>
               </label>
-             
+
             </div>
           </div>
-
-
-        </div>
-
-
-
-
-
-
-
-
-
+          </div>
       </div>
-
-
-
-
-
   </form>
   </div>

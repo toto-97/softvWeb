@@ -30,7 +30,7 @@
        vm.MesesAdelantados,900,object.clv_session).then(function(data){
         console.log(data);
         $uibModalInstance.dismiss('cancel');
-        $rootScope.$broadcast('reload_detalle', object.contrato);
+        $rootScope.$broadcast('reload_detalle', object);
          
        });
      
