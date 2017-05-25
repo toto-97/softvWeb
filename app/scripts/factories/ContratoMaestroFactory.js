@@ -41,7 +41,7 @@ angular.module('softvApp')
       DameDetalle_FacturaporCli: '/DameDetalle_FacturaporCli/GetDameDetalle_FacturaporCliList',
       GetAgregaDetalleNotaDeCreditoMaestroList: '/AgregaDetalleNotaDeCreditoMaestro/GetAgregaDetalleNotaDeCreditoMaestroList',
        GetCANCELA_FACTURASMAESTRA_PRINCIPAL:'/NotasDeCredito_ContraMaeFac/GetCANCELA_FACTURASMAESTRA_PRINCIPAL',
-
+GetCancelaPagoFacturaMaestro:'/ContratoMaestroFac/GetCancelaPagoFacturaMaestro'
     };
 
     factory.ProcesaDesconexion = function (contratos) {
@@ -827,6 +827,24 @@ angular.module('softvApp')
     };
 
 
+    factory.GetCancelaPagoFacturaMaestro = function (Clv_Pago) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'Clv_Pago': Clv_Pago
+      };      
+      $http.post(globalService.getUrl() + paths.GetCancelaPagoFacturaMaestro, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
     factory.DetalleContratosFM = function (factura) {
       var deferred = $q.defer();
       var config = {
@@ -847,6 +865,10 @@ angular.module('softvApp')
       });
       return deferred.promise;
     };
+
+     
+
+
 
 
     factory.DameDetalle_FacturaporCli = function (factura, session) {

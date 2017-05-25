@@ -305,7 +305,9 @@
                                         <th>Medio Pago</th>
                                         <th>Importe</th>
                                         <th>Fecha</th>
+                                        <th>Status</th>
                                         <th>Opción</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -315,10 +317,17 @@
                                         <td>{{z.Cajera}} </td>
                                         <td>{{z.MedioPago}}</td>
                                         <td>{{z.Importe | currency}}</td>
+                                       
+                                        
                                         <td>{{z.Hora}}</td>
+                                         <td>{{z.StatusPago}}</td>
                                         <td>
-                                            <button class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-click="$ctrl.verFactura(z.Clv_Pago)" data-toggle="tooltip" data-placement="top" title="Ver Facturas" data-original-title="Ver Detalle"><i class="fa fa-plus"></i></button>
+                                            <button class="btn ink-reaction btn-icon-toggle btn-xs btn-success" ng-click="$ctrl.verFactura(z.Clv_Pago)" data-toggle="tooltip" data-placement="top" title="Ver Facturas" data-original-title="Ver Detalle"><i class="fa fa-plus"></i></button>
                                         </td>
+                                        <td ng-if="z.StatusPago=='Activa'">
+                                            <button  class="btn ink-reaction btn-icon-toggle btn-xs  btn-danger" ng-click="$ctrl.cancelarfactura(z)" data-toggle="tooltip" data-placement="top" title="cancelar factura" data-original-title="cancelar"><i class="fa fa-trash"></i></button>
+                                        </td>
+                                        <td ng-if="z.StatusPago!='Activa'"></td>
                                     </tr>
                                 </tbody>
                             </table>

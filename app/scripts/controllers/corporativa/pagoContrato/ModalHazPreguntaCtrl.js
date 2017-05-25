@@ -11,6 +11,7 @@
     var vm = this;
     vm.ok = ok;
     vm.cancel = cancel;
+    vm.titulo='Atención';
 
     this.$onInit = function () {     
       console.log(object);

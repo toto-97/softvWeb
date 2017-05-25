@@ -134,6 +134,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         ngNotify.set('No se encontro el contrato.', 'error');
         resetBusquedas();
       } else {
+        vm.muestraTablaCliente=false;
         vm.muestraCliente = true;
         pagosMaestrosFactory.cobraSaldoMaestro(vm.Contratos.IdContratoMaestro).then(function (data) {
           console.log(data);
