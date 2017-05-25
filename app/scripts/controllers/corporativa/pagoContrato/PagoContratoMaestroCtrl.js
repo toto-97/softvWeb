@@ -59,7 +59,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
   $rootScope.$on('reload_detalle', function (e, obj) {
 
     pagosMaestrosFactory.dameDetalle(obj.clv_session).then(function (detallePago) {
-     
+
       if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
         vm.blockBaja = true;
         vm.blockPagar = true;
@@ -71,7 +71,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
       vm.sumaPagos = detallePago.GetDetalleContratosMaestrosListResult.datosdetalle;
       vm.detallePagoAux = vm.detallePago;
     });
-DetalleFactura(obj.clv_session);
+    DetalleFactura(obj.clv_session);
   });
 
 
@@ -105,7 +105,7 @@ DetalleFactura(obj.clv_session);
           vm.saldo = data.GetCobraContratoMaestroResult;
           HacerPregunta(vm.saldo.Clv_SessionPadre, 900);
           pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
-           
+
             if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
               vm.blockBaja = true;
               vm.blockPagar = true;
@@ -129,7 +129,7 @@ DetalleFactura(obj.clv_session);
 
   function DetalleFactura(clv_session) {
     ContratoMaestroFactory.Sp_DameDetalleFacturaMaestra(clv_session).then(function (result) {
-      
+
       vm.detalleFactura = result.GetSp_DameDetalleFacturaMaestraListResult;
     });
   }
@@ -138,7 +138,7 @@ DetalleFactura(obj.clv_session);
 
 
   function Buscarporcontrato(preguntar) {
-   
+
     if (vm.contratobusqueda == null || vm.contratobusqueda == undefined || vm.contratobusqueda == '') {
       ngNotify.set('Ingrese el contrato', 'error');
     }
@@ -163,13 +163,13 @@ DetalleFactura(obj.clv_session);
         pagosMaestrosFactory.cobraSaldoMaestro(vm.Contratos.IdContratoMaestro).then(function (data) {
 
           vm.saldo = data.GetCobraContratoMaestroResult;
-         
+
           if (preguntar) {
             HacerPregunta(vm.saldo.Clv_SessionPadre, 900);
           }
 
           pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
-            
+
             if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
               vm.blockBaja = true;
               vm.blockPagar = true;
@@ -248,7 +248,7 @@ DetalleFactura(obj.clv_session);
       'Op': 1
     };
     ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
-    
+
       vm.Contratos = data.GetBusquedaContratoMaestroFacResult;
       if (vm.Contratos == undefined) {
         ngNotify.set('No se encontro el contrato.', 'error');
@@ -429,28 +429,38 @@ DetalleFactura(obj.clv_session);
   }
 
   function HacerPregunta(clv_session, option) {
-    var object = {};
-    object.clv_session = clv_session;
-    object.contrato = vm.Contratos.IdContratoMaestro;
-    object.option = option;
-    var modalInstance = $uibModal.open({
-      animation: true,
-      ariaLabelledBy: 'modal-title',
-      ariaDescribedBy: 'modal-body',
-      templateUrl: 'views/corporativa/ModalHazPregunta.html',
-      controller: 'ModalHazPreguntaCtrl',
-      controllerAs: '$ctrl',
-      backdrop: 'static',
-      keyboard: false,
-      size: 'md',
-      resolve: {
-        object: function () {
-          return object;
-        }
+
+    ContratoMaestroFactory.uspHaz_Pregunta(vm.Contratos.IdContratoMaestro, 900).then(function (data) {
+      vm.pregunta = data.GetDeepuspHaz_Pregunta_CMResult.Pregunta;
+      vm.MesesAdelantados = data.GetDeepuspHaz_Pregunta_CMResult.MesesAdelantados;
+      console.log(vm.pregunta);
+      if (vm.pregunta != null) {
+        var object = {};
+        object.clv_session = clv_session;
+        object.contrato = vm.Contratos.IdContratoMaestro;
+        object.pregunta = vm.pregunta;
+        object.MesesAdelantados = vm.MesesAdelantados;
+        object.option = option;
+        var modalInstance = $uibModal.open({
+          animation: true,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'views/corporativa/ModalHazPregunta.html',
+          controller: 'ModalHazPreguntaCtrl',
+          controllerAs: '$ctrl',
+          backdrop: 'static',
+          keyboard: false,
+          size: 'md',
+          resolve: {
+            object: function () {
+              return object;
+            }
+          }
+        });
+
       }
+
     });
-
-
   }
 
 

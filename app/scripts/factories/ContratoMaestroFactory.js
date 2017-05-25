@@ -39,8 +39,8 @@ angular.module('softvApp')
       GetDeeAfirmacionPregunta_CM: '/uspHaz_Pregunta/GetDeeAfirmacionPregunta_CM',
       DetalleContratosFM: '/DetalleContratosFM/GetDetalleContratosFMList',
       DameDetalle_FacturaporCli: '/DameDetalle_FacturaporCli/GetDameDetalle_FacturaporCliList',
-      GetAgregaDetalleNotaDeCreditoMaestroList: '/AgregaDetalleNotaDeCreditoMaestro/GetAgregaDetalleNotaDeCreditoMaestroList'
-
+      GetAgregaDetalleNotaDeCreditoMaestroList: '/AgregaDetalleNotaDeCreditoMaestro/GetAgregaDetalleNotaDeCreditoMaestroList',
+       GetCANCELA_FACTURASMAESTRA_PRINCIPAL:'/NotasDeCredito_ContraMaeFac/GetCANCELA_FACTURASMAESTRA_PRINCIPAL',
 
     };
 
@@ -792,6 +792,33 @@ angular.module('softvApp')
       };
     
       $http.post(globalService.getUrl() + paths.TblFacturasOpcionesCM, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
+
+    
+
+
+
+    
+    factory.GetCANCELA_FACTURASMAESTRA_PRINCIPAL = function (factura) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+
+      var parametros = {
+        'ClvFacturaMaestro': factura
+
+      };
+      
+      $http.post(globalService.getUrl() + paths.GetCANCELA_FACTURASMAESTRA_PRINCIPAL, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
         deferred.reject(response);

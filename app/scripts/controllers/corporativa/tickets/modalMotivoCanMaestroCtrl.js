@@ -40,24 +40,19 @@
       } else {
         opcion = 6;
       }
-   
-      console.log(vm.op);
-      console.log(opcion);
-      console.log(vm.motcan);
-
       ContratoMaestroFactory.GuardaMotivos(vm.Clv_FacturaMaestro, vm.motcan.Clv_Motivo).then(function (data) {
-       
         ContratoMaestroFactory.AddBitacoraTickets(vm.Clv_FacturaMaestro, vm.ContratoMaestro, opcion).then(function (data) {
-         
           if (vm.op == 'CAN') {
-            ContratoMaestroFactory.TblFacturasOpcionesCM(vm.Clv_FacturaMaestro, 1, 0,0).then(function (data) {
-               $uibModalInstance.dismiss('cancel');
-               ngNotify.set("Se ha cancelado la factura correctamente")
+            console.log(ticket.Clv_FacturaMaestro);
+            ContratoMaestroFactory.GetCANCELA_FACTURASMAESTRA_PRINCIPAL(ticket.Clv_FacturaMaestro).then(function (data) {
+              $uibModalInstance.dismiss('cancel');
+               $rootScope.$broadcast('reload_tabla');
+              ngNotify.set("Se ha cancelado la factura correctamente");
             });
           } else {
-            ContratoMaestroFactory.TblFacturasOpcionesCM(vm.Clv_FacturaMaestro, 0, 1,0).then(function (data) {
-             $uibModalInstance.dismiss('cancel');
-             ngNotify.set("Se ha reimpreso la factura correctamente")
+            ContratoMaestroFactory.TblFacturasOpcionesCM(vm.Clv_FacturaMaestro, 0, 1, 0).then(function (data) {
+              $uibModalInstance.dismiss('cancel');
+              ngNotify.set("Se ha reimpreso la factura correctamente")
             });
 
           }

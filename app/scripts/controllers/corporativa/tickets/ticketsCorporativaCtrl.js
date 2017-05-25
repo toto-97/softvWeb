@@ -7,7 +7,7 @@
 
   ticketsCtrl.inject = [''];
 
-  function ticketsCtrl(ContratoMaestroFactory, $filter, $uibModal,ngNotify) {
+  function ticketsCtrl(ContratoMaestroFactory, $filter, $uibModal,ngNotify,$rootScope) {
 
     function Init() {
       Buscar(0);
@@ -131,6 +131,10 @@
 
 
     }
+
+    $rootScope.$on('reload_tabla', function () {
+    Buscar(0);
+  });
 
 
     var vm = this;

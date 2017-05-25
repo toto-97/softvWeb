@@ -12,13 +12,11 @@
     vm.ok = ok;
     vm.cancel = cancel;
 
-    this.$onInit = function () {
-
-      ContratoMaestroFactory.uspHaz_Pregunta(object.contrato, 900).then(function (data) {
-        vm.pregunta = data.GetDeepuspHaz_Pregunta_CMResult.Pregunta;
-        vm.MesesAdelantados = data.GetDeepuspHaz_Pregunta_CMResult.MesesAdelantados;
-        
-      });
+    this.$onInit = function () {     
+      console.log(object);
+        vm.pregunta = object.pregunta;
+        vm.MesesAdelantados = object.MesesAdelantados;
+    
     }
 
     function cancel() {
