@@ -12,8 +12,9 @@ angular
     }
 
     function ok() {
-       ContratoMaestroFactory.GetCancelaPagoFacturaMaestro(options.contrato).then(function(response){
-           $rootScope.$emit('reload', contrato);
+       ContratoMaestroFactory.GetCancelaPagoFacturaMaestro(options.Clv_Pago).then(function(response){
+           $rootScope.$emit('reload', options.contrato);
+           $uibModalInstance.dismiss('cancel');
 ngNotify.set('La factura se ha cancelado correctamente','success')
        });
     }

@@ -130,6 +130,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
   }
 
   function PagarCredito(x) {
+    console.log(x);
     if (x.Status == "Activa") {
       if (x.Importe <= x.TotalAbonado) {
         ngNotify.set('Ya se saldo el adeudo.', 'error');
