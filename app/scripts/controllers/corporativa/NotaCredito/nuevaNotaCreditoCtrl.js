@@ -53,6 +53,28 @@
       });
     }
 
+  function revertir(clvnota){
+var options={};
+options.clvnota=clvnota;
+     var modalInstance = $uibModal.open({
+        animation: true,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: 'views/corporativa/modalRevertirProceso.html',
+        controller: 'modalRevertirProcesoCtrl',
+        controllerAs: '$ctrl',
+        backdrop: 'static',
+        keyboard: false,
+        size: "md",
+       resolve: {
+          options: function () {
+            return options;
+          }
+        }
+      });
+  }
+
+  
 
     function abrirContratos() {
 
@@ -171,7 +193,7 @@
 
 
         ContratoMaestroFactory.DetalleContratosFM(vm.factura.CLV_FACTURA).then(function (result) {
-          console.log(result);
+          
           vm.clv_session = result.GetDetalleContratosFMListResult.ListaDos[0].Clv_Session;
           vm.contratos = result.GetDetalleContratosFMListResult.ListaUno;
           ContratoMaestroFactory.GetDetalle_NotasdeCreditoList(vm.clv_session).then(function (data) {
@@ -179,7 +201,7 @@
             calcular();
           });
           ContratoMaestroFactory.GetCalcula_monto(vm.factura.CLV_FACTURA).then(function (data) {
-            console.log(datas);
+           
             vm.Monto = data.GetCalcula_montoResult.Monto;
             
           });
@@ -215,13 +237,10 @@
 
       ContratoMaestroFactory.GetAddNotaCredito(obj).then(function (data) {
         vm.Clv_NotadeCredito = data.GetAddNotaCreditoResult[0].Clv_NotadeCredito;
+       
         ContratoMaestroFactory.GetGuarda_DetalleNota(vm.clv_session, vm.Clv_NotadeCredito).then(function (data) {
           ngNotify.set('La nota de crédito se ha guardado correctamente', 'success');
-          if (vm.revertir == true) {
-            ContratoMaestroFactory.GetProcedimientoCancelar(vm.factura.CLV_FACTURA).then(function (data) {
-              ngNotify.set(data.GetProcedimientoCancelarResult[0].Msg, 'success');
-            })
-          }
+                 
           ContratoMaestroFactory.AddMovSist(vm.Contrato, vm.sumatotal).then(function (data) {
             ContratoMaestroFactory.DeleteNotasDeCredito_ContraMaeFac(vm.factura.CLV_FACTURA, vm.Clv_NotadeCredito)
               .then(function (data) {});
@@ -229,7 +248,9 @@
         });
         vm.mostrarbtn = false;
         vm.clvnota = vm.Clv_NotadeCredito;
+         
         abrirTicket(vm.Clv_NotadeCredito);
+         revertir(vm.Clv_NotadeCredito); 
       });
 
     }
@@ -237,7 +258,7 @@
     function calcular() {
       vm.sumatotal = 0;
       vm.DetalleNota.forEach(function (element) {
-        console.log(element);
+       
         vm.sumatotal += (element.importe == undefined) ? 0 : element.importe
       });
     }

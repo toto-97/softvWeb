@@ -39,8 +39,8 @@ angular.module('softvApp')
       GetDeeAfirmacionPregunta_CM: '/uspHaz_Pregunta/GetDeeAfirmacionPregunta_CM',
       DetalleContratosFM: '/DetalleContratosFM/GetDetalleContratosFMList',
       DameDetalle_FacturaporCli: '/DameDetalle_FacturaporCli/GetDameDetalle_FacturaporCliList',
-      GetAgregaDetalleNotaDeCreditoMaestroList: '/AgregaDetalleNotaDeCreditoMaestro/GetAgregaDetalleNotaDeCreditoMaestroList'
-
+      GetAgregaDetalleNotaDeCreditoMaestroList: '/AgregaDetalleNotaDeCreditoMaestro/GetAgregaDetalleNotaDeCreditoMaestroList',
+       GetCANCELA_FACTURASMAESTRA_PRINCIPAL:'/NotasDeCredito_ContraMaeFac/GetCANCELA_FACTURASMAESTRA_PRINCIPAL',
 
     };
 
@@ -240,7 +240,7 @@ angular.module('softvApp')
         'Clv_Session': clv_session,
 
       };
-      console.log(JSON.stringify(parametros));
+
       $http.post(globalService.getUrl() + paths.GetDetalle_NotasdeCreditoList, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -409,7 +409,7 @@ angular.module('softvApp')
         'Factura': factura,
         'Clv_NotadeCredito': nota,
       };
-    console.log(JSON.stringify(parametros));
+
      
       $http.post(globalService.getUrl() + paths.GetGuarda_DetalleNota, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
@@ -637,7 +637,7 @@ angular.module('softvApp')
         'ClvMotivo': Motivo,
         'Usuario': $localStorage.currentUser.usuario
       };
-      console.log(JSON.stringify(parametros));
+   
       $http.post(globalService.getUrl() + paths.GuardaMotivos, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -663,7 +663,7 @@ angular.module('softvApp')
         }
 
       };
-      console.log(JSON.stringify(parametros));
+
       $http.post(globalService.getUrl() + paths.AddBitacoraTickets, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -683,7 +683,7 @@ angular.module('softvApp')
       var parametros = {
         'ClvSessionPadre': clv_sesion
       };
-      console.log(JSON.stringify(parametros));
+  
       $http.post(globalService.getUrl() + paths.Sp_DameDetalleFacturaMaestra, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -709,7 +709,7 @@ angular.module('softvApp')
         'Op2': 1
 
       };
-      console.log(JSON.stringify(parametros));
+     
       $http.post(globalService.getUrl() + paths.GetDeeAfirmacionPregunta_CM, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -734,7 +734,7 @@ angular.module('softvApp')
         'Contrato': contrato,
         'Op': op
       };
-      console.log(JSON.stringify(parametros));
+      
       $http.post(globalService.getUrl() + paths.uspHaz_Pregunta, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -762,7 +762,7 @@ angular.module('softvApp')
         },
         'lstDetalle': claves
       };
-      console.log(JSON.stringify(parametros));      
+     
       $http.post(globalService.getUrl() + paths.GetAgregaDetalleNotaDeCreditoMaestroList, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -790,8 +790,35 @@ angular.module('softvApp')
         }
 
       };
-      console.log(JSON.stringify(parametros));
+    
       $http.post(globalService.getUrl() + paths.TblFacturasOpcionesCM, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
+
+    
+
+
+
+    
+    factory.GetCANCELA_FACTURASMAESTRA_PRINCIPAL = function (factura) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+
+      var parametros = {
+        'ClvFacturaMaestro': factura
+
+      };
+      
+      $http.post(globalService.getUrl() + paths.GetCANCELA_FACTURASMAESTRA_PRINCIPAL, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
         deferred.reject(response);
@@ -812,7 +839,7 @@ angular.module('softvApp')
         'Clv_FacturaMaestro': factura
 
       };
-      console.log(JSON.stringify(parametros));
+      
       $http.post(globalService.getUrl() + paths.DetalleContratosFM, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -835,7 +862,7 @@ angular.module('softvApp')
         'Clv_Session': session
 
       };
-      console.log(JSON.stringify(parametros));
+   
       $http.post(globalService.getUrl() + paths.DameDetalle_FacturaporCli, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
