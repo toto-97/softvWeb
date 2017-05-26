@@ -130,6 +130,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
   }
 
   function PagarCredito(x) {
+    console.log(x);
     if (x.Status == "Activa") {
       if (x.Importe <= x.TotalAbonado) {
         ngNotify.set('Ya se saldo el adeudo.', 'error');
@@ -235,8 +236,11 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
   function historial(x) {
 
     pagosMaestrosFactory.obtenFacturas(x.Clv_FacturaMaestro).then(function (data) {
+      console.log(data);
       vm.historialPagos = data.GetObtieneHistorialPagosFacturaMaestroListResult;
-
+      for(var a=0; a<vm.historialPagos.length; a++){
+        vm.historialPagos[a].Clv_FacturaMaestro=x.Clv_FacturaMaestro;
+      }
     });
   }
 
@@ -274,6 +278,45 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     }
   }
 
+
+$rootScope.$on('reload', function (e,Clv_FacturaMaestro) {
+   pagosMaestrosFactory.obtenFacturas(Clv_FacturaMaestro).then(function (data) {
+      console.log(data);
+      vm.historialPagos = data.GetObtieneHistorialPagosFacturaMaestroListResult;
+      for(var a=0; a<vm.historialPagos.length; a++){
+        vm.historialPagos[a].Clv_FacturaMaestro=x.Clv_FacturaMaestro;
+      }
+    });
+  });
+
+  
+
+  function cancelarfactura(object) {
+    var options = {};
+    options.Clv_Pago=object.Clv_Pago;
+    options.contrato=object.Clv_FacturaMaestro;
+    options.pregunta = '¿ Estas seguro de cancelar la factura #'+ object.Clv_Pago+' ?';
+    var modalInstance = $uibModal.open({
+      animation: true,
+      ariaLabelledBy: 'modal-title',
+      ariaDescribedBy: 'modal-body',
+      templateUrl: 'views/corporativa/ModalHazPregunta.html',
+      controller: 'ModalCancelaFacturaCtrl',
+      controllerAs: '$ctrl',
+      backdrop: 'static',
+      keyboard: false,
+      class: 'modal-backdrop fade',
+      size: 'md',
+      resolve: {
+        options: function () {
+          return options;
+        }
+      }
+    });
+
+
+  }
+
   var vm = this;
   vm.saldadas = saldadas;
   vm.buscaContrato = buscaContrato;
@@ -282,5 +325,6 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
   vm.verFactura = verFactura;
   vm.detalle = detalle;
   vm.enterContrato = enterContrato;
+  vm.cancelarfactura = cancelarfactura;
 }
 angular.module('softvApp').controller('RecepcionPagoCtrl', RecepcionPagoCtrl);

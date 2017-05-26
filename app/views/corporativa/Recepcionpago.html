@@ -24,7 +24,7 @@
   <div class="card" style="margin-top:20px;">
     <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
       <header>
-        <strong style="font-weight:bold; border:none; margin-left:10px;">Recepción de pagos</strong>
+        <strong style="font-weight:bold; border:none; margin-left:10px; font-size: 16px;">Recepción de pagos</strong>
         <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Recepción de pagos</small>
       </header>
     </div>
@@ -111,12 +111,13 @@
 
       <div class="tabbable">
         <!-- Only required for left/right tabs -->
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="" data-target="#tab1" data-toggle="tab">Una Sola Tabla</a></li>
-          <li><a href="" data-target="#tab2" data-toggle="tab">Tres Tablas</a></li>
-        </ul>
-        <div class="tab-content">
-          <div class="tab-pane active" id="tab1">
+        <!--<ul class="nav nav-tabs">
+         <li class="active"><a href="" data-target="#tab1" data-toggle="tab">Una Sola Tabla</a></li>
+          <li class="active"><a href="" data-target="#tab2" data-toggle="tab">Tres Tablas</a></li>
+        </ul>-->
+      <!--  <div class="tab-content">-->
+
+      <!--<div class="tab-pane active" id="tab1">
             <div class="row">
               <div class="col-md-12" style="font-size:10px;">
                 <h4 class="text-center">Facturas Originales</h4>
@@ -153,10 +154,10 @@
                             data-toggle="tooltip" data-placement="top" title="Pagar" data-original-title="Pagar"><i class="fa fa-credit-card"></i></button>
                           <button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ng-disabled="$ctrl.generar" ng-click="$ctrl.detalle(x)"
                             data-toggle="tooltip" data-placement="top" title="Ver Detalle" data-original-title="Ver Detalle"><i class="fa fa-list-ul"></i></button>
-                          <!--  <button class="btn ink-reaction btn-floating-action btn-xs btn-default" ng-click="" data-toggle="tooltip" data-placement="top" title="Ver Historial" data-original-title="Ver Historial"><i class="fa fa-plus"></i></button>-->
+                         
                         </td>
                         <td>
-                          <!--$ctrl.historial(x)-->
+                        
                           <button ng-if="x.expanded" class="btn ink-reaction btn-xs btn-icon-toggle btn-primary" ng-click="x.expanded = false;"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
                           <button ng-if="!x.expanded" class="btn ink-reaction btn-xs btn-icon-toggle btn-primary" ng-click="x.expanded = true; "><i class="fa fa-angle-left" aria-hidden="true"></i></button>
                         </td>
@@ -175,6 +176,8 @@
                                     <th>Medio Pago</th>
                                     <th>Importe</th>
                                     <th>Fecha</th>
+                                    <th>Status</th>
+                                    <th></th>
                                     <th></th>
                                   </tr>
                                 </thead>
@@ -186,12 +189,17 @@
                                     <td>{{z.MedioPago}}</td>
                                     <td>{{z.Importe | currency}}</td>
                                     <td>{{z.Hora}}</td>
+                                     <td>{{z.StatusPago}}</td>
 
                                     <td>
-                                      <!--$ctrl.historial(x)-->
+                                     
                                       <button ng-if="z.expanded2" class="btn ink-reaction btn-xs btn-icon-toggle btn-primary" ng-click="z.expanded2 = false;"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
                                       <button ng-if="!z.expanded2" class=" btn ink-reaction btn-xs btn-icon-toggle btn-primary" ng-click="z.expanded2 = true; "><i class="fa fa-angle-down" aria-hidden="true"></i></button>
                                     </td>
+                                    <td ng-if="z.StatusPago=='Activa'">
+                                            <button  class="btn ink-reaction btn-icon-toggle btn-xs  btn-danger" ng-click="$ctrl.cancelarfactura(z)" data-toggle="tooltip" data-placement="top" title="cancelar factura" data-original-title="cancelar"><i class="fa fa-trash"></i></button>
+                                        </td>
+                                        <td ng-if="z.StatusPago!='Activa'"></td>
 
                                   </tr>
                                   <tr ng-if="z.expanded2" ng-repeat-end="">
@@ -233,23 +241,26 @@
                       </tr>
 
                     </tbody>
-                  </table>
+                  </table>-->
                   <!--<div style="padding-left: 20px;">
               <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
-              </dir-pagination-controls>
-            </div>-->
+            </dir-pagination-controls>
+            </div>
                 </div>
               </div>
 
 
             </div>
-          </div>
+          </div>-->
+        
 
-          <div class="tab-pane" id="tab2">
+       
+
+        <!--  <div class="tab-pane" id="tab2">-->
               <div class="row">
                 <div class="col-md-7 table-responsive" style="font-size:10px;">
-                    <h3 class="text-center">Facturas Originales</h3>
-                    <div class="row scrollDiv card wrapper">
+                    <h4 class="text-center">Facturas Originales</h4>
+                    <div class="row ">
                         <table class="table table-striped table-hover table-condensed">
                             <thead>
                                 <tr>
@@ -262,11 +273,13 @@
                                     <th>Total Abonado</th>
                                     <th>Saldo Pendiente</th>
                                     <th>Status</th>
-                                    <th>Opciones</th>
+                                    <th></th>
+                                     <th></th>
+                                      <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-show="$ctrl.pagos.length>0" dir-paginate="x in $ctrl.pagos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:10">
+                                <tr ng-show="$ctrl.pagos.length>0" dir-paginate="x in $ctrl.pagos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:5">
                                     <td>{{x.ContratoMaestro}}</td>
                                     <td>{{x.Ticket}}</td>
                                     <td>{{x.Cliente}}</td>
@@ -277,9 +290,16 @@
                                     <td>{{x.Importe - x.TotalAbonado | currency}}</td>
                                     <td>{{x.Status}}</td>
                                     <td>
-                                        <button class="btn ink-reaction btn-floating-action btn-xs btn-success" ng-disabled="$ctrl.pagar" ng-click="$ctrl.PagarCredito(x)" data-toggle="tooltip" data-placement="top" title="Pagar" data-original-title="Pagar"><i class="fa fa-credit-card"></i></button>
-                                        <button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ng-disabled="$ctrl.generar" ng-click="$ctrl.detalle(x)" data-toggle="tooltip" data-placement="top" title="Ver Detalle" data-original-title="Ver Detalle"><i class="fa fa-list-ul"></i></button>
-                                        <button class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-click="$ctrl.historial(x)" data-toggle="tooltip" data-placement="top" title="Ver Historial" data-original-title="Ver Historial"><i class="fa fa-plus"></i></button>
+                                     <button class="btn ink-reaction btn-icon-toggle btn-xs  btn-success" ng-disabled="$ctrl.pagar" ng-click="$ctrl.PagarCredito(x)" data-toggle="tooltip" data-placement="top" title="Pagar" data-original-title="Pagar"><i class="fa fa-credit-card"></i></button>
+                                    </td>
+                                    <td>
+
+                                      <button class="btn ink-reaction btn-icon-toggle btn-xs  btn-warning" ng-disabled="$ctrl.generar" ng-click="$ctrl.detalle(x)" data-toggle="tooltip" data-placement="top" title="Ver Detalle" data-original-title="Ver Detalle"><i class="fa fa-list-ul"></i></button>
+                                    </td>
+                                    <td>
+                                       
+                                        
+                                        <button class="btn ink-reaction btn-icon-toggle btn-xs  btn-danger" ng-click="$ctrl.historial(x)" data-toggle="tooltip" data-placement="top" title="Ver Historial" data-original-title="Ver Historial"><i class="fa fa-plus"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -305,7 +325,9 @@
                                         <th>Medio Pago</th>
                                         <th>Importe</th>
                                         <th>Fecha</th>
+                                        <th>Status</th>
                                         <th>Opción</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -315,10 +337,17 @@
                                         <td>{{z.Cajera}} </td>
                                         <td>{{z.MedioPago}}</td>
                                         <td>{{z.Importe | currency}}</td>
+                                       
+                                        
                                         <td>{{z.Hora}}</td>
+                                         <td>{{z.StatusPago}}</td>
                                         <td>
-                                            <button class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-click="$ctrl.verFactura(z.Clv_Pago)" data-toggle="tooltip" data-placement="top" title="Ver Facturas" data-original-title="Ver Detalle"><i class="fa fa-plus"></i></button>
+                                            <button class="btn ink-reaction btn-icon-toggle btn-xs btn-success" ng-click="$ctrl.verFactura(z.Clv_Pago)" data-toggle="tooltip" data-placement="top" title="Ver Facturas" data-original-title="Ver Detalle"><i class="fa fa-plus"></i></button>
                                         </td>
+                                        <td ng-if="z.StatusPago=='Activa'">
+                                            <button  class="btn ink-reaction btn-icon-toggle btn-xs  btn-danger" ng-click="$ctrl.cancelarfactura(z)" data-toggle="tooltip" data-placement="top" title="cancelar factura" data-original-title="cancelar"><i class="fa fa-trash"></i></button>
+                                        </td>
+                                        <td ng-if="z.StatusPago!='Activa'"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -353,8 +382,8 @@
                     </div>
                 </div>
             </div>
-          </div>
-        </div>
+         <!-- </div>-->
+       <!-- </div>-->
       </div>
 
 

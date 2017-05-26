@@ -3,7 +3,7 @@
   <div class="card" style="margin-top:20px;">
     <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
       <header>
-        <strong style="font-weight:bold; border:none; margin-left:10px;">Pago Contratos Maestros</strong>
+        <strong style="font-weight:bold; border:none; margin-left:10px; font-size: 16px;">Pago Contratos Maestros</strong>
         <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Pago Contratos Maestros</small>
       </header>
     </div>
@@ -127,7 +127,7 @@
                         <td>{{x.DistribuidorDes}}</td>
                         <td>{{x.EstadoDes}}</td>
                         <td>
-                          <button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.tablaContrato(x.IdContratoMaestro);"><i class="fa fa-eye"></i></button>
+                          <button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.tablaContrato(x);"><i class="fa fa-eye"></i></button>
                         </td>
                       </tr>
                     </tbody>
@@ -154,13 +154,7 @@
       <div class="row" style="padding-left: 30px; padding-right: 30px;">
         <div class="panel-group" id="datosCliente">
           <div class="card panel" ng-style="{'background-color': $ctrl.color}">
-            <div class="card-head card-head-xs collapsed" data-toggle="collapse" data-parent="#datosCliente" data-target="#datosCliente-1"
-              aria-expanded="false" ng-click="$ctrl.showDatosCliente = !$ctrl.showDatosCliente">
-              <header class="text-primary-dark" style="font-size: 12px;" ng-show="$ctrl.showDatosCliente">Datos del Cliente</header>
-              <div class="tools">
-                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
-              </div>
-            </div>
+          
             <div id="datosCliente-1" class="collapse datosCliente" aria-expanded="false">
               <div class="row" style="padding-left:10px;">
                 <div class="col-md-3">
@@ -267,7 +261,7 @@
                   </table>
                   <p class="btn-group text-right" style="padding-right: 10px;">
                     <button class="btn btn-danger btn-sm" ng-click="$ctrl.abrirPago($ctrl.saldo, $ctrl.Contratos)" ng-disabled="$ctrl.blockPagar"><i class="fa fa-money" aria-hidden="true"></i> generar factura</button>
-                    <button class="btn btn-default-bright btn-sm" ng-click="$ctrl.edocta()"><i class="fa fa-eye" aria-hidden="true"></i> ver estado de cuenta</button>
+                    <button class="btn btn-default-bright btn-sm" ng-disabled="$ctrl.blockedocta" ng-click="$ctrl.edocta()"><i class="fa fa-eye" aria-hidden="true" ></i> ver estado de cuenta</button>
                   </p>
                 </div>
               </div>
