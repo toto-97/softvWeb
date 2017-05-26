@@ -40,8 +40,9 @@ angular.module('softvApp')
       DetalleContratosFM: '/DetalleContratosFM/GetDetalleContratosFMList',
       DameDetalle_FacturaporCli: '/DameDetalle_FacturaporCli/GetDameDetalle_FacturaporCliList',
       GetAgregaDetalleNotaDeCreditoMaestroList: '/AgregaDetalleNotaDeCreditoMaestro/GetAgregaDetalleNotaDeCreditoMaestroList',
-       GetCANCELA_FACTURASMAESTRA_PRINCIPAL:'/NotasDeCredito_ContraMaeFac/GetCANCELA_FACTURASMAESTRA_PRINCIPAL',
-GetCancelaPagoFacturaMaestro:'/ContratoMaestroFac/GetCancelaPagoFacturaMaestro'
+      GetCANCELA_FACTURASMAESTRA_PRINCIPAL: '/NotasDeCredito_ContraMaeFac/GetCANCELA_FACTURASMAESTRA_PRINCIPAL',
+      GetCancelaPagoFacturaMaestro: '/ContratoMaestroFac/GetCancelaPagoFacturaMaestro',
+      GetValidaSipuedohacerPagoc: '/ContratoMaestroFac/GetValidaSipuedohacerPagoc'
     };
 
     factory.ProcesaDesconexion = function (contratos) {
@@ -302,7 +303,7 @@ GetCancelaPagoFacturaMaestro:'/ContratoMaestroFac/GetCancelaPagoFacturaMaestro'
           'Authorization': $localStorage.currentUser.token
         }
       };
-    
+
       $http.post(globalService.getUrl() + paths.GetAddNotaCredito, JSON.stringify(data), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -410,7 +411,7 @@ GetCancelaPagoFacturaMaestro:'/ContratoMaestroFac/GetCancelaPagoFacturaMaestro'
         'Clv_NotadeCredito': nota,
       };
 
-     
+
       $http.post(globalService.getUrl() + paths.GetGuarda_DetalleNota, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -637,7 +638,7 @@ GetCancelaPagoFacturaMaestro:'/ContratoMaestroFac/GetCancelaPagoFacturaMaestro'
         'ClvMotivo': Motivo,
         'Usuario': $localStorage.currentUser.usuario
       };
-   
+
       $http.post(globalService.getUrl() + paths.GuardaMotivos, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -683,7 +684,7 @@ GetCancelaPagoFacturaMaestro:'/ContratoMaestroFac/GetCancelaPagoFacturaMaestro'
       var parametros = {
         'ClvSessionPadre': clv_sesion
       };
-  
+
       $http.post(globalService.getUrl() + paths.Sp_DameDetalleFacturaMaestra, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -709,7 +710,7 @@ GetCancelaPagoFacturaMaestro:'/ContratoMaestroFac/GetCancelaPagoFacturaMaestro'
         'Op2': 1
 
       };
-     
+
       $http.post(globalService.getUrl() + paths.GetDeeAfirmacionPregunta_CM, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -734,7 +735,7 @@ GetCancelaPagoFacturaMaestro:'/ContratoMaestroFac/GetCancelaPagoFacturaMaestro'
         'Contrato': contrato,
         'Op': op
       };
-      
+
       $http.post(globalService.getUrl() + paths.uspHaz_Pregunta, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -762,7 +763,7 @@ GetCancelaPagoFacturaMaestro:'/ContratoMaestroFac/GetCancelaPagoFacturaMaestro'
         },
         'lstDetalle': claves
       };
-     
+
       $http.post(globalService.getUrl() + paths.GetAgregaDetalleNotaDeCreditoMaestroList, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -790,7 +791,7 @@ GetCancelaPagoFacturaMaestro:'/ContratoMaestroFac/GetCancelaPagoFacturaMaestro'
         }
 
       };
-    
+
       $http.post(globalService.getUrl() + paths.TblFacturasOpcionesCM, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -800,11 +801,11 @@ GetCancelaPagoFacturaMaestro:'/ContratoMaestroFac/GetCancelaPagoFacturaMaestro'
     };
 
 
-    
 
 
 
-    
+
+
     factory.GetCANCELA_FACTURASMAESTRA_PRINCIPAL = function (factura) {
       var deferred = $q.defer();
       var config = {
@@ -817,7 +818,7 @@ GetCancelaPagoFacturaMaestro:'/ContratoMaestroFac/GetCancelaPagoFacturaMaestro'
         'ClvFacturaMaestro': factura
 
       };
-      
+
       $http.post(globalService.getUrl() + paths.GetCANCELA_FACTURASMAESTRA_PRINCIPAL, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -836,7 +837,7 @@ GetCancelaPagoFacturaMaestro:'/ContratoMaestroFac/GetCancelaPagoFacturaMaestro'
       };
       var parametros = {
         'Clv_Pago': Clv_Pago
-      };      
+      };
       $http.post(globalService.getUrl() + paths.GetCancelaPagoFacturaMaestro, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -857,7 +858,7 @@ GetCancelaPagoFacturaMaestro:'/ContratoMaestroFac/GetCancelaPagoFacturaMaestro'
         'Clv_FacturaMaestro': factura
 
       };
-      
+
       $http.post(globalService.getUrl() + paths.DetalleContratosFM, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -866,7 +867,30 @@ GetCancelaPagoFacturaMaestro:'/ContratoMaestroFac/GetCancelaPagoFacturaMaestro'
       return deferred.promise;
     };
 
-     
+
+
+
+    factory.GetValidaSipuedohacerPagoc = function (ContratoMaestro, Clv_FacturaMaestro) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+
+      var parametros = {
+        'ContratoMaestro': ContratoMaestro,
+        'Clv_FacturaMaestro': Clv_FacturaMaestro
+      };
+
+      $http.post(globalService.getUrl() + paths.GetValidaSipuedohacerPagoc, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
 
 
 
@@ -884,7 +908,7 @@ GetCancelaPagoFacturaMaestro:'/ContratoMaestroFac/GetCancelaPagoFacturaMaestro'
         'Clv_Session': session
 
       };
-   
+
       $http.post(globalService.getUrl() + paths.DameDetalle_FacturaporCli, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {

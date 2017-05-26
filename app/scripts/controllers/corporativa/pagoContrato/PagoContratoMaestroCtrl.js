@@ -74,7 +74,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
   }
 
   function tablaContrato(x) {
-    console.log(x);
+  
     $('.buscarContrato').collapse('hide');
 
     vm.Contratos=x;
@@ -84,7 +84,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
       vm.saldo = data.GetCobraContratoMaestroResult;
       HacerPregunta(vm.saldo.Clv_SessionPadre, 900);
       pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
-        console.log(detallePago);
+       
         if (detallePago.GetDetalleContratosMaestrosListResult.lista.length == 0) {
           vm.blockedocta = true;
           vm.blockPagar = true;
@@ -137,13 +137,13 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         vm.muestraTablaCliente=false;
         vm.muestraCliente = true;
         pagosMaestrosFactory.cobraSaldoMaestro(vm.Contratos.IdContratoMaestro).then(function (data) {
-          console.log(data);
+        
           vm.saldo = data.GetCobraContratoMaestroResult;
           if (preguntar) {
             HacerPregunta(vm.saldo.Clv_SessionPadre, 900);
           }
           pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
-            console.log(detallePago);
+            
             if (detallePago.GetDetalleContratosMaestrosListResult.lista.length == 0) {
               vm.blockedocta = true;
               vm.blockPagar = true;
@@ -387,7 +387,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
     ContratoMaestroFactory.uspHaz_Pregunta(vm.Contratos.IdContratoMaestro, 900).then(function (data) {
       vm.pregunta = data.GetDeepuspHaz_Pregunta_CMResult.Pregunta;
       vm.MesesAdelantados = data.GetDeepuspHaz_Pregunta_CMResult.MesesAdelantados;
-      console.log(vm.pregunta);
+    
       if (vm.pregunta != null) {
         var object = {};
         object.clv_session = clv_session;
