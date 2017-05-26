@@ -33,5 +33,7 @@ angular.module('softvApp')
 		var vm = this;
 		vm.cancel = cancel;
 		vm.ok = ok;
+		vm.mensaje='¿Deseas Cancelar el TICKET DE CAJA:';
+		vm.titulo='Cancelación de tickets';
 		initialData();
 	});

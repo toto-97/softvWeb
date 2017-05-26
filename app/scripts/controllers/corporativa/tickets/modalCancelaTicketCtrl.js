@@ -44,4 +44,6 @@ angular
     var vm = this;
     vm.cancel = cancel;
     vm.ok = ok;
+    vm.mensaje='¿Deseas cancelar la factura';
+    vm.titulo='Cancelación de Facturas';
   });
