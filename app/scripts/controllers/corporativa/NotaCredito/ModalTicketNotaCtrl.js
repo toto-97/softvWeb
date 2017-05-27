@@ -6,16 +6,23 @@
     .controller('ModalTicketNotaCtrl', ModalTicketNotaCtrl);
 
   ModalTicketNotaCtrl.inject = ['$uibModalInstance', '$uibModal', '$rootScope', 'ngNotify', 'ContratoMaestroFactory', 'factura'];
-  function ModalTicketNotaCtrl($uibModalInstance, $uibModal, $rootScope, ngNotify, ContratoMaestroFactory, factura) {
+  function ModalTicketNotaCtrl($uibModalInstance, $uibModal, $rootScope, ngNotify, ContratoMaestroFactory, object) {
     var vm = this;
     vm.cancel = cancel;
     vm.printDiv = printDiv;
 
     this.$onInit = function () {
-      ContratoMaestroFactory.GetCrearNotaCreditoCM(factura).then(function (response) {
+      vm.cmaestro=object.contrato;
+      ContratoMaestroFactory.GetCrearNotaCreditoCM(object.factura).then(function (response) {
         vm.det = response.GetCrearNotaCreditoCMResult[0];
-        ContratoMaestroFactory.ConceptosTicketNotasCredito(factura).then(function (data) {
-          vm.conceptos = data.GetConceptosTicketNotasCreditoCMResult;
+        ContratoMaestroFactory.ConceptosTicketNotasCredito(object.factura).then(function (data) {
+          console.log(data);
+          vm.conceptos = data.GetConceptosTicketNotasCreditoCMResult;           
+
+          vm.total=0;
+          for(var a=0; a<vm.conceptos.length; a++){
+            vm.total+=vm.conceptos[a].importe;
+          }
         });
       });
     }

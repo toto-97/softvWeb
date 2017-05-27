@@ -42,7 +42,9 @@ angular.module('softvApp')
       GetAgregaDetalleNotaDeCreditoMaestroList: '/AgregaDetalleNotaDeCreditoMaestro/GetAgregaDetalleNotaDeCreditoMaestroList',
       GetCANCELA_FACTURASMAESTRA_PRINCIPAL: '/NotasDeCredito_ContraMaeFac/GetCANCELA_FACTURASMAESTRA_PRINCIPAL',
       GetCancelaPagoFacturaMaestro: '/ContratoMaestroFac/GetCancelaPagoFacturaMaestro',
-      GetValidaSipuedohacerPagoc: '/ContratoMaestroFac/GetValidaSipuedohacerPagoc'
+      GetValidaSipuedohacerPagoc: '/ContratoMaestroFac/GetValidaSipuedohacerPagoc',
+      GetValidaSipuedoCancelarPago:'/ContratoMaestroFac/GetValidaSipuedoCancelarPago',
+      GetDetalle_NotasdeCreditoVerHistorialList:'/Detalle_NotasdeCredito/GetDetalle_NotasdeCreditoVerHistorialList'
     };
 
     factory.ProcesaDesconexion = function (contratos) {
@@ -119,6 +121,55 @@ angular.module('softvApp')
       return deferred.promise;
 
     };
+
+
+
+    factory.GetValidaSipuedoCancelarPago = function (Clv_Pago) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'Clv_Pago':Clv_Pago
+      };
+
+      $http.post(globalService.getUrl() + paths.GetValidaSipuedoCancelarPago, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+
+factory.GetDetalle_NotasdeCreditoVerHistorialList = function (Clv_NotadeCredito) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'Clv_NotadeCredito':Clv_NotadeCredito
+      };
+
+      $http.post(globalService.getUrl() + paths.GetDetalle_NotasdeCreditoVerHistorialList, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+    
+
+    
 
 
 

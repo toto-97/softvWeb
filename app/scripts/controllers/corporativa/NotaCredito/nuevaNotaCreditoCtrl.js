@@ -33,8 +33,10 @@
       });
     }
 
-    function abrirTicket(factura) {
-
+    function abrirTicket(factura,contrato) {
+var object={};
+object.factura=factura;
+object.contrato=contrato;
       var modalInstance = $uibModal.open({
         animation: true,
         ariaLabelledBy: 'modal-title',
@@ -46,8 +48,8 @@
         keyboard: false,
         size: "sm",
         resolve: {
-          factura: function () {
-            return factura;
+          object: function () {
+            return object;
           }
         }
       });
@@ -105,6 +107,9 @@
 
     });
 
+    $rootScope.$on('verticket', function (e, contrato) {
+     abrirTicket(vm.Clv_NotadeCredito,vm.Contrato);
+    });
 
     $rootScope.$on('contrato_nota', function (e, contrato) {
       vm.DetalleContrato = contrato;
@@ -253,8 +258,9 @@
         vm.mostrarbtn = false;
         vm.clvnota = vm.Clv_NotadeCredito;
 
-        abrirTicket(vm.Clv_NotadeCredito);
         revertir(vm.Clv_NotadeCredito);
+       
+
       });
 
     }
