@@ -18,7 +18,7 @@
 
     function cancel() {
       $uibModalInstance.dismiss('cancel');
-      $rootScope.$emit('verticket', options);
+      $rootScope.$broadcast('verticket', options);
     }
     
      function ok() {
@@ -26,7 +26,7 @@
      
         ContratoMaestroFactory.GetProcedimientoCancelar(options.clvnota).then(function (data) {
             $uibModalInstance.dismiss('cancel');
-             $rootScope.$emit('verticket', options);
+             $rootScope.$broadcast('verticket', options);
           ngNotify.set(data.GetProcedimientoCancelarResult[0].Msg, 'success');
         })
       

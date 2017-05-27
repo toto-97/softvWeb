@@ -21,7 +21,10 @@
 
           vm.total=0;
           for(var a=0; a<vm.conceptos.length; a++){
-            vm.total+=vm.conceptos[a].importe;
+            if(vm.conceptos[a].Se_Cobra==true){
+             vm.total+=vm.conceptos[a].importe;
+            }
+            
           }
         });
       });

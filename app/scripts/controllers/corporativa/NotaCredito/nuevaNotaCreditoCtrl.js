@@ -5,9 +5,9 @@
     .module('softvApp')
     .controller('nuevaNotaCreditoCtrl', nuevaNotaCreditoCtrl);
 
-  nuevaNotaCreditoCtrl.inject = ['$uibModal', '$state', '$rootScope', 'ngNotify', 'ContratoMaestroFactory', '$localStorage', '$filter'];
+  nuevaNotaCreditoCtrl.inject = ['$uibModal', '$state', '$rootScope', 'ngNotify', 'ContratoMaestroFactory', '$localStorage', '$filter',' $scope'];
 
-  function nuevaNotaCreditoCtrl($uibModal, $state, $rootScope, ngNotify, ContratoMaestroFactory, $localStorage, $filter) {
+  function nuevaNotaCreditoCtrl($uibModal, $state, $rootScope, ngNotify, ContratoMaestroFactory, $localStorage, $filter, $scope) {
     var vm = this;
     vm.abrirContratos = abrirContratos;
     vm.cambioFactura = cambioFactura;
@@ -107,7 +107,7 @@ object.contrato=contrato;
 
     });
 
-    $rootScope.$on('verticket', function (e, contrato) {
+     $scope.$on('verticket', function (e, contrato) {
      abrirTicket(vm.Clv_NotadeCredito,vm.Contrato);
     });
 

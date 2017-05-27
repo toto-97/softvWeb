@@ -309,7 +309,8 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
   function cancelarfactura(object) {
 
     ContratoMaestroFactory.GetValidaSipuedoCancelarPago(object.Clv_Pago).then(function (data) {
-      if (data.GetValidaSipuedoCancelarPagoResult.Msg != null|| data.GetValidaSipuedoCancelarPagoResult.Msg !='') {
+      console.log(data);
+      if (data.GetValidaSipuedoCancelarPagoResult.Msg != '') {
         ngNotify.set(data.GetValidaSipuedoCancelarPagoResult.Msg, 'warn')
       } else {
         var options = {};
