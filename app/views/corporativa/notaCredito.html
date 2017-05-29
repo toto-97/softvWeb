@@ -26,7 +26,7 @@
 
               <div class="col-md-3">
                 <p>No.Folio :</p>
-                <input type="text" class="form-control input-sm" ng-model="$ctrl.folio">
+                <input type="number" class="form-control input-sm" ng-model="$ctrl.folio">
 
               </div>
               <div class="col-md-1">
@@ -73,8 +73,7 @@
             <th>No.Folio</th>
             <th>Contrato Maestro</th>
             <th>Fecha generación</th>
-            <th>Fecha caducidad</th>
-
+        
             <th>Status</th>
             <th>Ticket</th>
             <th>Monto</th>
@@ -87,10 +86,10 @@
             <td>{{x.NotaCredito}}</td>
             <td>{{x.ContratoMaestro}}</td>
             <td>{{x.FechaGeneracion}}</td>
-            <td>{{x.FechaCaducidad}}</td>
+         
             <td>{{x.Status}}</td>
             <td>{{x.Ticket}}</td>
-            <td>{{x.Monto}}</td>
+            <td>{{x.Monto|currency}}</td>
             <td>
               <button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.DetalleNota(x.NotaCredito);"><i class="fa fa-eye"></i></button>
               <button class="btn ink-reaction btn-floating-action btn-xs btn-default-bright" data-toggle="tooltip" data-placement="top"

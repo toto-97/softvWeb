@@ -14,7 +14,7 @@
     vm.op = ticket.op;
 
     this.$onInit = function () {
-      console.log(ticket);
+      
       vm.ContratoMaestro = ticket.ContratoMaestro;
       vm.Clv_FacturaMaestro = ticket.ContratoMaestro;
       if (vm.op == 'CAN') {
@@ -43,7 +43,7 @@
       ContratoMaestroFactory.GuardaMotivos(vm.Clv_FacturaMaestro, vm.motcan.Clv_Motivo).then(function (data) {
         ContratoMaestroFactory.AddBitacoraTickets(vm.Clv_FacturaMaestro, vm.ContratoMaestro, opcion).then(function (data) {
           if (vm.op == 'CAN') {
-            console.log(ticket.Clv_FacturaMaestro);
+            
             ContratoMaestroFactory.GetCANCELA_FACTURASMAESTRA_PRINCIPAL(ticket.Clv_FacturaMaestro).then(function (data) {
               $uibModalInstance.dismiss('cancel');
                $rootScope.$broadcast('reload_tabla');

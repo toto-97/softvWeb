@@ -5,9 +5,9 @@
     .module('softvApp')
     .controller('nuevaNotaCreditoCtrl', nuevaNotaCreditoCtrl);
 
-  nuevaNotaCreditoCtrl.inject = ['$uibModal', '$state', '$rootScope', 'ngNotify', 'ContratoMaestroFactory', '$localStorage', '$filter'];
+  nuevaNotaCreditoCtrl.inject = ['$uibModal', '$state', '$rootScope', 'ngNotify', 'ContratoMaestroFactory', '$localStorage', '$filter',' $scope'];
 
-  function nuevaNotaCreditoCtrl($uibModal, $state, $rootScope, ngNotify, ContratoMaestroFactory, $localStorage, $filter) {
+  function nuevaNotaCreditoCtrl($uibModal, $state, $rootScope, ngNotify, ContratoMaestroFactory, $localStorage, $filter, $scope) {
     var vm = this;
     vm.abrirContratos = abrirContratos;
     vm.cambioFactura = cambioFactura;
@@ -33,8 +33,10 @@
       });
     }
 
-    function abrirTicket(factura) {
-
+    function abrirTicket(factura,contrato) {
+var object={};
+object.factura=factura;
+object.contrato=contrato;
       var modalInstance = $uibModal.open({
         animation: true,
         ariaLabelledBy: 'modal-title',
@@ -46,17 +48,17 @@
         keyboard: false,
         size: "sm",
         resolve: {
-          factura: function () {
-            return factura;
+          object: function () {
+            return object;
           }
         }
       });
     }
 
-  function revertir(clvnota){
-var options={};
-options.clvnota=clvnota;
-     var modalInstance = $uibModal.open({
+    function revertir(clvnota) {
+      var options = {};
+      options.clvnota = clvnota;
+      var modalInstance = $uibModal.open({
         animation: true,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
@@ -66,15 +68,15 @@ options.clvnota=clvnota;
         backdrop: 'static',
         keyboard: false,
         size: "md",
-       resolve: {
+        resolve: {
           options: function () {
             return options;
           }
         }
       });
-  }
+    }
 
-  
+
 
     function abrirContratos() {
 
@@ -92,19 +94,22 @@ options.clvnota=clvnota;
       });
     }
 
-     $rootScope.$on('actualiza_detalle', function (e, obj) {       
-     
-          ContratoMaestroFactory.GetDetalle_NotasdeCreditoList( obj.clv_session).then(function (data) {
-            vm.DetalleNota = data.GetDetalle_NotasdeCreditoListResult;
-            calcular();
-          });
-          ContratoMaestroFactory.GetCalcula_monto(vm.factura.CLV_FACTURA).then(function (data) {
-            vm.Monto = data.GetCalcula_montoResult.Monto;
-            
-          });
-     
+    $rootScope.$on('actualiza_detalle', function (e, obj) {
+
+      ContratoMaestroFactory.GetDetalle_NotasdeCreditoList(obj.clv_session).then(function (data) {
+        vm.DetalleNota = data.GetDetalle_NotasdeCreditoListResult;
+        calcular();
+      });
+      ContratoMaestroFactory.GetCalcula_monto(vm.factura.CLV_FACTURA).then(function (data) {
+        vm.Monto = data.GetCalcula_montoResult.Monto;
+
+      });
+
     });
 
+     $scope.$on('verticket', function (e, contrato) {
+     abrirTicket(vm.Clv_NotadeCredito,vm.Contrato);
+    });
 
     $rootScope.$on('contrato_nota', function (e, contrato) {
       vm.DetalleContrato = contrato;
@@ -114,6 +119,8 @@ options.clvnota=clvnota;
       vm.Caja = '';
       vm.NSucursal = '';
       vm.Cajero = [];
+      vm.contratos = [];
+      vm.sumatotal = 0;
       vm.usuario = $localStorage.currentUser.usuario
       facturas(vm.Contrato);
     });
@@ -143,9 +150,11 @@ options.clvnota=clvnota;
               vm.Caja = '';
               vm.NSucursal = '';
               vm.Cajero = [];
+              vm.contratos = [];
+              vm.sumatotal = 0;
               vm.usuario = $localStorage.currentUser.usuario
               facturas(vm.Contrato);
-              
+
             } else {
               ngNotify.set('No se encontró un contrato  con la clave proporcionada', 'error');
             }
@@ -193,7 +202,7 @@ options.clvnota=clvnota;
 
 
         ContratoMaestroFactory.DetalleContratosFM(vm.factura.CLV_FACTURA).then(function (result) {
-          
+
           vm.clv_session = result.GetDetalleContratosFMListResult.ListaDos[0].Clv_Session;
           vm.contratos = result.GetDetalleContratosFMListResult.ListaUno;
           ContratoMaestroFactory.GetDetalle_NotasdeCreditoList(vm.clv_session).then(function (data) {
@@ -201,11 +210,11 @@ options.clvnota=clvnota;
             calcular();
           });
           ContratoMaestroFactory.GetCalcula_monto(vm.factura.CLV_FACTURA).then(function (data) {
-           
+
             vm.Monto = data.GetCalcula_montoResult.Monto;
-            
+
           });
-          
+
         });
 
 
@@ -237,10 +246,10 @@ options.clvnota=clvnota;
 
       ContratoMaestroFactory.GetAddNotaCredito(obj).then(function (data) {
         vm.Clv_NotadeCredito = data.GetAddNotaCreditoResult[0].Clv_NotadeCredito;
-       
+
         ContratoMaestroFactory.GetGuarda_DetalleNota(vm.clv_session, vm.Clv_NotadeCredito).then(function (data) {
           ngNotify.set('La nota de crédito se ha guardado correctamente', 'success');
-                 
+
           ContratoMaestroFactory.AddMovSist(vm.Contrato, vm.sumatotal).then(function (data) {
             ContratoMaestroFactory.DeleteNotasDeCredito_ContraMaeFac(vm.factura.CLV_FACTURA, vm.Clv_NotadeCredito)
               .then(function (data) {});
@@ -248,9 +257,10 @@ options.clvnota=clvnota;
         });
         vm.mostrarbtn = false;
         vm.clvnota = vm.Clv_NotadeCredito;
-         
-        abrirTicket(vm.Clv_NotadeCredito);
-         revertir(vm.Clv_NotadeCredito); 
+
+        revertir(vm.Clv_NotadeCredito);
+       
+
       });
 
     }
@@ -258,7 +268,7 @@ options.clvnota=clvnota;
     function calcular() {
       vm.sumatotal = 0;
       vm.DetalleNota.forEach(function (element) {
-       
+
         vm.sumatotal += (element.importe == undefined) ? 0 : element.importe
       });
     }

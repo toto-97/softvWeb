@@ -131,10 +131,24 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
 
   function PagarCredito(x) {
     console.log(x);
-    if (x.Status == "Activa") {
+    ContratoMaestroFactory.GetValidaSipuedohacerPagoc(x.ContratoMaestro, x.Clv_FacturaMaestro).then(function (response) {
+      console.log(response);
       if (x.Importe <= x.TotalAbonado) {
         ngNotify.set('Ya se saldo el adeudo.', 'error');
-      } else {
+        return;
+      }
+
+
+      vm.Bnd = response.GetValidaSipuedohacerPagocResult.Bnd;
+      if (x.Status == "Activa") {
+        /* if (x.Importe <= x.TotalAbonado) {
+           ngNotify.set('Ya se saldo el adeudo.', 'error');
+         } else {*/
+
+        if (vm.Bnd == 1) {
+          ngNotify.set('No se puede ingresar el pago sin haber saldado la factura anterior.', 'error');
+          return;
+        }
         if (x.ACuantosPagos == 'N/A') {
           var items = {
             Modo: 'n'
@@ -227,19 +241,20 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
             }
           });
         }
+
+      } else {
+        ngNotify.set('La factura ya ha sido cancelada.', 'error');
       }
-    } else {
-      ngNotify.set('La factura ya ha sido cancelada.', 'error');
-    }
+    });
   }
 
   function historial(x) {
 
     pagosMaestrosFactory.obtenFacturas(x.Clv_FacturaMaestro).then(function (data) {
-      console.log(data);
+
       vm.historialPagos = data.GetObtieneHistorialPagosFacturaMaestroListResult;
-      for(var a=0; a<vm.historialPagos.length; a++){
-        vm.historialPagos[a].Clv_FacturaMaestro=x.Clv_FacturaMaestro;
+      for (var a = 0; a < vm.historialPagos.length; a++) {
+        vm.historialPagos[a].Clv_FacturaMaestro = x.Clv_FacturaMaestro;
       }
     });
   }
@@ -279,40 +294,51 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
   }
 
 
-$rootScope.$on('reload', function (e,Clv_FacturaMaestro) {
-   pagosMaestrosFactory.obtenFacturas(Clv_FacturaMaestro).then(function (data) {
-      console.log(data);
+  $rootScope.$on('reload', function (e, Clv_FacturaMaestro) {
+    pagosMaestrosFactory.obtenFacturas(Clv_FacturaMaestro).then(function (data) {
+
       vm.historialPagos = data.GetObtieneHistorialPagosFacturaMaestroListResult;
-      for(var a=0; a<vm.historialPagos.length; a++){
-        vm.historialPagos[a].Clv_FacturaMaestro=x.Clv_FacturaMaestro;
+      for (var a = 0; a < vm.historialPagos.length; a++) {
+        vm.historialPagos[a].Clv_FacturaMaestro = x.Clv_FacturaMaestro;
       }
     });
   });
 
-  
+
 
   function cancelarfactura(object) {
-    var options = {};
-    options.Clv_Pago=object.Clv_Pago;
-    options.contrato=object.Clv_FacturaMaestro;
-    options.pregunta = '¿ Estas seguro de cancelar la factura #'+ object.Clv_Pago+' ?';
-    var modalInstance = $uibModal.open({
-      animation: true,
-      ariaLabelledBy: 'modal-title',
-      ariaDescribedBy: 'modal-body',
-      templateUrl: 'views/corporativa/ModalHazPregunta.html',
-      controller: 'ModalCancelaFacturaCtrl',
-      controllerAs: '$ctrl',
-      backdrop: 'static',
-      keyboard: false,
-      class: 'modal-backdrop fade',
-      size: 'md',
-      resolve: {
-        options: function () {
-          return options;
-        }
+
+    ContratoMaestroFactory.GetValidaSipuedoCancelarPago(object.Clv_Pago).then(function (data) {
+      console.log(data);
+      if (data.GetValidaSipuedoCancelarPagoResult.Msg != '') {
+        ngNotify.set(data.GetValidaSipuedoCancelarPagoResult.Msg, 'warn')
+      } else {
+        var options = {};
+        options.Clv_Pago = object.Clv_Pago;
+        options.contrato = object.Clv_FacturaMaestro;
+        options.pregunta = '¿ Estas seguro de cancelar la factura #' + object.Clv_Pago + ' ?';
+        var modalInstance = $uibModal.open({
+          animation: true,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'views/corporativa/ModalHazPregunta.html',
+          controller: 'ModalCancelaFacturaCtrl',
+          controllerAs: '$ctrl',
+          backdrop: 'static',
+          keyboard: false,
+          class: 'modal-backdrop fade',
+          size: 'md',
+          resolve: {
+            options: function () {
+              return options;
+            }
+          }
+        });
+
       }
+
     });
+
 
 
   }

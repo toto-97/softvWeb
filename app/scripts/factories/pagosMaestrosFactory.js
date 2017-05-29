@@ -86,6 +86,7 @@ angular
 					'IdDistribuidor': objPagar.IdDistribuidor
 				}
 			};
+			console.log(Parametros);
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
