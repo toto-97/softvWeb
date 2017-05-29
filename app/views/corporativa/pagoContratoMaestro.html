@@ -260,7 +260,7 @@
                     </tr>
                   </table>
                   <p class="btn-group text-right" style="padding-right: 10px;">
-                    <button class="btn btn-danger btn-sm" ng-click="$ctrl.abrirPago($ctrl.saldo, $ctrl.Contratos)" ng-disabled="$ctrl.blockPagar"><i class="fa fa-money" aria-hidden="true"></i> generar factura</button>
+                    <button class="btn btn-danger btn-sm" ng-click="$ctrl.PagarCredito($ctrl.saldo, $ctrl.sumaPagos, $ctrl.Contratos,'pagos')" ng-disabled="$ctrl.blockPagar"><i class="fa fa-money" aria-hidden="true"></i> generar factura</button>
                     <button class="btn btn-default-bright btn-sm" ng-disabled="$ctrl.blockedocta" ng-click="$ctrl.edocta()"><i class="fa fa-eye" aria-hidden="true" ></i> ver estado de cuenta</button>
                   </p>
                 </div>

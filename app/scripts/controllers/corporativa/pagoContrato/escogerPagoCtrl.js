@@ -1,7 +1,7 @@
 'use strict';
 angular.module('softvApp').controller('EscogerPagoCtrl', EscogerPagoCtrl);
 
-function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, $uibModalInstance, $localStorage, items, metodo, pagosMaestrosFactory, x, elem1) {
+function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, $uibModalInstance, $localStorage, metodo, pagosMaestrosFactory, x, elem1) {
 
     function cambio(pago) {
 		if (pago == 1){
@@ -38,7 +38,7 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 			// 	PagoInicial: vm.pagoInicial,
 			// };
 			// console.log(objPagar);
-			pagosMaestrosFactory.actFactura(elem).then(function(dataGraba) {
+			// pagosMaestrosFactory.actFactura(elem).then(function(dataGraba) {
 				$uibModalInstance.dismiss('cancel');
 				vm.animationsEnabled = true;
 				var modalInstance = $uibModal.open({
@@ -60,7 +60,7 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 						}
 					}
 				});
-			});
+			// });
 		}
 	}
 
@@ -78,7 +78,7 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 			// 	PagoInicial: vm.abono,
 			// };
 			// console.log(objPagar);
-			pagosMaestrosFactory.actFactura(elem).then(function(dataGraba) {
+			// pagosMaestrosFactory.actFactura(elem).then(function(dataGraba) {
 				$uibModalInstance.dismiss('cancel');
 				vm.animationsEnabled = true;
 				var modalInstance = $uibModal.open({
@@ -100,7 +100,7 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 						}
 					}
 				});
-			});
+			// });
 		}
 	}
 

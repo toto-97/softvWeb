@@ -83,22 +83,22 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 		vm.pagoNota = '';
 	}
 
-	function cambioCredito() {
-		vm.cuentaTransferencia = '';
-		vm.dineroTransferencia = '';
-		vm.autorizacionTransferencia = '';
-		vm.dineroCheque = '';
-		vm.numeroCheque = '';
-		vm.efectivo = '';
-		vm.casePago = 4;
-		cajasFactory.dameMontoCredito(vm.dineroCredito, items.Contrato).then(function (data) {
-			vm.pagoNota = data.GetDeepMontoNotaCreditoResult.Monto;
-			vm.TotalAbonado = vm.pagoNota;
-			if (vm.TotalAbonado > vm.monto) {
-				vm.TotalAbonado = vm.monto;
-			}
-		});
-	}
+	// function cambioCredito() {
+	// 	vm.cuentaTransferencia = '';
+	// 	vm.dineroTransferencia = '';
+	// 	vm.autorizacionTransferencia = '';
+	// 	vm.dineroCheque = '';
+	// 	vm.numeroCheque = '';
+	// 	vm.efectivo = '';
+	// 	vm.casePago = 4;
+	// 	cajasFactory.dameMontoCredito(vm.dineroCredito, items.Contrato).then(function (data) {
+	// 		vm.pagoNota = data.GetDeepMontoNotaCreditoResult.Monto;
+	// 		vm.TotalAbonado = vm.pagoNota;
+	// 		if (vm.TotalAbonado > vm.monto) {
+	// 			vm.TotalAbonado = vm.monto;
+	// 		}
+	// 	});
+	// }
 
 	// function ok() {
 	// 	if (vm.selectedMedio.IdMedioPago == 0) {
@@ -131,137 +131,309 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 	// }
 
 	function ok() {
+		var obj = {
+			'ContratoMaestro': x.ContratoMaestro,
+			'Credito': elem.Credito,
+			'Cajera': $localStorage.currentUser.usuario,
+			'IpMaquina': $localStorage.currentUser.maquina,
+			'Sucursal': $localStorage.currentUser.sucursal,
+			'IdCompania': x.IdCompania,
+			'IdDistribuidor': x.IdDistribuidor,
+			'ClvSessionPadre': x.Clv_SessionPadre,
+			'Tipo': 0,
+			'ToKen2': $localStorage.currentUser.token,
+			'NoPagos': elem.NoPago,
+			'PagoInicial': elem.PagoInicial
+		};
 		if (vm.casePago == undefined || vm.selectedMedio.IdMedioPago == 0) {
-			ngNotify.set('Por favor seleccione el medio de pago y llene un metodo de pago.', 'error');
+			ngNotify.set('Por favor seleccione el medio de pago y llene un método de pago.', 'error');
 		} else {
 			switch (vm.casePago) {
 				case 1:
-					if (vm.efectivo >= vm.monto) {
-						var objPagar = {
-							'Clv_FacturaMaestro': x.Clv_FacturaMaestro,
-							'ContratoMaestro': x.ContratoMaestro,
-							'Cajera': $localStorage.currentUser.usuario,
-							'IpMaquina': $localStorage.currentUser.maquina,
-							'Sucursal': $localStorage.currentUser.sucursal,
-							'Monto': vm.monto,
-							'GLOEFECTIVO2': vm.efectivo,
-							'GLOCHEQUE2': 0,
-							'GLOCLV_BANCOCHEQUE2': 0,
-							'NUMEROCHEQUE2': '',
-							'GLOTARJETA2': 0,
-							'GLOCLV_BANCOTARJETA2': 0,
-							'NUMEROTARJETA2': '',
-							'TARJETAAUTORIZACION2': '',
-							'CLV_Nota3': 0,
-							'GLONOTA3': 0,
-							'IdMedioPago': vm.selectedMedio.IdMedioPago,
-							'IdCompania': x.IdCompania,
-							'IdDistribuidor': x.IdDistribuidor
-						};
-						pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
-							vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
-							pagosMaestrosFactory.nuePagoEfectivoPago(vm.pago, vm.efectivo, vm.cambio).then(function (dataNuevo) {
+					if (x.tipo == 'pagos') {
+						pagosMaestrosFactory.generaFactura(obj).then(function (data) {
+							vm.r1 = data.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro;
+							elem.ClvFacturaMaestro = vm.r1;
+
+							pagosMaestrosFactory.actFactura(elem).then(function (dataAct) {
+								if (vm.efectivo >= vm.monto) {
+									var objPagar = {
+										'Clv_FacturaMaestro': elem.ClvFacturaMaestro,
+										'ContratoMaestro': x.ContratoMaestro,
+										'Cajera': $localStorage.currentUser.usuario,
+										'IpMaquina': $localStorage.currentUser.maquina,
+										'Sucursal': $localStorage.currentUser.sucursal,
+										'Monto': vm.monto,
+										'GLOEFECTIVO2': vm.efectivo,
+										'GLOCHEQUE2': 0,
+										'GLOCLV_BANCOCHEQUE2': 0,
+										'NUMEROCHEQUE2': '',
+										'GLOTARJETA2': 0,
+										'GLOCLV_BANCOTARJETA2': 0,
+										'NUMEROTARJETA2': '',
+										'TARJETAAUTORIZACION2': '',
+										'CLV_Nota3': 0,
+										'GLONOTA3': 0,
+										'IdMedioPago': vm.selectedMedio.IdMedioPago,
+										'IdCompania': x.IdCompania,
+										'IdDistribuidor': x.IdDistribuidor
+									};
+									pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
+										vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
+										pagosMaestrosFactory.nuePagoEfectivoPago(vm.pago, vm.efectivo, vm.cambio).then(function (dataNuevo) {
+										});
+										if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
+											ngNotify.set('No se grabo la factura', 'error');
+										} else {
+											$uibModalInstance.dismiss('cancel');
+											ngNotify.set('Pago grabado correctamente', 'success');
+											$rootScope.$emit('realoadBrowse', {});
+										}
+									});
+								} else {
+									ngNotify.set('No se ha saldado la factura.', 'error');
+								}
+
 							});
-							if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
-								ngNotify.set('No se grabo la factura', 'error');
-							} else {
-								$uibModalInstance.dismiss('cancel');
-								ngNotify.set('Pago grabado correctamente', 'success');
-								$rootScope.$emit('realoadBrowse', {});
-							}
 						});
 					} else {
-						ngNotify.set('No se ha saldado la factura.', 'error');
+						pagosMaestrosFactory.actFactura(elem).then(function (dataAct) {
+							if (vm.efectivo >= vm.monto) {
+								var objPagar = {
+									'Clv_FacturaMaestro': x.Clv_FacturaMaestro,
+									'ContratoMaestro': x.ContratoMaestro,
+									'Cajera': $localStorage.currentUser.usuario,
+									'IpMaquina': $localStorage.currentUser.maquina,
+									'Sucursal': $localStorage.currentUser.sucursal,
+									'Monto': vm.monto,
+									'GLOEFECTIVO2': vm.efectivo,
+									'GLOCHEQUE2': 0,
+									'GLOCLV_BANCOCHEQUE2': 0,
+									'NUMEROCHEQUE2': '',
+									'GLOTARJETA2': 0,
+									'GLOCLV_BANCOTARJETA2': 0,
+									'NUMEROTARJETA2': '',
+									'TARJETAAUTORIZACION2': '',
+									'CLV_Nota3': 0,
+									'GLONOTA3': 0,
+									'IdMedioPago': vm.selectedMedio.IdMedioPago,
+									'IdCompania': x.IdCompania,
+									'IdDistribuidor': x.IdDistribuidor
+								};
+								pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
+									vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
+									pagosMaestrosFactory.nuePagoEfectivoPago(vm.pago, vm.efectivo, vm.cambio).then(function (dataNuevo) {
+									});
+									if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
+										ngNotify.set('No se grabo la factura', 'error');
+									} else {
+										$uibModalInstance.dismiss('cancel');
+										ngNotify.set('Pago grabado correctamente', 'success');
+										$rootScope.$emit('realoadBrowse', {});
+									}
+								});
+							} else {
+								ngNotify.set('No se ha saldado la factura.', 'error');
+							}
+
+						});
 					}
 					break;
 				case 2:
-					if (vm.selectedBancoCheque.Clave == 0) {
-						ngNotify.set('Selecciona un banco.', 'error');
-					} else if (vm.numeroCheque == "" || vm.numeroCheque == undefined) {
-						ngNotify.set('Digita el número del cheque.', 'error');
-					} else {
-						if (vm.dineroCheque == vm.monto) {
-							var objPagar = {
-								'Clv_FacturaMaestro': x.Clv_FacturaMaestro,
-								'ContratoMaestro': x.ContratoMaestro,
-								'Cajera': $localStorage.currentUser.usuario,
-								'IpMaquina': $localStorage.currentUser.maquina,
-								'Sucursal': $localStorage.currentUser.sucursal,
-								'Monto': vm.monto,
-								'GLOEFECTIVO2': 0,
-								'GLOCHEQUE2': vm.dineroCheque,
-								'GLOCLV_BANCOCHEQUE2': vm.selectedBancoCheque.Clave,
-								'NUMEROCHEQUE2': vm.numeroCheque,
-								'GLOTARJETA2': 0,
-								'GLOCLV_BANCOTARJETA2': 0,
-								'NUMEROTARJETA2': '',
-								'TARJETAAUTORIZACION2': '',
-								'CLV_Nota3': 0,
-								'GLONOTA3': 0,
-								'IdMedioPago': vm.selectedMedio.IdMedioPago,
-								'IdCompania': x.IdCompania,
-								'IdDistribuidor': x.IdDistribuidor
-							};
-							pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
-								if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
-									ngNotify.set('No se grabo la factura', 'error');
+					if (x.tipo == 'pagos') {
+						pagosMaestrosFactory.generaFactura(obj).then(function (data) {
+							vm.r1 = data.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro;
+							elem.ClvFacturaMaestro = vm.r1;
+
+							pagosMaestrosFactory.actFactura(elem).then(function (dataAct) {
+								if (vm.selectedBancoCheque.Clave == 0) {
+									ngNotify.set('Selecciona un banco.', 'error');
+								} else if (vm.numeroCheque == "" || vm.numeroCheque == undefined) {
+									ngNotify.set('Digita el número del cheque.', 'error');
 								} else {
-									$uibModalInstance.dismiss('cancel');
-									ngNotify.set('Pago grabado correctamente', 'success');
-									$rootScope.$emit('realoadBrowse', {});
+									if (vm.dineroCheque == vm.monto) {
+										var objPagar = {
+											'Clv_FacturaMaestro': elem.ClvFacturaMaestro,
+											'ContratoMaestro': x.ContratoMaestro,
+											'Cajera': $localStorage.currentUser.usuario,
+											'IpMaquina': $localStorage.currentUser.maquina,
+											'Sucursal': $localStorage.currentUser.sucursal,
+											'Monto': vm.monto,
+											'GLOEFECTIVO2': 0,
+											'GLOCHEQUE2': vm.dineroCheque,
+											'GLOCLV_BANCOCHEQUE2': vm.selectedBancoCheque.Clave,
+											'NUMEROCHEQUE2': vm.numeroCheque,
+											'GLOTARJETA2': 0,
+											'GLOCLV_BANCOTARJETA2': 0,
+											'NUMEROTARJETA2': '',
+											'TARJETAAUTORIZACION2': '',
+											'CLV_Nota3': 0,
+											'GLONOTA3': 0,
+											'IdMedioPago': vm.selectedMedio.IdMedioPago,
+											'IdCompania': x.IdCompania,
+											'IdDistribuidor': x.IdDistribuidor
+										};
+										pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
+											if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
+												ngNotify.set('No se grabo la factura', 'error');
+											} else {
+												$uibModalInstance.dismiss('cancel');
+												ngNotify.set('Pago grabado correctamente', 'success');
+												$rootScope.$emit('realoadBrowse', {});
+											}
+										});
+									} else {
+										ngNotify.set('No se ha saldado la factura', 'error');
+									}
 								}
 							});
-						} else {
-							ngNotify.set('No se ha saldado la factura', 'error');
-						}
+						});
+					} else {
+						pagosMaestrosFactory.actFactura(elem).then(function (dataAct) {
+							if (vm.selectedBancoCheque.Clave == 0) {
+								ngNotify.set('Selecciona un banco.', 'error');
+							} else if (vm.numeroCheque == "" || vm.numeroCheque == undefined) {
+								ngNotify.set('Digita el número del cheque.', 'error');
+							} else {
+								if (vm.dineroCheque == vm.monto) {
+									var objPagar = {
+										'Clv_FacturaMaestro': x.Clv_FacturaMaestro,
+										'ContratoMaestro': x.ContratoMaestro,
+										'Cajera': $localStorage.currentUser.usuario,
+										'IpMaquina': $localStorage.currentUser.maquina,
+										'Sucursal': $localStorage.currentUser.sucursal,
+										'Monto': vm.monto,
+										'GLOEFECTIVO2': 0,
+										'GLOCHEQUE2': vm.dineroCheque,
+										'GLOCLV_BANCOCHEQUE2': vm.selectedBancoCheque.Clave,
+										'NUMEROCHEQUE2': vm.numeroCheque,
+										'GLOTARJETA2': 0,
+										'GLOCLV_BANCOTARJETA2': 0,
+										'NUMEROTARJETA2': '',
+										'TARJETAAUTORIZACION2': '',
+										'CLV_Nota3': 0,
+										'GLONOTA3': 0,
+										'IdMedioPago': vm.selectedMedio.IdMedioPago,
+										'IdCompania': x.IdCompania,
+										'IdDistribuidor': x.IdDistribuidor
+									};
+									pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
+										if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
+											ngNotify.set('No se grabo la factura', 'error');
+										} else {
+											$uibModalInstance.dismiss('cancel');
+											ngNotify.set('Pago grabado correctamente', 'success');
+											$rootScope.$emit('realoadBrowse', {});
+										}
+									});
+								} else {
+									ngNotify.set('No se ha saldado la factura', 'error');
+								}
+							}
+						});
 					}
 					break;
 				case 3:
-					if (vm.selectedBancoTransferencia.Clave == 0) {
-						ngNotify.set('Selecciona un banco', 'error');
-					} else if (vm.cuentaTransferencia == "" || vm.cuentaTransferencia == undefined) {
-						ngNotify.set('Digita el número de cuenta por favor.', 'error');
-					} else if (vm.autorizacionTransferencia == "" || vm.autorizacionTransferencia == undefined) {
-						ngNotify.set('Digita el número de autorizacion.', 'error');
-					} else {
-						if (vm.dineroTransferencia == vm.monto) {
-							var objPagar = {
-								'Clv_FacturaMaestro': x.Clv_FacturaMaestro,
-								'ContratoMaestro': x.ContratoMaestro,
-								'Cajera': $localStorage.currentUser.usuario,
-								'IpMaquina': $localStorage.currentUser.maquina,
-								'Sucursal': $localStorage.currentUser.sucursal,
-								'Monto': vm.monto,
-								'GLOEFECTIVO2': 0,
-								'GLOCHEQUE2': 0,
-								'GLOCLV_BANCOCHEQUE2': 0,
-								'NUMEROCHEQUE2': '',
-								'GLOTARJETA2': vm.dineroTransferencia,
-								'GLOCLV_BANCOTARJETA2': vm.selectedBancoTransferencia.Clave,
-								'NUMEROTARJETA2': vm.cuentaTransferencia,
-								'TARJETAAUTORIZACION2': vm.autorizacionTransferencia,
-								'CLV_Nota3': 0,
-								'GLONOTA3': 0,
-								'IdMedioPago': vm.selectedMedio.IdMedioPago,
-								'IdCompania': x.IdCompania,
-								'IdDistribuidor': x.IdDistribuidor
-							};
-							pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
-								if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
-									ngNotify.set('No se grabo la factura', 'error');
+					if (x.tipo == 'pagos') {
+						pagosMaestrosFactory.generaFactura(obj).then(function (data) {
+							vm.r1 = data.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro;
+							elem.ClvFacturaMaestro = vm.r1;
+
+							pagosMaestrosFactory.actFactura(elem).then(function (dataAct) {
+								if (vm.selectedBancoTransferencia.Clave == 0) {
+									ngNotify.set('Selecciona un banco', 'error');
+								} else if (vm.cuentaTransferencia == "" || vm.cuentaTransferencia == undefined) {
+									ngNotify.set('Digita el número de cuenta por favor.', 'error');
+								} else if (vm.autorizacionTransferencia == "" || vm.autorizacionTransferencia == undefined) {
+									ngNotify.set('Digita el número de autorizacion.', 'error');
 								} else {
-									$uibModalInstance.dismiss('cancel');
-									ngNotify.set('Pago grabado correctamente', 'success');
-									$rootScope.$emit('realoadBrowse', {});
+									if (vm.dineroTransferencia == vm.monto) {
+										var objPagar = {
+											'Clv_FacturaMaestro': elem.ClvFacturaMaestro,
+											'ContratoMaestro': x.ContratoMaestro,
+											'Cajera': $localStorage.currentUser.usuario,
+											'IpMaquina': $localStorage.currentUser.maquina,
+											'Sucursal': $localStorage.currentUser.sucursal,
+											'Monto': vm.monto,
+											'GLOEFECTIVO2': 0,
+											'GLOCHEQUE2': 0,
+											'GLOCLV_BANCOCHEQUE2': 0,
+											'NUMEROCHEQUE2': '',
+											'GLOTARJETA2': vm.dineroTransferencia,
+											'GLOCLV_BANCOTARJETA2': vm.selectedBancoTransferencia.Clave,
+											'NUMEROTARJETA2': vm.cuentaTransferencia,
+											'TARJETAAUTORIZACION2': vm.autorizacionTransferencia,
+											'CLV_Nota3': 0,
+											'GLONOTA3': 0,
+											'IdMedioPago': vm.selectedMedio.IdMedioPago,
+											'IdCompania': x.IdCompania,
+											'IdDistribuidor': x.IdDistribuidor
+										};
+										pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
+											if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
+												ngNotify.set('No se grabo la factura', 'error');
+											} else {
+												$uibModalInstance.dismiss('cancel');
+												ngNotify.set('Pago grabado correctamente', 'success');
+												$rootScope.$emit('realoadBrowse', {});
+											}
+										});
+									} else {
+										ngNotify.set('No se ha saldado la factura', 'error');
+									}
 								}
 							});
-						} else {
-							ngNotify.set('No se ha saldado la factura', 'error');
-						}
+						});
+					}
+					else {
+						pagosMaestrosFactory.actFactura(elem).then(function (dataAct) {
+							if (vm.selectedBancoTransferencia.Clave == 0) {
+								ngNotify.set('Selecciona un banco', 'error');
+							} else if (vm.cuentaTransferencia == "" || vm.cuentaTransferencia == undefined) {
+								ngNotify.set('Digita el número de cuenta por favor.', 'error');
+							} else if (vm.autorizacionTransferencia == "" || vm.autorizacionTransferencia == undefined) {
+								ngNotify.set('Digita el número de autorizacion.', 'error');
+							} else {
+								if (vm.dineroTransferencia == vm.monto) {
+									var objPagar = {
+										'Clv_FacturaMaestro': x.Clv_FacturaMaestro,
+										'ContratoMaestro': x.ContratoMaestro,
+										'Cajera': $localStorage.currentUser.usuario,
+										'IpMaquina': $localStorage.currentUser.maquina,
+										'Sucursal': $localStorage.currentUser.sucursal,
+										'Monto': vm.monto,
+										'GLOEFECTIVO2': 0,
+										'GLOCHEQUE2': 0,
+										'GLOCLV_BANCOCHEQUE2': 0,
+										'NUMEROCHEQUE2': '',
+										'GLOTARJETA2': vm.dineroTransferencia,
+										'GLOCLV_BANCOTARJETA2': vm.selectedBancoTransferencia.Clave,
+										'NUMEROTARJETA2': vm.cuentaTransferencia,
+										'TARJETAAUTORIZACION2': vm.autorizacionTransferencia,
+										'CLV_Nota3': 0,
+										'GLONOTA3': 0,
+										'IdMedioPago': vm.selectedMedio.IdMedioPago,
+										'IdCompania': x.IdCompania,
+										'IdDistribuidor': x.IdDistribuidor
+									};
+									pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
+										if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
+											ngNotify.set('No se grabo la factura', 'error');
+										} else {
+											$uibModalInstance.dismiss('cancel');
+											ngNotify.set('Pago grabado correctamente', 'success');
+											$rootScope.$emit('realoadBrowse', {});
+										}
+									});
+								} else {
+									ngNotify.set('No se ha saldado la factura', 'error');
+								}
+							}
+						});
 					}
 					break;
 				default:
-					
+
 			}
 		}
 	}
