@@ -186,17 +186,12 @@ angular
 
 		}
 
-
-
-
-
-
-
 		$rootScope.$on('cliente_seleccionado', function(e, detalle) {
 
 			var contrato = detalle.ContratoBueno;
 			vm.GlobalContrato = contrato;
 			vm.contrato = detalle.CONTRATO;
+			vm.contratoSelected=detalle.CONTRATO;
 			vm.NombreCliente = detalle.Nombre + detalle.Apellido_Paterno + " " + detalle.Apellido_Materno;
 			vm.Calle = detalle.CALLE;
 			vm.Numero = detalle.NUMERO;

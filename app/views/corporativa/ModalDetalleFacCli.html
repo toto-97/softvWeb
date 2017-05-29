@@ -1,0 +1,49 @@
+<div class="modal-header">
+  <button class="close" aria-label="Close" type="button">×</button>
+  <h4 class="modal-title"><i class="fa fa-thumb-tack"></i>modal detalle fac </h4>
+</div>
+<div class="modal-body">
+
+  <table class="table" style="font-size: 12px;">
+    <thead>
+
+      <th style="    vertical-align: middle;">Concepto</th>
+      <th style="    vertical-align: middle;">Importe</th>
+      <th style="    vertical-align: middle;">Dias A Bonificar </th>
+      <th style="    vertical-align: middle;">Periodo pagado inicial</th>
+      <th style="    vertical-align: middle;">Periodo pagado final</th>
+      <th style="    vertical-align: middle;">Puntos aplicados<br> pago oportuno</th>
+      <th style="    vertical-align: middle;">Puntos aplicados <br> por antiguedad</th>
+      <th style="    vertical-align: middle;">Puntos aplicados <br> por pagos adelant.</th>
+      <th style="    vertical-align: middle;">Puntos combo</th>
+      <th style="    vertical-align: middle;">Importe a bonificar</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="x in $ctrl.conceptos">
+        <td>{{x.DESCRIPCION}}</td>
+        <td>{{x.importe |currency}}</td>
+        <td>{{x.DiasBonifica}}</td>
+        <td>{{x.periodoPagadoIni}}</td>
+        <td>{{x.periodoPagadoFin}}</td>
+        <td></td>
+        <td>{{x.puntosAplicadosAnt}}</td>
+        <td>{{x.PuntosAplicadosPagoAdelantado}}</td>
+        <td>{{x.DescuentoNet}}</td>
+        <td>{{x.importeBonifica}}</td>
+        <td>
+          <label class="checkbox-inline checkbox-styled checkbox-info">
+														<input type="checkbox" ng-model="x.Se_Cobra"><span></span>
+													</label>
+          
+          
+          </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  <div class="modal-footer">
+    <button class="btn btn-success btn-sm" type="button" ng-click="$ctrl.ok()">Guardar</button>
+    <button class="btn btn-default btn-sm" type="button" ng-click="$ctrl.cancel()">cerrar</button>
+  </div>

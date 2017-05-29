@@ -48,8 +48,6 @@ angular
 				case 'General':
 					vm.showDistribuidores = true;
 					break;
-					vm.showDistribuidores = true;
-					break;
 				case 'Por Caja':
 					vm.showDistribuidores = true;
 					break;

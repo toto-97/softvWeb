@@ -3,7 +3,6 @@ angular.module('softvApp').controller('FacturasCtrl', FacturasCtrl);
 
 function FacturasCtrl($uibModal, ngNotify, inMenu, $uibModalInstance, clvPago, pagosMaestrosFactory) {
 	function initial() {
-        console.log(clvPago);
 		pagosMaestrosFactory.verFacturas(clvPago).then(function (data) {
 			vm.facturas = data.GetFacturasPorCliDePagoResult;
 		});

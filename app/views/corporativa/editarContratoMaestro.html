@@ -95,6 +95,52 @@
                   </select>
           </div>
         </div>
+        <div class="col-md-12">
+                    <label class="col-md-3 control-label blod">Entre calles:</label>
+                    <div class="col-md-9" style="padding-left:-10px;">
+                        <input type="text" class="form-control input-sm" 
+                        required-message="'Este campo es obligatorio.'" 
+                        required  ng-model="$ctrl.EntreCalles" name="EntreCalles">
+                  
+                    </div>
+                </div>
+                  <div class="col-md-12">
+                    <label class="col-md-3 control-label blod">Pais:</label>
+                    <div class="col-md-9" style="padding-left:-10px;">
+                        <input type="text" class="form-control input-sm" 
+                        required-message="'Este campo es obligatorio.'" 
+                        required  ng-model="$ctrl.Pais" name="Pais">
+                  
+                    </div>
+                </div>
+                 <div class="col-md-12">
+                    <label class="col-md-3 control-label blod">Teléfono:</label>
+                    <div class="col-md-9" style="padding-left:-10px;">
+                        <input type="text" class="form-control input-sm" 
+                        required-message="'Este campo es obligatorio.'" 
+                        required  ng-model="$ctrl.Telefono" name="Telefono">
+                  
+                    </div>
+                </div>
+                  <div class="col-md-12">
+                    <label class="col-md-3 control-label blod">Email:</label>
+                    <div class="col-md-9" style="padding-left:-10px;">
+                        <input type="text" class="form-control input-sm" 
+                        required-message="'Este campo es obligatorio.'" 
+                        required  ng-model="$ctrl.Email" name="Email">
+                  
+                    </div>
+                </div>
+
+    <div class="col-md-12">
+                    <label class="col-md-3 control-label blod">Fax:</label>
+                    <div class="col-md-9" style="padding-left:-10px;">
+                        <input type="text" class="form-control input-sm" 
+                        required-message="'Este campo es obligatorio.'" 
+                        required  ng-model="$ctrl.Fax" name="Fax">
+                  
+                    </div>
+                </div>
 
 
         <div class="col-md-12">
@@ -129,13 +175,13 @@
         <div class="col-md-12" ng-if="$ctrl.contratoMaestro.lstCliS.length > 0">
           <br>
           <div class="col-md-4">
-              <button type="button" class="btn btn-default btn-block" ng-click="$ctrl.desconexion('desconexion')">Desconexión</button>
+              <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('desconexion')">Desconexión</button>
           </div>
           <div class="col-md-4">
-              <button type="button" class="btn btn-default btn-block" ng-click="$ctrl.desconexion('reconexion')">Reconexión</button>
+              <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('reconexion')">Reconexión</button>
           </div>
           <div class="col-md-4">
-              <button type="button" class="btn btn-default btn-block" ng-click="$ctrl.desconexion('ordenes')">Generar Ordenes</button>
+              <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('ordenes')">Generar Ordenes</button>
           </div>
         </div>
 

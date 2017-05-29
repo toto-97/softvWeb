@@ -1,7 +1,7 @@
 'use strict';
 angular.module('softvApp').controller('EscogerPagoCtrl', EscogerPagoCtrl);
 
-function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, $uibModalInstance, $localStorage, items, metodo, pagosMaestrosFactory, x, elem1) {
+function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, $uibModalInstance, $localStorage, metodo, pagosMaestrosFactory, x, elem1) {
 
     function cambio(pago) {
 		if (pago == 1){
@@ -38,8 +38,7 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 			// 	PagoInicial: vm.pagoInicial,
 			// };
 			// console.log(objPagar);
-			// pagosMaestrosFactory.actFactura(objPagar).then(function(dataGraba) {
-			// 	console.log(dataGraba.AddActualizaFacturaMaestroResult);
+			// pagosMaestrosFactory.actFactura(elem).then(function(dataGraba) {
 				$uibModalInstance.dismiss('cancel');
 				vm.animationsEnabled = true;
 				var modalInstance = $uibModal.open({
@@ -51,7 +50,7 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 					controllerAs: '$ctrl',
 					backdrop: 'static',
 					keyboard: false,
-					size: 'sm',
+					size: 'md',
 					resolve: {
 						elem: function() {
 							return elem;
@@ -79,8 +78,7 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 			// 	PagoInicial: vm.abono,
 			// };
 			// console.log(objPagar);
-			// pagosMaestrosFactory.actFactura(objPagar).then(function(dataGraba) {
-			// 	console.log(dataGraba.AddActualizaFacturaMaestroResult);
+			// pagosMaestrosFactory.actFactura(elem).then(function(dataGraba) {
 				$uibModalInstance.dismiss('cancel');
 				vm.animationsEnabled = true;
 				var modalInstance = $uibModal.open({
@@ -92,7 +90,7 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 					controllerAs: '$ctrl',
 					backdrop: 'static',
 					keyboard: false,
-					size: 'sm',
+					size: 'md',
 					resolve: {
 						elem: function() {
 							return elem;
