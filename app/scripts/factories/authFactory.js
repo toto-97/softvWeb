@@ -18,6 +18,7 @@ angular.module('softvApp')
 				}
 			};
 			$http.post(globalService.getUrl() + paths.getAuthentication, JSON.stringify(Parametros), config).then(function(response) {
+				console.log(response);
 				if (response.data.GetDameSessionWListResult[0].Codigo) {
 					$localStorage.currentUser = {
 						token: response.data.GetDameSessionWListResult[0].Codigo,

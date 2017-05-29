@@ -290,15 +290,12 @@
                                     <td>{{x.Importe - x.TotalAbonado | currency}}</td>
                                     <td>{{x.Status}}</td>
                                     <td>
-                                     <button class="btn ink-reaction btn-icon-toggle btn-xs  btn-success" ng-disabled="$ctrl.pagar" ng-click="$ctrl.PagarCredito(x)" data-toggle="tooltip" data-placement="top" title="Pagar" data-original-title="Pagar"><i class="fa fa-credit-card"></i></button>
-                                    </td>
+                                     <button ng-if="x.Status=='Activa'" class="btn ink-reaction btn-icon-toggle btn-xs  btn-success" ng-disabled="$ctrl.pagar" ng-click="$ctrl.PagarCredito(x)" data-toggle="tooltip" data-placement="top" title="Pagar" data-original-title="Pagar"><i class="fa fa-credit-card"></i></button>
+                                    </td>                                  
                                     <td>
-
                                       <button class="btn ink-reaction btn-icon-toggle btn-xs  btn-warning" ng-disabled="$ctrl.generar" ng-click="$ctrl.detalle(x)" data-toggle="tooltip" data-placement="top" title="Ver Detalle" data-original-title="Ver Detalle"><i class="fa fa-list-ul"></i></button>
                                     </td>
-                                    <td>
-                                       
-                                        
+                                    <td>                                 
                                         <button class="btn ink-reaction btn-icon-toggle btn-xs  btn-danger" ng-click="$ctrl.historial(x)" data-toggle="tooltip" data-placement="top" title="Ver Historial" data-original-title="Ver Historial"><i class="fa fa-plus"></i></button>
                                     </td>
                                 </tr>

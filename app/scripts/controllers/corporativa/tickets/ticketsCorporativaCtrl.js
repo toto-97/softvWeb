@@ -71,9 +71,8 @@
           'Saldada': 0
         };
       }
-      console.log(parametros);
-      ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
-        console.log(data);
+     
+      ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {       
         vm.Tickets = data.GetBuscaFacturasMaestroListResult;
       });
     }

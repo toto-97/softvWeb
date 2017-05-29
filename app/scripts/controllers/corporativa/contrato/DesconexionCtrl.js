@@ -88,10 +88,10 @@
                     contratos_enviar.objprocesa.Contratos.push(_contrato);
                 }
             });
-            console.log(contratos_enviar);
+           
             ContratoMaestroFactory.ProcesaDesconexion(contratos_enviar).then(function (data){              
                 ngNotify.set('El proceso se ejecuto correctamente', 'success');
-                console.log(data);
+               
             });
         }
 

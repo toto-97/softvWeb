@@ -29,7 +29,7 @@
       Nota de crédito No.{{ctrl.det.Clv_notadecredito}}<br> Aplicada a :{{ctrl.det.Ticket}}
     </div>
     <div class="col-md-12" style="font-size:10px;">
-      <b>Contrato:</b></br>
+      <b>Contrato :</b> {{ctrl.cmaestro}}</br>
       {{ctrl.det.Nombre}}<br> {{ctrl.det.Calle}} #{{ctrl.det.Numero}}<br> {{ctrl.det.Colonia}}
       <br> {{ctrl.det.Ciudad}}
       <br>
@@ -38,16 +38,20 @@
     <div class="col-md-12">
 
       <table class="table conceptos" style="font-size:10px;">
-        <tr ng-repeat="x in ctrl.conceptos">
-          <td>{{x.Descripcion}}
-            <td>
-              <td>{{x.importe |currency}}
-                <td>
+        <tr ng-repeat="x in ctrl.conceptos" ng-if="x.Se_Cobra==true">
+          <td>{{x.Descripcion}}</td>
+          <td>{{x.importe |currency}}</td>
         </tr>
       </table>
 
     </div>
+    <div class="col-md-12 text-right">
+      <b>Total {{ctrl.total | currency}}</b>
+
+    </div>
+
     <div class="col-md-12" style="font-size:10px; ">
+
       <b>Cantidad con letra</b> {{ctrl.det.Monto|currency}} ({{ctrl.det.Cant_Letra}})
 
     </div>

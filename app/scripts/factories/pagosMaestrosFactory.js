@@ -68,7 +68,7 @@ angular
 					'ContratoMaestro': objPagar.ContratoMaestro,
 					'Cajera': objPagar.Cajera,
 					'Caja':0,
-     				'IpMaquina': objPagar.IpMaquina,
+					'IpMaquina': objPagar.IpMaquina,
 					'Sucursal': objPagar.Sucursal,
 					'Monto': objPagar.Monto,
 					'GLOEFECTIVO2': objPagar.GLOEFECTIVO2,
@@ -86,6 +86,7 @@ angular
 					'IdDistribuidor': objPagar.IdDistribuidor
 				}
 			};
+			console.log(Parametros);
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token

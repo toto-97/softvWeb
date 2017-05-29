@@ -26,7 +26,7 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope, $rootScope, 
       vm.contratos.push(contrato);
     }
     sortByKey(vm.contratos, 'Nivel');
-    console.log(vm.contratos);
+    
   }
 
   function cancel() {
@@ -139,8 +139,7 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope, $rootScope, 
 
         });
       });
-      console.log(vm.contratos);
-      console.log(contratos);
+     
 
       corporativoFactory.UpdateRelContrato(detalle.IdContratoMaestro, contratos, vm.Distribuidor.Clv_Plaza).then(function (data) {
 
@@ -166,7 +165,7 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope, $rootScope, 
     }
 
     ContratoMaestroFactory.UpdateFile(files, detalle.IdContratoMaestro, vm.Distribuidor.Clv_Plaza).then(function (data) {
-      console.log(data);
+    
       if (data.ContratosValidos.length > 0) {
         ngNotify.set('Se encontraron ' + data.ContratosValidos.length + ' contratos válidos', 'grimace');
         vm.contratos = [];

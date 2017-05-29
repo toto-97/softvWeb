@@ -2,8 +2,7 @@
 angular
   .module('softvApp')
   .controller('ModalCancelaFacturaCtrl', function ($uibModalInstance, $uibModal, ContratoMaestroFactory, ngNotify, $rootScope, options) {
-    this.$onInit = function () {
-        console.log(options);
+    this.$onInit = function () {      
       vm.pregunta = options.pregunta;
     }
 
