@@ -44,7 +44,8 @@ angular.module('softvApp')
       GetCancelaPagoFacturaMaestro: '/ContratoMaestroFac/GetCancelaPagoFacturaMaestro',
       GetValidaSipuedohacerPagoc: '/ContratoMaestroFac/GetValidaSipuedohacerPagoc',
       GetValidaSipuedoCancelarPago:'/ContratoMaestroFac/GetValidaSipuedoCancelarPago',
-      GetDetalle_NotasdeCreditoVerHistorialList:'/Detalle_NotasdeCredito/GetDetalle_NotasdeCreditoVerHistorialList'
+      GetDetalle_NotasdeCreditoVerHistorialList:'/Detalle_NotasdeCredito/GetDetalle_NotasdeCreditoVerHistorialList',
+      GetGeneraFacturaMaestroPrueba: '/ContratoMaestroFac/GetGeneraFacturaMaestroPrueba'
     };
 
     factory.ProcesaDesconexion = function (contratos) {
@@ -1024,6 +1025,25 @@ factory.GetDetalle_NotasdeCreditoVerHistorialList = function (Clv_NotadeCredito)
 
       return deferred.promise;
     };
+
+    factory.GetGeneraFacturaMaestroPrueba = function(contrato) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'IdContratoMaestro': contrato
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.GetGeneraFacturaMaestroPrueba, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
 
     return factory;
 

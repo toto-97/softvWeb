@@ -182,7 +182,7 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 										} else {
 											$uibModalInstance.dismiss('cancel');
 											ngNotify.set('Pago grabado correctamente', 'success');
-											$rootScope.$emit('realoadBrowse', {});
+											$state.reload();
 										}
 									});
 								});
@@ -273,7 +273,7 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 											} else {
 												$uibModalInstance.dismiss('cancel');
 												ngNotify.set('Pago grabado correctamente', 'success');
-												$rootScope.$emit('realoadBrowse', {});
+												$state.reload();
 											}
 										});
 									});
@@ -370,7 +370,7 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 											} else {
 												$uibModalInstance.dismiss('cancel');
 												ngNotify.set('Pago grabado correctamente', 'success');
-												$rootScope.$emit('realoadBrowse', {});
+												$state.reload();
 											}
 										});
 									});
