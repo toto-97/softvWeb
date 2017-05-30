@@ -169,7 +169,7 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 				'DiasCredito': vm.diascredito,
 				'DiasGracia': vm.diasgracia,
 				'LimiteCredito': vm.limitecredito,
-				'FechaFac': auxFecha,
+				'FechaFac': vm.fecha+'/01/2000',
 				'PagoEdoCuetna': vm.pagEdo,
 				'PagoFac': vm.pagFac,
 				'TipoCorteCli': vm.tipocorte.Id,

@@ -145,7 +145,7 @@
         var date = vm.contratoMaestro.FechaFac.replace(/[^0-9\.]+/g, '');
         var pattern = /(\d{2})(\d{2})(\d{4})/;
         date = new Date(date.replace(pattern, '$2/$1/$3'));
-        vm.fecha = date;
+        vm.fecha = vm.contratoMaestro.FechaFac;
         vm.autorizacion = vm.contratoMaestro.Referencia2;
         vm.EntreCalles = vm.contratoMaestro.EntreCalles;
         vm.Telefono = vm.contratoMaestro.Tel;
@@ -274,7 +274,7 @@
           'DiasCredito': vm.diascredito,
           'DiasGracia': vm.diasgracia,
           'LimiteCredito': vm.limitecredito,
-          'FechaFac': auxFecha,
+          'FechaFac': vm.fecha+'/01/2000',
           'PagoEdoCuetna': vm.pagEdo,
           'PagoFac': vm.pagFac,
           'TipoCorteCli': vm.tipocorte.Id,

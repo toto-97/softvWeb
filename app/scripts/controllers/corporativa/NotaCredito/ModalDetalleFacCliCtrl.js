@@ -16,7 +16,7 @@
     this.$onInit = function () {
 
       ContratoMaestroFactory.DameDetalle_FacturaporCli(options.Clv_FacturaCli, options.clv_session).then(function (response) {
-        console.log(response);
+       
         vm.conceptos = response.GetDameDetalle_FacturaporCliListResult;
 
       });
@@ -32,12 +32,12 @@
         if (vm.conceptos[a].Se_Cobra == true) {
           claves.push({
             'Clv_Detalle': vm.conceptos[a].CLV_DETALLE,
-            'Importe':vm.conceptos[a].cantidad
+            'Importe':vm.conceptos[a].ImporteNota
           })
         }
 
       }
-      console.log(claves);
+     
      
       ContratoMaestroFactory.GetAgregaDetalleNotaDeCreditoMaestroList(
         options.contratocom, options.clv_session, options.Clv_FacturaCli, claves).then(function (response) {
@@ -49,8 +49,8 @@
     function calcular() {
       vm.sumatotal = 0;
       vm.conceptos.forEach(function (element) {
-        console.log(element);
-        vm.sumatotal += (element.cantidad == undefined) ? 0 : element.cantidad
+        
+        vm.sumatotal += (element.ImporteNota == undefined) ? 0 : element.ImporteNota
       });
     }
 
