@@ -166,6 +166,22 @@ function corporativaConf($stateProvider) {
 		templateUrl: 'views/corporativa/nuevaNotaCredito.html',
 		controller: 'nuevaNotaCreditoCtrl',
 		controllerAs: '$ctrl'
+	},
+	{
+		name: 'home.corporativa.reportesPendientes',
+		data: {
+			pageTitle: 'SOFTV | REPORTES PAGOS PENDIENTES',
+			permissions: {
+				only: ['recepciondepagosSelect'],
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/reportePendientes',
+		templateUrl: 'views/corporativa/reportesPendientes.html',
+		controller: 'ReportesPendientesCtrl',
+		controllerAs: '$ctrl'
 	}
 
 
