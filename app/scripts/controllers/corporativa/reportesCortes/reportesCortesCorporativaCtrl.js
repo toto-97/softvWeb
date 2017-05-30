@@ -254,10 +254,10 @@ angular.module('softvApp')
                     type: 'error'
                 });
             } else {
-                if (reporteSeleccionado == 1) {
+                if (reporteSeleccionado == 1 || reporteSeleccionado == 2) {
                     showReporte();
                 }
-                else {
+                else if (reporteSeleccionado == 3){
                     showSucursales();
                 }
             }
@@ -302,7 +302,7 @@ angular.module('softvApp')
 
         function crearObjParametros() {
 
-            if (reporteSeleccionado == 1 || reporteSeleccionado == 3)//1 general, 3 resumen sucursales
+            if (reporteSeleccionado >= 1 && reporteSeleccionado <= 3)//1 general, 3 resumen sucursales
             {
 
                 var D1 = vm.fechaInicial;
@@ -359,13 +359,17 @@ angular.module('softvApp')
         function realizaReporte() {
 
             reportesCortesCorporativaFactory.creaReporte(clv_usuario, reporteSeleccionado, OtrosFiltrosXml, distribuidoresXML, sucursalesXml).then(function (data) {
-
+            
                 var urlReporte = '';
 
                 if (reporteSeleccionado == 1) {
                     urlReporte = data.GetReporte_GeneralResult;
                 }
-                else {
+                else if (reporteSeleccionado == 2){
+
+                    urlReporte = data.GetReporte_GeneralDeVentasResult;
+                }
+                else if (reporteSeleccionado == 3){
                     urlReporte = data.GetReporte_ResumenIngresoSucursalResult;
                 }
 

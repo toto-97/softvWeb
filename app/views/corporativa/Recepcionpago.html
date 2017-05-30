@@ -279,7 +279,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-show="$ctrl.pagos.length>0" dir-paginate="x in $ctrl.pagos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:5">
+                                <tr ng-show="$ctrl.pagos.length>0" dir-paginate="x in $ctrl.pagos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:12">
                                     <td>{{x.ContratoMaestro}}</td>
                                     <td>{{x.Ticket}}</td>
                                     <td>{{x.Cliente}}</td>
