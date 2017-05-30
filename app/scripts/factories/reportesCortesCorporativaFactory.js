@@ -9,6 +9,7 @@ angular.module('softvApp')
 			getXml: '/ContratoMaestroFac/GetCreateXmlBeforeReporteCorporativa',
 			//----------- Reportes Resumen	
 			ReporteGeneral: '/ContratoMaestroFac/GetReporte_General',
+			ReporteGeneralDeVentas: '/ContratoMaestroFac/GetReporte_GeneralDeVentas',
 			Reporte_ResIngresoSucursal: '/ContratoMaestroFac/GetReporte_ResumenIngresoSucursal'
 		};
 
@@ -77,7 +78,10 @@ angular.module('softvApp')
 			if (reporteSeleccionado === 1) {
 				rutaServicio = paths.ReporteGeneral;
 			}
-			else {
+			else if (reporteSeleccionado === 2 ) {				
+				rutaServicio = paths.ReporteGeneralDeVentas;
+			}
+			else if (reporteSeleccionado === 3) {
 				rutaServicio = paths.Reporte_ResIngresoSucursal;
 			}
 
