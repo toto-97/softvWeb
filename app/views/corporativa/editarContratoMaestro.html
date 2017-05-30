@@ -172,18 +172,6 @@
           </div>
         </div>
 
-        <div class="col-md-12" ng-if="$ctrl.contratoMaestro.lstCliS.length > 0">
-          <br>
-          <div class="col-md-4">
-              <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('desconexion')">Desconexión</button>
-          </div>
-          <div class="col-md-4">
-              <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('reconexion')">Reconexión</button>
-          </div>
-          <div class="col-md-4">
-              <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('ordenes')">Generar Ordenes</button>
-          </div>
-        </div>
 
       </div>
       <div class="col-md-6">
@@ -308,6 +296,23 @@
           <label class="text-left checkbox-inline checkbox-styled"><input type="checkbox" name="dolares" ng-model="$ctrl.dolares"><span></span></label>
         </div>
       </div>
+
+      
+        <div class="col-md-12 btn-group" ng-if="$ctrl.contratoMaestro.lstCliS.length > 0">
+          <br>
+          <div class="col-md-3">
+            <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('desconexion')">Desconexión</button>
+          </div>
+          <div class="col-md-3">
+            <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('reconexion')">Reconexión</button>
+          </div>
+          <div class="col-md-3">
+            <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('ordenes')">Generar Ordenes</button>
+          </div>
+          <div class="col-md-3">
+            <button type="button" class="btn btn-default btn-block" ng-click="$ctrl.generarFacturaPrueba($ctrl.contratoMaestro.IdContratoMaestro)">Generar Factura</button>
+          </div>
+        </div>
 
     </div>
 
