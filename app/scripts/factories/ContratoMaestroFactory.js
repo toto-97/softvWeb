@@ -43,8 +43,10 @@ angular.module('softvApp')
       GetCANCELA_FACTURASMAESTRA_PRINCIPAL: '/NotasDeCredito_ContraMaeFac/GetCANCELA_FACTURASMAESTRA_PRINCIPAL',
       GetCancelaPagoFacturaMaestro: '/ContratoMaestroFac/GetCancelaPagoFacturaMaestro',
       GetValidaSipuedohacerPagoc: '/ContratoMaestroFac/GetValidaSipuedohacerPagoc',
-      GetValidaSipuedoCancelarPago:'/ContratoMaestroFac/GetValidaSipuedoCancelarPago',
-      GetDetalle_NotasdeCreditoVerHistorialList:'/Detalle_NotasdeCredito/GetDetalle_NotasdeCreditoVerHistorialList'
+      GetValidaSipuedoCancelarPago: '/ContratoMaestroFac/GetValidaSipuedoCancelarPago',
+      GetDetalle_NotasdeCreditoVerHistorialList: '/Detalle_NotasdeCredito/GetDetalle_NotasdeCreditoVerHistorialList',
+      UpdateMarcaTodoNotaCreditoCM: '/NotasDeCredito_ContraMaeFac/UpdateMarcaTodoNotaCreditoCM',
+      UpdateDesmarcaTodoNotaCreditoCM: '/NotasDeCredito_ContraMaeFac/UpdateDesmarcaTodoNotaCreditoCM'
     };
 
     factory.ProcesaDesconexion = function (contratos) {
@@ -80,6 +82,9 @@ angular.module('softvApp')
 
 
 
+
+
+
     factory.GetMuestraFacturasMaestroList = function () {
       var deferred = $q.defer();
       var config = {
@@ -94,6 +99,63 @@ angular.module('softvApp')
       });
       return deferred.promise;
     };
+
+
+
+    factory.UpdateDesmarcaTodoNotaCreditoCM = function (session) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'objDesmarcaTodoNotaCreditoCM': {
+          'Clv_Session': session
+        }
+      };
+
+      $http.post(globalService.getUrl() + paths.UpdateDesmarcaTodoNotaCreditoCM, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+
+
+
+    factory.UpdateMarcaTodoNotaCreditoCM = function (session) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        
+          'objMarcaTodoNotaCreditoCM': {
+            'Clv_Session': session
+          }
+        
+
+
+      };
+
+      $http.post(globalService.getUrl() + paths.UpdateMarcaTodoNotaCreditoCM, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+
 
 
     factory.BuscaFacturasMaestro = function (objeto) {
@@ -132,7 +194,7 @@ angular.module('softvApp')
         }
       };
       var parametros = {
-        'Clv_Pago':Clv_Pago
+        'Clv_Pago': Clv_Pago
       };
 
       $http.post(globalService.getUrl() + paths.GetValidaSipuedoCancelarPago, JSON.stringify(parametros), config).then(function (response) {
@@ -146,7 +208,7 @@ angular.module('softvApp')
     };
 
 
-factory.GetDetalle_NotasdeCreditoVerHistorialList = function (Clv_NotadeCredito) {
+    factory.GetDetalle_NotasdeCreditoVerHistorialList = function (Clv_NotadeCredito) {
       var deferred = $q.defer();
       var config = {
         headers: {
@@ -154,7 +216,7 @@ factory.GetDetalle_NotasdeCreditoVerHistorialList = function (Clv_NotadeCredito)
         }
       };
       var parametros = {
-        'Clv_NotadeCredito':Clv_NotadeCredito
+        'Clv_NotadeCredito': Clv_NotadeCredito
       };
 
       $http.post(globalService.getUrl() + paths.GetDetalle_NotasdeCreditoVerHistorialList, JSON.stringify(parametros), config).then(function (response) {
@@ -167,9 +229,9 @@ factory.GetDetalle_NotasdeCreditoVerHistorialList = function (Clv_NotadeCredito)
 
     };
 
-    
 
-    
+
+
 
 
 
