@@ -93,5 +93,6 @@ function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStora
     vm.ok = ok;
     vm.abonoTotal = abonoTotal;
     vm.cancel = cancel;
+    vm.factura = x.Ticket;
     init();
 }

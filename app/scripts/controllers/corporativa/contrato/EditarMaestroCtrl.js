@@ -5,9 +5,9 @@
     .module('softvApp')
     .controller('EditarMaestroCtrl', EditarMaestroCtrl);
 
-  EditarMaestroCtrl.inject = ['$uibModal', '$rootScope', 'corporativoFactory', 'cajasFactory', ' $filter', 'ngNotify', '$state', '$stateParams'];
+  EditarMaestroCtrl.inject = ['$uibModal', '$rootScope', 'corporativoFactory', 'cajasFactory', ' $filter', 'ngNotify', '$state', '$stateParams', 'ContratoMaestroFactory'];
 
-  function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactory, $filter, ngNotify, $state, $stateParams) {
+  function EditarMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactory, $filter, ngNotify, $state, $stateParams, ContratoMaestroFactory) {
     var vm = this;
     var vm = this;
     vm.abrirContratos = abrirContratos;
@@ -18,6 +18,7 @@
     vm.MuestraBanco = false;
     vm.MuestraAutorizacion = false;
     vm.desconexion = desconexion;
+    vm.generarFacturaPrueba = generarFacturaPrueba;
 
     this.$onInit = function () {
       corporativoFactory.singleContrato($stateParams.id).then(function (data) {
@@ -324,6 +325,16 @@
         vm.MuestraBanco = false;
         vm.MuestraAutorizacion = false;
       }
+    }
+
+    function generarFacturaPrueba(contrato) {
+      ContratoMaestroFactory.GetGeneraFacturaMaestroPrueba(contrato).then(function (data) {
+          if (data.GetGeneraFacturaMaestroPruebaResult.Error == 0) {
+            ngNotify.set('Se ha generado la factura con éxito.', 'info');
+          } else {
+            ngNotify.set('No se generó la factura.', 'error');
+          }
+        });
     }
   }
 })();
