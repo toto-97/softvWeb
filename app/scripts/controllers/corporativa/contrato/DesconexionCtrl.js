@@ -37,8 +37,9 @@
             }
 
             ContratoMaestroFactory.UploadFileDesconexion(files, vm.contrato.IdContratoMaestro).then(function (data) {
-                if (data.contratosValidos.length == 0) {
-                    ngNotify.set('No se encontraron contratos válidos en el archivo csv.', 'error');
+               console.log(data);
+                if (data.contratosValidos.length == 0 || data.contratosValidos==null) {
+                    ngNotify.set('No se encontraron contratos válidos en el archivo.', 'error');
                 } else {
                     data.contratosValidos.forEach(function (item) {
                         for (var i = 0; i < vm.contrato.lstCliS.length; i++) {

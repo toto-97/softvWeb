@@ -3,36 +3,20 @@
     <button class="close" aria-label="Close" type="button">×</button>
     <h4 class="modal-title"><i class="fa fa-thumb-tack"></i> Detalle de contrato </h4>
   </div>
-  <div class="modal-body">
+  <div class="modal-body" style="overflow-y: scroll; max-height: 500px;">
 
-    <table class="table" style="font-size: 9px;">
+    <table class="table" style="font-size:12px;">
       <thead>
 
         <th style="    vertical-align: middle;">Concepto</th>
-        <th style="    vertical-align: middle;">Importe</th>
-        <th style="    vertical-align: middle;">Dias A Bonificar </th>
-        <th style="    vertical-align: middle;">Periodo pagado inicial</th>
-        <th style="    vertical-align: middle;">Periodo pagado final</th>
-        <th style="    vertical-align: middle;">Puntos aplicados<br> pago oportuno</th>
-        <th style="    vertical-align: middle;">Puntos aplicados <br> por antiguedad</th>
-        <th style="    vertical-align: middle;">Puntos aplicados <br> por pagos adelant.</th>
-        <th style="    vertical-align: middle;">Puntos combo</th>
-        <th style="    vertical-align: middle;">Importe a bonificar</th>
+        <th style="    vertical-align: middle;">Importe</th>       
         <th style="    vertical-align: middle;">Monto para nota de crédito</th>
         <th></th>
       </thead>
       <tbody>
         <tr ng-repeat="x in $ctrl.conceptos">
-          <td>{{x.DESCRIPCION}}</td>
-          <td>{{x.importe |currency}}</td>
-          <td>{{x.DiasBonifica}}</td>
-          <td>{{x.periodoPagadoIni}}</td>
-          <td>{{x.periodoPagadoFin}}</td>
-          <td></td>
-          <td>{{x.puntosAplicadosAnt}}</td>
-          <td>{{x.PuntosAplicadosPagoAdelantado}}</td>
-          <td>{{x.DescuentoNet}}</td>
-          <td>{{x.importeBonifica}}</td>
+          <td>{{x.Descripcion}}</td>
+          <td>{{x.Total |currency}}</td>        
           <td ng-if="x.Se_Cobra">
             <ng-form name="urlForm">
               <input type="number" ng-disabled="!x.Se_Cobra" name="cant" ng-model="x.ImporteNota" class="form-control input-sm" required min="0"
@@ -65,7 +49,7 @@
       <h4><b class="text-danger">{{$ctrl.sumatotal|currency}}</b></h4>
 
     </div>-->
-
+</div>
     <div class="modal-footer">
       <button class="btn btn-success btn-sm" type="submit">Guardar</button>
       <button class="btn btn-default btn-sm" type="button" ng-click="$ctrl.cancel()">cerrar</button>

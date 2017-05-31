@@ -16,7 +16,7 @@
     this.$onInit = function () {
 
       ContratoMaestroFactory.DameDetalle_FacturaporCli(options.Clv_FacturaCli, options.clv_session).then(function (response) {
-       
+       console.log(response);
         vm.conceptos = response.GetDameDetalle_FacturaporCliListResult;
 
       });
@@ -31,7 +31,7 @@
       for (var a = 0; a < vm.conceptos.length; a++) {
         if (vm.conceptos[a].Se_Cobra == true) {
           claves.push({
-            'Clv_Detalle': vm.conceptos[a].CLV_DETALLE,
+            'Clv_Detalle': vm.conceptos[a].Clv_Detalle,
             'Importe':vm.conceptos[a].ImporteNota
           })
         }

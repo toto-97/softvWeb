@@ -137,7 +137,7 @@
     function enter(keyEvent) {
 
       if (keyEvent.which === 13) {
-         keyEvent.preventDefault();
+        keyEvent.preventDefault();
         if (vm.Contrato > 0) {
           var parametros = {
             'RazonSocial': '',
@@ -166,8 +166,8 @@
         } else {
           ngNotify.set('Ingresa un contrato válido', 'error');
         }
-       
-      
+
+
       }
 
     }
@@ -187,7 +187,7 @@
         controllerAs: '$ctrl',
         backdrop: 'static',
         keyboard: false,
-        size: "lg",
+        size: "md",
         resolve: {
           options: function () {
             return options;
@@ -276,6 +276,13 @@
     }
 
     function guardar() {
+      if (vm.sumatotal == 0) {
+        ngNotify.set('No puede guardar una nota de crédito con un monto $0.00 ', 'error');
+        return;
+      }
+
+      console.log(vm.sumatotal);
+      return;
       var obj = {
         'ContratoMaestro': vm.Contrato,
         'Factura': vm.factura.CLV_FACTURA,
