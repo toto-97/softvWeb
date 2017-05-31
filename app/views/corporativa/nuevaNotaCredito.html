@@ -179,7 +179,8 @@
               </div>
             </uib-tab>
             <uib-tab index="1" heading="Contratos">
-              <div class="row" style="overflow-y: scroll; max-height: 400px;">
+              <div class="row" style="overflow-y: scroll; max-height: 400px; padding: 15px;">
+                <br>
                 <table class="table">
                   <thead>
                     <th>Contrato</th>
@@ -211,6 +212,13 @@
 
             </div>
           </div>
+          <div class="row">
+<label class="checkbox-inline checkbox-styled checkbox-info">
+														<input type="checkbox" ng-change="$ctrl.MarcarContratos()" ng-model="$ctrl.marcar"><span>Marcar/Desmarcar contratos</span>
+													</label>
+
+          </div>
+
           </div>
       </div>
   </form>
