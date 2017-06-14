@@ -2,6 +2,7 @@
   .blod {
     font-weight: bold;
   }
+
 </style>
 <div class="card animated fadeIn" style="margin-top:20px;">
   <form angular-validator-submit="$ctrl.guardarContrato()" name="contratoForm" novalidate angular-validator>
@@ -43,13 +44,15 @@
         </div>
 
 
+
+
         <div class="col-md-12">
           <label class="col-md-3 control-label blod">Estado:</label>
           <div class="col-md-9" style="padding-left:-10px;">
-            <select class="form-control input-sm" name="estado" validate-on="dirty" class="form-control imput-sm" ng-model="$ctrl.estado"
-              ng-options="v.Nombre for v in $ctrl.estados track by v.Clv_Estado" ng-change="$ctrl.cambioEstado()" required-message="'Este campo es obligatorio.'"
-              required>
-              </select>
+            <input type="text" class="form-control input-sm" name="estado" validate-on="dirty" class="form-control imput-sm" ng-model="$ctrl.estado"
+              required-message="'Este campo es obligatorio.'" required>
+
+
           </div>
         </div>
 
@@ -57,10 +60,9 @@
         <div class="col-md-12">
           <label class="col-md-3 control-label blod">Ciudad:</label>
           <div class="col-md-9" style="padding-left:-10px;">
-            <select name="ciudad" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.ciudad" ng-change="$ctrl.cambioCiudad()"
-              ng-options="v.Nombre for v in $ctrl.ciudades track by v.Clv_Ciudad" required-message="'Este campo es obligatorio.'"
+            <input type="text" name="ciudad" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.ciudad" required-message="'Este campo es obligatorio.'"
               required>
-                </select>
+
           </div>
         </div>
 
@@ -68,10 +70,9 @@
         <div class="col-md-12">
           <label class="col-md-3 control-label blod">Localidad:</label>
           <div class="col-md-9" style="padding-left:-10px;">
-            <select name="localidad" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.localidad" ng-change="$ctrl.cambioLocalidad()"
-              ng-options="v.Nombre for v in $ctrl.localidades track by v.Clv_Localidad" required-message="'Este campo es obligatorio.'"
+            <input type="text" name="localidad" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.localidad" required-message="'Este campo es obligatorio.'"
               required>
-              </select>
+
           </div>
         </div>
 
@@ -79,68 +80,61 @@
         <div class="col-md-12">
           <label class="col-md-3 control-label blod">Colonia:</label>
           <div class="col-md-9" style="padding-left:-10px;">
-            <select name="colonia" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.colonia" ng-change="$ctrl.cambioColonia()"
-              ng-options="v.Nombre for v in $ctrl.colonias track by v.clv_colonia" required-message="'Este campo es obligatorio.'"
+            <input type="text" name="colonia" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.colonia" required-message="'Este campo es obligatorio.'"
               required>
-                </select>
+
           </div>
         </div>
-
 
         <div class="col-md-12">
           <label class="col-md-3 control-label blod">Calle:</label>
           <div class="col-md-9" style="padding-left:-10px;">
-            <select name="calle" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.calle" ng-options="v.NOMBRE for v in $ctrl.calles track by v.Clv_Calle"
-              required-message="'Este campo es obligatorio.'" required>
-                  </select>
+            <input type="text" name="calle" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.calle" required-message="'Este campo es obligatorio.'"
+              required>
+
           </div>
         </div>
         <div class="col-md-12">
-                    <label class="col-md-3 control-label blod">Entre calles:</label>
-                    <div class="col-md-9" style="padding-left:-10px;">
-                        <input type="text" class="form-control input-sm" 
-                        required-message="'Este campo es obligatorio.'" 
-                        required  ng-model="$ctrl.EntreCalles" name="EntreCalles">
-                  
-                    </div>
-                </div>
-                  <div class="col-md-12">
-                    <label class="col-md-3 control-label blod">Pais:</label>
-                    <div class="col-md-9" style="padding-left:-10px;">
-                        <input type="text" class="form-control input-sm" 
-                        required-message="'Este campo es obligatorio.'" 
-                        required  ng-model="$ctrl.Pais" name="Pais">
-                  
-                    </div>
-                </div>
-                 <div class="col-md-12">
-                    <label class="col-md-3 control-label blod">Teléfono:</label>
-                    <div class="col-md-9" style="padding-left:-10px;">
-                        <input type="text" class="form-control input-sm" 
-                        required-message="'Este campo es obligatorio.'" 
-                        required  ng-model="$ctrl.Telefono" name="Telefono">
-                  
-                    </div>
-                </div>
-                  <div class="col-md-12">
-                    <label class="col-md-3 control-label blod">Email:</label>
-                    <div class="col-md-9" style="padding-left:-10px;">
-                        <input type="text" class="form-control input-sm" 
-                        required-message="'Este campo es obligatorio.'" 
-                        required  ng-model="$ctrl.Email" name="Email">
-                  
-                    </div>
-                </div>
+          <label class="col-md-3 control-label blod">Entre calles:</label>
+          <div class="col-md-9" style="padding-left:-10px;">
+            <input type="text" class="form-control input-sm" required-message="'Este campo es obligatorio.'" required ng-model="$ctrl.EntreCalles"
+              name="EntreCalles">
 
-    <div class="col-md-12">
-                    <label class="col-md-3 control-label blod">Fax:</label>
-                    <div class="col-md-9" style="padding-left:-10px;">
-                        <input type="text" class="form-control input-sm" 
-                        required-message="'Este campo es obligatorio.'" 
-                        required  ng-model="$ctrl.Fax" name="Fax">
-                  
-                    </div>
-                </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <label class="col-md-3 control-label blod">Pais:</label>
+          <div class="col-md-9" style="padding-left:-10px;">
+            <input type="text" class="form-control input-sm" required-message="'Este campo es obligatorio.'" required ng-model="$ctrl.Pais"
+              name="Pais">
+
+          </div>
+        </div>
+        <div class="col-md-12">
+          <label class="col-md-3 control-label blod">Teléfono:</label>
+          <div class="col-md-9" style="padding-left:-10px;">
+            <input type="text" class="form-control input-sm" required-message="'Este campo es obligatorio.'" required ng-model="$ctrl.Telefono"
+              name="Telefono">
+
+          </div>
+        </div>
+        <div class="col-md-12">
+          <label class="col-md-3 control-label blod">Email:</label>
+          <div class="col-md-9" style="padding-left:-10px;">
+            <input type="text" class="form-control input-sm" required-message="'Este campo es obligatorio.'" required ng-model="$ctrl.Email"
+              name="Email">
+
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <label class="col-md-3 control-label blod">Fax:</label>
+          <div class="col-md-9" style="padding-left:-10px;">
+            <input type="text" class="form-control input-sm" required-message="'Este campo es obligatorio.'" required ng-model="$ctrl.Fax"
+              name="Fax">
+
+          </div>
+        </div>
 
 
         <div class="col-md-12">
@@ -228,7 +222,7 @@
         <div class="col-md-12">
           <label class="col-md-3 control-label blod">Dia de  Facturación:</label>
           <div class="col-md-3" style="padding-left:-10px;">
-               <input type="text" name="fecha" validate-on="dirty" max="31" class="form-control input-sm" ng-model="$ctrl.fecha" required-message="'Este campo es obligatorio.'"
+            <input type="text" name="fecha" validate-on="dirty" max="31" class="form-control input-sm" ng-model="$ctrl.fecha" required-message="'Este campo es obligatorio.'"
               required>
           </div>
           <label class="col-md-3 control-label blod">Días de Gracia:</label>
@@ -297,22 +291,22 @@
         </div>
       </div>
 
-      
-        <div class="col-md-12 btn-group" ng-if="$ctrl.contratoMaestro.lstCliS.length > 0">
-          <br>
-          <div class="col-md-3">
-            <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('desconexion')">Desconexión</button>
-          </div>
-          <div class="col-md-3">
-            <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('reconexion')">Reconexión</button>
-          </div>
-          <div class="col-md-3">
-            <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('ordenes')">Generar Ordenes</button>
-          </div>
-          <div class="col-md-3">
-            <button type="button" class="btn btn-default btn-block" ng-click="$ctrl.generarFacturaPrueba($ctrl.contratoMaestro.IdContratoMaestro)">Generar Factura</button>
-          </div>
+
+      <div class="col-md-12 btn-group" ng-if="$ctrl.contratoMaestro.lstCliS.length > 0">
+        <br>
+        <div class="col-md-3">
+          <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('desconexion')">Desconexión</button>
         </div>
+        <div class="col-md-3">
+          <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('reconexion')">Reconexión</button>
+        </div>
+        <div class="col-md-3">
+          <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('ordenes')">Generar Ordenes</button>
+        </div>
+        <div class="col-md-3">
+          <button type="button" class="btn btn-default btn-block" ng-click="$ctrl.generarFacturaPrueba($ctrl.contratoMaestro.IdContratoMaestro)">Generar Factura</button>
+        </div>
+      </div>
 
     </div>
 

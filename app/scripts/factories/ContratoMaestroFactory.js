@@ -889,7 +889,7 @@ angular.module('softvApp')
 
 
 
-    factory.TblFacturasOpcionesCM = function (factura, cancelar, reimprimir, correo) {
+    factory.TblFacturasOpcionesCM = function (factura, cancelar, reimprimir, correo,OpRefacturar) {
       var deferred = $q.defer();
       var config = {
         headers: {
@@ -902,7 +902,8 @@ angular.module('softvApp')
           'Clv_Factura': factura,
           'OpCancelar': cancelar,
           'OpReimprimir': reimprimir,
-          'OpCorreo': correo
+          'OpCorreo': correo,
+          'OpRefacturar':OpRefacturar
         }
 
       };

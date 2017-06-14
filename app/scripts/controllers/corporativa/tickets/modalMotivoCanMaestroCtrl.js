@@ -50,7 +50,7 @@
               ngNotify.set("Se ha cancelado la factura correctamente");
             });
           } else {
-            ContratoMaestroFactory.TblFacturasOpcionesCM(vm.Clv_FacturaMaestro, 0, 1, 0).then(function (data) {
+            ContratoMaestroFactory.TblFacturasOpcionesCM(vm.Clv_FacturaMaestro, 0, 1, 0,0).then(function (data) {
               $uibModalInstance.dismiss('cancel');
               ngNotify.set("Se ha reimpreso la factura correctamente")
             });

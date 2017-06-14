@@ -281,8 +281,8 @@
         return;
       }
 
-      console.log(vm.sumatotal);
-      return;
+      
+      
       var obj = {
         'ContratoMaestro': vm.Contrato,
         'Factura': vm.factura.CLV_FACTURA,

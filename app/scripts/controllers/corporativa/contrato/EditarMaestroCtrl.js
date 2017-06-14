@@ -32,46 +32,16 @@
             }
           });
         });
-        corporativoFactory.getEstados().then(function (data) {
-          vm.estados = data.GetMuestraEstadoResult;
-          vm.estados.forEach(function (estado, index) {
-            if (estado.Clv_Estado == vm.contratoMaestro.Estado) {
-              vm.estado = vm.estados[index];
-            }
-          });
-        });
-        corporativoFactory.getCiudades(vm.contratoMaestro.Estado).then(function (data) {
-          vm.ciudades = data.GetMuestraCiudadResult;
-          vm.ciudades.forEach(function (entry, index) {
-            if (entry.Clv_Ciudad == vm.contratoMaestro.Ciudad) {
-              vm.ciudad = vm.ciudades[index];
-            }
-          });
-        });
-        corporativoFactory.getLocalidades(vm.contratoMaestro.Ciudad).then(function (data) {
-          vm.localidades = data.GetMuestraLocalidadResult;
-          vm.localidades.forEach(function (entry, index) {
-            if (entry.Clv_Localidad == vm.contratoMaestro.Localidad) {
-              vm.localidad = vm.localidades[index];
-            }
-          });
-        });
-        corporativoFactory.getColonias(vm.contratoMaestro.Localidad).then(function (data) {
-          vm.colonias = data.GetMuestraColoniaResult;
-          vm.colonias.forEach(function (entry, index) {
-            if (entry.clv_colonia == vm.contratoMaestro.Colonia) {
-              vm.colonia = vm.colonias[index];
-            }
-          });
-        });
-        corporativoFactory.getCalles(vm.contratoMaestro.Colonia, vm.contratoMaestro.Localidad).then(function (data) {
-          vm.calles = data.GetMuestraCalleResult;
-          vm.calles.forEach(function (entry, index) {
-            if (entry.Clv_Calle == vm.contratoMaestro.Calle) {
-              vm.calle = vm.calles[index];
-            }
-          });
-        });
+
+        vm.estado = vm.contratoMaestro.ColoniaDes;
+        vm.ciudad = vm.contratoMaestro.CiudadDes;
+        vm.localidad = vm.contratoMaestro.LocalidadDes;
+        vm.colonia = vm.contratoMaestro.ColoniaDes;
+        vm.calle = vm.contratoMaestro.CalleDes;
+
+
+
+
         corporativoFactory.getCortes().then(function (data) {
           vm.cortes = data.GetTiposCortesClientesListResult;
           vm.cortes.forEach(function (entry, index) {
@@ -123,10 +93,10 @@
         }
         if (vm.contratoMaestro.ReactivarMan) {
           vm.reactivacion = 'manual';
-          vm.bloqueageneracion=false;
+          vm.bloqueageneracion = false;
         } else {
           vm.reactivacion = 'factura';
-          vm.bloqueageneracion=true;
+          vm.bloqueageneracion = true;
         }
 
 
@@ -261,11 +231,11 @@
           'RazonSocial': vm.razon,
           'NombreComercial': vm.nombrecomercial,
           'Distribuidor': vm.distribuidor.Clv_Plaza,
-          'Estado': vm.estado.Clv_Estado,
-          'Ciudad': vm.ciudad.Clv_Ciudad,
-          'Localidad': vm.localidad.Clv_Localidad,
-          'Colonia': vm.colonia.clv_colonia,
-          'Calle': vm.calle.Clv_Calle,
+          'Estado': vm.estado,
+          'Ciudad': vm.ciudad,
+          'Localidad': vm.localidad,
+          'Colonia': vm.colonia,
+          'Calle': vm.calle,
           'NumExt': vm.numeroexterior,
           'NumInt': vm.numerointerior,
           'CodigoPostal': vm.cp,
@@ -275,7 +245,7 @@
           'DiasCredito': vm.diascredito,
           'DiasGracia': vm.diasgracia,
           'LimiteCredito': vm.limitecredito,
-          'FechaFac': vm.fecha+'/01/2000',
+          'FechaFac': vm.fecha + '/01/2000',
           'PagoEdoCuetna': vm.pagEdo,
           'PagoFac': vm.pagFac,
           'TipoCorteCli': vm.tipocorte.Id,
@@ -329,12 +299,12 @@
 
     function generarFacturaPrueba(contrato) {
       ContratoMaestroFactory.GetGeneraFacturaMaestroPrueba(contrato).then(function (data) {
-          if (data.GetGeneraFacturaMaestroPruebaResult.Error == 0) {
-            ngNotify.set('Se ha generado la factura con éxito.', 'info');
-          } else {
-            ngNotify.set('No se generó la factura.', 'error');
-          }
-        });
+        if (data.GetGeneraFacturaMaestroPruebaResult.Error == 0) {
+          ngNotify.set('Se ha generado la factura con éxito.', 'info');
+        } else {
+          ngNotify.set('No se generó la factura.', 'error');
+        }
+      });
     }
   }
 })();
