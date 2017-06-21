@@ -124,7 +124,7 @@ function corporativaConf($stateProvider) {
 		data: {
 			pageTitle: 'SAC | FACTURAS',
 			permissions: {
-				only: ['ticketsSelect'],
+				only: ['facturasSelect'],
 				options: {
 					reload: false
 				}
