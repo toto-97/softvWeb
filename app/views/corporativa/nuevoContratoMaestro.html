@@ -281,6 +281,12 @@
           <label class="col-md-3 control-label blod">Pago en Dolares:</label>
           <label class="text-left checkbox-inline checkbox-styled"><input type="checkbox" name="dolares" ng-model="$ctrl.dolares"><span></span></label>
         </div>
+        <div class="col-md-12">
+           <label class="col-md-3 control-label blod">Fecha de Vencimiento:</label>
+          <div class="col-md-9" style="padding-left:-10px;">
+            <input ng-model="$ctrl.fechaVigencia" name="fechaVigencia" style="padding-left:-10px;" type="date" id="fechaVigencia" placeholder="yyyy-MM-dd" required-message="'Este campo es obligatorio.'" required />	
+          </div>
+        </div>
       </div>
 
     </div>

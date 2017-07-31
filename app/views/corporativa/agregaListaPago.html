@@ -1,0 +1,81 @@
+<style>
+  .wrapper {
+    height: 140px;
+    overflow: auto;
+  }
+
+  .esmeralda {
+    background-color: #DDEAE9;
+  }
+
+  .sizeTr {
+    height: 20px;
+  }
+
+  .sizeTd {
+    padding: 5px !important;
+  }
+</style>
+<div class="modal-header">
+    <button class="close" aria-label="Close" type="button" ng-click="$ctrl.cancel()">×</button>
+    <h4 class="modal-title">Agregar conceptos a la lista</h4>
+</div>
+<div class="modal-body" style="padding-top:20px;">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="table-responsive" style="padding-left: 8px; width: 95%">
+                <b>Contratos ligados</b>
+                <table class="table table-bordered" st-safe-src="$ctrl.contratosLigados" st-table="$ctrl.displayCollection">
+                    <thead>
+                        <tr style="background-color: #B5B6B6;">
+                            <th style="font-size: 10px;">Contrato</th>
+                            <th style="font-size: 10px;">Nombre</th>
+                            <th style="font-size: 10px;">Selección</th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <input st-search="ContratoCom" placeholder="Contrato" class="input-sm form-control" type="search"/>
+                            </th>
+                            <th>
+                                <input st-search="NombreCli" placeholder="Nombre" class="input-sm form-control" type="search"/>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--<tr ng-repeat="x in $ctrl.contratosLigados" class="sizeTr" >-->
+                        <tr dir-paginate="x in $ctrl.displayCollection|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:10">
+                            <td>{{x.ContratoCom}}</td>
+                            <td>{{x.NombreCli }}</td>
+                            <td>
+                                <label class="text-left radio-inline radio-styled">
+                                    <input type="radio" ng-model="$ctrl.seleccion"  name="radioSeleccion" ng-change="$ctrl.cambiaSeleccion(x)"><span></span>
+                                </label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                 <div style="padding-left: 20px;">
+                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                    </dir-pagination-controls>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class=row>
+                <div class="col-md-12">
+                    <label class="control-label text-center" style="font-size: 12px;"><b>Servicios</b></label><br>
+                    <label class="control-label text-right" style="font-size: 12px;">Seleccione el servicio</label>
+                    <div>
+                        <select class="form-control" ng-model="$ctrl.selectedService"  ng-options="v.DescripcionFac for v in $ctrl.servicios track by v.Clv_Servicio"></select>
+                    </div>
+                    <div style="margin-top:10px;">
+                        <button class="btn btn-info btn-xs" ng-click="$ctrl.agregarLista()">AGREGAR A LA LISTA</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default btn-sm" type="button" ng-click="$ctrl.cancel()">Cerrar</button>
+</div>

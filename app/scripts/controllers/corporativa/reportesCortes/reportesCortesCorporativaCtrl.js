@@ -295,11 +295,6 @@ angular.module('softvApp')
             crearXml();
         }
 
-
-
-
-
-
         function crearObjParametros() {
 
             if (reporteSeleccionado >= 1 && reporteSeleccionado <= 3)//1 general, 3 resumen sucursales
@@ -319,6 +314,13 @@ angular.module('softvApp')
 
                 objPrincipal.fecha_ini = fechaInicialYMD;
                 objPrincipal.fecha_fin = fechaFinalYMD;
+
+                if (vm.dolares == undefined || vm.dolares == false){
+                    objPrincipal.dolares=0;
+                }
+                else{
+                    objPrincipal.dolares=1
+                }
                 //objPrincipal.clv_reporte = 2;
 
                 if (vm.status == true) {
@@ -339,12 +341,10 @@ angular.module('softvApp')
 
         }
 
-
-
         function crearXml() {
-
+            console.log(objPrincipal);
             reportesCortesCorporativaFactory.getXml(reporteSeleccionado, objPrincipal, Distribuidores, Sucursales).then(function (data) {
-
+                console.log(data.GetCreateXmlBeforeReporteCorporativaResult[0]);
                 OtrosFiltrosXml = data.GetCreateXmlBeforeReporteCorporativaResult[0];
                 distribuidoresXML = data.GetCreateXmlBeforeReporteCorporativaResult[1];
                 sucursalesXml = data.GetCreateXmlBeforeReporteCorporativaResult[2];

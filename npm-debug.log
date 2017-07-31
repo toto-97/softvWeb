@@ -1,0 +1,350 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'grint-karma',
+1 verbose cli   'karma',
+1 verbose cli   'karma-phantomjs-launcher',
+1 verbose cli   'karma-jasmine',
+1 verbose cli   'jasmine-core',
+1 verbose cli   'phantomjs-prebuilt',
+1 verbose cli   '--save-dev' ]
+2 info using npm@3.10.10
+3 info using node@v6.10.0
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData grint-karma
+8 silly fetchPackageMetaData karma@^1.3.0
+9 silly fetchPackageMetaData karma-phantomjs-launcher@^1.0.2
+10 silly fetchPackageMetaData karma-jasmine@^1.1.0
+11 silly fetchPackageMetaData jasmine-core@^2.5.2
+12 silly fetchPackageMetaData phantomjs-prebuilt@^2.1.14
+13 silly fetchNamedPackageData karma
+14 silly mapToRegistry name karma
+15 silly mapToRegistry using default registry
+16 silly mapToRegistry registry https://registry.npmjs.org/
+17 silly mapToRegistry data Result {
+17 silly mapToRegistry   raw: 'karma',
+17 silly mapToRegistry   scope: null,
+17 silly mapToRegistry   escapedName: 'karma',
+17 silly mapToRegistry   name: 'karma',
+17 silly mapToRegistry   rawSpec: '',
+17 silly mapToRegistry   spec: 'latest',
+17 silly mapToRegistry   type: 'tag' }
+18 silly mapToRegistry uri https://registry.npmjs.org/karma
+19 silly fetchNamedPackageData karma-phantomjs-launcher
+20 silly mapToRegistry name karma-phantomjs-launcher
+21 silly mapToRegistry using default registry
+22 silly mapToRegistry registry https://registry.npmjs.org/
+23 silly mapToRegistry data Result {
+23 silly mapToRegistry   raw: 'karma-phantomjs-launcher',
+23 silly mapToRegistry   scope: null,
+23 silly mapToRegistry   escapedName: 'karma-phantomjs-launcher',
+23 silly mapToRegistry   name: 'karma-phantomjs-launcher',
+23 silly mapToRegistry   rawSpec: '',
+23 silly mapToRegistry   spec: 'latest',
+23 silly mapToRegistry   type: 'tag' }
+24 silly mapToRegistry uri https://registry.npmjs.org/karma-phantomjs-launcher
+25 silly fetchNamedPackageData karma-jasmine
+26 silly mapToRegistry name karma-jasmine
+27 silly mapToRegistry using default registry
+28 silly mapToRegistry registry https://registry.npmjs.org/
+29 silly mapToRegistry data Result {
+29 silly mapToRegistry   raw: 'karma-jasmine',
+29 silly mapToRegistry   scope: null,
+29 silly mapToRegistry   escapedName: 'karma-jasmine',
+29 silly mapToRegistry   name: 'karma-jasmine',
+29 silly mapToRegistry   rawSpec: '',
+29 silly mapToRegistry   spec: 'latest',
+29 silly mapToRegistry   type: 'tag' }
+30 silly mapToRegistry uri https://registry.npmjs.org/karma-jasmine
+31 silly fetchNamedPackageData jasmine-core
+32 silly mapToRegistry name jasmine-core
+33 silly mapToRegistry using default registry
+34 silly mapToRegistry registry https://registry.npmjs.org/
+35 silly mapToRegistry data Result {
+35 silly mapToRegistry   raw: 'jasmine-core',
+35 silly mapToRegistry   scope: null,
+35 silly mapToRegistry   escapedName: 'jasmine-core',
+35 silly mapToRegistry   name: 'jasmine-core',
+35 silly mapToRegistry   rawSpec: '',
+35 silly mapToRegistry   spec: 'latest',
+35 silly mapToRegistry   type: 'tag' }
+36 silly mapToRegistry uri https://registry.npmjs.org/jasmine-core
+37 silly fetchNamedPackageData phantomjs-prebuilt
+38 silly mapToRegistry name phantomjs-prebuilt
+39 silly mapToRegistry using default registry
+40 silly mapToRegistry registry https://registry.npmjs.org/
+41 silly mapToRegistry data Result {
+41 silly mapToRegistry   raw: 'phantomjs-prebuilt',
+41 silly mapToRegistry   scope: null,
+41 silly mapToRegistry   escapedName: 'phantomjs-prebuilt',
+41 silly mapToRegistry   name: 'phantomjs-prebuilt',
+41 silly mapToRegistry   rawSpec: '',
+41 silly mapToRegistry   spec: 'latest',
+41 silly mapToRegistry   type: 'tag' }
+42 silly mapToRegistry uri https://registry.npmjs.org/phantomjs-prebuilt
+43 silly fetchNamedPackageData grint-karma
+44 silly mapToRegistry name grint-karma
+45 silly mapToRegistry using default registry
+46 silly mapToRegistry registry https://registry.npmjs.org/
+47 silly mapToRegistry data Result {
+47 silly mapToRegistry   raw: 'grint-karma',
+47 silly mapToRegistry   scope: null,
+47 silly mapToRegistry   escapedName: 'grint-karma',
+47 silly mapToRegistry   name: 'grint-karma',
+47 silly mapToRegistry   rawSpec: '',
+47 silly mapToRegistry   spec: 'latest',
+47 silly mapToRegistry   type: 'tag' }
+48 silly mapToRegistry uri https://registry.npmjs.org/grint-karma
+49 verbose request uri https://registry.npmjs.org/grint-karma
+50 verbose request no auth needed
+51 info attempt registry request try #1 at 19:02:23
+52 verbose request id 438638e8a6db431e
+53 http request GET https://registry.npmjs.org/grint-karma
+54 verbose request uri https://registry.npmjs.org/karma
+55 verbose request no auth needed
+56 info attempt registry request try #1 at 19:02:23
+57 verbose etag W/"596f9914-160f44"
+58 verbose lastModified Wed, 19 Jul 2017 17:38:28 GMT
+59 http request GET https://registry.npmjs.org/karma
+60 verbose request uri https://registry.npmjs.org/karma-phantomjs-launcher
+61 verbose request no auth needed
+62 info attempt registry request try #1 at 19:02:23
+63 verbose etag W/"590b3543-ac2c"
+64 verbose lastModified Thu, 04 May 2017 14:05:55 GMT
+65 http request GET https://registry.npmjs.org/karma-phantomjs-launcher
+66 verbose request uri https://registry.npmjs.org/jasmine-core
+67 verbose request no auth needed
+68 info attempt registry request try #1 at 19:02:23
+69 verbose etag W/"594442f9-862c"
+70 verbose lastModified Fri, 16 Jun 2017 20:43:37 GMT
+71 http request GET https://registry.npmjs.org/jasmine-core
+72 verbose request uri https://registry.npmjs.org/phantomjs-prebuilt
+73 verbose request no auth needed
+74 info attempt registry request try #1 at 19:02:23
+75 verbose etag W/"59674093-9b29"
+76 verbose lastModified Thu, 13 Jul 2017 09:42:43 GMT
+77 http request GET https://registry.npmjs.org/phantomjs-prebuilt
+78 verbose request uri https://registry.npmjs.org/karma-jasmine
+79 verbose request no auth needed
+80 info attempt registry request try #1 at 19:02:23
+81 verbose etag W/"592e4f61-d2cd"
+82 verbose lastModified Wed, 31 May 2017 05:06:41 GMT
+83 http request GET https://registry.npmjs.org/karma-jasmine
+84 http 304 https://registry.npmjs.org/karma-phantomjs-launcher
+85 verbose headers { date: 'Thu, 20 Jul 2017 00:02:28 GMT',
+85 verbose headers   via: '1.1 varnish',
+85 verbose headers   'cache-control': 'max-age=300',
+85 verbose headers   etag: 'W/"590b3543-ac2c"',
+85 verbose headers   age: '51',
+85 verbose headers   connection: 'keep-alive',
+85 verbose headers   'x-served-by': 'cache-dfw1829-DFW',
+85 verbose headers   'x-cache': 'HIT',
+85 verbose headers   'x-cache-hits': '1',
+85 verbose headers   'x-timer': 'S1500508949.604720,VS0,VE0',
+85 verbose headers   vary: 'Accept-Encoding, Accept' }
+86 silly get cb [ 304,
+86 silly get   { date: 'Thu, 20 Jul 2017 00:02:28 GMT',
+86 silly get     via: '1.1 varnish',
+86 silly get     'cache-control': 'max-age=300',
+86 silly get     etag: 'W/"590b3543-ac2c"',
+86 silly get     age: '51',
+86 silly get     connection: 'keep-alive',
+86 silly get     'x-served-by': 'cache-dfw1829-DFW',
+86 silly get     'x-cache': 'HIT',
+86 silly get     'x-cache-hits': '1',
+86 silly get     'x-timer': 'S1500508949.604720,VS0,VE0',
+86 silly get     vary: 'Accept-Encoding, Accept' } ]
+87 verbose etag https://registry.npmjs.org/karma-phantomjs-launcher from cache
+88 verbose get saving karma-phantomjs-launcher to C:\Users\Jano\AppData\Roaming\npm-cache\registry.npmjs.org\karma-phantomjs-launcher\.cache.json
+89 verbose correctMkdir C:\Users\Jano\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+90 http 304 https://registry.npmjs.org/phantomjs-prebuilt
+91 verbose headers { date: 'Thu, 20 Jul 2017 00:02:28 GMT',
+91 verbose headers   via: '1.1 varnish',
+91 verbose headers   'cache-control': 'max-age=300',
+91 verbose headers   etag: 'W/"59674093-9b29"',
+91 verbose headers   age: '278',
+91 verbose headers   connection: 'keep-alive',
+91 verbose headers   'x-served-by': 'cache-dfw1829-DFW',
+91 verbose headers   'x-cache': 'HIT',
+91 verbose headers   'x-cache-hits': '2',
+91 verbose headers   'x-timer': 'S1500508949.605339,VS0,VE0',
+91 verbose headers   vary: 'Accept-Encoding, Accept' }
+92 silly get cb [ 304,
+92 silly get   { date: 'Thu, 20 Jul 2017 00:02:28 GMT',
+92 silly get     via: '1.1 varnish',
+92 silly get     'cache-control': 'max-age=300',
+92 silly get     etag: 'W/"59674093-9b29"',
+92 silly get     age: '278',
+92 silly get     connection: 'keep-alive',
+92 silly get     'x-served-by': 'cache-dfw1829-DFW',
+92 silly get     'x-cache': 'HIT',
+92 silly get     'x-cache-hits': '2',
+92 silly get     'x-timer': 'S1500508949.605339,VS0,VE0',
+92 silly get     vary: 'Accept-Encoding, Accept' } ]
+93 verbose etag https://registry.npmjs.org/phantomjs-prebuilt from cache
+94 verbose get saving phantomjs-prebuilt to C:\Users\Jano\AppData\Roaming\npm-cache\registry.npmjs.org\phantomjs-prebuilt\.cache.json
+95 verbose correctMkdir C:\Users\Jano\AppData\Roaming\npm-cache correctMkdir already in flight; waiting
+96 http 304 https://registry.npmjs.org/karma-jasmine
+97 verbose headers { date: 'Thu, 20 Jul 2017 00:02:28 GMT',
+97 verbose headers   via: '1.1 varnish',
+97 verbose headers   'cache-control': 'max-age=300',
+97 verbose headers   etag: 'W/"592e4f61-d2cd"',
+97 verbose headers   age: '239',
+97 verbose headers   connection: 'keep-alive',
+97 verbose headers   'x-served-by': 'cache-lax8638-LAX',
+97 verbose headers   'x-cache': 'HIT',
+97 verbose headers   'x-cache-hits': '48',
+97 verbose headers   'x-timer': 'S1500508949.681289,VS0,VE0',
+97 verbose headers   vary: 'Accept-Encoding, Accept' }
+98 silly get cb [ 304,
+98 silly get   { date: 'Thu, 20 Jul 2017 00:02:28 GMT',
+98 silly get     via: '1.1 varnish',
+98 silly get     'cache-control': 'max-age=300',
+98 silly get     etag: 'W/"592e4f61-d2cd"',
+98 silly get     age: '239',
+98 silly get     connection: 'keep-alive',
+98 silly get     'x-served-by': 'cache-lax8638-LAX',
+98 silly get     'x-cache': 'HIT',
+98 silly get     'x-cache-hits': '48',
+98 silly get     'x-timer': 'S1500508949.681289,VS0,VE0',
+98 silly get     vary: 'Accept-Encoding, Accept' } ]
+99 verbose etag https://registry.npmjs.org/karma-jasmine from cache
+100 verbose get saving karma-jasmine to C:\Users\Jano\AppData\Roaming\npm-cache\registry.npmjs.org\karma-jasmine\.cache.json
+101 verbose correctMkdir C:\Users\Jano\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+102 http 304 https://registry.npmjs.org/karma
+103 verbose headers { date: 'Thu, 20 Jul 2017 00:02:28 GMT',
+103 verbose headers   via: '1.1 varnish',
+103 verbose headers   'cache-control': 'max-age=300',
+103 verbose headers   etag: 'W/"596f9914-160f44"',
+103 verbose headers   age: '264',
+103 verbose headers   connection: 'keep-alive',
+103 verbose headers   'x-served-by': 'cache-lax8637-LAX',
+103 verbose headers   'x-cache': 'HIT',
+103 verbose headers   'x-cache-hits': '1471',
+103 verbose headers   'x-timer': 'S1500508949.685244,VS0,VE0',
+103 verbose headers   vary: 'Accept-Encoding, Accept' }
+104 silly get cb [ 304,
+104 silly get   { date: 'Thu, 20 Jul 2017 00:02:28 GMT',
+104 silly get     via: '1.1 varnish',
+104 silly get     'cache-control': 'max-age=300',
+104 silly get     etag: 'W/"596f9914-160f44"',
+104 silly get     age: '264',
+104 silly get     connection: 'keep-alive',
+104 silly get     'x-served-by': 'cache-lax8637-LAX',
+104 silly get     'x-cache': 'HIT',
+104 silly get     'x-cache-hits': '1471',
+104 silly get     'x-timer': 'S1500508949.685244,VS0,VE0',
+104 silly get     vary: 'Accept-Encoding, Accept' } ]
+105 verbose etag https://registry.npmjs.org/karma from cache
+106 verbose get saving karma to C:\Users\Jano\AppData\Roaming\npm-cache\registry.npmjs.org\karma\.cache.json
+107 verbose correctMkdir C:\Users\Jano\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+108 http 304 https://registry.npmjs.org/jasmine-core
+109 verbose headers { date: 'Thu, 20 Jul 2017 00:02:28 GMT',
+109 verbose headers   via: '1.1 varnish',
+109 verbose headers   'cache-control': 'max-age=300',
+109 verbose headers   etag: 'W/"594442f9-862c"',
+109 verbose headers   age: '123',
+109 verbose headers   connection: 'keep-alive',
+109 verbose headers   'x-served-by': 'cache-lax8642-LAX',
+109 verbose headers   'x-cache': 'HIT',
+109 verbose headers   'x-cache-hits': '1',
+109 verbose headers   'x-timer': 'S1500508949.694916,VS0,VE0',
+109 verbose headers   vary: 'Accept-Encoding, Accept' }
+110 silly get cb [ 304,
+110 silly get   { date: 'Thu, 20 Jul 2017 00:02:28 GMT',
+110 silly get     via: '1.1 varnish',
+110 silly get     'cache-control': 'max-age=300',
+110 silly get     etag: 'W/"594442f9-862c"',
+110 silly get     age: '123',
+110 silly get     connection: 'keep-alive',
+110 silly get     'x-served-by': 'cache-lax8642-LAX',
+110 silly get     'x-cache': 'HIT',
+110 silly get     'x-cache-hits': '1',
+110 silly get     'x-timer': 'S1500508949.694916,VS0,VE0',
+110 silly get     vary: 'Accept-Encoding, Accept' } ]
+111 verbose etag https://registry.npmjs.org/jasmine-core from cache
+112 verbose get saving jasmine-core to C:\Users\Jano\AppData\Roaming\npm-cache\registry.npmjs.org\jasmine-core\.cache.json
+113 verbose correctMkdir C:\Users\Jano\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+114 http 404 https://registry.npmjs.org/grint-karma
+115 verbose headers { 'content-type': 'application/json',
+115 verbose headers   'cache-control': 'max-age=0',
+115 verbose headers   'content-length': '2',
+115 verbose headers   'accept-ranges': 'bytes',
+115 verbose headers   date: 'Thu, 20 Jul 2017 00:02:28 GMT',
+115 verbose headers   via: '1.1 varnish',
+115 verbose headers   age: '0',
+115 verbose headers   connection: 'keep-alive',
+115 verbose headers   'x-served-by': 'cache-dfw1820-DFW',
+115 verbose headers   'x-cache': 'MISS',
+115 verbose headers   'x-cache-hits': '0',
+115 verbose headers   'x-timer': 'S1500508949.583953,VS0,VE317',
+115 verbose headers   vary: 'Accept-Encoding' }
+116 silly get cb [ 404,
+116 silly get   { 'content-type': 'application/json',
+116 silly get     'cache-control': 'max-age=0',
+116 silly get     'content-length': '2',
+116 silly get     'accept-ranges': 'bytes',
+116 silly get     date: 'Thu, 20 Jul 2017 00:02:28 GMT',
+116 silly get     via: '1.1 varnish',
+116 silly get     age: '0',
+116 silly get     connection: 'keep-alive',
+116 silly get     'x-served-by': 'cache-dfw1820-DFW',
+116 silly get     'x-cache': 'MISS',
+116 silly get     'x-cache-hits': '0',
+116 silly get     'x-timer': 'S1500508949.583953,VS0,VE317',
+116 silly get     vary: 'Accept-Encoding' } ]
+117 silly fetchPackageMetaData Error: Registry returned 404 for GET on https://registry.npmjs.org/grint-karma
+117 silly fetchPackageMetaData     at makeError (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:302:12)
+117 silly fetchPackageMetaData     at CachingRegistryClient.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:280:14)
+117 silly fetchPackageMetaData     at Request._callback (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:210:14)
+117 silly fetchPackageMetaData     at Request.self.callback (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:187:22)
+117 silly fetchPackageMetaData     at emitTwo (events.js:106:13)
+117 silly fetchPackageMetaData     at Request.emit (events.js:191:7)
+117 silly fetchPackageMetaData     at Request.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:1048:10)
+117 silly fetchPackageMetaData     at emitOne (events.js:96:13)
+117 silly fetchPackageMetaData     at Request.emit (events.js:188:7)
+117 silly fetchPackageMetaData     at IncomingMessage.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:969:12)
+117 silly fetchPackageMetaData  error for grint-karma { Error: Registry returned 404 for GET on https://registry.npmjs.org/grint-karma
+117 silly fetchPackageMetaData     at makeError (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:302:12)
+117 silly fetchPackageMetaData     at CachingRegistryClient.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:280:14)
+117 silly fetchPackageMetaData     at Request._callback (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:210:14)
+117 silly fetchPackageMetaData     at Request.self.callback (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:187:22)
+117 silly fetchPackageMetaData     at emitTwo (events.js:106:13)
+117 silly fetchPackageMetaData     at Request.emit (events.js:191:7)
+117 silly fetchPackageMetaData     at Request.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:1048:10)
+117 silly fetchPackageMetaData     at emitOne (events.js:96:13)
+117 silly fetchPackageMetaData     at Request.emit (events.js:188:7)
+117 silly fetchPackageMetaData     at IncomingMessage.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:969:12) pkgid: 'grint-karma', statusCode: 404, code: 'E404' }
+118 silly rollbackFailedOptional Starting
+119 silly rollbackFailedOptional Finishing
+120 silly runTopLevelLifecycles Finishing
+121 silly install printInstalled
+122 verbose stack Error: Registry returned 404 for GET on https://registry.npmjs.org/grint-karma
+122 verbose stack     at makeError (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:302:12)
+122 verbose stack     at CachingRegistryClient.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:280:14)
+122 verbose stack     at Request._callback (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:210:14)
+122 verbose stack     at Request.self.callback (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:187:22)
+122 verbose stack     at emitTwo (events.js:106:13)
+122 verbose stack     at Request.emit (events.js:191:7)
+122 verbose stack     at Request.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:1048:10)
+122 verbose stack     at emitOne (events.js:96:13)
+122 verbose stack     at Request.emit (events.js:188:7)
+122 verbose stack     at IncomingMessage.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:969:12)
+123 verbose statusCode 404
+124 verbose pkgid grint-karma
+125 verbose cwd C:\Users\Jano\Documents\GitHub\softvWeb
+126 error Windows_NT 6.1.7601
+127 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "grint-karma" "karma" "karma-phantomjs-launcher" "karma-jasmine" "jasmine-core" "phantomjs-prebuilt" "--save-dev"
+128 error node v6.10.0
+129 error npm  v3.10.10
+130 error code E404
+131 error 404 Registry returned 404 for GET on https://registry.npmjs.org/grint-karma
+132 error 404
+133 error 404 'grint-karma' is not in the npm registry.
+134 error 404 You should bug the author to publish it (or use the name yourself!)
+135 error 404 Note that you can also install from a
+136 error 404 tarball, folder, http url, or git url.
+137 verbose exit [ 1, true ]
