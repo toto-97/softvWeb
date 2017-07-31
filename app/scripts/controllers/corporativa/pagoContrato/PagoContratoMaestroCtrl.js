@@ -20,7 +20,7 @@ angular.module('softvApp').controller('PagoContratoMaestroCtrl', PagoContratoMae
         };
     });
 
-function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, pagosMaestrosFactory, ContratoMaestroFactory) {
+function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, pagosMaestrosFactory, ContratoMaestroFactory, $filter) {
 
     function initialData() {
         ContratoMaestroFactory.GetContratoList().then(function (data) {
@@ -130,10 +130,21 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         };
         ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
             vm.Contratos = data.GetBusquedaContratoMaestroFacResult[0];
+            console.log(vm.Contratos);
             if (vm.Contratos == undefined) {
                 ngNotify.set('No se encontro el contrato.', 'error');
                 resetBusquedas();
             } else {
+                //Vamos a validar la fecha de vencimiento del contrato maestro
+                var fechaHoy = new Date();
+                fechaHoy = $filter('date')(fechaHoy, 'dd/MM/yyyy');
+                var fechaVigenciaAux = vm.Contratos.FechaVencimiento.replace(/[^0-9\.]+/g, '');
+                var pattern = /(\d{2})(\d{2})(\d{4})/;
+                fechaVigenciaAux = new Date(fechaVigenciaAux.replace(pattern, '$2/$1/$3'));
+                if(fechaVigenciaAux < fechaHoy){
+                    ngNotify.set('El contrato maestro se encuentra vencido, no se pueden aplicar pagos', 'error');
+                    return;
+                }       
                 vm.muestraTablaCliente = false;
                 vm.muestraCliente = true;
                 pagosMaestrosFactory.cobraSaldoMaestro(vm.Contratos.IdContratoMaestro).then(function (data) {
@@ -143,8 +154,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                         HacerPregunta(vm.saldo.Clv_SessionPadre, 900);
                     }
                     pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
-
-                        if (detallePago.GetDetalleContratosMaestrosListResult.lista.length == 0) {
+                        if (detallePago.GetDetalleContratosMaestrosListResult.lista.filter(function(value) { return value.Importe >= 0 }).length == 0) {
                             vm.blockedocta = true;
                             vm.blockPagar = true;
                             vm.color = '#f3f3f3';
@@ -155,7 +165,8 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                             vm.color = 'white';
                         }
                         DetalleFactura(vm.saldo.Clv_SessionPadre);
-                        vm.detallePago = detallePago.GetDetalleContratosMaestrosListResult.lista;
+                        vm.detallePago = detallePago.GetDetalleContratosMaestrosListResult.lista.filter(function(value) { return value.Importe >= 0 });
+                        vm.detallePagoTodo = detallePago.GetDetalleContratosMaestrosListResult.lista;
                         vm.sumaPagos = detallePago.GetDetalleContratosMaestrosListResult.datosdetalle;
                         vm.detallePagoAux = vm.detallePago;
                     });
@@ -253,7 +264,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                 pagosMaestrosFactory.cobraSaldoMaestro(vm.Contratos.IdContratoMaestro).then(function (data) {
                     vm.saldo = data.GetCobraContratoMaestroResult;
                     pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
-                        if (detallePago.GetDetalleContratosMaestrosListResult.lista.length == 0) {
+                        if (detallePago.GetDetalleContratosMaestrosListResult.lista.filter(function(value) { return value.Importe >= 0 }).length == 0) {
                             vm.blockedocta = true;
                             vm.blockPagar = true;
                             vm.color = '#f3f3f3';
@@ -263,7 +274,8 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                             vm.blockPagar = false;
                             vm.color = 'white';
                         }
-                        vm.detallePago = detallePago.GetDetalleContratosMaestrosListResult.lista;
+                        vm.detallePago = detallePago.GetDetalleContratosMaestrosListResult.lista.filter(function(value) { return value.Importe >= 0 });
+                        vm.detallePagoTodo = detallePago.GetDetalleContratosMaestrosListResult.lista;
                         vm.sumaPagos = detallePago.GetDetalleContratosMaestrosListResult.datosdetalle;
                         vm.detallePagoAux = vm.detallePago;
                     });
@@ -331,6 +343,43 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                     return x;
                 }
             }
+        });
+    }
+
+    function agregarListaGeneral(){        
+        vm.animationsEnabled = true;
+        vm.modalInstanceLista = $uibModal.open({
+            animation: vm.animationsEnabled,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'views/corporativa/agregaListaPago.html',
+            controller: 'agregaListaPagoCtrl',
+            controllerAs: '$ctrl',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'lg',
+            resolve: {
+                Contratos : function () {
+                    return vm.Contratos;
+                },
+                Clv_SessionPadre : function () {
+                    return vm.saldo.Clv_SessionPadre;
+                },
+                detallePagoTodo : function () {
+                    return vm.detallePagoTodo;
+                }
+            }
+        });   
+        vm.modalInstanceLista.result.then(function () {
+            pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
+                vm.detallePago = detallePago.GetDetalleContratosMaestrosListResult.lista.filter(function(value) { return value.Importe >= 0 });
+                vm.detallePagoTodo = detallePago.GetDetalleContratosMaestrosListResult.lista;
+                vm.sumaPagos = detallePago.GetDetalleContratosMaestrosListResult.datosdetalle;
+                vm.detallePagoAux = vm.detallePago;
+            });
+            DetalleFactura(vm.saldo.Clv_SessionPadre);
+        }, function () {
+            //alert('Modal dismissed');
         });
     }
 
@@ -469,5 +518,8 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
     vm.enterRazon = enterRazon;
     vm.color = 'white';
     vm.PagarCredito = PagarCredito;
+    vm.fecha = new Date();
+    vm.agregarListaGeneral = agregarListaGeneral;
+    vm.modalInstanceLista = new Object();
     initialData();
 }

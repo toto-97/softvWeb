@@ -19,7 +19,11 @@ angular
 			buscarPagos: '/BuscaFacturasMaestroConsulta/GetBuscaFacturasMaestroConsultaList',
 			generaFactura: '/GrabaFacturaCMaestro/GetGrabaFacturaCMaestro',
 			dameDetalleFactura: '/DameDetalle_FacturaMaestro/GetDameDetalle_FacturaMaestroList',
-			GetBuscaFacturasMaestroPendientesList: '/BuscaFacturasMaestroPendientes/GetBuscaFacturasMaestroPendientesList'
+			GetBuscaFacturasMaestroPendientesList: '/BuscaFacturasMaestroPendientes/GetBuscaFacturasMaestroPendientesList',
+			ReporteResumenContratoMaestro: '/ResumenGeneraPorContratoMaestro/GetResumenGeneraPorContratoMaestroList',
+			ReporteServiciosInstalados: '/ReporteServiciosInstalados/GetReporteServiciosInstaladosList',
+			ReporteServiciosPorInstalar: '/ReporteServiciosPorInstalar/GetReporteServiciosPorInstalarList',
+			ReporteFacturasVencidas: '/ReporteFacturasMaestrasVencidas/GetReporteFacturasMaestrasVencidasList'
 		};
 
 		factory.cobraSaldoMaestro = function(contrato) {
@@ -385,6 +389,70 @@ angular
 				}
 			};
 			$http.post(globalService.getUrl() + paths.GetBuscaFacturasMaestroPendientesList, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.ReporteResumenContratoMaestro = function(obj) {
+			var deferred = $q.defer();
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.ReporteResumenContratoMaestro, JSON.stringify(obj), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.ReporteServiciosInstalados = function(obj) {
+			var deferred = $q.defer();
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.ReporteServiciosInstalados, JSON.stringify(obj), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.ReporteServiciosPorInstalar = function(obj) {
+			var deferred = $q.defer();
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.ReporteServiciosPorInstalar, JSON.stringify(obj), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.ReporteFacturasVencidas = function(obj) {
+			var deferred = $q.defer();
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.ReporteFacturasVencidas, JSON.stringify(obj), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response);

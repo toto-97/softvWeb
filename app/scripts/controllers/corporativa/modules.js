@@ -182,6 +182,70 @@ function corporativaConf($stateProvider) {
 		templateUrl: 'views/corporativa/reportesPendientes.html',
 		controller: 'ReportesPendientesCtrl',
 		controllerAs: '$ctrl'
+	},
+	{
+		name: 'home.corporativa.reportesResumenContrato',
+		data: {
+			pageTitle: 'SOFTV | REPORTES RESUMEN POR CONTRATO MAESTRO',
+			permissions: {
+				only: ['recepciondepagosSelect'],
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/reportesResumenContrato',
+		templateUrl: 'views/corporativa/reportesResumenContrato.html',
+		controller: 'reportesResumenContratoCtrl',
+		controllerAs: '$ctrl'
+	},
+	{
+		name: 'home.corporativa.reportesServiciosInstalados',
+		data: {
+			pageTitle: 'SOFTV | REPORTES SERVICIOS INSTALADOS',
+			permissions: {
+				only: ['recepciondepagosSelect'],
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/reportesServiciosInstalados',
+		templateUrl: 'views/corporativa/reportesServiciosInstalados.html',
+		controller: 'reportesServiciosInstaladosCtrl',
+		controllerAs: '$ctrl'
+	},
+	{
+		name: 'home.corporativa.reportesServiciosPorInstalar',
+		data: {
+			pageTitle: 'SOFTV | REPORTES SERVICIOS POR INSTALAR',
+			permissions: {
+				only: ['recepciondepagosSelect'],
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/reportesServiciosPorInstalar',
+		templateUrl: 'views/corporativa/reportesServiciosPorInstalar.html',
+		controller: 'reportesServiciosPorInstalarCtrl',
+		controllerAs: '$ctrl'
+	},
+	{
+		name: 'home.corporativa.reportesFacturasVencidas',
+		data: {
+			pageTitle: 'SOFTV | REPORTES FACTURAS VENCIDAS',
+			permissions: {
+				only: ['recepciondepagosSelect'],
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/reportesFacturasVencidas',
+		templateUrl: 'views/corporativa/reportesFacturasVencidas.html',
+		controller: 'reportesFacturasVencidasCtrl',
+		controllerAs: '$ctrl'
 	}
 
 

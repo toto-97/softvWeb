@@ -24,6 +24,7 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 	vm.MuestraReferencia = false;
 	vm.CambioTipo = CambioTipo;
 	vm.dolares = false;
+	vm.fechaVigencia = "";
 
 	this.$onInit = function () {
 		corporativoFactory.getDistribuidores().then(function (data) {
@@ -102,6 +103,7 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 	}
 
 	function guardarContrato() {
+
 		if (vm.MuestraBanco) {
 			if (!vm.selectedBanco) {
 				ngNotify.set('Selecciona un banco por favor.', 'error');
@@ -150,6 +152,14 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 		}
 
 		var auxFecha = $filter('date')(vm.fecha, 'dd/MM/yyyy');
+		var fechaHoy = new Date();
+		fechaHoy = $filter('date')(fechaHoy, 'dd/MM/yyyy');
+		var fechaVigenciaAux = $filter('date')(vm.fechaVigencia, 'dd/MM/yyyy');
+		if(fechaVigenciaAux <= fechaHoy){
+			ngNotify.set('La fecha de vigencia debe ser mayor a la fecha actual', 'error');
+			return;
+		}
+			
 		var contrato = {
 			'objContratoMaestroFac': {
 				'RazonSocial': vm.razon,
@@ -184,7 +194,8 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 				'Pais':vm.Pais,
 				'Fax':vm.Fax,
 				'Tel':vm.Telefono,
-				'Email':vm.Email
+				'Email':vm.Email,
+				'FechaVencimiento':$filter('date')(vm.fechaVigencia, 'dd/MM/yyyy')
 
 
 			}

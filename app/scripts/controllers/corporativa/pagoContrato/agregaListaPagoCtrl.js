@@ -1,0 +1,117 @@
+'use strict';
+angular.module('softvApp').controller('agregaListaPagoCtrl', agregaListaPagoCtrl)
+.filter('myStrictFilter', function ($filter, $rootScope) {
+  return function (input, predicate) {
+      return $filter('filter')(input, predicate, true);
+  }
+})
+.filter('unique', function () {
+  return function (arr, field) {
+      var o = {}, i, l = arr.length, r = [];
+      for (i = 0; i < l; i += 1) {
+          o[arr[i][field]] = arr[i];
+      }
+      for (i in o) {
+          r.push(o[i]);
+      }
+      return r;
+  };
+});
+
+function agregaListaPagoCtrl($uibModal, $state, $rootScope, cajasFactory, corporativoFactory, ngNotify, inMenu, $uibModalInstance , $filter, Contratos, Clv_SessionPadre, detallePagoTodo) {
+
+  function Init() {
+    vm.contratosLigados = Contratos.lstCliS;
+    vm.displayCollection = Contratos.lstCliS;
+  }
+
+  function cancel() {
+    $uibModalInstance.dismiss('cancel');
+  }
+
+  function sortByKey(array, key) {
+    return array.sort(function (a, b) {
+      var x = a[key];
+      var y = b[key];
+      return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+  }
+  //Nos traemos los servicios por contrato que se le puedan aplicar
+  function cambiaSeleccion(contratoSeleccionado){
+    console.log(contratoSeleccionado);
+    vm.ContratoSeleccionado = contratoSeleccionado.ContratoReal;
+    vm.Clv_Session = detallePagoTodo.filter(function(value) { return value.Contrato == contratoSeleccionado.ContratoReal });
+    vm.Clv_Session = vm.Clv_Session[0].Clv_Session;
+    cajasFactory.muestraServicios(contratoSeleccionado.ContratoReal).then(function (data) {
+        data.GetMuestraServiciosFACListResult.unshift({
+            'DescripcionFac': '----------------',
+            'Clv_Servicio': 0
+        });
+        vm.servicios = data.GetMuestraServiciosFACListResult;
+        vm.selectedService = data.GetMuestraServiciosFACListResult[0];
+    });
+  }
+
+  function agregarLista(){
+    cajasFactory.dameSuscriptor(vm.ContratoSeleccionado).then(function (suscriptor) {
+      vm.Suscriptor = suscriptor.GetDameTiposClientesListResult[0];
+      if (vm.selectedService.Clv_Servicio == 0) {
+              ngNotify.set('Selecciona un servicio por favor.', 'error');
+      } else {
+        if (vm.selectedService.Clv_Txt == 'CADIG' || vm.selectedService.Clv_Txt == 'CADI2' || vm.selectedService.Clv_Txt == 'CADI3' || vm.selectedService.Clv_Txt == 'CANET') {
+          cajasFactory.consultaCamdo(vm.Clv_Session, vm.ContratoSeleccionado).then(function (data) {
+            if (data.GetCAMDOFACResult.Existe == false) {
+              var items = {};
+              items.Session = vm.Clv_Session;
+              items.Contrato = vm.ContratoSeleccionado;
+              items.Texto = vm.selectedService.Clv_Txt;
+              items.Tipo = vm.Suscriptor.Clv_TipoCliente;
+              vm.animationsEnabled = true;
+              var modalInstance = $uibModal.open({
+                animation: vm.animationsEnabled,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'views/facturacion/modalCambioDomicilio.html',
+                controller: 'ModalCambioDomicilioCtrl',
+                controllerAs: 'ctrl',
+                backdrop: 'static',
+                keyboard: false,
+                size: 'md',
+                resolve: {
+                    items: function () {
+                        return items;
+                    }
+                }
+              });
+              modalInstance.result.then(function () {
+                $uibModalInstance.close();
+                //alert('Modal ok');
+              }, function () {
+                $uibModalInstance.close();
+                //alert('Modal dismissed');
+              });
+            } else {
+                ngNotify.set('El cliente tiene un cambio de domicilio pendiente.', 'error');
+            }
+          });
+        } else {
+          cajasFactory.addAdicionales(vm.Clv_Session, vm.selectedService.Clv_Txt, vm.ContratoSeleccionado, vm.Suscriptor.Clv_TipoCliente).then(function (data) {
+              //$uibModalInstance.dismiss('cancel');
+              $uibModalInstance.close();
+          });
+        }
+      }
+    });
+  }
+
+  var vm = this;
+  vm.cancel = cancel;
+  vm.contratosLigados = [];
+  vm.servicios = [];
+  vm.cambiaSeleccion = cambiaSeleccion;
+  vm.displayCollection = [];
+  vm.seleccion = false;
+  vm.agregarLista = agregarLista;
+  Init();
+
+}
