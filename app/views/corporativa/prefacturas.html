@@ -6,7 +6,7 @@
       <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Facturas preliminares fiscales</small>
     </header>
     <div class="tools">
-      <button class="btn btn-primary btn-sm" ui-sref="home.corporativa.nuevanota" type="button" permission permission-only="'notasdecreditoAdd'"><i class="fa fa-plus" aria-hidden="true"></i> Nueva Nota</button>
+
     </div>
   </div>
 
@@ -25,27 +25,27 @@
             <div class="row">
 
               <div class="col-md-2">
-                <p>No.Factura :</p>
-                <input type="number" class="form-control input-sm" ng-model="$ctrl.factura">
+                <p>No.ticket :</p>
+                <input type="text" class="form-control input-sm" ng-model="$ctrl.factura">
 
               </div>
               <div class="col-md-1">
                 <br>
-                <button class="btn btn-info btn-xs" ng-click="$ctrl.buscar(1);"><i class="fa fa-search"></i> Buscar</button>
+                <button class="btn btn-info btn-xs" ng-click="$ctrl.buscar(2);"><i class="fa fa-search"></i> Buscar</button>
               </div>
               <div class="col-md-2">
 
                 <p>No.Contrato:
                   <p>
-                    <input type="text" class="form-control input-sm" ng-model="$ctrl.contrato">
+                    <input type="number" class="form-control input-sm" ng-model="$ctrl.contrato">
 
               </div>
               <div class="col-md-2">
                 <br>
-                <button class="btn btn-info btn-xs" ng-click="$ctrl.buscar(2);"><i class="fa fa-search"></i> Buscar</button>
+                <button class="btn btn-info btn-xs" ng-click="$ctrl.buscar(4);"><i class="fa fa-search"></i> Buscar</button>
 
               </div>
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <p>Fecha :</p>
                 <input type="date" class="form-control input-sm" ng-model="$ctrl.fecha">
 
@@ -53,6 +53,14 @@
               <div class="col-md-1">
                 <br>
                 <button class="btn btn-info btn-xs" ng-click="$ctrl.buscar(3);"><i class="fa fa-search"></i> Buscar</button>
+
+              </div>
+              <div class="col-md-2">
+                <br>
+                <label class="checkbox-inline checkbox-styled checkbox-danger">
+														<input type="checkbox"ng-model="$ctrl.todas" ng-change="$ctrl.buscar(1)"><span>Todos</span>
+													</label>
+
 
               </div>
 
@@ -70,33 +78,31 @@
       <table class="table" style="font-size:10px;">
         <thead>
           <tr>
-            <th>No.Folio</th>
+            <th>No.Factura</th>
             <th>Contrato Maestro</th>
             <th>Fecha generación</th>
-
             <th>Status</th>
             <th>Ticket</th>
-            <th>Monto</th>
+            <th>Importe</th>
+            <th>Total abonado</th>
             <th>opciones</th>
           </tr>
         </thead>
         <tbody>
 
-          <tr dir-paginate="x in $ctrl.Notas|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:8">
-            <td>{{x.NotaCredito}}</td>
+          <tr dir-paginate="x in $ctrl.facturas|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:8">
+            <td>{{x.Clv_FacturaMaestro}}</td>
             <td>{{x.ContratoMaestro}}</td>
-            <td>{{x.FechaGeneracion}}</td>
-
-            <td>{{x.Status}}</td>
+            <td>{{x.Fecha}}</td>
+            <td>{{x.EstatusFactura}}</td>
             <td>{{x.Ticket}}</td>
-            <td>{{x.Monto|currency}}</td>
+            <td>{{x.Importe | currency}}</td>
+            <td>{{x.TotalAbonado | currency}}</td>
             <td>
-              <button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.DetalleNota(x.NotaCredito);"><i class="fa fa-eye"></i></button>
-              <button class="btn ink-reaction btn-floating-action btn-xs btn-default-bright" data-toggle="tooltip" data-placement="top"
-                title="Refacturar" data-original-title="Tooltip on top" ng-click="$ctrl.opcionesNota(1,x.NotaCredito);"><i class=" md md-repeat
-"></i></button>
-              <button class="btn ink-reaction btn-floating-action btn-xs btn-default-bright" data-toggle="tooltip" data-placement="top"
-                title="Reimprimir" data-original-title="Tooltip on top" ng-click="$ctrl.opcionesNota(2,x.NotaCredito);"><i class="md md-print
+
+              <button ng-if="x.EstatusFactura==='Por Facturar'|| x.EstatusFactura=== 'Facturada'" class="btn ink-reaction btn-floating-action btn-xs btn-warning"
+                data-toggle="tooltip" data-placement="top" title="Editar conceptos de factura" data-original-title="Tooltip on top"
+                ng-click="$ctrl.Conceptos(x.Clv_FacturaMaestro,x.EstatusFactura);"><i class=" fa fa-edit
 "></i></button>
 
 

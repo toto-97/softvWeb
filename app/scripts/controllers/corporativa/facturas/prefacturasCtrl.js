@@ -1,52 +1,55 @@
 'use strict';
 angular.module('softvApp').controller('prefacturasCtrl', prefacturasCtrl);
 
-function prefacturasCtrl($state, corporativoFactory, ngNotify, $filter) {
+function prefacturasCtrl($state, ContratoMaestroFactory, ngNotify, $filter, $uibModal, $scope) {
 
-  function Init() {}
+  function Init() {
+    buscar(1);
+  }
 
   var buscar = function (op) {
-    var parametros;
-    if (op === 2) {
-      parametros = {
-        'Factura': vm.factura,
-        'Fecha': '',
-        'Todas': 0,
-        'ContratoMaestro': 0,
-        'Opcion': 2
-      };
-    } else if (op === 3) {
+    var parametros = {
+      'Factura': (op === 2 && (vm.factura !== null || vm.factura !== undefined)) ? vm.factura : 0,
+      'Fecha': (op === 3 && (vm.fecha !== null || vm.fecha !== undefined)) ? $filter('date')(vm.fecha, 'dd/MM/yyyy') : '',
+      'Todas': (op === 1 && vm.todas === true) ? 1 : 0,
+      'ContratoMaestro': (op === 4 && (vm.contrato !== null || vm.contrato !== undefined)) ? vm.contrato : 0,
+      'Opcion': op
+    };
+    ContratoMaestroFactory.BuscaFacturasFisca(parametros)
+      .then(function (data) {
 
-      parametros = {
-        'Factura': 0,
-        'Fecha': vm.fecha,
-        'Todas': 0,
-        'ContratoMaestro': 0,
-        'Opcion': 3
-      };
-    } else if (op === 4) {
-
-      parametros = {
-        'Factura': 0,
-        'Fecha': vm.fecha,
-        'Todas': 0,
-        'ContratoMaestro': 0,
-        'Opcion': 3
-      };
-    } else {
-      parametros = {
-        'Factura': 0,
-        'Fecha': '',
-        'Todas': vm.solofacturadas,
-        'ContratoMaestro': vm.contrato,
-        'Opcion': 1
-      };
-    }
+        vm.facturas = data.GetBuscaFacturasFiscaListResult;
+      });
 
   };
+  var Conceptos = function (clave, status) {
+    var obj = {};
+    obj.clave = clave;
+    obj.status = status;
+    var modalInstance = $uibModal.open({
+      animation: true,
+      ariaLabelledBy: 'modal-title',
+      ariaDescribedBy: 'modal-body',
+      templateUrl: 'views/corporativa/ModalEditaFacpreeliminar.html',
+      controller: 'ModalEditaFacpreeliminarCtrl',
+      controllerAs: '$ctrl',
+      backdrop: 'static',
+      keyboard: false,
+      size: "md",
+      resolve: {
+        obj: function () {
+          return obj;
+        }
+      }
+    });
+  };
 
+  $scope.$on("actualizar_listado", function (e) {
+    buscar(1);
+  });
 
   var vm = this;
   Init();
   vm.buscar = buscar;
+  vm.Conceptos = Conceptos;
 }
