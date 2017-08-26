@@ -1,7 +1,7 @@
 'use strict';
 angular.module('softvApp').controller('prefacturasCtrl', prefacturasCtrl);
 
-function prefacturasCtrl($state, ContratoMaestroFactory, ngNotify, $filter, $uibModal, $scope) {
+function prefacturasCtrl($state, ContratoMaestroFactory, ngNotify, $filter, $uibModal, $scope, $rootScope) {
 
   function Init() {
     buscar(1);
@@ -35,7 +35,7 @@ function prefacturasCtrl($state, ContratoMaestroFactory, ngNotify, $filter, $uib
       controllerAs: '$ctrl',
       backdrop: 'static',
       keyboard: false,
-      size: "md",
+      size: "lg",
       resolve: {
         obj: function () {
           return obj;
@@ -44,9 +44,10 @@ function prefacturasCtrl($state, ContratoMaestroFactory, ngNotify, $filter, $uib
     });
   };
 
-  $scope.$on("actualizar_listado", function (e) {
-    buscar(1);
+ $rootScope.$on('actualizar_listado', function (e, clave) {   
+     buscar(1);
   });
+
 
   var vm = this;
   Init();
