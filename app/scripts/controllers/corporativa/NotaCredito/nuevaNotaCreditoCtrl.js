@@ -325,7 +325,6 @@
     function calcular() {
       vm.sumatotal = 0;
       vm.DetalleNota.forEach(function (element) {
-
         vm.sumatotal += (element.importe == undefined) ? 0 : element.importe
       });
     }

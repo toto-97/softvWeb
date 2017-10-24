@@ -246,6 +246,22 @@ function corporativaConf($stateProvider) {
 		templateUrl: 'views/corporativa/reportesFacturasVencidas.html',
 		controller: 'reportesFacturasVencidasCtrl',
 		controllerAs: '$ctrl'
+	},
+	{
+		name: 'home.corporativa.prefacturas',
+		data: {
+			pageTitle: 'SOFTV | FACTURAS',
+			permissions: {
+				only: ['facturaspreliminaresSelect'],
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/facturas',
+		templateUrl: 'views/corporativa/prefacturas.html',
+		controller: 'prefacturasCtrl',
+		controllerAs: '$ctrl'
 	}
 
 
