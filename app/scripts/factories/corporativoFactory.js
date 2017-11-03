@@ -17,7 +17,12 @@ angular.module('softvApp')
 			singleContrato: '/ContratoMaestroFac/GetRelContratos',
 			updateContrato: '/ContratoMaestroFac/UpdateContratoMaestroFac',
 			UpdateRelContrato: '/ContratoMaestroFac/GetAddUpdate',
-			buscarCliente: '/uspBuscaContratoSeparado2/GetBuscaByIdDisList'
+			buscarCliente: '/uspBuscaContratoSeparado2/GetBuscaByIdDisList',
+			GetObtienePolizasMaestro: '/PolizaMaestro/GetObtienePolizasMaestro',
+			EliminaPoliza: '/PolizaMaestro/GetEliminaPoliza',
+			GetDetallesPolizaMaestro : '/PolizaMaestro/GetDetallesPolizaMaestro',
+			GetGeneraNuevaPolizaMaestro: '/PolizaMaestro/GetGeneraNuevaPolizaMaestro',
+			GetPolizaTxt: '/PolizaMaestro/GetPolizaTxt'
 		};
 
 		factory.updateContrato = function(contrato) {
@@ -311,6 +316,91 @@ angular.module('softvApp')
 				}
 			};
 			$http.post(globalService.getUrl() + paths.buscarCliente, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.GetObtienePolizasMaestro = function(obj) {
+			var deferred = $q.defer();
+			//console.log(JSON.stringify(obj));
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.GetObtienePolizasMaestro, JSON.stringify(obj), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.EliminaPoliza = function(obj) {
+			var deferred = $q.defer();
+			//console.log(JSON.stringify(obj));
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.EliminaPoliza, JSON.stringify(obj), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.GetDetallesPolizaMaestro = function(obj) {
+			var deferred = $q.defer();
+			//console.log(JSON.stringify(obj));
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.GetDetallesPolizaMaestro, JSON.stringify(obj), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.GetGeneraNuevaPolizaMaestro = function(obj) {
+			var deferred = $q.defer();
+			//console.log(JSON.stringify(obj));
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.GetGeneraNuevaPolizaMaestro, JSON.stringify(obj), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.GetPolizaTxt = function(obj) {
+			var deferred = $q.defer();
+			//console.log(JSON.stringify(obj));
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.GetPolizaTxt, JSON.stringify(obj), config).then(function(response) {
 				deferred.resolve(response.data);
 			}).catch(function(response) {
 				deferred.reject(response.data);

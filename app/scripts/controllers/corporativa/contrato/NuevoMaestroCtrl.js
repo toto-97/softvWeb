@@ -3,7 +3,7 @@ angular
 	.module('softvApp')
 	.controller('NuevoMaestroCtrl', NuevoMaestroCtrl);
 
-function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactory, $filter, ngNotify, $state) {
+function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactory, $filter, ngNotify, $state, ContratoMaestroFactory) {
 	var vm = this;
 	vm.abrirContratos = abrirContratos;
 	vm.contratos = [];
@@ -42,6 +42,10 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 		cajasFactory.dameBancos().then(function (data) {
 			vm.bancos = data.GetMuestraBancosListResult;
 		});
+		ContratoMaestroFactory.GetCuentaCableMaestro().then(function (data) {
+          vm.Clabes = data.GetCuentaCableMaestroResult;
+          console.log(vm.Clabes);
+        });
 	}
 
 	function abrirContratos() {
@@ -150,6 +154,10 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 		} else {
 			vm.FacturacionDolaresAux = 0;
 		}
+		var IdClabe = 0;
+		if (vm.selectedClabe != undefined){
+			IdClabe = vm.selectedClabe.Id;
+		}
 
 		var auxFecha = $filter('date')(vm.fecha, 'dd/MM/yyyy');
 		var fechaHoy = new Date();
@@ -195,9 +203,8 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 				'Fax':vm.Fax,
 				'Tel':vm.Telefono,
 				'Email':vm.Email,
-				'FechaVencimiento':$filter('date')(vm.fechaVigencia, 'dd/MM/yyyy')
-
-
+				'FechaVencimiento':$filter('date')(vm.fechaVigencia, 'dd/MM/yyyy'),
+				'IdClabe': IdClabe
 			}
 		};
 		corporativoFactory.addMaestro(contrato).then(function (data) {

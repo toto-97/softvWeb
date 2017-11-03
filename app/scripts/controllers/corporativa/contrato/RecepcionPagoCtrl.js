@@ -144,9 +144,13 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
         /* if (x.Importe <= x.TotalAbonado) {
            ngNotify.set('Ya se saldo el adeudo.', 'error');
          } else {*/
-
+        console.log(vm.Bnd);
         if (vm.Bnd == 1) {
           ngNotify.set('No se puede ingresar el pago sin haber saldado la factura anterior.', 'error');
+          return;
+        }
+        else if (vm.Bnd === 2){
+          ngNotify.set('No es posible ingresar un pago. No tiene folio Fiscal', 'error');
           return;
         }
         if (x.ACuantosPagos == 'N/A') {
