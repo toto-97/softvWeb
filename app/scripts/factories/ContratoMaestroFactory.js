@@ -51,7 +51,8 @@ angular.module('softvApp')
       BuscaFacturasFisca: '/BuscaFacturasFisca/GetBuscaFacturasFiscaList',
       DameDetalle_FacturaMaestroFiscal: '/DameDetalle_FacturaMaestroFiscal/GetDameDetalle_FacturaMaestroFiscalList',
       GetAddDetalleFacFiscal: '/BuscaFacturasFisca/GetAddDetalleFacFiscal',
-      ActualizaFacturaGeneraFiscal:'/ActualizaFacturaGeneraFiscal/UpdateActualizaFacturaGeneraFiscal'
+      ActualizaFacturaGeneraFiscal:'/ActualizaFacturaGeneraFiscal/UpdateActualizaFacturaGeneraFiscal',
+      GetCuentaCableMaestro: '/ContratoMaestroFac/GetCuentaCableMaestro'
     };
 
 
@@ -1211,6 +1212,22 @@ angular.module('softvApp')
         }
       };
       $http.post(globalService.getUrl() + paths.GetGeneraFacturaMaestroPrueba, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+
+      return deferred.promise;
+    };
+
+    factory.GetCuentaCableMaestro = function () {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.get(globalService.getUrl() + paths.GetCuentaCableMaestro, config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
         deferred.reject(response);

@@ -262,6 +262,22 @@ function corporativaConf($stateProvider) {
 		templateUrl: 'views/corporativa/prefacturas.html',
 		controller: 'prefacturasCtrl',
 		controllerAs: '$ctrl'
+	},
+	{
+		name: 'home.corporativa.polizas',
+		data: {
+			pageTitle: 'SOFTV | PÓLIZAS',
+			permissions: {
+				only: ['polizasSelect'],
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/polizas',
+		templateUrl: 'views/corporativa/PolizaMaestro/polizasMaestro.html',
+		controller: 'polizaMaestroCtrl',
+		controllerAs: '$ctrl'
 	}
 
 

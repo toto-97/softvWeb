@@ -1,0 +1,36 @@
+<form angular-validator-submit="$ctrl.Generar()" name="contratoForm" novalidate angular-validator>
+  <div class="modal-header">
+    <button class="close" aria-label="Close" type="button" ng-click="$ctrl.cancel()">×</button>
+    <h4 class="modal-title"><i class="fa fa-thumb-tack"></i> Nueva Póliza Facturación Corporativa </h4>
+  </div>
+  <div class="modal-body" >
+    <div class="row">
+      <div class="col-md-7">
+        <p>Distribuidor:</p>
+        <select ng-model="$ctrl.Distribuidor" class="form-control input-sm" ng-options="item as item.Nombre for item in $ctrl.Distribuidores track by item.Clv_Plaza" required-message="'Este campo es obligatorio.'" required>
+          <option value="">Selecciona</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <br>
+      <div class="col-md-7">
+        <p>Fecha Póliza:</p>                     
+        <input type="date" ng-model="$ctrl.Fecha" class="form-control input-sm" required-message="'Este campo es obligatorio.'" required>
+
+      </div>                  
+    </div>
+    <div class="row">
+      <br>
+      <div class="col-md-7">
+        <p>Tipo:</p>                     
+        <label class="text-left checkbox-inline checkbox-styled"><input type="checkbox" name="dolares" ng-model="$ctrl.DolaresCheck" ng-change="$ctrl.CambiaDolares()"><span>Dólares</span></label>
+
+      </div>                  
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success btn-sm" type="submit">Generar</button>
+    <button class="btn btn-default btn-sm" type="button" ng-click="$ctrl.cancel()">Cerrar</button>
+  </div>
+</form>
