@@ -278,7 +278,7 @@ function corporativaConf($stateProvider) {
 		templateUrl: 'views/corporativa/relacioningresos.html',
 		controller: 'relacionIngresosCtrl',
 		controllerAs: '$ctrl'
-    }
+    
 	},
 	{
 		name: 'home.corporativa.polizas',
