@@ -1,7 +1,7 @@
 'use strict';
 angular.module('softvApp').controller('ContratoMaestroCtrl', ContratoMaestroCtrl);
 
-function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory) {
+function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory, moment) {
   var vm = this;
   vm.DetalleContrato = DetalleContrato;
   vm.BuscarNombrec = BuscarNombrec;
@@ -13,6 +13,21 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory) {
   this.$onInit = function () {
     ContratoMaestroFactory.GetContratoList().then(function (data) {
       vm.Contratos = data.GetContratos_CSResult;
+      var today = moment().format('L');
+      vm.Contratos.forEach(function (item) {
+        var fechavencimiento = moment(item.FechaVencimiento, "DD/MM/YYYY");
+        var days = moment(today).diff(fechavencimiento, "day");
+        console.log(days);
+        if (days ===0 ) {
+          item.status = 'V';//VENCIDO
+        } else if (days > -90 ) {
+          item.status = 'PV';//POR VENCER
+        } else {
+          item.status = 'N';//NORMAL
+        }
+
+      });
+      console.log('contratos', vm.Contratos);
       ContratoMaestroFactory.GetDistribuidores().then(function (data) {
         vm.Distribuidores = data.GetDistribuidoresResult;
         ContratoMaestroFactory.GetCiudadList(vm.Distribuidores[0].Clv_Plaza).then(function (data) {
@@ -53,7 +68,7 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory) {
       "Op": 2
     }
 
-    ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {     
+    ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
       vm.Contratos = data.GetBusquedaContratoMaestroFacResult;
     });
   }

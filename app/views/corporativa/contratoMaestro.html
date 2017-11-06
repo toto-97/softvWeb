@@ -122,7 +122,9 @@
             </thead>
             <tbody>
 
-              <tr ng-show="$ctrl.Contratos.length>0" dir-paginate="x in $ctrl.Contratos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:8">
+              <tr ng-show="$ctrl.Contratos.length>0"
+                 dir-paginate="x in $ctrl.Contratos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:8"
+                 ng-class="{danger: x.status=='V', warning:  x.status=='PV'}">
                 <td>{{x.IdContratoMaestro}}</td>
                 <td>{{x.RazonSocial}}</td>
                 <td>{{x.RFC}}</td>

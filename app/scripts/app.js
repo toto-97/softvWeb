@@ -14,7 +14,9 @@ angular
 		'ui.mask','dndLists',
 		'smart-table',
 		'ngSanitize',
-		'ngCsv'
+		'ngCsv',
+		'moment-picker',
+		'angularMoment'
 
 	])
 	.config(['$provide', '$urlRouterProvider', '$httpProvider', 'cfpLoadingBarProvider', '$qProvider', 'blockUIConfig', function ($provide, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $qProvider, blockUIConfig) {
@@ -63,8 +65,10 @@ angular
 		delete $httpProvider.defaults.headers.common['X-Requested-With'];
 	}])
 	.constant('APP_CONFIG', window.appConfig)
-	.run(['$rootScope', '$state', '$stateParams', '$localStorage', '$location', 'PermPermissionStore', 'PermRoleStore', 'inMenu', function ($rootScope, $state, $stateParams, $localStorage, $location, PermPermissionStore, PermRoleStore, inMenu) {
+	.run(['$rootScope', '$state', '$stateParams', '$localStorage', '$location', 'PermPermissionStore', 'PermRoleStore', 'inMenu','amMoment',
+	 function ($rootScope, $state, $stateParams, $localStorage, $location, PermPermissionStore, PermRoleStore, inMenu,amMoment) {
 		$rootScope.$state = $state;
+		amMoment.changeLocale('es');
 		$rootScope.$stateParams = $stateParams;
 		if ($localStorage.currentUser) {
 			//$location.path('/home/');

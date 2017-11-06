@@ -23,18 +23,19 @@
 
   .dualmultiselect .pool ul li {
     width: 100%;
-    padding: 4px 8px 4px 4px;
+    /*  padding: 4px 8px 4px 4px;*/
     border-bottom: 1px dotted #CFCFCF;
   }
 
   .dualmultiselect .pool ul li a:hover {
     text-decoration: none;
   }
+
 </style>
 <div class="dualmultiselect">
   <div class="row">
     <div class="col-lg-5 col-md-5 col-sm-5">
-      <input class="form-control" placeholder="{{$ctrl.options.filterPlaceHolder}}" ng-model="$ctrl.searchTerm">
+      <input class="form-control input-sm" placeholder="{{$ctrl.options.filterPlaceHolder}}" ng-model="$ctrl.searchTerm">
     </div>
   </div>
   <div class="row">
@@ -54,7 +55,8 @@
       <button type="button" class="btn btn-warning btn-xs" ng-click="$ctrl.transfer($ctrl.options.selectedItems, $ctrl.options.items, -1)"> Deseleccionar Todo </button>
       <div class="pool">
         <ul>
-          <li ng-click="$ctrl.transfer($ctrl.options.selectedItems, $ctrl.options.items, $ctrl.options.selectedItems.indexOf(item))" ng-repeat="item in $ctrl.options.selectedItems | orderBy: $ctrl.options.orderProperty">
+          <li ng-click="$ctrl.transfer($ctrl.options.selectedItems, $ctrl.options.items, $ctrl.options.selectedItems.indexOf(item))"
+            ng-repeat="item in $ctrl.options.selectedItems | orderBy: $ctrl.options.orderProperty">
             <a href="">{{item[$ctrl.options.labelShow]}}</a>
           </li>
         </ul>

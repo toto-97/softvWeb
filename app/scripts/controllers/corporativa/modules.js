@@ -263,6 +263,23 @@ function corporativaConf($stateProvider) {
 		controller: 'prefacturasCtrl',
 		controllerAs: '$ctrl'
 	},
+		{
+		name: 'home.corporativa.relacioningresos',
+		data: {
+			pageTitle: 'SOFTV | FACTURAS',
+			permissions: {
+				
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/relaciondeingresos',
+		templateUrl: 'views/corporativa/relacioningresos.html',
+		controller: 'relacionIngresosCtrl',
+		controllerAs: '$ctrl'
+    }
+	},
 	{
 		name: 'home.corporativa.polizas',
 		data: {

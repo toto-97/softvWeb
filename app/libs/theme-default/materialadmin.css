@@ -1535,7 +1535,7 @@ a.text-success:hover {
   padding: 16px;
 }
 .menubar-visible #menubar {
-  width: 240px;
+  width: 350px;
 }
 #menubar.animate {
   -webkit-transition: width 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
