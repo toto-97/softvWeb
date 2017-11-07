@@ -295,6 +295,22 @@ function corporativaConf($stateProvider) {
 		templateUrl: 'views/corporativa/PolizaMaestro/polizasMaestro.html',
 		controller: 'polizaMaestroCtrl',
 		controllerAs: '$ctrl'
+	},
+	{
+		name: 'home.corporativa.reportecontratos',
+		data: {
+			pageTitle: 'SOFTV | CONTRATOS VENCIDOS/POR VENCER',
+			permissions: {
+				only: ['polizasSelect'],
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/reportecontratos',
+		templateUrl: 'views/corporativa/Reportes/reporte.contratovencido.html',
+		controller: 'reporteContratoVencidoCtrl',
+		controllerAs: '$ctrl'
 	}
 
 

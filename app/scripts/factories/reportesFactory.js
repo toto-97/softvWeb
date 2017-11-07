@@ -41,7 +41,8 @@ angular
 			getCatalogoOptionsEspeciales: '/CatalogoReportesFac/GetCatalogoRepCorteEspecialFacList',
 			reporteGeneralEspeciales: '/ReporteCortesEspeciales/GetReporteCortesEspGralList',
 			reporteSucursalEspeciales: '/ReporteCortesEspeciales/GetReporteCortesEspSucList',
-			reporteFacturasFiscales: '/RepFacFisEspeciales/GetRepFacFisEspecialesGralList'
+			reporteFacturasFiscales: '/RepFacFisEspeciales/GetRepFacFisEspecialesGralList',
+			
 		};
 
 		factory.getOpcionsMenu = function() {

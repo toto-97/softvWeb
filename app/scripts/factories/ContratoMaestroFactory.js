@@ -52,7 +52,53 @@ angular.module('softvApp')
       DameDetalle_FacturaMaestroFiscal: '/DameDetalle_FacturaMaestroFiscal/GetDameDetalle_FacturaMaestroFiscalList',
       GetAddDetalleFacFiscal: '/BuscaFacturasFisca/GetAddDetalleFacFiscal',
       ActualizaFacturaGeneraFiscal:'/ActualizaFacturaGeneraFiscal/UpdateActualizaFacturaGeneraFiscal',
-      GetCuentaCableMaestro: '/ContratoMaestroFac/GetCuentaCableMaestro'
+      GetCuentaCableMaestro: '/ContratoMaestroFac/GetCuentaCableMaestro',
+      GetReporteMaestroPorVencer:'/ContratoMaestroFac/GetReporteMaestroPorVencer',
+      GetNotificacionContratoPorVencer:'/ContratoMaestroFac/GetNotificacionContratoPorVencer'
+    };
+     
+    factory.GetNotificacionContratoPorVencer = function () {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+        $http.get(globalService.getUrl() + paths.GetNotificacionContratoPorVencer, config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+    
+
+
+    factory.GetReporteMaestroPorVencer = function (obj) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {        
+          'Op': obj.Op,
+          'FechaVencimiento':obj.FechaVencimiento.replace('/','').replace('/',''),
+          'ContratoMaestro':obj.ContratoMaestro,
+          'IdDistribuidor':obj.IdDistribuidor      
+      };
+      console.log(parametros);
+      
+      $http.post(globalService.getUrl() + paths.GetReporteMaestroPorVencer, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
     };
 
 
