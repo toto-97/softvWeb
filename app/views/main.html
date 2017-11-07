@@ -20,6 +20,28 @@
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="headerbar-right">
+        <ul class="header-nav header-nav-options">
+				{{notificaciones | json}}
+						<li class="dropdown hidden-xs">
+							<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
+								<i class="fa fa-bell"></i><sup class="badge style-danger">{{$ctrl.notificaciones.length}}</sup>
+							</a>
+							<ul class="dropdown-menu animation-expand" style="width: 300px; height: 350px; overflow: auto">
+								<li class="dropdown-header">Contratos por vencer</li>
+								<li>
+									<a ng-repeat="x in $ctrl.notificaciones" class="alert alert-callout alert-warning" href="javascript:void(0);">
+                    
+                    
+										<strong>Contrato: {{x.IdContratoMaestro}}</strong><br>
+										<small>Fecha Vencimiento: {{x.FechaVencimiento}}</small>
+									</a>
+								</li>
+								
+							
+							</ul><!--end .dropdown-menu -->
+						</li><!--end .dropdown -->
+						
+					</ul>
       <ul class="header-nav header-nav-profile">
         <li class="dropdown">
           <a href="javascript:void(0);" class="dropdown-toggle ink-reaction" data-toggle="dropdown">
