@@ -17,6 +17,24 @@
         <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Contratos Maestros</small>
       </header>
       <div class="tools">
+          <div class="btn-group">
+              <div class="btn-group">
+                <button type="button" class="btn ink-reaction btn-default-light dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
+                  <i class="fa fa-wrench">  </i>   Exportar
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <ul class="dropdown-menu" role="menu">                
+                  <li>                            
+                    <a  csv-column-order="$ctrl.csvorder"  
+                    csv-header="$ctrl.csvheader"
+                    ng-csv="$ctrl.Contratos" filename="contratos.csv" field-separator="," decimal-separator="."  add-bom="true">
+                      <i class="fa fa-file-excel-o"></i> CSV</a>
+                  </li>
+                  
+                </ul>
+              </div>
+              <!--end .btn-group -->
+            </div>
         <button class="btn btn-primary btn-sm" type="button" ui-sref="home.corporativa.maestroNuevo" permission permission-only="'contratomaestroAdd'"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo</button>
       </div>
     </div>

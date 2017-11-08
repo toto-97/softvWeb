@@ -9,15 +9,15 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory, moment) {
   vm.BuscarCiudad = BuscarCiudad;
   vm.ObtenerCiudades = ObtenerCiudades;
   vm.Buscarporcontrato = Buscarporcontrato;
-
+  vm.csvheader=['No.ContratoMaestro','Razon Social','Nombre Comercial','Distribuidor','RFC','Email','FechaVencimiento','Telefono','Calle','Entre Calles','NumExt','NumInt','Colonia','Codigo Postal','Localidad','Ciudad','Estado','Dias Credito','Dias Gracia','Facturacion Dolares','Fecha Facturacion','Limite Credito','Pago EdoCuetna','PagoFac','PostPago','Prepago']
+  vm.csvorder=['IdContratoMaestro','RazonSocial','NombreComercial','DistribuidorDes','RFC','Email','FechaVencimiento','Tel','CalleDes','EntreCalles','NumExt','NumInt','ColoniaDes','CodigoPostal','LocalidadDes','CiudadDes','EstadoDes','DiasCredito','DiasGracia','FacturacionDolares','FechaFac','LimiteCredito','PagoEdoCuetna','PagoFac','PostPago','Prepago']
   this.$onInit = function () {
     ContratoMaestroFactory.GetContratoList().then(function (data) {
       vm.Contratos = data.GetContratos_CSResult;
       var today = moment().format('L');
       vm.Contratos.forEach(function (item) {
         var fechavencimiento = moment(item.FechaVencimiento, "DD/MM/YYYY");
-        var days = moment(today).diff(fechavencimiento, "day");
-        console.log(days);
+        var days = moment(today).diff(fechavencimiento, "day");        
         if (days ===0 ) {
           item.status = 'V';//VENCIDO
         } else if (days > -90 ) {
