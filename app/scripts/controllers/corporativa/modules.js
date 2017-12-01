@@ -292,7 +292,7 @@ function corporativaConf($stateProvider) {
 			}
 		},
 		url: '/corporativa/polizas',
-		templateUrl: 'views/corporativa/PolizaMaestro/polizasMaestro.html',
+		templateUrl: 'views/corporativa/polizasMaestro.html',
 		controller: 'polizaMaestroCtrl',
 		controllerAs: '$ctrl'
 	},
@@ -308,7 +308,7 @@ function corporativaConf($stateProvider) {
 			}
 		},
 		url: '/corporativa/reportecontratos',
-		templateUrl: 'views/corporativa/Reportes/reporte.contratovencido.html',
+		templateUrl: 'views/corporativa/reporte.contratovencido.html',
 		controller: 'reporteContratoVencidoCtrl',
 		controllerAs: '$ctrl'
 	}
