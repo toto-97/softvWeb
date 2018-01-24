@@ -18,6 +18,7 @@
     vm.AddItem=AddItem;
     vm.cambioDescripcion=cambioDescripcion;
     vm.cambioMonto=cambioMonto;
+    vm.totalconceptos=0;
 
     this.$onInit = function () {
       vm.clave = obj.clave;
@@ -29,6 +30,7 @@
           item.Accion=1;
           vm.total = vm.total + item.Importe;          
         });
+        calcularmonto();
       });
     };
 
@@ -65,9 +67,9 @@
     }
 
     function calcularmonto() {
-      vm.total = 0;
+     vm.totalconceptos = 0;
       vm.conceptos.forEach(function (item) {
-        vm.total += (item.Importe === undefined || item.Accion ===2 ) ? 0 : item.Importe;
+        vm.totalconceptos += (item.Importe === undefined || item.Accion ===2 ) ? 0 : item.Importe;
       });
     }
 

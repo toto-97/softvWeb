@@ -126,7 +126,7 @@
 
  <div class="col-md-12 table-responsive">
          
-          <table class="table" style="font-size:10px;">
+          <table class="table" style="font-size:13px;">
             <thead>
               <tr>
                 <th>#contrato</th>
@@ -150,8 +150,8 @@
                 <td>{{x.DistribuidorDes}}</td>
                 <td>{{x.EstadoDes}}</td>
                 <td>
-                  <button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.DetalleContrato(x);"><i class="fa fa-eye"></i></button>
-                  <button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ui-sref="home.corporativa.maestroEditar({id:x.IdContratoMaestro})" permission permission-only="'contratomaestroUpdate'"><i class="fa fa-edit"></i></button>
+                  <button class="btn ink-reaction  btn-xs btn-info" ng-click="$ctrl.DetalleContrato(x);"><i class="fa fa-eye"></i> Detalle</button>
+                  <button class="btn ink-reaction  btn-xs btn-warning" ui-sref="home.corporativa.maestroEditar({id:x.IdContratoMaestro})" permission permission-only="'contratomaestroUpdate'"><i class="fa fa-edit"></i> Editar</button>
 
               </tr>
             </tbody>

@@ -24,10 +24,15 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 	}
 
 	function cambioEfectivo() {
-		vm.maxmonto = vm.monto * 10;
+	   console.log('maxmonto',vm.maxmonto);
+	   console.log('monto',vm.monto);
+	   console.log('efectivo',vm.efectivo);
+	   console.log('TotalAbonado',vm.TotalAbonado);
+
+		/* vm.maxmonto = vm.monto * 10;
 		if (vm.efectivo > vm.maxmonto) {
 			vm.efectivo = vm.maxmonto;
-		}
+		} */
 		vm.cambio = vm.efectivo - vm.monto;
 		if (vm.cambio < 0) {
 			vm.cambio = 0;

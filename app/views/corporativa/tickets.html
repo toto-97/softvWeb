@@ -78,7 +78,7 @@
 
   <div class="col-md-12 table-responsive">
 
-    <table class="table" style="font-size:10px;">
+    <table class="table" style="font-size:13px;">
       <thead>
         <tr>
           <th>Contrato Maestro</th>
@@ -103,9 +103,9 @@
           <td>{{x.Importe | currency}}</td>
           <td>{{x.Cliente}}</td>
           <td>
-            <button class="btn ink-reaction btn-floating-action btn-xs btn-default-bright" ng-click="$ctrl.opcionTicket(1,x);"><i class="fa fa-print"></i></button>
-            <button class="btn ink-reaction btn-floating-action btn-xs btn-default-bright" ng-click="$ctrl.opcionTicket(3,x);"><i class="fa fa-envelope-o"></i></button>
-            <button class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-if="x.Status!='Cancelada'" ng-click="$ctrl.opcionTicket(2,x);"><i class="fa fa-ban"></i></button>
+            <button class="btn ink-reaction  btn-xs btn-default-bright" ng-click="$ctrl.opcionTicket(1,x);"><i class="fa fa-print"></i> Imprimir</button>
+            <button class="btn ink-reaction  btn-xs btn-default-bright" ng-click="$ctrl.opcionTicket(3,x);"><i class="fa fa-envelope-o"></i> Enviar</button>
+            <button class="btn ink-reaction btn-xs btn-danger" ng-if="x.Status!='Cancelada'" ng-click="$ctrl.opcionTicket(2,x);"><i class="fa fa-ban"></i> Cancelar</button>
             
 
         </tr>

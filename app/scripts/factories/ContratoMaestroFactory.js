@@ -54,7 +54,121 @@ angular.module('softvApp')
       ActualizaFacturaGeneraFiscal:'/ActualizaFacturaGeneraFiscal/UpdateActualizaFacturaGeneraFiscal',
       GetCuentaCableMaestro: '/ContratoMaestroFac/GetCuentaCableMaestro',
       GetReporteMaestroPorVencer:'/ContratoMaestroFac/GetReporteMaestroPorVencer',
-      GetNotificacionContratoPorVencer:'/ContratoMaestroFac/GetNotificacionContratoPorVencer'
+      GetNotificacionContratoPorVencer:'/ContratoMaestroFac/GetNotificacionContratoPorVencer',
+      GetCodigosPostalesMizar:'/ContratoMaestroFac/GetCodigosPostalesMizar',
+      GetColoniasMizar:'/ContratoMaestroFac/GetColoniasMizar',
+      GetEstadosMizar:'/ContratoMaestroFac/GetEstadosMizar',
+      GetMunicipiosMizar:'/ContratoMaestroFac/GetMunicipiosMizar',
+      GetPaisesMizar:'/ContratoMaestroFac/GetPaisesMizar'
+    };
+
+    factory.GetPaisesMizar = function (id_CodigoPostal) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {        
+          'id_CodigoPostal':id_CodigoPostal               
+      };
+     
+      
+      $http.post(globalService.getUrl() + paths.GetPaisesMizar, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+    factory.GetMunicipiosMizar = function (id_CodigoPostal,id_Estado) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {        
+          'id_CodigoPostal':id_CodigoPostal,
+          'id_Estado':id_Estado            
+      };
+     
+      
+      $http.post(globalService.getUrl() + paths.GetMunicipiosMizar, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+
+    factory.GetEstadosMizar = function (id_CodigoPostal) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {        
+          'id_CodigoPostal':id_CodigoPostal               
+      };
+     
+      
+      $http.post(globalService.getUrl() + paths.GetEstadosMizar, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+
+
+    factory.GetColoniasMizar = function (id_CodigoPostal) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {        
+          'id_CodigoPostal':id_CodigoPostal               
+      };
+     
+      
+      $http.post(globalService.getUrl() + paths.GetColoniasMizar, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+
+    factory.GetCodigosPostalesMizar = function () {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+        $http.get(globalService.getUrl() + paths.GetCodigosPostalesMizar, config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
     };
      
     factory.GetNotificacionContratoPorVencer = function () {

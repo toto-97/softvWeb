@@ -19,6 +19,7 @@
     vm.MuestraAutorizacion = false;
     vm.desconexion = desconexion;
     vm.generarFacturaPrueba = generarFacturaPrueba;
+    vm.getEstadoCiudadPais=getEstadoCiudadPais;
 
     this.$onInit = function () {
       corporativoFactory.singleContrato($stateParams.id).then(function (data) {
@@ -33,12 +34,7 @@
           });
         });
 
-        vm.estado = vm.contratoMaestro.ColoniaDes;
-        vm.ciudad = vm.contratoMaestro.CiudadDes;
-        vm.localidad = vm.contratoMaestro.LocalidadDes;
-        vm.colonia = vm.contratoMaestro.ColoniaDes;
-        vm.calle = vm.contratoMaestro.CalleDes;
-
+    
         //Nos traemos las cuentas clabes disponibles en caso de que no se haya asignado alguna
         if (vm.contratoMaestro.IdClabe === 0){
           ContratoMaestroFactory.GetCuentaCableMaestro().then(function (data) {
@@ -122,7 +118,7 @@
         vm.numerointerior = vm.contratoMaestro.NumInt;
         vm.numeroexterior = vm.contratoMaestro.NumExt;
         vm.dolares = vm.contratoMaestro.FacturacionDolares;
-        vm.cp = vm.contratoMaestro.CodigoPostal;
+         
         vm.rfc = vm.contratoMaestro.RFC;
         vm.diascredito = vm.contratoMaestro.DiasCredito;
         vm.diasgracia = vm.contratoMaestro.DiasGracia;
@@ -137,7 +133,7 @@
         vm.Telefono = vm.contratoMaestro.Tel;
         vm.Email = vm.contratoMaestro.Email;
         vm.Fax = vm.contratoMaestro.Fax;
-        vm.Pais = vm.contratoMaestro.Pais;
+        //vm.Pais = vm.contratoMaestro.Pais;
 
         var date2 = new Date(vm.contratoMaestro.FechaVencimiento);
         var date = vm.contratoMaestro.FechaVencimiento.replace(/[^0-9\.]+/g, '');
@@ -145,7 +141,82 @@
         date = new Date(date.replace(pattern, '$2/$1/$3'));
         vm.fechaVigencia = date;
 
+        vm.contratoMaestro.LocalidadDes;
+        vm.contratoMaestro.CalleDes;
+
+        ContratoMaestroFactory.GetCodigosPostalesMizar().then(function(data){
+          vm.codigospostales=data.GetCodigosPostalesMizarResult;
+
+          vm.codigospostales.forEach(function(item){
+            if(item.id_CodigoPostal=== vm.contratoMaestro.CodigoPostal){
+                vm.cp= item;
+            }           
+          });          
+          getEstadoCiudadPais(true);         
+          
+        });
+
       });
+    }
+
+
+
+    function getEstadoCiudadPais(onload){
+
+
+
+      ContratoMaestroFactory.GetPaisesMizar(vm.cp.id_CodigoPostal).then(function(data){
+        vm.paises=data.GetPaisesMizarResult;
+        if(onload){
+          vm.paises.forEach(function(item){
+            if( item.Descripcion==vm.contratoMaestro.Pais){
+              vm.Pais=item;
+            }
+           }) 
+          }      
+        });
+       
+          
+        ContratoMaestroFactory.GetEstadosMizar(vm.cp.id_CodigoPostal).then(function(result){
+            vm.estados=result.GetEstadosMizarResult;
+            if(onload){
+              vm.estados.forEach(function(item){
+                if(item.Descripcion== vm.contratoMaestro.EstadoDes){
+                 vm.estado=item;
+                }
+            })            
+          }        
+            
+           
+        ContratoMaestroFactory.GetMunicipiosMizar(vm.cp.id_CodigoPostal,vm.estado.id_Estado).then(function(data){
+         
+            vm.ciudades=data.GetMunicipiosMizarResult;
+            if(load){
+              vm.ciudades.forEach(function(item){
+                if( item.Descripcion===vm.contratoMaestro.CiudadDes){
+                  vm.ciudad=item;
+                }
+               });
+            }
+            
+
+           
+        
+            ContratoMaestroFactory.GetColoniasMizar(vm.cp.id_CodigoPostal).then(function(data){           
+              vm.colonias=data.GetColoniasMizarResult;
+              if(load){
+              vm.colonias.forEach(function(item){
+                 if(item.Descripcion=== vm.contratoMaestro.ColoniaDes){
+                  vm.colonia=item;
+                 }
+              });            
+            }
+          
+              });
+          
+        });
+      });
+    
     }
 
     function desconexion(tipo) {

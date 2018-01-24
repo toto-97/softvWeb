@@ -1,12 +1,12 @@
 <form angular-validator-submit="$ctrl.ok()" name="contratoForm" novalidate angular-validator>
   <div class="modal-header">
-    <button class="close" aria-label="Close" type="button">×</button>
+    <button class="close" aria-label="Close" type="button" ng-click="$ctrl.cancel()">×</button>
     <h4 class="modal-title">
       <i class="fa fa-thumb-tack"></i> Conceptos de Factura #{{$ctrl.clave}} </h4>
   </div>
   <div class="col-md-12" style="padding:10px">
     
-      <div class="col-md-2">
+     <!--  <div class="col-md-2">
         <b>Agregar concepto:</b>
       </div>
       <div class="col-md-4">
@@ -26,11 +26,11 @@
             
           </div>
         </div>
-      </div>
-      <div class="col-md-2">        
+      </div> -->
+      <!-- <div class="col-md-2">        
         <button ng-disabled="!$ctrl.montonuevo >0" ng-click="$ctrl.AddItem()" class="btn btn-info btn-sm" type="button">
           <i class="fa fa-plus"></i> Agregar</button>
-      </div>
+      </div> -->
    
   </div>
   <div class="modal-body" style="overflow-y: scroll; max-height: 400px;">
@@ -59,11 +59,14 @@
                       <i class="fa fa-usd fa-lg"></i>
                     </span>
                     <div class="input-group-content">
-                      <input type="number" name="cant" ng-model="x.Importe" 
-                      ng-keyup="$ctrl.cambioMonto(x.Importe,$index)"
+                        <input type="number" ng-disabled="true" name="cant" ng-model="x.Importe"                       
+                         class="form-control" required min="0"
+                           validate-on="dirty">
+                    <!--   <input type="number" name="cant" ng-model="x.Importe" 
+                     ng-keyup="$ctrl.cambioMonto(x.Importe,$index)"
                       ng-change="$ctrl.cambioMonto(x.Importe,$index)"
                       class="form-control" required min="0"
-                        validate-on="dirty">
+                        validate-on="dirty"> -->
                       <span class="alert error text-danger" ng-show="urlForm.cant.$error.required">campo requerido</span>
                     </div>
                   </div>
@@ -71,12 +74,13 @@
                 </ng-form>
               </td>
               <td>
-                <button type="button" class="btn btn-danger btn-xs" ng-click="$ctrl.deleteItem($index)">
-                  <i class="fa fa-trash"></i> Eliminar </button>
+               <!--  <button type="button" class="btn btn-danger btn-xs" ng-click="$ctrl.deleteItem($index)">
+                  <i class="fa fa-trash"></i> Eliminar </button> -->
               </td>
             </tr>
           </tbody>
         </table>
+    <!--     <h4 class="text-right">{{$ctrl.totalconceptos | currency}}</h4> -->
       </div>
 
 
@@ -85,10 +89,10 @@
   </div>
   <div class="modal-footer">
     <h4 class="text-danger text-left ">Total: {{$ctrl.total | currency}}</h4>
-    <button class="btn btn-success btn-sm" ng-disabled="$ctrl.total===0" ng-if="$ctrl.status!=='En espera'" type="submit" ng-click="$ctrl.opcion=1">Guardar conceptos</button>
-    <button class="btn btn-danger btn-sm" ng-disabled="$ctrl.total===0" ng-if="$ctrl.status==='Por Facturar' && $ctrl.status!=='En espera'"
+    <button class="btn btn-success btn-sm" ng-disabled="$ctrl.total===0 || $ctrl.totalconceptos !=$ctrl.total" ng-if="$ctrl.status!=='En espera'" type="submit" ng-click="$ctrl.opcion=1">Guardar conceptos</button>
+    <button class="btn btn-danger btn-sm" ng-disabled="$ctrl.total===0  || $ctrl.totalconceptos !=$ctrl.total" ng-if="$ctrl.status==='Por Facturar' && $ctrl.status!=='En espera'"
       type="submit" ng-click="$ctrl.opcion=2">facturar</button>
-    <button class="btn btn-danger btn-sm" ng-disabled="$ctrl.total===0" ng-if="$ctrl.status==='Facturada' && $ctrl.status!=='En espera'"
+    <button class="btn btn-danger btn-sm" ng-disabled="$ctrl.total===0  || $ctrl.totalconceptos !=$ctrl.total" ng-if="$ctrl.status==='Facturada' && $ctrl.status!=='En espera'"
       type="submit" ng-click="$ctrl.opcion=3">Refacturar</button>
     <button class="btn btn-default btn-sm" type="button" ng-click="$ctrl.cancel()">cerrar</button>
   </div>

@@ -72,6 +72,22 @@ function corporativaConf($stateProvider) {
 		controllerAs: '$ctrl'
 	},
 	{
+		name: 'home.corporativa.pagodetalle',
+		data: {
+			pageTitle: 'SOFTV | PAGO CONTRATO MAESTRO',
+			permissions: {
+				only: ['contratomaestroUpdate'],
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/pagoContratoMaestro/detallepago/:id',
+		templateUrl: 'views/corporativa/pagoDetalleContratoMaestro.html',
+		controller: 'PagoDetalleContratoMaestroCtrl',
+		controllerAs: '$ctrl'
+	},
+	{
 		name: 'home.corporativa.pago',
 		data: {
 			pageTitle: 'SOFTV | PAGO CONTRATO MAESTRO',

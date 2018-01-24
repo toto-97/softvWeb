@@ -153,7 +153,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
           ngNotify.set('No es posible ingresar un pago. No tiene folio Fiscal', 'error');
           return;
         }
-        if (x.ACuantosPagos == 'N/A') {
+        if (x.ACuantosPagos === 'N/A') {
           var items = {
             Modo: 'n'
           };
