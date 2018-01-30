@@ -119,10 +119,6 @@ function PagoDetalleContratoMaestroCtrl($stateParams, ContratoMaestroFactory,cor
 
 
   function agregarListaGeneral(){ 
-    console.log(vm.Contratos);
-    console.log(vm.saldo.Clv_SessionPadre);
-    console.log(vm.detallePagoTodo);
-
     vm.animationsEnabled = true;
     vm.modalInstanceLista = $uibModal.open({
         animation: vm.animationsEnabled,

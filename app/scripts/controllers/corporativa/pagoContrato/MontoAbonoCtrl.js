@@ -13,14 +13,9 @@ function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStora
     }
 
     function abonoTotal() {
-        console.log(parseFloat(x.Importe - x.TotalAbonado).toFixed(4));
+    
         var pagar =parseFloat(x.Importe - x.TotalAbonado).toFixed(4);
-        var monto =parseFloat(vm.monto).toFixed(4);
-        console.log(pagar);
-        console.log(monto);
-       //console.log(x.TotalAbonado);
-       // console.log( x.Importe);
-       // console.log(pagar);
+        var monto =parseFloat(vm.monto).toFixed(4);    
         if (vm.minimo !== true) {
             if (vm.abono > pagar) {
                 vm.abono = parseFloat(pagar);

@@ -57,7 +57,7 @@ function ReportesPendientesCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactor
                 };
                 pagosMaestrosFactory.GetBuscaFacturasMaestroPendientesList(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroPendientesListResult;
-                    console.log(vm.pagos);
+                 
                 });
                 vm.displayCollection = [].concat(vm.pagos);
 

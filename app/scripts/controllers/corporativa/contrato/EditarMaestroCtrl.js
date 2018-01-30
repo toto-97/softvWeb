@@ -23,7 +23,7 @@
 
     this.$onInit = function () {
       corporativoFactory.singleContrato($stateParams.id).then(function (data) {
-        console.log(data);
+     
         vm.contratoMaestro = data.GetRelContratosResult[0];
         corporativoFactory.getDistribuidores().then(function (data) {
           vm.distribuidores = data.GetDistribuidoresResult;

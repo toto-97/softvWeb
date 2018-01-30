@@ -129,8 +129,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
             'Op': 4
         };
         ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
-            vm.Contratos = data.GetBusquedaContratoMaestroFacResult[0];
-            console.log(vm.Contratos);
+            vm.Contratos = data.GetBusquedaContratoMaestroFacResult[0];          
             if (vm.Contratos == undefined) {
                 ngNotify.set('No se encontro el contrato.', 'error');
                 resetBusquedas();
@@ -497,7 +496,10 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                 },
                 x: function () {
                     return x;
-                }
+                },
+                proceso: function () {
+                    return 'PCM';
+                  }
             }
         });
     }

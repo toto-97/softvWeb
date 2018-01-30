@@ -59,8 +59,60 @@ angular.module('softvApp')
       GetColoniasMizar:'/ContratoMaestroFac/GetColoniasMizar',
       GetEstadosMizar:'/ContratoMaestroFac/GetEstadosMizar',
       GetMunicipiosMizar:'/ContratoMaestroFac/GetMunicipiosMizar',
-      GetPaisesMizar:'/ContratoMaestroFac/GetPaisesMizar'
+      GetPaisesMizar:'/ContratoMaestroFac/GetPaisesMizar',
+      GetGraba_Factura_DigitalPago:'/FacturacionSoftv/GetGraba_Factura_DigitalPago',
+      GetGraba_Factura_DigitalMaestrotvzac:'/FacturacionSoftv/GetGraba_Factura_DigitalMaestrotvzac'
     };
+
+
+    factory.GetGraba_Factura_DigitalPago = function (oClv_Factura) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {        
+          'oClv_Factura':oClv_Factura ,
+          'oIden':0              
+      };
+     
+      
+      $http.post(globalService.getUrlMizar() + paths.GetGraba_Factura_DigitalPago, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+
+    factory.GetGraba_Factura_DigitalMaestrotvzac = function (oClv_Factura) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {        
+          'oClv_Factura':oClv_Factura ,
+          'oIden':0              
+      };
+     
+      
+      $http.post(globalService.getUrlMizar() + paths.GetGraba_Factura_DigitalMaestrotvzac, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+
 
     factory.GetPaisesMizar = function (id_CodigoPostal) {
       var deferred = $q.defer();

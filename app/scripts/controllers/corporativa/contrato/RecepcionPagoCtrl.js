@@ -130,9 +130,9 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
   }
 
   function PagarCredito(x) {
-    console.log(x);
+ 
     ContratoMaestroFactory.GetValidaSipuedohacerPagoc(x.ContratoMaestro, x.Clv_FacturaMaestro).then(function (response) {
-      console.log(response);
+  
       if (x.Importe <= x.TotalAbonado) {
         ngNotify.set('Ya se saldo el adeudo.', 'error');
         return;
@@ -144,7 +144,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
         /* if (x.Importe <= x.TotalAbonado) {
            ngNotify.set('Ya se saldo el adeudo.', 'error');
          } else {*/
-        console.log(vm.Bnd);
+      
         if (vm.Bnd == 1) {
           ngNotify.set('No se puede ingresar el pago sin haber saldado la factura anterior.', 'error');
           return;
@@ -177,6 +177,9 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
               },
               x: function () {
                 return x;
+              },
+              proceso: function () {
+                return 'RP';
               }
             }
           });
@@ -209,6 +212,9 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
               },
               x: function () {
                 return x;
+              },
+              proceso: function () {
+                return 'RP';
               }
             }
           });
@@ -241,6 +247,9 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
               },
               x: function () {
                 return x;
+              },
+              proceso: function () {
+                return 'RP';
               }
             }
           });
@@ -313,7 +322,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
   function cancelarfactura(object) {
 
     ContratoMaestroFactory.GetValidaSipuedoCancelarPago(object.Clv_Pago).then(function (data) {
-      console.log(data);
+    
       if (data.GetValidaSipuedoCancelarPagoResult.Msg != '') {
         ngNotify.set(data.GetValidaSipuedoCancelarPagoResult.Msg, 'warn')
       } else {

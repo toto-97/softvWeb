@@ -27,7 +27,7 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory, moment) {
         }
 
       });
-      console.log('contratos', vm.Contratos);
+    
       ContratoMaestroFactory.GetDistribuidores().then(function (data) {
         vm.Distribuidores = data.GetDistribuidoresResult;
         ContratoMaestroFactory.GetCiudadList(vm.Distribuidores[0].Clv_Plaza).then(function (data) {
@@ -54,7 +54,6 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory, moment) {
       "Op": 4
     };
     ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
-      console.log(data);
       vm.Contratos = data.GetBusquedaContratoMaestroFacResult;
     });
   }

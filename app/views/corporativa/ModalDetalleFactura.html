@@ -1,0 +1,13 @@
+<form angular-validator-submit="$ctrl.ok()" name="contratoForm" novalidate angular-validator>
+    <div class="modal-header">
+      <button class="close" aria-label="Close" type="button">×</button>
+      <h4 class="modal-title"><i class="fa fa-thumb-tack"></i> Factura  </h4>
+    </div>
+    <div class="modal-body" >
+        <iframe src="{{$ctrl.url}}" width="800px;" height="600px;"></iframe>
+  </div>
+  <div class="modal-footer">
+   
+    <button class="btn btn-default btn-sm" type="button" ng-click="$ctrl.cancel()">cerrar</button>
+  </div>
+  </form>
