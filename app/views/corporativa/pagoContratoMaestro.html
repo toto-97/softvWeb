@@ -106,7 +106,7 @@
             <div id="datosCliente-1" class="collapse datosCliente" aria-expanded="false" style="margin-top: -20px">
               <div class="row" style="padding-left:10px;">
                 <div class="table-responsive col-md-12" style="padding-left: 20px;">
-                  <table class="table" style="font-size:10px;">
+                  <table class="table" style="font-size:14px;">
                     <thead>
                       <tr style="background-color: #B5B6B6;">
                         <th>#contrato</th>
@@ -156,11 +156,11 @@
           <div class="card panel" ng-style="{'background-color': $ctrl.color}">
           
             <div id="datosCliente-1" class="collapse datosCliente" aria-expanded="false">
-              <div class="row" style="padding-left:10px;">
+              <div class="row" style="padding-left:14px;">
                 <div class="col-md-3">
                   <p class="text-center" style="color:red;" ng-show="$ctrl.showFiscales">EL CLIENTE CUENTA CON DATOS FISCALES</p>
-                  <p class="text-primary"><b><i class="md md-account-box"></i> Detalles del contrato maestro</b></p>
-                  <p style="font-size: 12px;">
+                  <h4 class="text-primary"><b><i class="md md-account-box"></i> Detalles del contrato maestro</b></h4>
+                  <p style="font-size: 14px;">
                     <b>Contrato: </b>{{ $ctrl.Contratos.IdContratoMaestro }}<br/>
                     <b>Nombre Comercial: </b>{{ $ctrl.Contratos.NombreComercial }}<br/>
                     <b>Razón Social: </b>{{ $ctrl.Contratos.RazonSocial }}
@@ -182,11 +182,11 @@
 
                         <table st-safe-src="$ctrl.detallePago" st-table="$ctrl.displayCollection" class="table table-bordered">
                           <thead>
-                            <tr style="background-color: #B5B6B6;">
-                              <th st-sort="ContratoCompuesto" style="font-size: 10px;">Contrato</th>
-                              <th st-sort="Nombre" style="font-size: 10px;">Nombre</th>
-                              <th st-sort="Importe" style="font-size: 10px;">Monto</th>
-                              <th style="font-size: 10px;">Detalle</th>
+                            <tr style="background-color:#e5f1d8;">
+                              <th st-sort="ContratoCompuesto" style="font-size: 12px;">Contrato</th>
+                              <th st-sort="Nombre" style="font-size: 12px;">Nombre</th>
+                              <th st-sort="Importe" style="font-size: 12px;">Monto</th>
+                              <th style="font-size: 12px;">Detalle</th>
                             </tr>
                             <tr>
                               <th style="font-size: 10px;">
@@ -225,7 +225,7 @@
 
                         <table class="table table-bordered">
                           <thead>
-                            <tr style="background-color: #B5B6B6;">
+                            <tr style="background-color:#e5f1d8;">
                               <th style="font-size: 10px;">Concepto</th>
                               <th style="font-size: 10px;">Importe</th>
                             </tr>
@@ -245,12 +245,12 @@
 
                   </uib-tabset>
                   <p class="btn-group text-right" style="padding-right: 10px;">
-                    <button class="btn btn-danger btn-sm" ng-click="$ctrl.agregarListaGeneral()" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar a la lista</button>
+                    <button class="btn btn-info btn-xs" ng-click="$ctrl.agregarListaGeneral()" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar a la lista</button>
                   </p>
                 </div>
                 <div class="col-md-4  text-center vertical-center">
                   <div class="row">
-                      <label class="text-primary"><b>Conceptos</b></label>
+                      <h4 class="text-primary"><b>Conceptos</b></h4>
                   </div>
                   <br>
                   <table class="table">
@@ -262,7 +262,7 @@
                     </tr>
                   </table>
                   <p class="btn-group text-right" style="padding-right: 10px;">
-                    <button class="btn btn-danger btn-sm" ng-click="$ctrl.PagarCredito($ctrl.saldo, $ctrl.sumaPagos, $ctrl.Contratos,'pagos')" ng-disabled="$ctrl.blockPagar"><i class="fa fa-money" aria-hidden="true"></i> generar factura</button>
+                    <button class="btn btn-warning btn-sm" ng-click="$ctrl.PagarCredito($ctrl.saldo, $ctrl.sumaPagos, $ctrl.Contratos,'pagos')" ng-disabled="$ctrl.blockPagar"><i class="fa fa-money" aria-hidden="true"></i> generar factura</button>
                     <button class="btn btn-default-bright btn-sm" ng-disabled="$ctrl.blockedocta" ng-click="$ctrl.edocta()"><i class="fa fa-eye" aria-hidden="true" ></i> ver estado de cuenta</button>
                   </p>
                 </div>

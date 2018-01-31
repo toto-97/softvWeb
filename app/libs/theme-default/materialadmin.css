@@ -5225,7 +5225,7 @@ section .style-default-light,
 section.style-default-light,
 .offcanvas-pane.style-default-light,
 .card.style-default-light {
-  background-color: #f2f3f3;
+  background-color: #dddddd80;
   border-color: #f2f3f3;
   color: #313534;
 }
@@ -5470,7 +5470,7 @@ section .style-primary-light,
 section.style-primary-light,
 .offcanvas-pane.style-primary-light,
 .card.style-primary-light {
-  background-color: #7dd8d2;
+  background-color: #e3ecec42;
   border-color: #7dd8d2;
   color: #313534;
 }
