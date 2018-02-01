@@ -115,7 +115,7 @@ function polizaMaestroCtrl($uibModal, ContratoMaestroFactory, corporativoFactory
       animation: vm.animationsEnabled,
       ariaLabelledBy: 'modal-title',
       ariaDescribedBy: 'modal-body',
-      templateUrl: 'views/corporativa/PolizaMaestro/modalNuevoPolizaMaestro.html',
+      templateUrl: 'views/corporativa/modalNuevoPolizaMaestro.html',
       controller: 'modalNuevoPolizaMaestroCtrl',
       controllerAs: '$ctrl',
       backdrop: 'static',

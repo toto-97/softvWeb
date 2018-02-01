@@ -1,0 +1,50 @@
+<div class="modal-header">
+        <button class="close" aria-label="Close" type="button" ng-click="$ctrl.cancel()">×</button>
+        <h4 class="modal-title"><i class="fa fa-thumb-tack"></i> {{$ctrl.titulo}}</h4>
+      </div>
+      <div class="modal-body text-center" style="padding-top:20px;">
+
+        <div class="row">
+                <table class="table table-striped table-hover table-condensed">
+                        <thead>
+                          <tr>
+                            <th>Factura</th>
+                            <th>Sucursal</th>
+                            <th>Cajera</th>
+                            <th>Medio Pago</th>
+                            <th>Importe</th>
+                            <th>Fecha</th>
+                            <th>Status</th>
+                            <th>Opción</th>
+                           
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="z in $ctrl.historialPagos">
+                            <td>{{z.Clv_Pago}}</td>
+                            <td>{{z.Sucursal}}</td>
+                            <td>{{z.Cajera}} </td>
+                            <td>{{z.MedioPago}}</td>
+                            <td>{{z.Importe | currency}}</td>     
+                            <td>{{z.Hora}}</td>
+                            <td>{{z.StatusPago}}</td>
+                            <td>
+                            <button class="btn ink-reaction   btn-xs btn-default-bright"  ng-if="z.StatusPago=='Activa'" ng-click="$ctrl.ImprimeFacturaFiscalpago(z);"  ><i class="fa fa-print"></i> Imprimir</button>
+                            <button class="btn ink-reaction  btn-xs btn-default-bright"  ng-if="z.StatusPago=='Activa'" ng-click="$ctrl.EnviaFacturaFiscalpago(z);" ><i class="fa fa-envelope-o"></i> Enviar</button>
+                            <button class="btn ink-reaction btn-xs btn-danger"   ng-if="!z.StatusPago=='Cancelada'" ><i class="fa fa-ban"></i> Cancelar</button>
+                            
+                            </td>
+                           
+                          </tr>
+                        </tbody>
+                      </table>
+        </div>
+      
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default btn-sm" type="button" ng-click="$ctrl.cancel()">Cerrar</button>
+       
+      </div>
+
+      
+      

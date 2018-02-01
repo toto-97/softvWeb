@@ -61,7 +61,129 @@ angular.module('softvApp')
       GetMunicipiosMizar:'/ContratoMaestroFac/GetMunicipiosMizar',
       GetPaisesMizar:'/ContratoMaestroFac/GetPaisesMizar',
       GetGraba_Factura_DigitalPago:'/FacturacionSoftv/GetGraba_Factura_DigitalPago',
-      GetGraba_Factura_DigitalMaestrotvzac:'/FacturacionSoftv/GetGraba_Factura_DigitalMaestrotvzac'
+      GetGraba_Factura_DigitalMaestrotvzac:'/FacturacionSoftv/GetGraba_Factura_DigitalMaestrotvzac',
+      GetImprimeFacturaFiscal:'/FacturacionSoftv/GetImprimeFacturaFiscal',
+      GetEnviaFacturaFiscal:'/FacturacionSoftv/GetEnviaFacturaFiscal',
+      GetImprimeFacturaFiscalpago:'/FacturacionSoftv/GetImprimeFacturaFiscalpago',
+      GetEnviaFacturaFiscalpago:'/FacturacionSoftv/GetEnviaFacturaFiscalpago'
+    };
+
+
+    factory.GetEnviaFacturaFiscalpago = function (oClv_Factura) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {        
+          'oClv_Factura':oClv_Factura                    
+      };
+     
+      
+      $http.post(globalService.getUrlMizar() + paths.GetEnviaFacturaFiscalpago, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+
+    factory.GetImprimeFacturaFiscalpago = function (oClv_Factura) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {        
+          'oClv_Factura':oClv_Factura                    
+      };
+     
+      
+      $http.post(globalService.getUrlMizar() + paths.GetImprimeFacturaFiscalpago, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+
+
+
+
+    factory.GetEnviaFacturaFiscal = function (oClv_Factura) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {        
+          'oClv_Factura':oClv_Factura                    
+      };
+     
+      
+      $http.post(globalService.getUrlMizar() + paths.GetEnviaFacturaFiscal, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+
+    factory.GetEnviaFacturaFiscal = function (oClv_Factura) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {        
+          'oClv_Factura':oClv_Factura                    
+      };
+     
+      
+      $http.post(globalService.getUrlMizar() + paths.GetEnviaFacturaFiscal, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+
+    factory.GetImprimeFacturaFiscal = function (oClv_Factura) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {        
+          'oClv_Factura':oClv_Factura                    
+      };
+     
+      
+      $http.post(globalService.getUrlMizar() + paths.GetImprimeFacturaFiscal, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
     };
 
 

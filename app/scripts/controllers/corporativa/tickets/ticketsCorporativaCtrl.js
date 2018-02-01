@@ -7,11 +7,76 @@
 
   ticketsCtrl.inject = [''];
 
-  function ticketsCtrl(ContratoMaestroFactory, $filter, $uibModal,ngNotify,$rootScope) {
+  function ticketsCtrl(ContratoMaestroFactory, $filter, $uibModal, ngNotify, $rootScope, pagosMaestrosFactory) {
 
-    function Init() {
-      Buscar(0);
+
+    function GetEnviaFacturaFiscal(item) {
+
+
+      ContratoMaestroFactory.GetEnviaFacturaFiscal(item.Clv_FacturaMaestro).then(function (result) {
+        if (result.GetEnviaFacturaFiscalResult.IdResult === 0) {
+          ngNotify.set(result.GetEnviaFacturaFiscalResult.Message, 'error');
+          return;
+        } else {
+          ngNotify.set('Factura se envió correctamente', 'success');
+        }
+
+      });
     }
+
+    function historial(x) {    
+
+      vm.animationsEnabled = true;
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: 'views/corporativa/modalPagosFacturas.html',
+        controller: 'modalPagosFacturasCtrl',
+        controllerAs: '$ctrl',
+        backdrop: 'static',
+        keyboard: false,
+        size: 'lg',
+        resolve: {
+          factura: function () {
+            return x;
+          }
+        }
+      });
+
+
+    }
+
+
+    function GetImprimeFacturaFiscal(item) {
+
+      ContratoMaestroFactory.GetImprimeFacturaFiscal(item.Clv_FacturaMaestro).then(function (result) {
+        if (result.GetImprimeFacturaFiscalResult.IdResult === 0) {
+          ngNotify.set(result.GetImprimeFacturaFiscalResult.Message, 'error');
+          return;
+        }
+
+        var url = result.GetImprimeFacturaFiscalResult.urlReporte;
+        vm.animationsEnabled = true;
+        var modalInstance = $uibModal.open({
+          animation: vm.animationsEnabled,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'views/corporativa/ModalDetalleFactura.html',
+          controller: 'ModalDetalleFacturaCtrl',
+          controllerAs: '$ctrl',
+          backdrop: 'static',
+          keyboard: false,
+          size: 'lg',
+          resolve: {
+            url: function () {
+              return url;
+            }
+          }
+        });
+      });
+    }
+
 
     function Buscar(opc) {
 
@@ -71,74 +136,17 @@
           'Saldada': 0
         };
       }
-     
-      ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {       
+
+      ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
         vm.Tickets = data.GetBuscaFacturasMaestroListResult;
       });
-    }
-
-    function opcionTicket(opc, ticket) {
-      if (opc == 1) {
-        ticket.op = 'PRINT';
-
-        var modalInstance = $uibModal.open({
-          animation: true,
-          ariaLabelledBy: 'modal-title',
-          ariaDescribedBy: 'modal-body',
-          templateUrl: 'views/corporativa/modalMotivoCanMaestro.html',
-          controller: 'modalMotivoCanMaestroCtrl',
-          controllerAs: '$ctrl',
-          backdrop: 'static',
-          keyboard: false,
-          class: 'modal-backdrop fade',
-          size: 'md',
-          resolve: {
-            ticket: function () {
-              return ticket;
-            }
-          }
-        });
-
-      } else if (opc == 3) {
-
-        ContratoMaestroFactory.TblFacturasOpcionesCM(ticket.Clv_FacturaMaestro, 0, 0,1).then(function (data) {
-          ngNotify.set("El email se ha enviado  exitosamente")
-        });
-      } else {
-
-        ticket.op = 'CAN';
-        var modalInstance = $uibModal.open({
-          animation: true,
-          ariaLabelledBy: 'modal-title',
-          ariaDescribedBy: 'modal-body',
-          templateUrl: 'views/facturacion/modalCancelarTicket.html',
-          controller: 'modalCancelaTicketCtrl',
-          controllerAs: '$ctrl',
-          backdrop: 'static',
-          keyboard: false,
-          class: 'modal-backdrop fade',
-          size: 'md',
-          resolve: {
-            ticket: function () {
-              return ticket;
-            }
-          }
-        });
-
-
-      }
-
-
-    }
-
-    $rootScope.$on('reload_tabla', function () {
-    Buscar(0);
-  });
-
+    }   
 
     var vm = this;
     vm.Buscar = Buscar;
-    Init();
-    vm.opcionTicket = opcionTicket;
+    Buscar(0);
+    vm.historial = historial;
+    vm.GetEnviaFacturaFiscal = GetEnviaFacturaFiscal;
+    vm.GetImprimeFacturaFiscal = GetImprimeFacturaFiscal;
   }
 })();
