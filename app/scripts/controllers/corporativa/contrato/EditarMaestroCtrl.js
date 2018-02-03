@@ -19,11 +19,11 @@
     vm.MuestraAutorizacion = false;
     vm.desconexion = desconexion;
     vm.generarFacturaPrueba = generarFacturaPrueba;
-    vm.getEstadoCiudadPais=getEstadoCiudadPais;
+    vm.getEstadoCiudadPais = getEstadoCiudadPais;
 
     this.$onInit = function () {
       corporativoFactory.singleContrato($stateParams.id).then(function (data) {
-     
+
         vm.contratoMaestro = data.GetRelContratosResult[0];
         corporativoFactory.getDistribuidores().then(function (data) {
           vm.distribuidores = data.GetDistribuidoresResult;
@@ -34,21 +34,19 @@
           });
         });
 
-    
+
         //Nos traemos las cuentas clabes disponibles en caso de que no se haya asignado alguna
-        if (vm.contratoMaestro.IdClabe === 0){
+        if (vm.contratoMaestro.IdClabe === 0) {
           ContratoMaestroFactory.GetCuentaCableMaestro().then(function (data) {
             vm.Clabes = data.GetCuentaCableMaestroResult;
           });
         }
         //Si ya hay asignada, solo mostramos la que está asignada
-        else{
-          vm.Clabes = [
-            {
-              'Id': vm.contratoMaestro.IdClabe,
-               'Clabe': vm.contratoMaestro.Clabe
-            }
-          ];
+        else {
+          vm.Clabes = [{
+            'Id': vm.contratoMaestro.IdClabe,
+            'Clabe': vm.contratoMaestro.Clabe
+          }];
           vm.selectedClabe = vm.Clabes[0];
         }
 
@@ -118,7 +116,7 @@
         vm.numerointerior = vm.contratoMaestro.NumInt;
         vm.numeroexterior = vm.contratoMaestro.NumExt;
         vm.dolares = vm.contratoMaestro.FacturacionDolares;
-         
+
         vm.rfc = vm.contratoMaestro.RFC;
         vm.diascredito = vm.contratoMaestro.DiasCredito;
         vm.diasgracia = vm.contratoMaestro.DiasGracia;
@@ -144,16 +142,16 @@
         vm.contratoMaestro.LocalidadDes;
         vm.contratoMaestro.CalleDes;
 
-        ContratoMaestroFactory.GetCodigosPostalesMizar().then(function(data){
-          vm.codigospostales=data.GetCodigosPostalesMizarResult;
+        ContratoMaestroFactory.GetCodigosPostalesMizar().then(function (data) {
+          vm.codigospostales = data.GetCodigosPostalesMizarResult;
 
-          vm.codigospostales.forEach(function(item){
-            if(item.id_CodigoPostal=== vm.contratoMaestro.CodigoPostal){
-                vm.cp= item;
-            }           
-          });          
-          getEstadoCiudadPais(true);         
-          
+          vm.codigospostales.forEach(function (item) {
+            if (item.id_CodigoPostal === vm.contratoMaestro.CodigoPostal) {
+              vm.cp = item;
+            }
+          });
+          getEstadoCiudadPais(true);
+
         });
 
       });
@@ -161,62 +159,77 @@
 
 
 
-    function getEstadoCiudadPais(onload){
+    function getEstadoCiudadPais(onload) {
 
 
-
-      ContratoMaestroFactory.GetPaisesMizar(vm.cp.id_CodigoPostal).then(function(data){
-        vm.paises=data.GetPaisesMizarResult;
-        if(onload){
-          vm.paises.forEach(function(item){
-            if( item.Descripcion==vm.contratoMaestro.Pais){
-              vm.Pais=item;
-            }
-           }) 
-          }      
-        });
-       
-          
-        ContratoMaestroFactory.GetEstadosMizar(vm.cp.id_CodigoPostal).then(function(result){
-            vm.estados=result.GetEstadosMizarResult;
-            if(onload){
-              vm.estados.forEach(function(item){
-                if(item.Descripcion== vm.contratoMaestro.EstadoDes){
-                 vm.estado=item;
-                }
-            })            
-          }        
+      ContratoMaestroFactory.GetPaisesMizar(vm.cp.id_CodigoPostal).then(function (data) {
+        vm.paises = data.GetPaisesMizarResult;
+        if (onload) {
+          vm.paises.forEach(function (item) {
+            if (item.Descripcion === vm.contratoMaestro.Pais) {
             
-           
-        ContratoMaestroFactory.GetMunicipiosMizar(vm.cp.id_CodigoPostal,vm.estado.id_Estado).then(function(data){
-         
-            vm.ciudades=data.GetMunicipiosMizarResult;
-            if(load){
-              vm.ciudades.forEach(function(item){
-                if( item.Descripcion===vm.contratoMaestro.CiudadDes){
-                  vm.ciudad=item;
-                }
-               });
+              vm.Pais = item;
             }
-            
+          })
+        }
 
-           
-        
-            ContratoMaestroFactory.GetColoniasMizar(vm.cp.id_CodigoPostal).then(function(data){           
-              vm.colonias=data.GetColoniasMizarResult;
-              if(load){
-              vm.colonias.forEach(function(item){
-                 if(item.Descripcion=== vm.contratoMaestro.ColoniaDes){
-                  vm.colonia=item;
-                 }
-              });            
-            }
-          
+
+        ContratoMaestroFactory.GetEstadosMizar(vm.cp.id_CodigoPostal).then(function (result) {
+          vm.estados = result.GetEstadosMizarResult;
+          if (onload) {
+            vm.estados.forEach(function (item) {
+              if (item.Descripcion == vm.contratoMaestro.EstadoDes) {
+              
+                vm.estado = item;
+              }
+            })
+          }
+
+
+          ContratoMaestroFactory.GetMunicipiosMizar(vm.cp.id_CodigoPostal, vm.estado.id_Estado).then(function (data) {
+
+            vm.ciudades = data.GetMunicipiosMizarResult;
+           console.log(vm.ciudades);
+            if (onload) {
+              vm.ciudades.forEach(function (item) {
+                console.log(item);
+                console.log(item.Descripcion,vm.contratoMaestro.CiudadDes);
+                if (item.Descripcion === vm.contratoMaestro.CiudadDes) {
+               
+              
+                  vm.ciudad = item;
+                }
               });
-          
+            }
+
+
+
+
+            ContratoMaestroFactory.GetColoniasMizar(vm.cp.id_CodigoPostal).then(function (data) {
+              vm.colonias = data.GetColoniasMizarResult;
+              if (onload) {
+                vm.colonias.forEach(function (item) {
+                  if (item.Descripcion === vm.contratoMaestro.ColoniaDes) {
+                   
+                    vm.colonia = item;
+                    console.log('colonia',item);
+                  }
+                });
+              }
+
+            });
+
+          });
         });
+
+
+
+
       });
-    
+
+
+
+
     }
 
     function desconexion(tipo) {
@@ -244,10 +257,10 @@
       var fechaHoy = new Date();
       fechaHoy = $filter('date')(fechaHoy, 'dd/MM/yyyy');
       var fechaVigenciaAux = $filter('date')(vm.fechaVigencia, 'dd/MM/yyyy');
-      if(fechaVigenciaAux <= fechaHoy){
+      if (fechaVigenciaAux <= fechaHoy) {
         ngNotify.set('El contrato maestro se encuentra vencido, los contratos que se agreguen no se verán afectados', 'info');
       }
-    
+
       var detalle = {};
       detalle.ContratosSoftv = vm.contratoMaestro.lstCliS;
       detalle.IdContratoMaestro = vm.contratoMaestro.IdContratoMaestro;
@@ -323,19 +336,18 @@
         vm.FacturacionDolaresAux = 0;
       }
       var IdClabe = 0;
-      if (vm.contratoMaestro.IdClabe === 0){
-        if (vm.selectedClabe != undefined){
+      if (vm.contratoMaestro.IdClabe === 0) {
+        if (vm.selectedClabe != undefined) {
           IdClabe = vm.selectedClabe.Id;
         }
-      }
-      else{
+      } else {
         IdClabe = vm.contratoMaestro.IdClabe;
       }
 
       var fechaHoy = new Date();
       fechaHoy = $filter('date')(fechaHoy, 'dd/MM/yyyy');
       var fechaVigenciaAux = $filter('date')(vm.fechaVigencia, 'dd/MM/yyyy');
-    
+
       var auxFecha = $filter('date')(vm.fecha, 'dd/MM/yyyy');
       var contrato = {
         'objContratoMaestroFac': {
@@ -373,7 +385,7 @@
           'Fax': vm.Fax,
           'Tel': vm.Telefono,
           'Email': vm.Email,
-          'FechaVencimiento':fechaVigenciaAux,
+          'FechaVencimiento': fechaVigenciaAux,
           'IdClabe': IdClabe
         }
       };

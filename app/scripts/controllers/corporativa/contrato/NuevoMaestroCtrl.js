@@ -11,10 +11,6 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 	vm.reactivacion = 'manual';
 	vm.tipopago = 'factura';
 	vm.guardarContrato = guardarContrato;
-/* 	vm.cambioEstado = cambioEstado;
-	vm.cambioCiudad = cambioCiudad;
-	vm.cambioLocalidad = cambioLocalidad;
-	vm.cambioColonia = cambioColonia; */
 	vm.NumExt = '';
 	vm.ligados = true;
 	vm.guardarBtn = false;
@@ -45,13 +41,10 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 		});
 		ContratoMaestroFactory.GetCuentaCableMaestro().then(function (data) {
           vm.Clabes = data.GetCuentaCableMaestroResult;
-          console.log(vm.Clabes);
+        
 		});
 		ContratoMaestroFactory.GetCodigosPostalesMizar().then(function(data){
-			vm.codigospostales=data.GetCodigosPostalesMizarResult;
-			vm.cp=vm.codigospostales[0];
-			getEstadoCiudadPais();
-			console.log(data);
+			vm.codigospostales=data.GetCodigosPostalesMizarResult;	
 		});
 	}
 
@@ -62,18 +55,17 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 				
 			ContratoMaestroFactory.GetEstadosMizar(vm.cp.id_CodigoPostal).then(function(result){
 					vm.estados=result.GetEstadosMizarResult;
-					vm.estado=vm.estados[0];
-					
-            console.log(vm.cp.id_CodigoPostal,vm.estado.id_Estado);
+					vm.estado=vm.estados[0];					
+      
 			ContratoMaestroFactory.GetMunicipiosMizar(vm.cp.id_CodigoPostal,vm.estado.id_Estado).then(function(data){
-				console.log(data);
+			
 					vm.ciudades=data.GetMunicipiosMizarResult;
 					vm.ciudad=vm.ciudades[0];
 			
 					ContratoMaestroFactory.GetColoniasMizar(vm.cp.id_CodigoPostal).then(function(data){
 						vm.colonias=data.GetColoniasMizarResult;
 						vm.colonia=vm.colonias[0];
-						console.log(data);
+					
 				    });
 				
 			});
@@ -115,32 +107,7 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 		vm.contratos = contratos
 	});
 
-	/* function cambioEstado() {
-		corporativoFactory.getCiudades(vm.estado.Clv_Estado).then(function (data) {
-			vm.ciudades = data.GetMuestraCiudadResult;
-		});
-	}
-
-	function cambioCiudad() {
-		corporativoFactory.getLocalidades(vm.ciudad.Clv_Ciudad).then(function (data) {
-			vm.localidades = data.GetMuestraLocalidadResult;
-		});
-	}
-
-	function cambioLocalidad() {
-		corporativoFactory.getColonias(vm.localidad.Clv_Localidad).then(function (data) {
-			vm.colonias = data.GetMuestraColoniaResult;
-		});
-	}
-
-	function cambioColonia() {
-		corporativoFactory.getCalles(vm.colonia.clv_colonia, vm.localidad.Clv_Localidad).then(function (data) {
-			vm.calles = data.GetMuestraCalleResult;
-		});
-	} */
-
 	function guardarContrato() {
-
 		if (vm.MuestraBanco) {
 			if (!vm.selectedBanco) {
 				ngNotify.set('Selecciona un banco por favor.', 'error');
