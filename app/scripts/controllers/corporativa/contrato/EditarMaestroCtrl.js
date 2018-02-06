@@ -131,6 +131,8 @@
         vm.Telefono = vm.contratoMaestro.Tel;
         vm.Email = vm.contratoMaestro.Email;
         vm.Fax = vm.contratoMaestro.Fax;
+        vm.calle=vm.contratoMaestro.Calle;
+        vm.localidad=vm.contratoMaestro.Localidad;
         //vm.Pais = vm.contratoMaestro.Pais;
 
         var date2 = new Date(vm.contratoMaestro.FechaVencimiento);
@@ -355,14 +357,14 @@
           'RazonSocial': vm.razon,
           'NombreComercial': vm.nombrecomercial,
           'Distribuidor': vm.distribuidor.Clv_Plaza,
-          'Estado': vm.estado,
-          'Ciudad': vm.ciudad,
+          'Estado': vm.estado.Descripcion,
+          'Ciudad': vm.ciudad.Descripcion,
           'Localidad': vm.localidad,
-          'Colonia': vm.colonia,
+          'Colonia': vm.colonia.Descripcion,
           'Calle': vm.calle,
           'NumExt': vm.numeroexterior,
           'NumInt': vm.numerointerior,
-          'CodigoPostal': vm.cp,
+          'CodigoPostal': vm.cp.id_CodigoPostal,
           'RFC': vm.rfc,
           'Prepago': vm.prep,
           'PostPago': vm.posp,
@@ -381,7 +383,7 @@
           'ClvBanco': vm.clvBanco,
           'FacturacionDolares': vm.FacturacionDolaresAux,
           'EntreCalles': vm.EntreCalles,
-          'Pais': vm.Pais,
+          'Pais': vm.Pais.Descripcion,
           'Fax': vm.Fax,
           'Tel': vm.Telefono,
           'Email': vm.Email,

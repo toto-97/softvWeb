@@ -65,8 +65,34 @@ angular.module('softvApp')
       GetImprimeFacturaFiscal:'/FacturacionSoftv/GetImprimeFacturaFiscal',
       GetEnviaFacturaFiscal:'/FacturacionSoftv/GetEnviaFacturaFiscal',
       GetImprimeFacturaFiscalpago:'/FacturacionSoftv/GetImprimeFacturaFiscalpago',
-      GetEnviaFacturaFiscalpago:'/FacturacionSoftv/GetEnviaFacturaFiscalpago'
+      GetEnviaFacturaFiscalpago:'/FacturacionSoftv/GetEnviaFacturaFiscalpago',
+      GetGraba_Factura_NotaMaestro:'/FacturacionSoftv/GetGraba_Factura_NotaMaestro'
     };
+
+
+    factory.GetGraba_Factura_NotaMaestro = function (oClv_Factura) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {        
+          'oClv_Factura':oClv_Factura                    
+      };
+     
+      
+      $http.post(globalService.getUrlMizar() + paths.GetGraba_Factura_NotaMaestro, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+
 
 
     factory.GetEnviaFacturaFiscalpago = function (oClv_Factura) {

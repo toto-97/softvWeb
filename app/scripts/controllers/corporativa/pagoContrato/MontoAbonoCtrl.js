@@ -28,6 +28,7 @@ function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStora
     }
     
     function ok() {
+      
         if (vm.abono === undefined || vm.abono === null || vm.abono === 0 || vm.abono < 0) {
             ngNotify.set('Capture el abono para continuar', 'error');
         } else if (items.Modo == 'v') {

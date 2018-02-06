@@ -33,7 +33,7 @@
     </div>
 
     <div class="row" ng-show="$ctrl.variables" style="padding-top: 15px;">
-        <div class="col-md-9 form-group">
+        <div class="col-md-9 form-group" ng-hide="$ctrl.proceso==='PCM'">
             <label class="label-control">Abono</label>
             <input type="number" class="form-control" ng-change="$ctrl.abonoMenor()" ng-model="$ctrl.abono">
         </div>

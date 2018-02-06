@@ -110,7 +110,29 @@
     });
 
     $scope.$on('verticket', function (e, contrato) {
-      abrirTicket(vm.Clv_NotadeCredito, vm.Contrato);
+
+      ContratoMaestroFactory.GetGraba_Factura_NotaMaestro(vm.Clv_NotadeCredito).then(function (result) {
+        var url = result.GetGraba_Factura_NotaMaestroResult.urlReporte;
+        vm.animationsEnabled = true;
+        var modalInstance = $uibModal.open({
+          animation: vm.animationsEnabled,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'views/corporativa/ModalDetalleFactura.html',
+          controller: 'ModalDetalleFacturaCtrl',
+          controllerAs: '$ctrl',
+          backdrop: 'static',
+          keyboard: false,
+          size: 'lg',
+          resolve: {
+            url: function () {
+              return url;
+            }
+          }
+        });
+      });
+      
+     // abrirTicket(vm.Clv_NotadeCredito, vm.Contrato);
     });
 
     $rootScope.$on('contrato_nota', function (e, contrato) {
@@ -276,13 +298,11 @@
     }
 
     function guardar() {
-      if (vm.sumatotal == 0) {
+      if (vm.sumatotal === 0) {
         ngNotify.set('No puede guardar una nota de crédito con un monto $0.00 ', 'error');
         return;
       }
 
-      
-      
       var obj = {
         'ContratoMaestro': vm.Contrato,
         'Factura': vm.factura.CLV_FACTURA,
@@ -305,17 +325,25 @@
         vm.Clv_NotadeCredito = data.GetAddNotaCreditoResult[0].Clv_NotadeCredito;
 
         ContratoMaestroFactory.GetGuarda_DetalleNota(vm.clv_session, vm.Clv_NotadeCredito).then(function (data) {
-          ngNotify.set('La nota de crédito se ha guardado correctamente', 'success');
+          ngNotify.set('La nota de crédito se ha guardado correctamente', 'success');       
 
-          ContratoMaestroFactory.AddMovSist(vm.Contrato, vm.sumatotal).then(function (data) {
-            ContratoMaestroFactory.DeleteNotasDeCredito_ContraMaeFac(vm.factura.CLV_FACTURA, vm.Clv_NotadeCredito)
-              .then(function (data) {});
-          });
+            ContratoMaestroFactory.AddMovSist(vm.Contrato, vm.sumatotal).then(function (data) {
+
+              ContratoMaestroFactory.DeleteNotasDeCredito_ContraMaeFac(vm.factura.CLV_FACTURA, vm.Clv_NotadeCredito).then(function (data) {
+
+                vm.mostrarbtn = false;
+                vm.clvnota = vm.Clv_NotadeCredito;
+                revertir(vm.Clv_NotadeCredito);
+              });
+
+            });
+
+       
+
         });
-        vm.mostrarbtn = false;
-        vm.clvnota = vm.Clv_NotadeCredito;
 
-        revertir(vm.Clv_NotadeCredito);
+
+
 
 
       });

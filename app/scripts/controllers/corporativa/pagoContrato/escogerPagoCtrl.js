@@ -26,18 +26,11 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
   function guardarFijo() {
 
     console.log(proceso);
-
-
-
     if (vm.proceso === 'PCM') {
       if (vm.numeroPagos == undefined || vm.numeroPagos == null || vm.numeroPagos == 0 || vm.numeroPagos < 0) {
         ngNotify.set('Los campos no deben de ir nulos, negativos o en 0', 'error');
         return;
-      }
-      console.log(x);
-      console.log(metodo);
-      console.log(elem1);
-
+      }     
       var obj = {
         'ContratoMaestro': x.ContratoMaestro,
         'Credito': metodo,
@@ -52,8 +45,6 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
         'NoPagos': vm.numeroPagos,
         'PagoInicial': 0
       };
-      console.log(obj);
-
 
       pagosMaestrosFactory.generaFactura(obj).then(function (data) {
         var clvFactura = data.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro;
@@ -118,42 +109,88 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
   }
 
   function guardarVariable() {
-    if (vm.abono == undefined || vm.abono == null || vm.abono == 0 || vm.abono < 0) {
-      ngNotify.set('Los campos no deben de ir nulos, negativos o en 0', 'error');
-    } else {
-      var elem = {
-        ClvFacturaMaestro: x.Clv_FacturaMaestro,
-        Credito: metodo,
-        NoPago: 0,
-        PagoInicial: vm.abono
-      };
 
-      $uibModalInstance.dismiss('cancel');
-      vm.animationsEnabled = true;
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        ariaLabelledBy: 'modal-title',
-        ariaDescribedBy: 'modal-body',
-        templateUrl: 'views/corporativa/pagarCredito.html',
-        controller: 'PagarCreditoCtrl',
-        controllerAs: '$ctrl',
-        backdrop: 'static',
-        keyboard: false,
-        size: 'md',
-        resolve: {
-          elem: function () {
-            return elem;
-          },
-          x: function () {
-            return x;
-          },
-          proceso:function(){
-            return vm.proceso;
-          }
-        }
+    if (vm.proceso === 'PCM') {
+
+      var obj = {
+        'ContratoMaestro': x.ContratoMaestro,
+        'Credito': metodo,
+        'Cajera': $localStorage.currentUser.usuario,
+        'IpMaquina': $localStorage.currentUser.maquina,
+        'Sucursal': $localStorage.currentUser.sucursal,
+        'IdCompania': x.IdCompania,
+        'IdDistribuidor': x.IdDistribuidor,
+        'ClvSessionPadre': x.Clv_SessionPadre,
+        'Tipo': 0,
+        'ToKen2': $localStorage.currentUser.token,
+        'NoPagos': 0,
+        'PagoInicial': 0
+      };
+      
+      pagosMaestrosFactory.generaFactura(obj).then(function (data) {
+        var clvFactura = data.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro;
+        var elem = {
+          ClvFacturaMaestro: clvFactura,
+          Credito: metodo,
+          NoPago:0 ,
+          PagoInicial: 0,
+
+        };
+        pagosMaestrosFactory.actFactura(elem).then(function (dataAct) {
+          ngNotify.set('Factura Generada Correctamente', 'success');
+          $uibModalInstance.dismiss('cancel');
+        });
       });
-      // });
+
+
+
+
+    }else{
+
+      if (vm.abono == undefined || vm.abono == null || vm.abono == 0 || vm.abono < 0) {
+        ngNotify.set('Los campos no deben de ir nulos, negativos o en 0', 'error');
+      } else {
+        var elem = {
+          ClvFacturaMaestro: x.Clv_FacturaMaestro,
+          Credito: metodo,
+          NoPago: 0,
+          PagoInicial: vm.abono
+        };
+  
+        $uibModalInstance.dismiss('cancel');
+        vm.animationsEnabled = true;
+        var modalInstance = $uibModal.open({
+          animation: vm.animationsEnabled,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'views/corporativa/pagarCredito.html',
+          controller: 'PagarCreditoCtrl',
+          controllerAs: '$ctrl',
+          backdrop: 'static',
+          keyboard: false,
+          size: 'md',
+          resolve: {
+            elem: function () {
+              return elem;
+            },
+            x: function () {
+              return x;
+            },
+            proceso:function(){
+              return vm.proceso;
+            }
+          }
+        });
+        // });
+      }
+
     }
+
+
+
+
+
+  
   }
 
   function operacion() {

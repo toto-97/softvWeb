@@ -1,7 +1,7 @@
 'use strict';
 angular.module('softvApp').controller('PagarCreditoCtrl', PagarCreditoCtrl);
 
-function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu,ContratoMaestroFactory, $uibModalInstance, x, $localStorage, pagosMaestrosFactory, elem, cajasFactory,proceso) {
+function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu,ContratoMaestroFactory, $uibModalInstance, x, $localStorage, pagosMaestrosFactory, elem, cajasFactory) {
 	function initialData() {
 		vm.monto = elem.PagoInicial;
 		pagosMaestrosFactory.getMedios().then(function (data) {
@@ -508,7 +508,7 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu,Contra
 	}
 
 	var vm = this;
-	vm.proceso=proceso;
+	
 	vm.cancel = cancel;
 	vm.cambioEfectivo = cambioEfectivo;
 	vm.cambioCheque = cambioCheque;

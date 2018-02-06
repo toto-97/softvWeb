@@ -12,27 +12,21 @@
     vm.cancel = cancel;
     vm.ok = ok;
 
-    this.$onInit = function () {
-
-    }
 
     function cancel() {
       $uibModalInstance.dismiss('cancel');
       $rootScope.$broadcast('verticket', options);
     }
-    
-     function ok() {
 
-     
-        ContratoMaestroFactory.GetProcedimientoCancelar(options.clvnota).then(function (data) {
-            $uibModalInstance.dismiss('cancel');
-             $rootScope.$broadcast('verticket', options);
-          ngNotify.set(data.GetProcedimientoCancelarResult[0].Msg, 'success');
-        })
-      
-      
+    function ok() {
 
-
+      ContratoMaestroFactory.GetProcedimientoCancelar(options.clvnota).then(function (data) {
+        $uibModalInstance.dismiss('cancel');
+        $rootScope.$broadcast('verticket', options);
+        ngNotify.set(data.GetProcedimientoCancelarResult[0].Msg, 'success');
+      });
     }
+
+
   }
 })();
