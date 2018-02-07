@@ -51,24 +51,49 @@ angular.module('softvApp')
       BuscaFacturasFisca: '/BuscaFacturasFisca/GetBuscaFacturasFiscaList',
       DameDetalle_FacturaMaestroFiscal: '/DameDetalle_FacturaMaestroFiscal/GetDameDetalle_FacturaMaestroFiscalList',
       GetAddDetalleFacFiscal: '/BuscaFacturasFisca/GetAddDetalleFacFiscal',
-      ActualizaFacturaGeneraFiscal:'/ActualizaFacturaGeneraFiscal/UpdateActualizaFacturaGeneraFiscal',
+      ActualizaFacturaGeneraFiscal: '/ActualizaFacturaGeneraFiscal/UpdateActualizaFacturaGeneraFiscal',
       GetCuentaCableMaestro: '/ContratoMaestroFac/GetCuentaCableMaestro',
-      GetReporteMaestroPorVencer:'/ContratoMaestroFac/GetReporteMaestroPorVencer',
-      GetNotificacionContratoPorVencer:'/ContratoMaestroFac/GetNotificacionContratoPorVencer',
-      GetCodigosPostalesMizar:'/ContratoMaestroFac/GetCodigosPostalesMizar',
-      GetColoniasMizar:'/ContratoMaestroFac/GetColoniasMizar',
-      GetEstadosMizar:'/ContratoMaestroFac/GetEstadosMizar',
-      GetMunicipiosMizar:'/ContratoMaestroFac/GetMunicipiosMizar',
-      GetPaisesMizar:'/ContratoMaestroFac/GetPaisesMizar',
-      GetGraba_Factura_DigitalPago:'/FacturacionSoftv/GetGraba_Factura_DigitalPago',
-      GetGraba_Factura_DigitalMaestrotvzac:'/FacturacionSoftv/GetGraba_Factura_DigitalMaestrotvzac',
-      GetImprimeFacturaFiscal:'/FacturacionSoftv/GetImprimeFacturaFiscal',
-      GetEnviaFacturaFiscal:'/FacturacionSoftv/GetEnviaFacturaFiscal',
-      GetImprimeFacturaFiscalpago:'/FacturacionSoftv/GetImprimeFacturaFiscalpago',
-      GetEnviaFacturaFiscalpago:'/FacturacionSoftv/GetEnviaFacturaFiscalpago',
-      GetGraba_Factura_NotaMaestro:'/FacturacionSoftv/GetGraba_Factura_NotaMaestro'
+      GetReporteMaestroPorVencer: '/ContratoMaestroFac/GetReporteMaestroPorVencer',
+      GetNotificacionContratoPorVencer: '/ContratoMaestroFac/GetNotificacionContratoPorVencer',
+      GetCodigosPostalesMizar: '/ContratoMaestroFac/GetCodigosPostalesMizar',
+      GetColoniasMizar: '/ContratoMaestroFac/GetColoniasMizar',
+      GetEstadosMizar: '/ContratoMaestroFac/GetEstadosMizar',
+      GetMunicipiosMizar: '/ContratoMaestroFac/GetMunicipiosMizar',
+      GetPaisesMizar: '/ContratoMaestroFac/GetPaisesMizar',
+      GetGraba_Factura_DigitalPago: '/FacturacionSoftv/GetGraba_Factura_DigitalPago',
+      GetGraba_Factura_DigitalMaestrotvzac: '/FacturacionSoftv/GetGraba_Factura_DigitalMaestrotvzac',
+      GetImprimeFacturaFiscal: '/FacturacionSoftv/GetImprimeFacturaFiscal',
+      GetEnviaFacturaFiscal: '/FacturacionSoftv/GetEnviaFacturaFiscal',
+      GetImprimeFacturaFiscalpago: '/FacturacionSoftv/GetImprimeFacturaFiscalpago',
+      GetEnviaFacturaFiscalpago: '/FacturacionSoftv/GetEnviaFacturaFiscalpago',
+      GetGraba_Factura_NotaMaestro: '/FacturacionSoftv/GetGraba_Factura_NotaMaestro',
+      GetCancelacion_Factura_CFDMaestro: '/FacturacionSoftv/GetCancelacion_Factura_CFDMaestro'
     };
 
+
+
+    factory.GetCancelacion_Factura_CFDMaestro = function (oClv_FacturaCFD, tipo) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'oClv_FacturaCFD': oClv_FacturaCFD,
+        'tipo': tipo
+      };
+
+
+      $http.post(globalService.getUrlMizar() + paths.GetCancelacion_Factura_CFDMaestro, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
 
     factory.GetGraba_Factura_NotaMaestro = function (oClv_Factura) {
       var deferred = $q.defer();
@@ -77,11 +102,11 @@ angular.module('softvApp')
           'Authorization': $localStorage.currentUser.token
         }
       };
-      var parametros = {        
-          'oClv_Factura':oClv_Factura                    
+      var parametros = {
+        'oClv_Factura': oClv_Factura
       };
-     
-      
+
+
       $http.post(globalService.getUrlMizar() + paths.GetGraba_Factura_NotaMaestro, JSON.stringify(parametros), config).then(function (response) {
 
         deferred.resolve(response.data);
@@ -102,11 +127,11 @@ angular.module('softvApp')
           'Authorization': $localStorage.currentUser.token
         }
       };
-      var parametros = {        
-          'oClv_Factura':oClv_Factura                    
+      var parametros = {
+        'oClv_Factura': oClv_Factura
       };
-     
-      
+
+
       $http.post(globalService.getUrlMizar() + paths.GetEnviaFacturaFiscalpago, JSON.stringify(parametros), config).then(function (response) {
 
         deferred.resolve(response.data);
@@ -125,11 +150,11 @@ angular.module('softvApp')
           'Authorization': $localStorage.currentUser.token
         }
       };
-      var parametros = {        
-          'oClv_Factura':oClv_Factura                    
+      var parametros = {
+        'oClv_Factura': oClv_Factura
       };
-     
-      
+
+
       $http.post(globalService.getUrlMizar() + paths.GetImprimeFacturaFiscalpago, JSON.stringify(parametros), config).then(function (response) {
 
         deferred.resolve(response.data);
@@ -151,11 +176,11 @@ angular.module('softvApp')
           'Authorization': $localStorage.currentUser.token
         }
       };
-      var parametros = {        
-          'oClv_Factura':oClv_Factura                    
+      var parametros = {
+        'oClv_Factura': oClv_Factura
       };
-     
-      
+
+
       $http.post(globalService.getUrlMizar() + paths.GetEnviaFacturaFiscal, JSON.stringify(parametros), config).then(function (response) {
 
         deferred.resolve(response.data);
@@ -174,11 +199,11 @@ angular.module('softvApp')
           'Authorization': $localStorage.currentUser.token
         }
       };
-      var parametros = {        
-          'oClv_Factura':oClv_Factura                    
+      var parametros = {
+        'oClv_Factura': oClv_Factura
       };
-     
-      
+
+
       $http.post(globalService.getUrlMizar() + paths.GetEnviaFacturaFiscal, JSON.stringify(parametros), config).then(function (response) {
 
         deferred.resolve(response.data);
@@ -197,11 +222,11 @@ angular.module('softvApp')
           'Authorization': $localStorage.currentUser.token
         }
       };
-      var parametros = {        
-          'oClv_Factura':oClv_Factura                    
+      var parametros = {
+        'oClv_Factura': oClv_Factura
       };
-     
-      
+
+
       $http.post(globalService.getUrlMizar() + paths.GetImprimeFacturaFiscal, JSON.stringify(parametros), config).then(function (response) {
 
         deferred.resolve(response.data);
@@ -220,12 +245,12 @@ angular.module('softvApp')
           'Authorization': $localStorage.currentUser.token
         }
       };
-      var parametros = {        
-          'oClv_Factura':oClv_Factura ,
-          'oIden':0              
+      var parametros = {
+        'oClv_Factura': oClv_Factura,
+        'oIden': 0
       };
-     
-      
+
+
       $http.post(globalService.getUrlMizar() + paths.GetGraba_Factura_DigitalPago, JSON.stringify(parametros), config).then(function (response) {
 
         deferred.resolve(response.data);
@@ -244,12 +269,12 @@ angular.module('softvApp')
           'Authorization': $localStorage.currentUser.token
         }
       };
-      var parametros = {        
-          'oClv_Factura':oClv_Factura ,
-          'oIden':0              
+      var parametros = {
+        'oClv_Factura': oClv_Factura,
+        'oIden': 0
       };
-     
-      
+
+
       $http.post(globalService.getUrlMizar() + paths.GetGraba_Factura_DigitalMaestrotvzac, JSON.stringify(parametros), config).then(function (response) {
 
         deferred.resolve(response.data);
@@ -269,11 +294,11 @@ angular.module('softvApp')
           'Authorization': $localStorage.currentUser.token
         }
       };
-      var parametros = {        
-          'id_CodigoPostal':id_CodigoPostal               
+      var parametros = {
+        'id_CodigoPostal': id_CodigoPostal
       };
-     
-      
+
+
       $http.post(globalService.getUrl() + paths.GetPaisesMizar, JSON.stringify(parametros), config).then(function (response) {
 
         deferred.resolve(response.data);
@@ -284,19 +309,19 @@ angular.module('softvApp')
 
     };
 
-    factory.GetMunicipiosMizar = function (id_CodigoPostal,id_Estado) {
+    factory.GetMunicipiosMizar = function (id_CodigoPostal, id_Estado) {
       var deferred = $q.defer();
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
         }
       };
-      var parametros = {        
-          'id_CodigoPostal':id_CodigoPostal,
-          'id_Estado':id_Estado            
+      var parametros = {
+        'id_CodigoPostal': id_CodigoPostal,
+        'id_Estado': id_Estado
       };
-     
-      
+
+
       $http.post(globalService.getUrl() + paths.GetMunicipiosMizar, JSON.stringify(parametros), config).then(function (response) {
 
         deferred.resolve(response.data);
@@ -315,11 +340,11 @@ angular.module('softvApp')
           'Authorization': $localStorage.currentUser.token
         }
       };
-      var parametros = {        
-          'id_CodigoPostal':id_CodigoPostal               
+      var parametros = {
+        'id_CodigoPostal': id_CodigoPostal
       };
-     
-      
+
+
       $http.post(globalService.getUrl() + paths.GetEstadosMizar, JSON.stringify(parametros), config).then(function (response) {
 
         deferred.resolve(response.data);
@@ -339,11 +364,11 @@ angular.module('softvApp')
           'Authorization': $localStorage.currentUser.token
         }
       };
-      var parametros = {        
-          'id_CodigoPostal':id_CodigoPostal               
+      var parametros = {
+        'id_CodigoPostal': id_CodigoPostal
       };
-     
-      
+
+
       $http.post(globalService.getUrl() + paths.GetColoniasMizar, JSON.stringify(parametros), config).then(function (response) {
 
         deferred.resolve(response.data);
@@ -362,7 +387,7 @@ angular.module('softvApp')
           'Authorization': $localStorage.currentUser.token
         }
       };
-        $http.get(globalService.getUrl() + paths.GetCodigosPostalesMizar, config).then(function (response) {
+      $http.get(globalService.getUrl() + paths.GetCodigosPostalesMizar, config).then(function (response) {
 
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -370,7 +395,7 @@ angular.module('softvApp')
       });
       return deferred.promise;
     };
-     
+
     factory.GetNotificacionContratoPorVencer = function () {
       var deferred = $q.defer();
       var config = {
@@ -378,7 +403,7 @@ angular.module('softvApp')
           'Authorization': $localStorage.currentUser.token
         }
       };
-        $http.get(globalService.getUrl() + paths.GetNotificacionContratoPorVencer, config).then(function (response) {
+      $http.get(globalService.getUrl() + paths.GetNotificacionContratoPorVencer, config).then(function (response) {
 
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -387,7 +412,7 @@ angular.module('softvApp')
       return deferred.promise;
 
     };
-    
+
 
 
     factory.GetReporteMaestroPorVencer = function (obj) {
@@ -397,14 +422,14 @@ angular.module('softvApp')
           'Authorization': $localStorage.currentUser.token
         }
       };
-      var parametros = {        
-          'Op': obj.Op,
-          'FechaVencimiento':obj.FechaVencimiento.replace('/','').replace('/',''),
-          'ContratoMaestro':obj.ContratoMaestro,
-          'IdDistribuidor':obj.IdDistribuidor      
+      var parametros = {
+        'Op': obj.Op,
+        'FechaVencimiento': obj.FechaVencimiento.replace('/', '').replace('/', ''),
+        'ContratoMaestro': obj.ContratoMaestro,
+        'IdDistribuidor': obj.IdDistribuidor
       };
       console.log(parametros);
-      
+
       $http.post(globalService.getUrl() + paths.GetReporteMaestroPorVencer, JSON.stringify(parametros), config).then(function (response) {
 
         deferred.resolve(response.data);
@@ -416,9 +441,9 @@ angular.module('softvApp')
     };
 
 
-    
 
-    factory.ActualizaFacturaGeneraFiscal = function (Clv_FacturaMaestro,tipo) {
+
+    factory.ActualizaFacturaGeneraFiscal = function (Clv_FacturaMaestro, tipo) {
       var deferred = $q.defer();
       var config = {
         headers: {
@@ -428,10 +453,10 @@ angular.module('softvApp')
       var parametros = {
         'objActualizaFacturaGeneraFiscal': {
           'Clv_FacturaMaestro': Clv_FacturaMaestro,
-          'Tipo':tipo
+          'Tipo': tipo
         }
-       
-        
+
+
       };
 
       $http.post(globalService.getUrl() + paths.ActualizaFacturaGeneraFiscal, JSON.stringify(parametros), config).then(function (response) {
@@ -445,7 +470,7 @@ angular.module('softvApp')
     };
 
 
-    factory.GetAddDetalleFacFiscal = function (Clv_FacturaMaestro,conceptos_array) {
+    factory.GetAddDetalleFacFiscal = function (Clv_FacturaMaestro, conceptos_array) {
       var deferred = $q.defer();
       var config = {
         headers: {
@@ -456,8 +481,8 @@ angular.module('softvApp')
         'Obj': {
           Clv_FacturaMaestro: Clv_FacturaMaestro
         },
-        Lst:conceptos_array
-        
+        Lst: conceptos_array
+
       };
 
       $http.post(globalService.getUrl() + paths.GetAddDetalleFacFiscal, JSON.stringify(parametros), config).then(function (response) {

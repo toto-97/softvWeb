@@ -9,7 +9,7 @@
 
   function ticketsCtrl(ContratoMaestroFactory, $filter, $uibModal, ngNotify, $rootScope, pagosMaestrosFactory) {
 
-
+/* 
     function GetEnviaFacturaFiscal(item) {
 
 
@@ -23,6 +23,74 @@
 
       });
     }
+ */
+
+    function opcionTicket(opc, ticket) {
+      ticket.tipo='M';
+      console.log( ticket.tipo);
+      if (opc == 1) {
+        ticket.op = 'PRINT';
+
+        var modalInstance = $uibModal.open({
+          animation: true,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'views/corporativa/modalMotivoCanMaestro.html',
+          controller: 'modalMotivoCanMaestroCtrl',
+          controllerAs: '$ctrl',
+          backdrop: 'static',
+          keyboard: false,
+          class: 'modal-backdrop fade',
+          size: 'md',
+          resolve: {
+            ticket: function () {
+              return ticket;
+            }
+          }
+        });
+
+      } else if (opc == 3) {
+
+        ContratoMaestroFactory.GetEnviaFacturaFiscal(ticket.Clv_FacturaMaestro).then(function (result) {
+          if (result.GetEnviaFacturaFiscalResult.IdResult === 0) {
+            ngNotify.set(result.GetEnviaFacturaFiscalResult.Message, 'error');
+            return;
+          } else {
+            ngNotify.set('Factura se envió correctamente', 'success');
+          }
+  
+        }); 
+
+
+      } else {
+
+        ticket.op = 'CAN';
+        var modalInstance = $uibModal.open({
+          animation: true,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'views/facturacion/modalCancelarTicket.html',
+          controller: 'modalCancelaTicketCtrl',
+          controllerAs: '$ctrl',
+          backdrop: 'static',
+          keyboard: false,
+          class: 'modal-backdrop fade',
+          size: 'md',
+          resolve: {
+            ticket: function () {
+              return ticket;
+            }
+          }
+        });
+
+
+      }
+
+
+    }
+
+
+
 
     function historial(x) {    
 
@@ -48,7 +116,7 @@
     }
 
 
-    function GetImprimeFacturaFiscal(item) {
+  /*   function GetImprimeFacturaFiscal(item) {
 
       ContratoMaestroFactory.GetImprimeFacturaFiscal(item.Clv_FacturaMaestro).then(function (result) {
         if (result.GetImprimeFacturaFiscalResult.IdResult === 0) {
@@ -76,6 +144,14 @@
         });
       });
     }
+ */
+/* 
+    function  GetCancelacion_Factura_CFDMaestro(item){
+
+      ContratoMaestroFactory.GetCancelacion_Factura_CFDMaestro(item.Clv_FacturaMaestro,'M').then(function(result){
+       console.log(result);
+      });
+    } */
 
 
     function Buscar(opc) {
@@ -146,7 +222,9 @@
     vm.Buscar = Buscar;
     Buscar(0);
     vm.historial = historial;
-    vm.GetEnviaFacturaFiscal = GetEnviaFacturaFiscal;
-    vm.GetImprimeFacturaFiscal = GetImprimeFacturaFiscal;
+    vm.opcionTicket=opcionTicket;
+   // vm.GetEnviaFacturaFiscal = GetEnviaFacturaFiscal;
+    //vm.GetImprimeFacturaFiscal = GetImprimeFacturaFiscal;
+    //vm.GetCancelacion_Factura_CFDMaestro=GetCancelacion_Factura_CFDMaestro;
   }
 })();

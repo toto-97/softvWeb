@@ -14,10 +14,11 @@
     vm.op = ticket.op;
 
     this.$onInit = function () {
-      
+      console.log('********tipo*********',ticket.tipo);
+      console.log('**********ticket ******************',ticket);
       vm.ContratoMaestro = ticket.ContratoMaestro;
       vm.Clv_FacturaMaestro = ticket.ContratoMaestro;
-      if (vm.op == 'CAN') {
+      if (vm.op === 'CAN') {
         ContratoMaestroFactory.MUESTRAMOTIVOS(0).then(function (data) {
           vm.motivos = data.GetMUESTRAMOTIVOSListResult;
         });
@@ -34,31 +35,118 @@
     }
 
     function ok() {
+    
+     
+
       var opcion;
       if (vm.op == 'CAN') {
         opcion = 5;
       } else {
         opcion = 6;
       }
-      ContratoMaestroFactory.GuardaMotivos(vm.Clv_FacturaMaestro, vm.motcan.Clv_Motivo).then(function (data) {
-        ContratoMaestroFactory.AddBitacoraTickets(vm.Clv_FacturaMaestro, vm.ContratoMaestro, opcion).then(function (data) {
-          if (vm.op == 'CAN') {
-            
-            ContratoMaestroFactory.GetCANCELA_FACTURASMAESTRA_PRINCIPAL(ticket.Clv_FacturaMaestro).then(function (data) {
-              $uibModalInstance.dismiss('cancel');
-               $rootScope.$broadcast('reload_tabla');
-              ngNotify.set("Se ha cancelado la factura correctamente");
-            });
-          } else {
-            ContratoMaestroFactory.TblFacturasOpcionesCM(vm.Clv_FacturaMaestro, 0, 1, 0,0).then(function (data) {
-              $uibModalInstance.dismiss('cancel');
-              ngNotify.set("Se ha reimpreso la factura correctamente")
-            });
 
-          }
 
+      if (ticket.tipo === 'M') {
+        ContratoMaestroFactory.GuardaMotivos(vm.Clv_FacturaMaestro, vm.motcan.Clv_Motivo).then(function (data) {
+          ContratoMaestroFactory.AddBitacoraTickets(vm.Clv_FacturaMaestro, vm.ContratoMaestro, opcion).then(function (data) {
+            if (vm.op === 'CAN') {
+
+              ContratoMaestroFactory.GetCANCELA_FACTURASMAESTRA_PRINCIPAL(ticket.Clv_FacturaMaestro).then(function (data) {
+                $uibModalInstance.dismiss('cancel');
+                ContratoMaestroFactory.GetCancelacion_Factura_CFDMaestro(ticket.Clv_FacturaMaestro, 'M').then(function (result) {
+                  $rootScope.$broadcast('reload_tabla');
+                  ngNotify.set("Se ha cancelado la factura correctamente");
+                });
+              });
+            } else {
+
+              //ContratoMaestroFactory.TblFacturasOpcionesCM(vm.Clv_FacturaMaestro, 0, 1, 0,0).then(function (data) {
+              $uibModalInstance.dismiss('cancel');
+              ContratoMaestroFactory.GetImprimeFacturaFiscal(ticket.Clv_FacturaMaestro).then(function (result) {
+                if (result.GetImprimeFacturaFiscalResult.IdResult === 0) {
+                  ngNotify.set(result.GetImprimeFacturaFiscalResult.Message, 'error');
+                  return;
+                }
+
+                var url = result.GetImprimeFacturaFiscalResult.urlReporte;
+                vm.animationsEnabled = true;
+                var modalInstance = $uibModal.open({
+                  animation: vm.animationsEnabled,
+                  ariaLabelledBy: 'modal-title',
+                  ariaDescribedBy: 'modal-body',
+                  templateUrl: 'views/corporativa/ModalDetalleFactura.html',
+                  controller: 'ModalDetalleFacturaCtrl',
+                  controllerAs: '$ctrl',
+                  backdrop: 'static',
+                  keyboard: false,
+                  size: 'lg',
+                  resolve: {
+                    url: function () {
+                      return url;
+                    }
+                  }
+                });
+              });
+              
+              ngNotify.set("Se ha reimpreso la factura correctamente");
+              //  });
+            }
+          });
         });
-      });
+      }
+      if (ticket.tipo === 'P') {
+       
+
+        ContratoMaestroFactory.GuardaMotivos(vm.Clv_Pago, vm.motcan.Clv_Motivo).then(function (data) {
+          ContratoMaestroFactory.AddBitacoraTickets(vm.Clv_Pago,0, opcion).then(function (data) {
+            if (vm.op === 'CAN') {
+
+              ContratoMaestroFactory.GetCANCELA_FACTURASMAESTRA_PRINCIPAL(ticket.Clv_Pago).then(function (data) {
+                $uibModalInstance.dismiss('cancel');
+                ContratoMaestroFactory.GetCancelacion_Factura_CFDMaestro(ticket.Clv_Pago, 'P').then(function (result) {
+                  $rootScope.$broadcast('reload_tabla');
+                  ngNotify.set("Se ha cancelado la factura correctamente");
+                });
+              });
+            } else {
+
+              //ContratoMaestroFactory.TblFacturasOpcionesCM(vm.Clv_FacturaMaestro, 0, 1, 0,0).then(function (data) {
+              $uibModalInstance.dismiss('cancel');
+              ContratoMaestroFactory.GetImprimeFacturaFiscalpago(ticket.Clv_Pago).then(function (result) {
+                if (result.GetImprimeFacturaFiscalpagoResult.IdResult === 0) {
+                  ngNotify.set(result.GetImprimeFacturaFiscalpagoResult.Message, 'error');
+                  return;
+                }
+        
+                var url = result.GetImprimeFacturaFiscalpagoResult.urlReporte;
+                vm.animationsEnabled = true;
+                var modalInstance = $uibModal.open({
+                  animation: vm.animationsEnabled,
+                  ariaLabelledBy: 'modal-title',
+                  ariaDescribedBy: 'modal-body',
+                  templateUrl: 'views/corporativa/ModalDetalleFactura.html',
+                  controller: 'ModalDetalleFacturaCtrl',
+                  controllerAs: '$ctrl',
+                  backdrop: 'static',
+                  keyboard: false,
+                  size: 'lg',
+                  resolve: {
+                    url: function () {
+                      return url;
+                    }
+                  }
+                });
+              });
+              
+              ngNotify.set("Se ha reimpreso la factura correctamente");
+              //  });
+            }
+          });
+        });
+
+      }
+
+
     }
   }
 })();

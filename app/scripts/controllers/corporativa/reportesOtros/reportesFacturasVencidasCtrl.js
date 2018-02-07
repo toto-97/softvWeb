@@ -23,7 +23,7 @@ function reportesFacturasVencidasCtrl($uibModal, ngNotify, inMenu, pagosMaestros
     function buscaContrato() {
         var parametros;
         if (vm.Fecha == undefined || vm.Fecha == '') {
-            ngNotify.set('Seleccione un contrato.', 'error');
+            ngNotify.set('Seleccione una fecha válida.', 'error');
         } else {
             if (vm.Vencidas == undefined || vm.Vencidas == false){
                 vm.Vencidas=0;
