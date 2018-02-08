@@ -13,21 +13,24 @@ function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStora
     }
 
     function abonoTotal() {
-        var pagar = x.Importe - x.TotalAbonado;
-        if (vm.minimo != true) {
+    
+        var pagar =parseFloat(x.Importe - x.TotalAbonado).toFixed(4);
+        var monto =parseFloat(vm.monto).toFixed(4);    
+        if (vm.minimo !== true) {
             if (vm.abono > pagar) {
-                vm.abono = pagar;
+                vm.abono = parseFloat(pagar);
             }
         } else {
-            if (vm.abono > vm.monto) {
-                vm.abono = vm.monto;
+            if (vm.abono > monto) {
+                vm.abono = parseFloat(monto) ;
             }
         }
     }
     
     function ok() {
-        if (vm.abono == undefined || vm.abono == null || vm.abono == 0 || vm.abono < 0) {
-            ngNotify.set('Inserte el abono', 'error');
+      
+        if (vm.abono === undefined || vm.abono === null || vm.abono === 0 || vm.abono < 0) {
+            ngNotify.set('Capture el abono para continuar', 'error');
         } else if (items.Modo == 'v') {
             $uibModalInstance.dismiss('cancel');
             var elem = {

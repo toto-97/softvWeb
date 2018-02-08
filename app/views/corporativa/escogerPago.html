@@ -18,7 +18,7 @@
     </div>
 
     <div class="row" ng-show="$ctrl.fijos" style="padding-top: 15px;">
-        <div class="col-md-9 form-group">
+        <div class="col-md-9 form-group" ng-hide="$ctrl.proceso==='PCM'">
             <label class="label-control">Pago inicial</label>
             <input type="number" class="form-control" ng-change="$ctrl.operacion()" ng-model="$ctrl.pagoInicial">
         </div>
@@ -33,7 +33,7 @@
     </div>
 
     <div class="row" ng-show="$ctrl.variables" style="padding-top: 15px;">
-        <div class="col-md-9 form-group">
+        <div class="col-md-9 form-group" ng-hide="$ctrl.proceso==='PCM'">
             <label class="label-control">Abono</label>
             <input type="number" class="form-control" ng-change="$ctrl.abonoMenor()" ng-model="$ctrl.abono">
         </div>
@@ -41,6 +41,6 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn-default btn-sm" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
-    <button class="btn btn-success btn-sm" type="button" ng-show="$ctrl.botonFijo" ng-click="$ctrl.guardarFijo()">Siguiente</button>
-    <button class="btn btn-success btn-sm" type="button" ng-show="$ctrl.botonVariable" ng-click="$ctrl.guardarVariable()">Siguiente</button>
+    <button class="btn btn-success btn-sm" type="button" ng-show="$ctrl.botonFijo" ng-click="$ctrl.guardarFijo()">Aceptar</button>
+    <button class="btn btn-success btn-sm" type="button" ng-show="$ctrl.botonVariable" ng-click="$ctrl.guardarVariable()">Aceptar</button>
 </div>

@@ -1,0 +1,137 @@
+
+
+<div class="row animated fadeIn fast" style="margin-top:10px;">
+  <div class="card" style="margin-top:20px;">
+    <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
+      <header>
+        <strong style="font-weight:bold; border:none; margin-left:10px;">Contratos vencidos/por vencer</strong>
+        <br />
+        <small class="text-muted" style="font-size:14px; margin-left:10px;">
+          <i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa > Reportes</small>
+      </header>
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+
+        <div class="col-md-12">
+          <div class="col-md-2">
+
+
+            <label>Fecha de vigencia:</label>
+            <div class="input-group" moment-picker="$ctrl.fecha" format="YYYY-MM-DD">
+              <span class="input-group-addon">
+                <i class="octicon octicon-calendar"></i>
+              </span>
+              <input class="form-control input-sm " validate-on="dirty" required required-message="'Este campo es obligatorio.'" placeholder="Fecha final"
+                ng-model="$ctrl.fecha" ng-model-options="{ updateOn: 'blur' }">
+            </div>
+
+          </div>
+          <div class="col-md-1">
+              <br>
+              <button type="button" class="btn btn-warning btn-sm" ng-click="$ctrl.buscar(2)">
+                <i class="fa fa-search"></i> Buscar </button>
+            </div>
+          <div class="col-md-2">
+            <label>Contrato Maestro:</label>
+            <input type="number" class="form-control  input-sm" min="1" ng-model="$ctrl.contratomaestro" placeholder=" # contrato">
+          </div>
+          <div class="col-md-1">
+              <br>
+              <button type="button" class="btn btn-warning btn-sm" ng-click="$ctrl.buscar(1)">
+                <i class="fa fa-search"></i> Buscar </button>
+            </div>
+          <div class="col-md-3">
+            <label>Distribuidor:</label>
+            <select class="form-control input-sm" ng-options="item as item.Nombre for item in $ctrl.distribuidores track by item.Clv_Plaza" ng-model="$ctrl.distribuidor">
+              <option value="">Selecciona - Distribuidor</option>
+            </select>
+          </div>
+          <div class="col-md-1">
+            <br>
+            <button type="button" class="btn btn-warning btn-sm" ng-click="$ctrl.buscar(3)">
+              <i class="fa fa-search"></i> Buscar </button>
+          </div>
+
+          <div class="col-md-2">
+             
+            <br>
+                <div class="btn-group">
+                  <div class="btn-group">
+                    <button type="button" class="btn ink-reaction btn-default-light dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
+                      <i class="fa fa-wrench">  </i>   Exportar
+                      <i class="fa fa-caret-down"></i>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li>
+                        <a  ng-click="$ctrl.createpdf()">
+                          <i class="fa fa-file-pdf-o"></i> PDF </a>
+                      </li>
+                      <li>                            
+                        <a  csv-column-order="$ctrl.predicates"  
+                        csv-header="$ctrl.predicates"
+                        ng-csv="$ctrl.contratos" filename="{{ $ctrl.filename }}.csv" field-separator="," decimal-separator="."  add-bom="true">
+                          <i class="fa fa-file-excel-o"></i> CSV</a>
+                      </li>
+                      
+                    </ul>
+                  </div>
+                  <!--end .btn-group -->
+                </div>
+      
+              </div>
+        </div>
+     
+
+      </div>
+      <hr>
+
+
+
+      <div class="col-md-12">
+        <table class="table" style="font-size:10px;">
+          <thead>
+            <tr>
+              <th>Distribuidor </th>
+              <th># contrato</th>
+              <th>Razón social</th>
+              <th>Fecha de Vencimiento</th>
+
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr dir-paginate="x in $ctrl.contratos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:8" ng-class="{danger: x.DiasRestantes==0, warning:  x.DiasRestantes <=90}">
+              <td>{{x.Distribuidor}}</td>
+              <td>{{x.IdContratoMaestro}}</td>
+              <td>{{x.RazonSocial}}</td>
+              <td>{{x.FechaVencimiento}}</td>
+
+
+            </tr>
+          </tbody>
+        </table>
+        <div style="padding-left: 20px;">
+          <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+          </dir-pagination-controls>
+        </div>
+        <button class="btn btn-default" id="csvDos" ng-hide="true"  >
+               
+            </button>
+      </div>
+      <div class="col-md-12">
+
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-1">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

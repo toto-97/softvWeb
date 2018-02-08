@@ -75,7 +75,7 @@
 
     <div class="col-md-12">
 
-      <table class="table" style="font-size:10px;">
+      <table class="table" style="font-size:14px;">
         <thead>
           <tr>
             <th>No.Factura</th>
@@ -100,10 +100,10 @@
             <td>{{x.TotalAbonado | currency}}</td>
             <td>
 
-              <button ng-if="x.EstatusFactura==='Por Facturar'|| x.EstatusFactura=== 'Facturada'" class="btn ink-reaction btn-floating-action btn-xs btn-warning"
+              <button ng-if="x.EstatusFactura==='Por Facturar'|| x.EstatusFactura=== 'Facturada'" class="btn ink-reaction  btn-xs btn-warning"
                 data-toggle="tooltip" data-placement="top" title="Editar conceptos de factura" data-original-title="Tooltip on top"
                 ng-click="$ctrl.Conceptos(x.Clv_FacturaMaestro,x.EstatusFactura);"><i class=" fa fa-edit
-"></i></button>
+"></i> Editar conceptos</button>
 
 
 

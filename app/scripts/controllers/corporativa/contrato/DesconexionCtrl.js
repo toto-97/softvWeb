@@ -37,7 +37,7 @@
             }
 
             ContratoMaestroFactory.UploadFileDesconexion(files, vm.contrato.IdContratoMaestro).then(function (data) {
-               console.log(data);
+              
                 if (data.contratosValidos.length == 0 || data.contratosValidos==null) {
                     ngNotify.set('No se encontraron contratos válidos en el archivo.', 'error');
                 } else {

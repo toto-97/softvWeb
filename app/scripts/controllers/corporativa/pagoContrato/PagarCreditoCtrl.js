@@ -1,7 +1,7 @@
 'use strict';
 angular.module('softvApp').controller('PagarCreditoCtrl', PagarCreditoCtrl);
 
-function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibModalInstance, x, $localStorage, pagosMaestrosFactory, elem, cajasFactory) {
+function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu,ContratoMaestroFactory, $uibModalInstance, x, $localStorage, pagosMaestrosFactory, elem, cajasFactory) {
 	function initialData() {
 		vm.monto = elem.PagoInicial;
 		pagosMaestrosFactory.getMedios().then(function (data) {
@@ -24,10 +24,15 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 	}
 
 	function cambioEfectivo() {
-		vm.maxmonto = vm.monto * 10;
+	   console.log('maxmonto',vm.maxmonto);
+	   console.log('monto',vm.monto);
+	   console.log('efectivo',vm.efectivo);
+	   console.log('TotalAbonado',vm.TotalAbonado);
+
+		/* vm.maxmonto = vm.monto * 10;
 		if (vm.efectivo > vm.maxmonto) {
 			vm.efectivo = vm.maxmonto;
-		}
+		} */
 		vm.cambio = vm.efectivo - vm.monto;
 		if (vm.cambio < 0) {
 			vm.cambio = 0;
@@ -130,6 +135,29 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 	// 	}
 	// }
 
+
+   function muestraFactura(url){
+	   
+	vm.animationsEnabled = true;
+	var modalInstance = $uibModal.open({
+	  animation: vm.animationsEnabled,
+	  ariaLabelledBy: 'modal-title',
+	  ariaDescribedBy: 'modal-body',
+	  templateUrl: 'views/corporativa/ModalDetalleFactura.html',
+	  controller: 'ModalDetalleFacturaCtrl',
+	  controllerAs: '$ctrl',
+	  backdrop: 'static',
+	  keyboard: false,
+	  size: 'lg',
+	  resolve: {
+		url: function () {
+		  return url;
+		}
+	  }
+	});
+   }
+
+
 	function ok() {
 		var obj = {
 			'ContratoMaestro': x.ContratoMaestro,
@@ -179,15 +207,23 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 										'IdDistribuidor': x.IdDistribuidor
 									};
 									pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
+										console.log(dataGraba,'dataGraba c 1');
 										vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
 										pagosMaestrosFactory.nuePagoEfectivoPago(vm.pago, vm.efectivo, vm.cambio).then(function (dataNuevo) {
 										});
 										if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
 											ngNotify.set('No se grabo la factura', 'error');
 										} else {
+                                           	ContratoMaestroFactory.GetGraba_Factura_DigitalPago(vm.pago).then(function(result){
+										   var url=result.GetGraba_Factura_DigitalPagoResult.urlReporte;
+										   muestraFactura(url);
 											$uibModalInstance.dismiss('cancel');
 											ngNotify.set('Pago grabado correctamente', 'success');
 											$state.reload(); 
+
+											
+
+											});
 										}
 									});
 								} else {
@@ -222,14 +258,19 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 								};
 								pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
 									vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
+									console.log(dataGraba,'dataGraba c 2');
 									pagosMaestrosFactory.nuePagoEfectivoPago(vm.pago, vm.efectivo, vm.cambio).then(function (dataNuevo) {
 									});
 									if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
 										ngNotify.set('No se grabo la factura', 'error');
 									} else {
+											ContratoMaestroFactory.GetGraba_Factura_DigitalPago(vm.pago).then(function(result){
+												var url=result.GetGraba_Factura_DigitalPagoResult.urlReporte;
+												muestraFactura(url);
 										$uibModalInstance.dismiss('cancel');
 										ngNotify.set('Pago grabado correctamente', 'success');
 										$rootScope.$emit('realoadBrowse', {});
+										});
 									}
 								});
 							} else {
@@ -274,12 +315,18 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 											'IdDistribuidor': x.IdDistribuidor
 										};
 										pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
+											vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
+											console.log(dataGraba,'dataGraba c 3');
 											if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
 												ngNotify.set('No se grabo la factura', 'error');
 											} else {
+													ContratoMaestroFactory.GetGraba_Factura_DigitalPago(vm.pago).then(function(result){
+														var url=result.GetGraba_Factura_DigitalPagoResult.urlReporte;
+														muestraFactura(url);
 												$uibModalInstance.dismiss('cancel');
 												ngNotify.set('Pago grabado correctamente', 'success');
 												$state.reload();
+											});
 											}
 										});
 									} else {
@@ -318,12 +365,18 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 										'IdDistribuidor': x.IdDistribuidor
 									};
 									pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
+										console.log(dataGraba,'dataGraba c 4');
+										vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
 										if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
 											ngNotify.set('No se grabo la factura', 'error');
 										} else {
+										ContratoMaestroFactory.GetGraba_Factura_DigitalPago(vm.pago).then(function(result){
+											var url=result.GetGraba_Factura_DigitalPagoResult.urlReporte;
+											muestraFactura(url);
 											$uibModalInstance.dismiss('cancel');
 											ngNotify.set('Pago grabado correctamente', 'success');
 											$rootScope.$emit('realoadBrowse', {});
+										});
 										}
 									});
 								} else {
@@ -370,12 +423,18 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 											'IdDistribuidor': x.IdDistribuidor
 										};
 										pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
+											console.log(dataGraba,'dataGraba c 5');
+											vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
 											if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
 												ngNotify.set('No se grabo la factura', 'error');
 											} else {
+											 ContratoMaestroFactory.GetGraba_Factura_DigitalPago(vm.pago).then(function(result){
+												var url=result.GetGraba_Factura_DigitalPagoResult.urlReporte;
+												muestraFactura(url);
 												$uibModalInstance.dismiss('cancel');
 												ngNotify.set('Pago grabado correctamente', 'success');
 												$state.reload();
+											});
 											}
 										});
 									} else {
@@ -417,12 +476,18 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 										'IdDistribuidor': x.IdDistribuidor
 									};
 									pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
+										console.log(dataGraba,'dataGraba c 6');
+										vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
 										if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
 											ngNotify.set('No se grabo la factura', 'error');
 										} else {
+											ContratoMaestroFactory.GetGraba_Factura_DigitalPago(vm.pago).then(function(result){
+											var url=result.GetGraba_Factura_DigitalPagoResult.urlReporte;
+											muestraFactura(url);
 											$uibModalInstance.dismiss('cancel');
 											ngNotify.set('Pago grabado correctamente', 'success');
 											$rootScope.$emit('realoadBrowse', {});
+											});
 										}
 									});
 								} else {
@@ -443,6 +508,7 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 	}
 
 	var vm = this;
+	
 	vm.cancel = cancel;
 	vm.cambioEfectivo = cambioEfectivo;
 	vm.cambioCheque = cambioCheque;

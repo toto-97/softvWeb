@@ -72,6 +72,22 @@ function corporativaConf($stateProvider) {
 		controllerAs: '$ctrl'
 	},
 	{
+		name: 'home.corporativa.pagodetalle',
+		data: {
+			pageTitle: 'SOFTV | PAGO CONTRATO MAESTRO',
+			permissions: {
+				only: ['contratomaestroUpdate'],
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/pagoContratoMaestro/detallepago/:id',
+		templateUrl: 'views/corporativa/pagoDetalleContratoMaestro.html',
+		controller: 'PagoDetalleContratoMaestroCtrl',
+		controllerAs: '$ctrl'
+	},
+	{
 		name: 'home.corporativa.pago',
 		data: {
 			pageTitle: 'SOFTV | PAGO CONTRATO MAESTRO',
@@ -263,6 +279,23 @@ function corporativaConf($stateProvider) {
 		controller: 'prefacturasCtrl',
 		controllerAs: '$ctrl'
 	},
+		{
+		name: 'home.corporativa.relacioningresos',
+		data: {
+			pageTitle: 'SOFTV | FACTURAS',
+			permissions: {
+				
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/relaciondeingresos',
+		templateUrl: 'views/corporativa/relacioningresos.html',
+		controller: 'relacionIngresosCtrl',
+		controllerAs: '$ctrl'
+    
+	},
 	{
 		name: 'home.corporativa.polizas',
 		data: {
@@ -275,8 +308,24 @@ function corporativaConf($stateProvider) {
 			}
 		},
 		url: '/corporativa/polizas',
-		templateUrl: 'views/corporativa/PolizaMaestro/polizasMaestro.html',
+		templateUrl: 'views/corporativa/polizasMaestro.html',
 		controller: 'polizaMaestroCtrl',
+		controllerAs: '$ctrl'
+	},
+	{
+		name: 'home.corporativa.reportecontratos',
+		data: {
+			pageTitle: 'SOFTV | CONTRATOS VENCIDOS/POR VENCER',
+			permissions: {
+				only: ['polizasSelect'],
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/reportecontratos',
+		templateUrl: 'views/corporativa/reporte.contratovencido.html',
+		controller: 'reporteContratoVencidoCtrl',
 		controllerAs: '$ctrl'
 	}
 

@@ -1,0 +1,106 @@
+<div class="card animated fadeIn" style="margin-top:20px;">
+
+  <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
+    <header>
+      <strong style="font-weight:bold; border:none; margin-left:10px; font-size: 16px;">Relación de Ingresos por concepto</strong>
+      <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa</small>
+    </header>
+    <div class="tools">
+
+    </div>
+  </div>
+
+  <div class="card-body">
+    <form angular-validator-submit="$ctrl.guardar()" name="contratoForm" novalidate angular-validator>
+      <div class="col-md-12">
+
+        <div class="col-md-5">
+          <div class="row">
+            <div class="alert alert-info" role="alert">
+              <strong>Atención!</strong> Ingresa la siguiente información para obtener el reporte
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="col-md-4">
+                <label>Fecha Inicial:</label>
+                <div class="input-group" moment-picker="$ctrl.fechainicio" format="YYYY-MM-DD">
+                  <span class="input-group-addon">
+        <i class="octicon octicon-calendar"></i>
+    </span>
+                  <input class="form-control input-sm" placeholder="Fecha de inicio" validate-on="dirty" required required-message="'Este campo es obligatorio.'"
+                    ng-model="$ctrl.fechainicio" ng-model-options="{ updateOn: 'blur' }">
+                </div>
+              </div>
+
+              <!--  <label>Fecha Inicial:</label>
+                <input type="date" class="form-control input-sm" name="fechainicio" required required-message="'Este campo es obligatorio.'"
+                  validate-on="dirty" ng-model="$ctrl.fechainicio">
+              </div>-->
+
+              <div class="col-md-4">
+
+
+                <label>Fecha Final:</label>
+                <div class="input-group" moment-picker="$ctrl.fechafin" format="YYYY-MM-DD">
+                  <span class="input-group-addon">
+        <i class="octicon octicon-calendar"></i>
+    </span>
+                  <input class="form-control input-sm" validate-on="dirty" required required-message="'Este campo es obligatorio.'" placeholder="Fecha final"
+                    ng-model="$ctrl.fechafin" ng-model-options="{ updateOn: 'blur' }">
+                </div>
+
+
+              </div>
+              <div class="col-md-4">
+                <br>
+                <div class="checkbox checkbox-styled">
+                  <label>
+													<input type="checkbox" value="" ng-model="$ctrl.dolares">
+													<span>Dolares</span>
+												</label>
+
+                </div>
+
+              </div>
+            </div>
+
+
+
+            <br>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <multi-select options="$ctrl.options">
+              </multi-select>
+            </div>
+
+          </div>
+
+          <div class="col-md-12 text-right">
+            <br>
+            <button class="btn btn-primary " type="submit">Generar reporte</button>
+          </div>
+
+
+        </div>
+
+        <div class="col-md-7">
+          <div class="row">
+            <div class="col-md-12">
+
+              <iframe class="embed-responsive-item" frameborder="0" ng-src="{{$ctrl.url}}" style="width:100%; height: 80vh;"> </iframe>
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+
+
+      </div>
+    </form>
+  </div>

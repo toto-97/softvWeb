@@ -11,10 +11,6 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 	vm.reactivacion = 'manual';
 	vm.tipopago = 'factura';
 	vm.guardarContrato = guardarContrato;
-	vm.cambioEstado = cambioEstado;
-	vm.cambioCiudad = cambioCiudad;
-	vm.cambioLocalidad = cambioLocalidad;
-	vm.cambioColonia = cambioColonia;
 	vm.NumExt = '';
 	vm.ligados = true;
 	vm.guardarBtn = false;
@@ -25,6 +21,7 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 	vm.CambioTipo = CambioTipo;
 	vm.dolares = false;
 	vm.fechaVigencia = "";
+	vm.getEstadoCiudadPais=getEstadoCiudadPais;
 
 	this.$onInit = function () {
 		corporativoFactory.getDistribuidores().then(function (data) {
@@ -44,8 +41,36 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 		});
 		ContratoMaestroFactory.GetCuentaCableMaestro().then(function (data) {
           vm.Clabes = data.GetCuentaCableMaestroResult;
-          console.log(vm.Clabes);
-        });
+        
+		});
+		ContratoMaestroFactory.GetCodigosPostalesMizar().then(function(data){
+			vm.codigospostales=data.GetCodigosPostalesMizarResult;	
+		});
+	}
+
+	function getEstadoCiudadPais(){
+		ContratoMaestroFactory.GetPaisesMizar(vm.cp.id_CodigoPostal).then(function(data){
+			vm.paises=data.GetPaisesMizarResult;
+			vm.Pais=vm.paises[0];
+				
+			ContratoMaestroFactory.GetEstadosMizar(vm.cp.id_CodigoPostal).then(function(result){
+					vm.estados=result.GetEstadosMizarResult;
+					vm.estado=vm.estados[0];					
+      
+			ContratoMaestroFactory.GetMunicipiosMizar(vm.cp.id_CodigoPostal,vm.estado.id_Estado).then(function(data){
+			
+					vm.ciudades=data.GetMunicipiosMizarResult;
+					vm.ciudad=vm.ciudades[0];
+			
+					ContratoMaestroFactory.GetColoniasMizar(vm.cp.id_CodigoPostal).then(function(data){
+						vm.colonias=data.GetColoniasMizarResult;
+						vm.colonia=vm.colonias[0];
+					
+				    });
+				
+			});
+		});
+		});
 	}
 
 	function abrirContratos() {
@@ -82,32 +107,7 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 		vm.contratos = contratos
 	});
 
-	function cambioEstado() {
-		corporativoFactory.getCiudades(vm.estado.Clv_Estado).then(function (data) {
-			vm.ciudades = data.GetMuestraCiudadResult;
-		});
-	}
-
-	function cambioCiudad() {
-		corporativoFactory.getLocalidades(vm.ciudad.Clv_Ciudad).then(function (data) {
-			vm.localidades = data.GetMuestraLocalidadResult;
-		});
-	}
-
-	function cambioLocalidad() {
-		corporativoFactory.getColonias(vm.localidad.Clv_Localidad).then(function (data) {
-			vm.colonias = data.GetMuestraColoniaResult;
-		});
-	}
-
-	function cambioColonia() {
-		corporativoFactory.getCalles(vm.colonia.clv_colonia, vm.localidad.Clv_Localidad).then(function (data) {
-			vm.calles = data.GetMuestraCalleResult;
-		});
-	}
-
 	function guardarContrato() {
-
 		if (vm.MuestraBanco) {
 			if (!vm.selectedBanco) {
 				ngNotify.set('Selecciona un banco por favor.', 'error');
@@ -173,14 +173,14 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 				'RazonSocial': vm.razon,
 				'NombreComercial': vm.nombrecomercial,
 				'Distribuidor': vm.distribuidor.Clv_Plaza,
-				'Estado': vm.estado,
-				'Ciudad': vm.ciudad,
+				'Estado': (vm.estado)?vm.estado.Descripcion:'',
+				'Ciudad': (vm.ciudad)? vm.ciudad.Descripcion:'',
 				'Localidad': vm.localidad,
-				'Colonia': vm.colonia,
+				'Colonia': (vm.colonia)?vm.colonia.Descripcion:'',
 				'Calle': vm.calle,
 				'NumExt': vm.numeroexterior,
 				'NumInt': vm.numerointerior,
-				'CodigoPostal': vm.cp,
+				'CodigoPostal': (vm.cp)?vm.cp.id_CodigoPostal:'',
 				'RFC': vm.rfc,
 				'Prepago': vm.prep,
 				'PostPago': vm.posp,
@@ -199,7 +199,7 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 				'ClvBanco': vm.clvBanco,
 				'FacturacionDolares': vm.FacturacionDolaresAux,
 				'EntreCalles':vm.EntreCalles,
-				'Pais':vm.Pais,
+				'Pais':(vm.Pais)?vm.Pais.Descripcion:'',
 				'Fax':vm.Fax,
 				'Tel':vm.Telefono,
 				'Email':vm.Email,
@@ -207,6 +207,7 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 				'IdClabe': IdClabe
 			}
 		};
+		
 		corporativoFactory.addMaestro(contrato).then(function (data) {
 			vm.contratoMaestro = data.AddContratoMaestroFacResult;
 			ngNotify.set('Contrato maestro agregado correctamente, ahora puedes ligar contratos.', 'success');
