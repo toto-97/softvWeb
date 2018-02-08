@@ -38,7 +38,7 @@ function agregaListaPagoCtrl($uibModal, $state, $rootScope, cajasFactory, corpor
   }
   //Nos traemos los servicios por contrato que se le puedan aplicar
   function cambiaSeleccion(contratoSeleccionado){
-
+  
     vm.ContratoSeleccionado = contratoSeleccionado.ContratoReal;
     vm.Clv_Session = detallePagoTodo.filter(function(value) { return value.Contrato == contratoSeleccionado.ContratoReal });
     vm.Clv_Session = vm.Clv_Session[0].Clv_Session;

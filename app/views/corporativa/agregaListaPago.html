@@ -48,7 +48,7 @@
                             <td>{{x.NombreCli }}</td>
                             <td>
                                 <label class="text-left radio-inline radio-styled">
-                                    <input type="radio" ng-model="$ctrl.seleccion"  name="radioSeleccion" ng-change="$ctrl.cambiaSeleccion(x)"><span></span>
+                                    <input type="radio" ng-model="x.selected"  name="radioSeleccion" ng-click="$ctrl.cambiaSeleccion(x)"><span></span>
                                 </label>
                             </td>
                         </tr>
