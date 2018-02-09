@@ -364,13 +364,13 @@
       <div class="col-md-12 btn-group" ng-if="$ctrl.contratoMaestro.lstCliS.length > 0">
         <br>
         <div class="col-md-3">
-          <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('desconexion')">Desconexión</button>
+          <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.tipocorte.Id !=3" ng-click="$ctrl.desconexion('desconexion')">Desconexión</button>
         </div>
         <div class="col-md-3">
-          <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('reconexion')">Reconexión</button>
+          <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.tipocorte.Id !=3" ng-click="$ctrl.desconexion('reconexion')">Reconexión</button>
         </div>
-        <div class="col-md-3">
-          <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('ordenes')">Generar Ordenes</button>
+        <div class="col-md-3">         
+          <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.reactivacion !='manual'" ng-click="$ctrl.desconexion('ordenes')">Generar Ordenes</button>
         </div>
         <div class="col-md-3">
           <button type="button" class="btn btn-default btn-block" ng-click="$ctrl.generarFacturaPrueba($ctrl.contratoMaestro.IdContratoMaestro)">Generar Factura</button>
