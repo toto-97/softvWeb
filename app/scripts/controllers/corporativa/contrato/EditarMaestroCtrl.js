@@ -20,6 +20,8 @@
     vm.desconexion = desconexion;
     vm.generarFacturaPrueba = generarFacturaPrueba;
     vm.getEstadoCiudadPais = getEstadoCiudadPais;
+    vm.buscarCP=buscarCP;
+    vm.getCiudades=getCiudades;
 
     this.$onInit = function () {
       corporativoFactory.singleContrato($stateParams.id).then(function (data) {
@@ -144,60 +146,103 @@
         vm.contratoMaestro.LocalidadDes;
         vm.contratoMaestro.CalleDes;
 
-        ContratoMaestroFactory.GetCodigosPostalesMizar().then(function (data) {
+       /*  ContratoMaestroFactory.GetCodigosPostalesMizar().then(function (data) {
           vm.codigospostales = data.GetCodigosPostalesMizarResult;
 
           vm.codigospostales.forEach(function (item) {
             if (item.id_CodigoPostal === vm.contratoMaestro.CodigoPostal) {
               vm.cp = item;
             }
-          });
+          }); */
+          vm.cp=vm.contratoMaestro.CodigoPostal;
           getEstadoCiudadPais(true);
 
-        });
+       // });
 
       });
     }
 
 
+    function buscarCP(){
+      
+		var modalInstance = $uibModal.open({
+			animation: true,
+			ariaLabelledBy: 'modal-title',
+			ariaDescribedBy: 'modal-body',
+			templateUrl: 'views/corporativa/modalCodigoPostal.html',
+			controller: 'modalCodigoPostalCtrl',
+			controllerAs: '$ctrl',
+			backdrop: 'static',
+			keyboard: false,
+			size: "sm",
+			resolve: {
+				
+			}
+		});
+		modalInstance.result.then(function (item) {
+		
+			vm.cp=item.id_CodigoPostal;
+			getEstadoCiudadPais(false);
+		  }, function () {
+      });
+      
+    }
 
-    function getEstadoCiudadPais(onload) {
+    function getCiudades (){
+      ContratoMaestroFactory.GetMunicipiosMizar(vm.cp,vm.estado.id_Estado).then(function (data) {
+        vm.ciudades = data.GetMunicipiosMizarResult;          
+        
+    });
+  }
 
 
-      ContratoMaestroFactory.GetPaisesMizar(vm.cp.id_CodigoPostal).then(function (data) {
+
+    function getEstadoCiudadPais(onload) {     
+
+      ContratoMaestroFactory.GetPaisesMizar(vm.cp).then(function (data) {      
         vm.paises = data.GetPaisesMizarResult;
+     
         if (onload) {
           vm.paises.forEach(function (item) {
             if (item.Descripcion === vm.contratoMaestro.Pais) {
             
               vm.Pais = item;
             }
-          })
+          });
         }
 
 
-        ContratoMaestroFactory.GetEstadosMizar(vm.cp.id_CodigoPostal).then(function (result) {
+        ContratoMaestroFactory.GetEstadosMizar(vm.cp).then(function (result) {
           vm.estados = result.GetEstadosMizarResult;
+       
           if (onload) {
+            
             vm.estados.forEach(function (item) {
-              if (item.Descripcion == vm.contratoMaestro.EstadoDes) {
-              
+              if (item.Descripcion === vm.contratoMaestro.EstadoDes) {              
                 vm.estado = item;
               }
-            })
-          }
-
-
-          ContratoMaestroFactory.GetMunicipiosMizar(vm.cp.id_CodigoPostal, vm.estado.id_Estado).then(function (data) {
-
-            vm.ciudades = data.GetMunicipiosMizarResult;
-           console.log(vm.ciudades);
+            });
+          }        
+          
+          
+          ContratoMaestroFactory.GetColoniasMizar(vm.cp).then(function (data) {              
+            vm.colonias = data.GetColoniasMizarResult;             
             if (onload) {
-              vm.ciudades.forEach(function (item) {
-                console.log(item);
-                console.log(item.Descripcion,vm.contratoMaestro.CiudadDes);
-                if (item.Descripcion === vm.contratoMaestro.CiudadDes) {
-               
+              vm.colonias.forEach(function (item) {
+                if (item.Descripcion === vm.contratoMaestro.ColoniaDes) {                   
+                  vm.colonia = item;
+                 
+                }
+              });
+            }
+
+        var idestado=(vm.estado)? vm.estado.id_Estado:'';
+
+          ContratoMaestroFactory.GetMunicipiosMizar(vm.cp,idestado).then(function (data) {
+            vm.ciudades = data.GetMunicipiosMizarResult;           
+            if (onload) {
+              vm.ciudades.forEach(function (item) {               
+                if (item.Descripcion === vm.contratoMaestro.CiudadDes) {              
               
                   vm.ciudad = item;
                 }
@@ -207,17 +252,7 @@
 
 
 
-            ContratoMaestroFactory.GetColoniasMizar(vm.cp.id_CodigoPostal).then(function (data) {
-              vm.colonias = data.GetColoniasMizarResult;
-              if (onload) {
-                vm.colonias.forEach(function (item) {
-                  if (item.Descripcion === vm.contratoMaestro.ColoniaDes) {
-                   
-                    vm.colonia = item;
-                    console.log('colonia',item);
-                  }
-                });
-              }
+           
 
             });
 
@@ -364,7 +399,7 @@
           'Calle': vm.calle,
           'NumExt': vm.numeroexterior,
           'NumInt': vm.numerointerior,
-          'CodigoPostal': vm.cp.id_CodigoPostal,
+          'CodigoPostal': vm.cp,
           'RFC': vm.rfc,
           'Prepago': vm.prep,
           'PostPago': vm.posp,
