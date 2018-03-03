@@ -72,8 +72,42 @@ angular
       } else {
 
         ticket.op = 'CAN';
+
+
+        ContratoMaestroFactory.GetValidaSipuedoCancelarPago(ticket.Clv_Pago).then(function (data) {
+          
+            if (data.GetValidaSipuedoCancelarPagoResult.Msg != '') {
+              ngNotify.set(data.GetValidaSipuedoCancelarPagoResult.Msg, 'warn')
+            } else {
+              var options = {};
+              options.Clv_Pago = ticket.Clv_Pago;
+              options.contrato = ticket.Clv_FacturaMaestro;
+              options.pregunta = '¿ Estas seguro de cancelar la factura #' + ticket.Clv_Pago + ' ?';
+              var modalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'views/corporativa/ModalHazPregunta.html',
+                controller: 'ModalCancelaFacturaCtrl',
+                controllerAs: '$ctrl',
+                backdrop: 'static',
+                keyboard: false,
+                class: 'modal-backdrop fade',
+                size: 'md',
+                resolve: {
+                  options: function () {
+                    return options;
+                  }
+                }
+              });
       
-        var modalInstance = $uibModal.open({
+            }
+      
+          });
+
+
+      
+   /*      var modalInstance = $uibModal.open({
           animation: true,
           ariaLabelledBy: 'modal-title',
           ariaDescribedBy: 'modal-body',
@@ -89,7 +123,7 @@ angular
               return ticket;
             }
           }
-        });
+        }); */
 
       }
 

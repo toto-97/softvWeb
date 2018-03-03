@@ -16,8 +16,8 @@ angular
 		'ngSanitize',
 		'ngCsv',
 		'moment-picker',
-		'angularMoment'
-
+		'angularMoment',
+		'angucomplete-alt'
 	])
 	.config(['$provide', '$urlRouterProvider', '$httpProvider', 'cfpLoadingBarProvider', '$qProvider', 'blockUIConfig', function ($provide, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $qProvider, blockUIConfig) {
 		$urlRouterProvider.otherwise(function ($injector) {

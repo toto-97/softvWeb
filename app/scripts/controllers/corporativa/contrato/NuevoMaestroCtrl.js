@@ -22,6 +22,7 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 	vm.dolares = false;
 	vm.fechaVigencia = "";
 	vm.getEstadoCiudadPais=getEstadoCiudadPais;
+	vm.buscarCP=buscarCP;
 
 	this.$onInit = function () {
 		corporativoFactory.getDistribuidores().then(function (data) {
@@ -48,21 +49,48 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 		});
 	}
 
+
+	function buscarCP(){
+      
+		var modalInstance = $uibModal.open({
+			animation: true,
+			ariaLabelledBy: 'modal-title',
+			ariaDescribedBy: 'modal-body',
+			templateUrl: 'views/corporativa/modalCodigoPostal.html',
+			controller: 'modalCodigoPostalCtrl',
+			controllerAs: '$ctrl',
+			backdrop: 'static',
+			keyboard: false,
+			size: "sm",
+			resolve: {
+				
+			}
+		});
+		modalInstance.result.then(function (item) {
+			console.log(item);
+			vm.cp=item.id_CodigoPostal;
+			getEstadoCiudadPais();
+		  }, function () {
+		  });             
+
+
+	}
+
 	function getEstadoCiudadPais(){
-		ContratoMaestroFactory.GetPaisesMizar(vm.cp.id_CodigoPostal).then(function(data){
+		ContratoMaestroFactory.GetPaisesMizar(vm.cp).then(function(data){
 			vm.paises=data.GetPaisesMizarResult;
 			vm.Pais=vm.paises[0];
 				
-			ContratoMaestroFactory.GetEstadosMizar(vm.cp.id_CodigoPostal).then(function(result){
+			ContratoMaestroFactory.GetEstadosMizar(vm.cp).then(function(result){
 					vm.estados=result.GetEstadosMizarResult;
 					vm.estado=vm.estados[0];					
       
-			ContratoMaestroFactory.GetMunicipiosMizar(vm.cp.id_CodigoPostal,vm.estado.id_Estado).then(function(data){
+			ContratoMaestroFactory.GetMunicipiosMizar(vm.cp,vm.estado.id_Estado).then(function(data){
 			
 					vm.ciudades=data.GetMunicipiosMizarResult;
 					vm.ciudad=vm.ciudades[0];
 			
-					ContratoMaestroFactory.GetColoniasMizar(vm.cp.id_CodigoPostal).then(function(data){
+					ContratoMaestroFactory.GetColoniasMizar(vm.cp).then(function(data){
 						vm.colonias=data.GetColoniasMizarResult;
 						vm.colonia=vm.colonias[0];
 					
@@ -180,7 +208,7 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 				'Calle': vm.calle,
 				'NumExt': vm.numeroexterior,
 				'NumInt': vm.numerointerior,
-				'CodigoPostal': (vm.cp)?vm.cp.id_CodigoPostal:'',
+				'CodigoPostal': (vm.cp)?vm.cp:'',
 				'RFC': vm.rfc,
 				'Prepago': vm.prep,
 				'PostPago': vm.posp,

@@ -90,25 +90,22 @@
             </div>
 
 
-           
-                <div class="col-md-12">
-                    <label class="col-md-3 control-label blod">CP:</label>
-                  
-                    <div class="col-md-9" style="padding-left:-10px;">    
-                        <select class="form-control input-sm" name="cp" validate-on="dirty" 
-                        ng-change="$ctrl.getEstadoCiudadPais()"
-                        ng-model="$ctrl.cp" ng-options="v.id_CodigoPostal for v in $ctrl.codigospostales track by v.id_CodigoPostal"
-                        required-message="'Este campo es obligatorio.'" required>
-                          <option value="">selecciona</option>
-                      </select>
-
-                        
-                    <!--   <input type="text" name="cp" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.cp" ng-pattern="/^\d*[1-9]\d*$/"
-                        invalid-message="'Solo números'" required-message="'Este campo es obligatorio.'" required> -->
-                    </div>
-        
-                   
-                  </div>
+            <div class="col-md-12">      
+                
+                                    <label class="col-md-3 control-label blod">CP:</label>                  
+                                    <div class="col-md-6" style="padding-left:-10px;">
+                                      <input type="text" class="form-control input-sm" name="cp" 
+                                      ng-model="$ctrl.cp"
+                                      ng-disabled="true"
+                                      required-message="'Este campo es obligatorio.'" required
+                                      validate-on="dirty" >                     
+                                    </div>
+                                    <div class="col-md-3" style="padding-left:-10px;">
+                                        <button class="btn btn-xs btn-warning" type="button" ng-click="$ctrl.buscarCP()"><i class="fa fa-search"></i> Buscar</button>
+                                    </div>
+                                  
+                                   
+             </div>
 
             <div class="col-md-12">
                 <label class="col-md-3 control-label blod">Colonia:</label>
@@ -153,7 +150,8 @@
                 <label class="col-md-3 control-label blod">Estado:</label>
                 <div class="col-md-9" style="padding-left:-10px;">
       
-                    <select class="form-control input-sm" name="estado" validate-on="dirty"               
+                    <select class="form-control input-sm" name="estado" validate-on="dirty" 
+                    ng-change="$ctrl.getCiudades()"             
                     ng-model="$ctrl.estado" ng-options="v.Descripcion for v in $ctrl.estados track by v.id_Estado"
                     required-message="'Este campo es obligatorio.'" required>
                       <option value="">selecciona</option>
@@ -364,16 +362,16 @@
       <div class="col-md-12 btn-group" ng-if="$ctrl.contratoMaestro.lstCliS.length > 0">
         <br>
         <div class="col-md-3">
-          <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('desconexion')">Desconexión</button>
+          <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.tipocorte.Id !=3" ng-click="$ctrl.desconexion('desconexion')">Desconexión</button>
         </div>
         <div class="col-md-3">
-          <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('reconexion')">Reconexión</button>
+          <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.tipocorte.Id !=3" ng-click="$ctrl.desconexion('reconexion')">Reconexión</button>
+        </div>
+        <div class="col-md-3">         
+          <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.reactivacion !='manual'" ng-click="$ctrl.desconexion('ordenes')">Generar Ordenes</button>
         </div>
         <div class="col-md-3">
-          <button type="button" class="btn btn-default btn-block" ng-disabled="$ctrl.bloqueageneracion" ng-click="$ctrl.desconexion('ordenes')">Generar Ordenes</button>
-        </div>
-        <div class="col-md-3">
-          <button type="button" class="btn btn-default btn-block" ng-click="$ctrl.generarFacturaPrueba($ctrl.contratoMaestro.IdContratoMaestro)">Generar Factura</button>
+          <button type="button" class="btn btn-default btn-block" ng-click="$ctrl.generarFacturaPrueba($ctrl.contratoMaestro.IdContratoMaestro)">Generar preeliminar</button>
         </div>
       </div>
 

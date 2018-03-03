@@ -25,13 +25,10 @@
             <div class="col-md-12">
               <div class="col-md-4">
                 <label>Fecha Inicial:</label>
-                <div class="input-group" moment-picker="$ctrl.fechainicio" format="YYYY-MM-DD">
-                  <span class="input-group-addon">
-        <i class="octicon octicon-calendar"></i>
-    </span>
-                  <input class="form-control input-sm" placeholder="Fecha de inicio" validate-on="dirty" required required-message="'Este campo es obligatorio.'"
-                    ng-model="$ctrl.fechainicio" ng-model-options="{ updateOn: 'blur' }">
-                </div>
+                <input type="date" ng-model="$ctrl.fechainicio" 
+                validate-on="dirty" required required-message="'Este campo es obligatorio.'"
+                class="form-control">
+               
               </div>
 
               <!--  <label>Fecha Inicial:</label>
@@ -43,14 +40,9 @@
 
 
                 <label>Fecha Final:</label>
-                <div class="input-group" moment-picker="$ctrl.fechafin" format="YYYY-MM-DD">
-                  <span class="input-group-addon">
-        <i class="octicon octicon-calendar"></i>
-    </span>
-                  <input class="form-control input-sm" validate-on="dirty" required required-message="'Este campo es obligatorio.'" placeholder="Fecha final"
-                    ng-model="$ctrl.fechafin" ng-model-options="{ updateOn: 'blur' }">
-                </div>
-
+                <input type="date" ng-model="$ctrl.fechafin" 
+                validate-on="dirty" required required-message="'Este campo es obligatorio.'"
+                class="form-control">              
 
               </div>
               <div class="col-md-4">

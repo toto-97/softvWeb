@@ -81,22 +81,20 @@
                 </div>
       
 
-                <div class="col-md-12">
-                    <label class="col-md-3 control-label blod">CP:</label>
-                  
-                    <div class="col-md-9" style="padding-left:-10px;">    
-                        <select class="form-control input-sm" name="cp" validate-on="dirty" 
-                        ng-change="$ctrl.getEstadoCiudadPais()"
-                        ng-model="$ctrl.cp" ng-options="v.id_CodigoPostal for v in $ctrl.codigospostales track by v.id_CodigoPostal"
-                        required-message="'Este campo es obligatorio.'" required>
-                          <option value="">selecciona</option>
-                      </select>
+                <div class="col-md-12">      
 
-                        
-                    <!--   <input type="text" name="cp" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.cp" ng-pattern="/^\d*[1-9]\d*$/"
-                        invalid-message="'Solo números'" required-message="'Este campo es obligatorio.'" required> -->
+                    <label class="col-md-3 control-label blod">CP:</label>                  
+                    <div class="col-md-6" style="padding-left:-10px;">
+                      <input type="text" class="form-control input-sm" name="cp" 
+                      ng-model="$ctrl.cp"
+                      ng-disabled="true"
+                      required-message="'Este campo es obligatorio.'" required
+                      validate-on="dirty" >                     
                     </div>
-        
+                    <div class="col-md-3" style="padding-left:-10px;">
+                        <button class="btn btn-xs btn-warning" type="button" ng-click="$ctrl.buscarCP()"><i class="fa fa-search"></i> Buscar</button>
+                    </div>
+                  
                    
                   </div>
 

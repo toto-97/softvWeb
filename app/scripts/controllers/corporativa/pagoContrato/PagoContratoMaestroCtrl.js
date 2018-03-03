@@ -46,7 +46,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                 vm.blockBaja = false;
                 vm.blockPagar = false;
             }
-            vm.detallePago = detallePago.GetDetalleContratosMaestrosListResult.lista;
+            vm.detallePago = detallePago.GetDetalleContratosMaestrosListResult.lista.filter(function(value) { return value.Importe >= 0 });
             vm.sumaPagos = detallePago.GetDetalleContratosMaestrosListResult.datosdetalle;
             vm.detallePagoAux = vm.detallePago;
         });
@@ -58,7 +58,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
 
     $rootScope.$on('reload_detalle', function (e, obj) {
         pagosMaestrosFactory.dameDetalle(obj.clv_session).then(function (detallePago) {
-            vm.detallePago = detallePago.GetDetalleContratosMaestrosListResult.lista;
+            vm.detallePago = detallePago.GetDetalleContratosMaestrosListResult.lista.filter(function(value) { return value.Importe >= 0 });
             vm.sumaPagos = detallePago.GetDetalleContratosMaestrosListResult.datosdetalle;
             vm.detallePagoAux = vm.detallePago;
         });
@@ -226,7 +226,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
 
             vm.Contratos = data.GetBusquedaContratoMaestroFacResult;
-            if (vm.Contratos == undefined) {
+            if (vm.Contratos === undefined) {
                 ngNotify.set('No se encontro el contrato.', 'error');
                 resetBusquedas();
             } else {
@@ -242,7 +242,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
     }
 
     function BuscarCiudad() {
-        if (vm.Ciudades.Clv_Ciudad == undefined) {
+        if (vm.Ciudades.Clv_Ciudad === undefined) {
             ngNotify.set('Ingrese distribuidor y ciudad.', 'error');
         }
         $('.buscarContrato').collapse('hide');
@@ -375,6 +375,20 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                 vm.detallePagoTodo = detallePago.GetDetalleContratosMaestrosListResult.lista;
                 vm.sumaPagos = detallePago.GetDetalleContratosMaestrosListResult.datosdetalle;
                 vm.detallePagoAux = vm.detallePago;
+                 
+                if (detallePago.GetDetalleContratosMaestrosListResult.lista.length === 0) {
+                    vm.blockedocta = true;
+                    vm.blockPagar = true;
+                    vm.color = '#f3f3f3';
+                    ngNotify.set('No hay conceptos para facturar', 'warn');
+                } else {
+                    vm.blockedocta = false;
+                    vm.blockPagar = false;
+                    vm.color = 'white';
+                }
+                
+
+
             });
             DetalleFactura(vm.saldo.Clv_SessionPadre);
         }, function () {

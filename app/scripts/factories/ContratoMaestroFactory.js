@@ -380,14 +380,14 @@ angular.module('softvApp')
     };
 
 
-    factory.GetCodigosPostalesMizar = function () {
+    factory.GetCodigosPostalesMizar = function (query) {
       var deferred = $q.defer();
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
         }
       };
-      $http.get(globalService.getUrl() + paths.GetCodigosPostalesMizar, config).then(function (response) {
+      $http.get(globalService.getUrl() + paths.GetCodigosPostalesMizar+'?query='+query, config).then(function (response) {
 
         deferred.resolve(response.data);
       }).catch(function (response) {
