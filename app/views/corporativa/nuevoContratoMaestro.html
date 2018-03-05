@@ -209,7 +209,7 @@
         <div class="col-md-12">
           <label class="col-md-3 control-label blod">Nombre Comercial:</label>
           <div class="col-md-9" style="padding-left:-10px;">
-            <input type="text" name="nombrecomercial" validate-on="dirty" class="form-control imput-sm" ng-model="$ctrl.nombrecomercial"
+            <input type="text" name="nombrecomercial" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.nombrecomercial"
               required-message="'Este campo es obligatorio.'" required>
           </div>
         </div>
@@ -338,9 +338,21 @@
            <label class="col-md-3 control-label blod">Cuenta CLABE:</label>
           <div class="col-md-9" style="padding-left:-10px;">
             <div class="col-md-9" style="padding-left:-10px;">
-            <select class="form-control input-sm" name="clabes" ng-model="$ctrl.selectedClabe"  ng-options="item as item.Clabe for item in $ctrl.Clabes track by item.Id"></select>
+            <select class="form-control input-sm" name="clabes" ng-model="$ctrl.selectedClabe"  ng-options="item as item.Clabe for item in $ctrl.Clabes track by item.Id">
+              <option value="">Selecciona</option>
+            </select>
           </div>
           </div>
+          <div class="col-md-12">
+            <label class="col-md-3 control-label blod">Uso CDFI:</label>
+           <div class="col-md-9" style="padding-left:-10px;">
+           
+             <select class="form-control input-sm" name="CDFI" ng-model="$ctrl.CDFI"  ng-options="item as item.Descripcion for item in $ctrl.listaCDFI track by item.id_UsoCFDI">
+              <option value="">Selecciona</option>
+             </select>
+          
+           </div>
+         </div>
         </div>
       </div>
 

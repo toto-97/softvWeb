@@ -67,10 +67,26 @@ angular.module('softvApp')
       GetImprimeFacturaFiscalpago: '/FacturacionSoftv/GetImprimeFacturaFiscalpago',
       GetEnviaFacturaFiscalpago: '/FacturacionSoftv/GetEnviaFacturaFiscalpago',
       GetGraba_Factura_NotaMaestro: '/FacturacionSoftv/GetGraba_Factura_NotaMaestro',
-      GetCancelacion_Factura_CFDMaestro: '/FacturacionSoftv/GetCancelacion_Factura_CFDMaestro'
+      GetCancelacion_Factura_CFDMaestro: '/FacturacionSoftv/GetCancelacion_Factura_CFDMaestro',
+      GetUsoCFDI:'/ContratoMaestroFac/GetUsoCFDI'
     };
 
 
+    factory.GetUsoCFDI = function () {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.get(globalService.getUrl() + paths.GetUsoCFDI, config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
 
     factory.GetCancelacion_Factura_CFDMaestro = function (oClv_FacturaCFD, tipo) {
       var deferred = $q.defer();
