@@ -327,6 +327,22 @@ function corporativaConf($stateProvider) {
 		templateUrl: 'views/corporativa/reporte.contratovencido.html',
 		controller: 'reporteContratoVencidoCtrl',
 		controllerAs: '$ctrl'
+	},
+	{
+		name: 'home.corporativa.reportedetallepago',
+		data: {
+			pageTitle: 'SOFTV | DETALLE DE PAGOS',
+			permissions: {
+				only: ['polizasSelect'],
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/reportedetallepago',
+		templateUrl: 'views/corporativa/reporte.detallepago.html',
+		controller: 'reporteDetallePagoCtrl',
+		controllerAs: '$ctrl'
 	}
 
 
