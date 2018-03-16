@@ -44,9 +44,15 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
           vm.Clabes = data.GetCuentaCableMaestroResult;
         
 		});
-		ContratoMaestroFactory.GetCodigosPostalesMizar().then(function(data){
-			vm.codigospostales=data.GetCodigosPostalesMizarResult;	
+
+		ContratoMaestroFactory.GetUsoCFDI().then(function(data){
+		vm.listaCDFI=data.GetUsoCFDIResult;
 		});
+
+		
+	/* 	ContratoMaestroFactory.GetCodigosPostalesMizar().then(function(data){
+			vm.codigospostales=data.GetCodigosPostalesMizarResult;	
+		}); */
 	}
 
 
@@ -235,7 +241,8 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 				'Tel':vm.Telefono,
 				'Email':vm.Email,
 				'FechaVencimiento':$filter('date')(vm.fechaVigencia, 'dd/MM/yyyy'),
-				'IdClabe': IdClabe
+				'IdClabe': IdClabe,
+				'id_UsoCFDI':(vm.CDFI)?vm.CDFI.id_UsoCFDI:''
 			}
 		};
 		

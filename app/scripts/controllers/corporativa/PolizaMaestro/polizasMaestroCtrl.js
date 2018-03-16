@@ -1,7 +1,7 @@
 'use strict';
 angular.module('softvApp').controller('polizaMaestroCtrl', polizaMaestroCtrl);
 
-function polizaMaestroCtrl($uibModal, ContratoMaestroFactory, corporativoFactory, $filter, globalService) {
+function polizaMaestroCtrl($uibModal, ContratoMaestroFactory,ngNotify, corporativoFactory, $filter, globalService) {
   var vm = this;
   vm.BuscaPoliza = BuscaPoliza;
   vm.EliminaPoliza = EliminaPoliza;
@@ -84,6 +84,8 @@ function polizaMaestroCtrl($uibModal, ContratoMaestroFactory, corporativoFactory
       };
       corporativoFactory.GetObtienePolizasMaestro(params).then(function (data) {
         vm.Polizas = data.GetObtienePolizasMaestroResult;
+        ngNotify.set('La póliza se ha eliminado correctamente','success');
+        location.reload();
       });
     });
   }
