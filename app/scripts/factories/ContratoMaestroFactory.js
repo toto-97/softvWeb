@@ -67,10 +67,47 @@ angular.module('softvApp')
       GetImprimeFacturaFiscalpago: '/FacturacionSoftv/GetImprimeFacturaFiscalpago',
       GetEnviaFacturaFiscalpago: '/FacturacionSoftv/GetEnviaFacturaFiscalpago',
       GetGraba_Factura_NotaMaestro: '/FacturacionSoftv/GetGraba_Factura_NotaMaestro',
-      GetCancelacion_Factura_CFDMaestro: '/FacturacionSoftv/GetCancelacion_Factura_CFDMaestro'
+      GetCancelacion_Factura_CFDMaestro: '/FacturacionSoftv/GetCancelacion_Factura_CFDMaestro',
+      GetValidaCoordenadasCAMDO: '/CAMDOFAC/GetValidaCoordenadasCAMDO',
+      GetNUECAMDOFACnoInt: '/CAMDOFAC/GetNUECAMDOFACnoInt'
     };
 
 
+    factory.GetNUECAMDOFACnoInt = function (parametros) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+
+      $http.post(globalService.getUrl() + paths.GetNUECAMDOFACnoInt, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+    
+    factory.GetValidaCoordenadasCAMDO = function (parametros) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+
+      $http.post(globalService.getUrl() + paths.GetValidaCoordenadasCAMDO, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
 
     factory.GetCancelacion_Factura_CFDMaestro = function (oClv_FacturaCFD, tipo) {
       var deferred = $q.defer();

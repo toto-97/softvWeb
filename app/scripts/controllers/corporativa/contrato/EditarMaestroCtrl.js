@@ -380,6 +380,9 @@
       } else {
         IdClabe = vm.contratoMaestro.IdClabe;
       }
+      if (vm.EntreCalles === undefined){
+        vm.EntreCalles = '';
+      }
 
       var fechaHoy = new Date();
       fechaHoy = $filter('date')(fechaHoy, 'dd/MM/yyyy');

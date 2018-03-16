@@ -58,7 +58,7 @@ function agregaListaPagoCtrl($uibModal, $state, $rootScope, cajasFactory, corpor
       if (vm.selectedService.Clv_Servicio == 0) {
               ngNotify.set('Selecciona un servicio por favor.', 'error');
       } else {
-        if (vm.selectedService.Clv_Txt == 'CADIG' || vm.selectedService.Clv_Txt == 'CADI2' || vm.selectedService.Clv_Txt == 'CADI3' || vm.selectedService.Clv_Txt == 'CANET') {
+        if (vm.selectedService.Clv_Txt == 'CADIG' || vm.selectedService.Clv_Txt == 'CADI2' || vm.selectedService.Clv_Txt == 'CADI3') {
           cajasFactory.consultaCamdo(vm.Clv_Session, vm.ContratoSeleccionado).then(function (data) {
             if (data.GetCAMDOFACResult.Existe == false) {
               var items = {};
@@ -94,7 +94,45 @@ function agregaListaPagoCtrl($uibModal, $state, $rootScope, cajasFactory, corpor
                 ngNotify.set('El cliente tiene un cambio de domicilio pendiente.', 'error');
             }
           });
-        } else {
+        } 
+        else if (vm.selectedService.Clv_Txt == 'CANET'){
+          cajasFactory.consultaCamdo(vm.Clv_Session, vm.ContratoSeleccionado).then(function (data) {
+            if (data.GetCAMDOFACResult.Existe == false) {
+              var items = {};
+              items.Session = vm.Clv_Session;
+              items.Contrato = vm.ContratoSeleccionado;
+              items.Texto = vm.selectedService.Clv_Txt;
+              items.Tipo = vm.Suscriptor.Clv_TipoCliente;
+              vm.animationsEnabled = true;
+              var modalInstance = $uibModal.open({
+                animation: vm.animationsEnabled,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'views/corporativa/ModalCambioDomicilioInternet.html',
+                controller: 'ModalCambioDomicilioInternetCtrl',
+                controllerAs: 'ctrl',
+                backdrop: 'static',
+                keyboard: false,
+                size: 'md',
+                resolve: {
+                    items: function () {
+                        return items;
+                    }
+                }
+              });
+              modalInstance.result.then(function () {
+                $uibModalInstance.close();
+                //alert('Modal ok');
+              }, function () {
+                $uibModalInstance.close();
+                //alert('Modal dismissed');
+              });
+            } else {
+                ngNotify.set('El cliente tiene un cambio de domicilio pendiente.', 'error');
+            }
+          });
+        }
+        else {
           cajasFactory.addAdicionales(vm.Clv_Session, vm.selectedService.Clv_Txt, vm.ContratoSeleccionado, vm.Suscriptor.Clv_TipoCliente).then(function (data) {
               //$uibModalInstance.dismiss('cancel');
               $uibModalInstance.close();
