@@ -24,15 +24,22 @@
       </div>
       <div class="col-md-6">
 
-          <div class="col-md-12">
-              <label class="col-md-3 control-label blod">Distribuidor:</label>
-              <div class="col-md-9" style="padding-left:-10px;">
-                <select class="form-control input-sm" name="distribuidor" validate-on="dirty" ng-model="$ctrl.distribuidor" ng-options="v.Nombre for v in $ctrl.distribuidores track by v.Clv_Plaza"
-                  required-message="'Este campo es obligatorio.'" required>
-                    <option value="">selecciona</option>
-                </select>
-              </div>
-            </div>
+        <div class="col-md-12">
+          <label class="col-md-3 control-label text-ultra-bold" style='margin-top:4px'>Contrato Maestro:</label>
+          <div class="col-md-3" style="padding-left:-10px;">
+            <input type="text" name="rfc" validate-on="dirty" class="form-control input-sm text-ultra-bold" disabled ng-model="$ctrl.contratoMaestro" >
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <label class="col-md-3 control-label blod">Distribuidor:</label>
+          <div class="col-md-9" style="padding-left:-10px;">
+            <select class="form-control input-sm" name="distribuidor" validate-on="dirty" ng-model="$ctrl.distribuidor" ng-options="v.Nombre for v in $ctrl.distribuidores track by v.Clv_Plaza"
+              required-message="'Este campo es obligatorio.'" required>
+                <option value="">selecciona</option>
+            </select>
+          </div>
+        </div>
 
         <div class="col-md-12">
           <label class="col-md-3 control-label blod">Razón Social:</label>
@@ -74,9 +81,8 @@
               <div class="col-md-12">
                   <label class="col-md-3 control-label blod">Entre calles:</label>
                   <div class="col-md-9" style="padding-left:-10px;">
-                    <input type="text" class="form-control input-sm" required-message="'Este campo es obligatorio.'" required ng-model="$ctrl.EntreCalles"
+                    <input type="text" class="form-control input-sm" ng-model="$ctrl.EntreCalles"
                       name="EntreCalles">
-        
                   </div>
                 </div>
       

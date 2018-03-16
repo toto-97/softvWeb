@@ -192,6 +192,9 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 		if (vm.selectedClabe != undefined){
 			IdClabe = vm.selectedClabe.Id;
 		}
+		if (vm.EntreCalles === undefined){
+	        vm.EntreCalles = '';
+	    }
 
 		var auxFecha = $filter('date')(vm.fecha, 'dd/MM/yyyy');
 		var fechaHoy = new Date();
