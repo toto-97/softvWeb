@@ -15,7 +15,7 @@ angular
 		var params = {};
 		params.filtros = {
 			'Op': 0,
-			'Clv_Plaza': vm.Distribuidor.Clv_Plaza,
+			'Clv_Plaza': 0,
 			'FechaPoliza': fechaAux,
 			'Clv_Poliza': 0,
 			'Dolares': vm.Dolares
@@ -28,17 +28,17 @@ angular
 	}
 
 	function CambiaDolares(){
-    if (vm.DolaresCheck === true){
-      vm.Dolares = 1;
-    }
-    else if (vm.DolaresCheck === false){
-      vm.Dolares=0;
-    }
-  }
+	    if (vm.DolaresCheck === true){
+	      vm.Dolares = 1;
+	    }
+	    else if (vm.DolaresCheck === false){
+	      vm.Dolares=0;
+	    }
+	  }
 
 	var vm = this;
 	vm.cancel = cancel;
 	vm.Generar = Generar;
 	vm.CambiaDolares = CambiaDolares;
-	vm.Dolares = 0
+	vm.Dolares = 0;
 });
