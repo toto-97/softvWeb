@@ -1,0 +1,65 @@
+<div class="card animated fadeIn" style="margin-top:20px;">
+
+  <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
+    <header>
+      <strong style="font-weight:bold; border:none; margin-left:10px; font-size: 16px;">Reporte detalle de pagos</strong>
+      <br />
+      <small class="text-muted" style="font-size:14px; margin-left:10px;">
+        <i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa</small>
+    </header>
+    <div class="tools">
+
+    </div>
+  </div>
+
+  <div class="card-body">
+    <form angular-validator-submit="$ctrl.guardar()" name="contratoForm" novalidate angular-validator>
+      <div class="col-md-12">
+
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-12">
+                  <multi-select options="$ctrl.options">
+                  </multi-select>
+                </div>    
+              </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="row">
+            <div class="alert alert-info" role="alert">
+              <strong>Atención!</strong> Ingresa la siguiente información para obtener el reporte
+            </div>
+          </div>
+          <div class="row">
+         
+              <div class="col-md-12">
+                <label>Fecha Inicial:</label>
+                <input type="date" ng-model="$ctrl.fechainicio" validate-on="dirty" required required-message="'Este campo es obligatorio.'"
+                  class="form-control">
+
+              </div>
+              <div class="col-md-12">
+                <label>Fecha Final:</label>
+                <input type="date" ng-model="$ctrl.fechafin" validate-on="dirty" required required-message="'Este campo es obligatorio.'"
+                  class="form-control">
+
+              </div>
+              
+          </div>
+         
+
+          <div class="col-md-12 text-right">
+            <br>
+            <button class="btn btn-primary " type="submit">Generar reporte</button>
+          </div>
+
+
+        </div>
+
+
+
+
+      </div>
+    </form>
+  </div>

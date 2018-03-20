@@ -53,10 +53,12 @@
 
               ContratoMaestroFactory.GetCANCELA_FACTURASMAESTRA_PRINCIPAL(ticket.Clv_FacturaMaestro).then(function (data) {
                 $uibModalInstance.dismiss('cancel');
-                ContratoMaestroFactory.GetCancelacion_Factura_CFDMaestro(ticket.Clv_FacturaMaestro, 'M').then(function (result) {
+              /*   ContratoMaestroFactory.GetCancelacion_Factura_CFDMaestro(ticket.Clv_FacturaMaestro, 'M').then(function (result) {
                   $rootScope.$broadcast('reload_tabla');
                   ngNotify.set("Se ha cancelado la factura correctamente");
-                });
+                }); */
+                $rootScope.$broadcast('reload_tabla');
+                ngNotify.set("Se ha cancelado la factura correctamente");
               });
             } else {
 
@@ -103,16 +105,19 @@
 
               ContratoMaestroFactory.GetCANCELA_FACTURASMAESTRA_PRINCIPAL(ticket.Clv_Pago).then(function (data) {
                 $uibModalInstance.dismiss('cancel');
-                ContratoMaestroFactory.GetCancelacion_Factura_CFDMaestro(ticket.Clv_Pago, 'P').then(function (result) {
-                  $rootScope.$broadcast('reload_tabla');
-                  ngNotify.set("Se ha cancelado la factura correctamente");
-                });
+               /*  ContratoMaestroFactory.GetCancelacion_Factura_CFDMaestro(ticket.Clv_Pago, 'P').then(function (result) {
+                 $rootScope.$broadcast('reload_tabla');
+                ngNotify.set("Se ha cancelado la factura correctamente");
+                }); */
+                $rootScope.$broadcast('reload_tabla');
+                ngNotify.set("Se ha cancelado la factura correctamente");
               });
             } else {
 
               //ContratoMaestroFactory.TblFacturasOpcionesCM(vm.Clv_FacturaMaestro, 0, 1, 0,0).then(function (data) {
               $uibModalInstance.dismiss('cancel');
               ContratoMaestroFactory.GetImprimeFacturaFiscalpago(ticket.Clv_Pago).then(function (result) {
+                
                 if (result.GetImprimeFacturaFiscalpagoResult.IdResult === 0) {
                   ngNotify.set(result.GetImprimeFacturaFiscalpagoResult.Message, 'error');
                   return;
