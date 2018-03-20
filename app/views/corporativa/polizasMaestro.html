@@ -34,7 +34,7 @@
           <div id="accordion3-1" class="collapse buscarContrato" aria-expanded="false" style="height: 0px;">
             <div class="panel-body">
               <div class="row">
-                <div class="col-md-3">
+                <!--<div class="col-md-3">
                   <p>Distribuidor:</p>
                   <select ng-model="$ctrl.Distribuidor" class="form-control input-sm" ng-options="item as item.Nombre for item in $ctrl.Distribuidores track by item.Clv_Plaza">
                     <option value="">Selecciona</option>
@@ -42,7 +42,7 @@
                 </div>
                  <div class="col-md-1">
                   <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaPoliza(2);"><i class="fa fa-search"></i> Buscar</button>
-                </div>
+                </div>-->
                 <div class="col-md-3">
                   <p>Fecha Póliza:</p>                     
                   <input type="date" ng-model="$ctrl.Fecha" class="form-control input-sm" ng-keypress="$ctrl.enterContrato($event, 1)">
@@ -68,7 +68,7 @@
           <thead>
             <tr>
               <th># Póliza</th>
-              <th>Distribuidor</th>
+              <!--<th>Distribuidor</th>-->
               <th>Fecha de Generación</th>
               <th>Fecha de Póliza</th>
               <th></th>
@@ -78,7 +78,7 @@
 
             <tr ng-show="$ctrl.Polizas.length>0" dir-paginate="x in $ctrl.Polizas|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:8">
               <td>{{x.Clv_Poliza}}</td>
-              <td>{{x.Plaza}}</td>
+              <!--<td>{{x.Plaza}}</td>-->
               <td>{{x.FechaGeneracion}}</td>
               <td>{{x.FechaPoliza}}</td>
               <td>
@@ -98,7 +98,7 @@
         <div class="row">
           <div class="col-md-8">
             <h4 ># Póliza: {{ $ctrl.SelectedPoliza.Clv_Poliza }}</h4>
-            <h4 >Distribuidor: {{ $ctrl.SelectedPoliza.Plaza }}</h4>
+            <!--<h4 >Distribuidor: {{ $ctrl.SelectedPoliza.Plaza }}</h4>-->
             <h4 >Fecha de Generación: {{ $ctrl.SelectedPoliza.FechaGeneracion }}</h4>
             <h4 >Fecha de Póliza: {{ $ctrl.SelectedPoliza.FechaPoliza }}</h4>
             <h4 >Tipo: {{ $ctrl.SelectedPoliza.Dolares }}</h4>
