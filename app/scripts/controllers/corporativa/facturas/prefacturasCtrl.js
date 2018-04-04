@@ -44,8 +44,38 @@ function prefacturasCtrl($state, ContratoMaestroFactory, ngNotify, $filter, $uib
     });
   };
 
+  var CancelarFacturaPreliminar = function (FacturaMaestro) {
+    var ticket = {};
+    ticket.Clv_FacturaMaestro = FacturaMaestro.Clv_FacturaMaestro;
+    ticket.Ticket = FacturaMaestro.Ticket;
+    ticket.op = 'CAN';
+    ticket.tipo = 'M';
+    ticket.ContratoMaestro = FacturaMaestro.ContratoMaestro;
+    var modalInstance = $uibModal.open({
+      animation: true,
+      ariaLabelledBy: 'modal-title',
+      ariaDescribedBy: 'modal-body',
+      templateUrl: 'views/facturacion/modalCancelarTicket.html',
+      controller: 'modalCancelaTicketCtrl',
+      controllerAs: '$ctrl',
+      backdrop: 'static',
+      keyboard: false,
+      class: 'modal-backdrop fade',
+      size: 'md',
+      resolve: {
+        ticket: function () {
+          return ticket;
+        }
+      }
+    });
+  }
+
  $rootScope.$on('actualizar_listado', function (e, clave) {   
-     buscar(1);
+    buscar(1);
+  });
+
+ $rootScope.$on('reload_tabla', function () {
+    buscar(1);
   });
 
 
@@ -53,4 +83,5 @@ function prefacturasCtrl($state, ContratoMaestroFactory, ngNotify, $filter, $uib
   Init();
   vm.buscar = buscar;
   vm.Conceptos = Conceptos;
+  vm.CancelarFacturaPreliminar = CancelarFacturaPreliminar;
 }
