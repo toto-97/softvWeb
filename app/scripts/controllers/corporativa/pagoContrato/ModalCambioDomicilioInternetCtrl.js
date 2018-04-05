@@ -44,8 +44,8 @@ angular
 					paramValida.Contrato = items.Contrato;
 					ContratoMaestroFactory.GetValidaCoordenadasCAMDO(paramValida).then(function(dataValida) {
 						vm.ValidaCoordenadas = dataValida.GetValidaCoordenadasCAMDOResult;
-						console.log(dataValida);
-						if(vm.ValidaCoordenadas.Cobertura === 1){
+						if(vm.ValidaCoordenadas.Cobertura === '1'){
+
 							var paramAddCAMDO = {
 								'entity_CAMDOFAC': {
 									'Clv_Sesion': items.Session,
