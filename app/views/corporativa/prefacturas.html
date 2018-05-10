@@ -102,6 +102,7 @@
               <button ng-if="x.EstatusFactura==='Por Facturar'|| x.EstatusFactura=== 'Facturada'" class="btn ink-reaction  btn-xs btn-warning"
                 data-toggle="tooltip" data-placement="top" title="Editar conceptos de factura" data-original-title="Tooltip on top"
                 ng-click="$ctrl.Conceptos(x.Clv_FacturaMaestro,x.EstatusFactura);"><i class=" fa fa-edit"></i> Editar conceptos</button>
+              <!--Boton para cancelar factura preliminar-->
               <button class="btn ink-reaction btn-xs btn-danger" ng-if="x.EstatusFactura != 'Facturada'" ng-click="$ctrl.CancelarFacturaPreliminar(x);"><i class="fa fa-ban"></i> Cancelar</button>
             </td>
           </tr>
