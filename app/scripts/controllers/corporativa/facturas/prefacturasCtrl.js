@@ -44,6 +44,7 @@ function prefacturasCtrl($state, ContratoMaestroFactory, ngNotify, $filter, $uib
     });
   };
 
+  //Cancela una factura preliminar
   var CancelarFacturaPreliminar = function (FacturaMaestro) {
     var ticket = {};
     ticket.Clv_FacturaMaestro = FacturaMaestro.Clv_FacturaMaestro;

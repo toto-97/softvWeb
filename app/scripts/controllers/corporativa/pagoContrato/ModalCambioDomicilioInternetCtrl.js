@@ -47,7 +47,7 @@ angular
 						if(vm.ValidaCoordenadas.Cobertura === '1'){
 
 							var paramAddCAMDO = {
-								'objCAMDOFAC': {
+								'entity_CAMDOFAC': {
 									'Clv_Sesion': items.Session,
 									'CONTRATO': items.Contrato,
 									'Clv_Calle': vm.selectedCalle.Clv_calle,
