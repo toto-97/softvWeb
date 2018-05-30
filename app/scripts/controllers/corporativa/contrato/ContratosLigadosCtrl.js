@@ -5,6 +5,7 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope, $rootScope, 
   function Init() {
     vm.contratos = [];
     vm.Distribuidor = detalle.Distribuidor;
+    vm.ContratoMaestro = detalle.IdContratoMaestro;
     if (detalle.Action == "EDIT") {
       vm.showokbtn = false;
       vm.showeditbtn = true;
@@ -26,7 +27,7 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope, $rootScope, 
       vm.contratos.push(contrato);
     }
     sortByKey(vm.contratos, 'Nivel');
-    
+
   }
 
   function cancel() {
@@ -87,6 +88,7 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope, $rootScope, 
     var detalle = {};
     detalle.contratos = vm.contratos;
     detalle.Distribuidor = vm.Distribuidor;
+    detalle.ContratoMaestro = vm.ContratoMaestro;
     var modalInstance = $uibModal.open({
       animation: true,
       ariaLabelledBy: 'modal-title',
@@ -139,7 +141,7 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope, $rootScope, 
 
         });
       });
-     
+
 
       corporativoFactory.UpdateRelContrato(detalle.IdContratoMaestro, contratos, vm.Distribuidor.Clv_Plaza).then(function (data) {
 
@@ -165,10 +167,9 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope, $rootScope, 
     }
 
     ContratoMaestroFactory.UpdateFile(files, detalle.IdContratoMaestro, vm.Distribuidor.Clv_Plaza).then(function (data) {
-    
       if (data.ContratosValidos.length > 0) {
         ngNotify.set('Se encontraron ' + data.ContratosValidos.length + ' contratos válidos', 'grimace');
-        vm.contratos = [];
+        //vm.contratos = [];
         for (var i = 0; i < data.ContratosValidos.length; i++) {
 
           var aux = 0;

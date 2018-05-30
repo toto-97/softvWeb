@@ -114,7 +114,7 @@ angular.module('softvApp')
 			return deferred.promise;
 		};
 
-		factory.validaContrato = function(contrato) {
+		factory.validaContrato = function(contrato, ContratoMaestro) {
 			var deferred = $q.defer();
 			var config = {
 				headers: {
@@ -122,7 +122,8 @@ angular.module('softvApp')
 				}
 			};
 			var Parametros = {
-				'ContratoBueno': contrato
+				'ContratoBueno': contrato,
+				'ContratoMaestro': ContratoMaestro
 			};
 			$http.post(globalService.getUrl() + paths.validaContrato, JSON.stringify(Parametros), config).then(function(response) {
 				deferred.resolve(response.data);

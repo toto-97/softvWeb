@@ -3,11 +3,15 @@
     <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
       <header>
         <strong style="font-weight:bold; border:none; margin-left:10px; font-size: 16px;">Nueva Nota de Crédito</strong>
-        <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Nueva Nota de Crédito</small>
+        <br />
+        <small class="text-muted" style="font-size:14px; margin-left:10px;">
+          <i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Nueva Nota de Crédito</small>
       </header>
       <div class="tools">
-        <button class="btn btn-default btn-sm" ui-sref="home.corporativa.notas" type="button"><i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</button>
-        <button class="btn btn-primary btn-sm" ng-show="$ctrl.mostrarbtn" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+        <button class="btn btn-default btn-sm" ui-sref="home.corporativa.notas" type="button">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</button>
+        <button class="btn btn-primary btn-sm" ng-show="$ctrl.mostrarbtn && $ctrl.TicketValido" type="submit">
+          <i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
 
       </div>
     </div>
@@ -22,11 +26,14 @@
             Contrato maestro
           </div>
           <div class="col-md-4">
-            <input type="number" class="form-control input-sm" name="ContratoMaestro" placeholder="No.Contrato" ng-model="$ctrl.Contrato" ng-keypress="$ctrl.enter($event)">
+            <input type="number" class="form-control input-sm" name="ContratoMaestro" placeholder="No.Contrato" ng-model="$ctrl.Contrato"
+              ng-keypress="$ctrl.enter($event)">
           </div>
           <div class="col-md-4">
 
-            <button class="btn ink-reaction btn-floating-action btn-sm btn-default" name="Buscar" ng-click="$ctrl.abrirContratos()" type="button"><i class="fa fa-search"></i> </button>
+            <button class="btn ink-reaction btn-floating-action btn-sm btn-default" name="Buscar" ng-click="$ctrl.abrirContratos()" type="button">
+              <i class="fa fa-search"></i>
+            </button>
           </div>
 
         </div>
@@ -35,11 +42,13 @@
         </div>
         <div class="col-md-3" ng-show="$ctrl.MuestraDet">
           <select ng-model="$ctrl.Status" ng-disabled="true" name="EstatusNota" class="form-control input-sm" ng-options="item as item.Status for item in $ctrl.StatusList track by item.Clv_Status">
-         <option value="" selected>Activa</option>
-         </select>
+            <option value="" selected>Activa</option>
+          </select>
         </div>
         <div class="col-md-3">
-          <div class="col-md-4"><b class="text-danger">No.Nota</b></div>
+          <div class="col-md-4">
+            <b class="text-danger">No.Nota</b>
+          </div>
           <div class="col-md-8">
             <input type="text" ng-disabled="true" name="NoNota" ng-model="$ctrl.clvnota" class="form-control input-sm">
           </div>
@@ -99,8 +108,8 @@
             <div class="col-md-9" style="padding-left:-10px;">
               <select class="form-control input-sm" ng-model="$ctrl.factura" name="ticket" required ng-change="$ctrl.cambioFactura()" required-message="'Este campo es obligatorio.'"
                 validate-on="dirty" ng-options="item as item.FACTURAS for item in $ctrl.facturas track by item.CLV_FACTURA">
-          <option value="">selecciona</option>
-          </select>
+                <option value="">selecciona</option>
+              </select>
             </div>
           </div>
           <div class="col-md-12">
@@ -114,8 +123,8 @@
             <label class="col-md-3 control-label blod">Cajero:</label>
             <div class="col-md-9" style="padding-left:-10px;">
               <select class="form-control input-sm" name="Cajero" ng-model="$ctrl.scajero" ng-options="item as item.NOMBRE for item in $ctrl.Cajero track by item.CLV_USUARIO">
-          <option value="">selecciona</option>
-          </select>
+                <option value="">selecciona</option>
+              </select>
 
             </div>
           </div>
@@ -132,7 +141,7 @@
               <input type="text" ng-disabled="true" name="Generacion" class="form-control input-sm" ng-model="$ctrl.FechaG">
             </div>
           </div>
-        
+
           <div class="col-md-12">
             <label class="col-md-3 control-label blod">Observaciones:</label>
             <div class="col-md-9" style="padding-left:-10px;">
@@ -142,7 +151,7 @@
           </div>
           <div class="col-md-12">
             <br>
-           
+
 
 
           </div>
@@ -191,7 +200,9 @@
                     <tr ng-repeat="x in $ctrl.contratos">
                       <td>{{x.ContratoCompuesto}}</td>
                       <td>{{x.Importe|currency}}</td>
-                      <td><button class="btn btn-xs btn-info" name="Detalle" type="button" ng-click="$ctrl.Detallefactura(x)">Detalle</button></td>
+                      <td>
+                        <button class="btn btn-xs btn-info" name="Detalle" type="button" ng-click="$ctrl.Detallefactura(x)">Detalle</button>
+                      </td>
                     </tr>
                   </tbody>
 
@@ -204,22 +215,25 @@
           </uib-tabset>
           <div class="row">
             <div class="col-md-6" class="text-right">
-              <b class="text-danger">Monto: $</b></div>
+              <b class="text-danger">Monto: $</b>
+            </div>
             <div class="col-md-6">
-              <label class="text-danger"><b>
-                {{$ctrl.sumatotal | currency}}</b>
+              <label class="text-danger">
+                <b>
+                  {{$ctrl.sumatotal | currency}}</b>
               </label>
 
             </div>
           </div>
           <div class="row">
             <label class="checkbox-inline checkbox-styled checkbox-info">
-							<input type="checkbox" name="Desmarcar" ng-change="$ctrl.MarcarContratos()" ng-model="$ctrl.marcar"><span>Marcar/Desmarcar contratos</span>
-						</label>
+              <input type="checkbox" name="Desmarcar" ng-change="$ctrl.MarcarContratos()" ng-model="$ctrl.marcar">
+              <span>Marcar/Desmarcar contratos</span>
+            </label>
 
           </div>
 
-          </div>
+        </div>
       </div>
   </form>
   </div>

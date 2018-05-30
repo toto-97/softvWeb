@@ -71,6 +71,33 @@ function prefacturasCtrl($state, ContratoMaestroFactory, ngNotify, $filter, $uib
     });
   }
 
+  //Ver detalles de los contratos de una factura preliminar
+  var DetalleContratos = function (FacturaMaestro) {
+    var ticket = {};
+    ticket.Clv_FacturaMaestro = FacturaMaestro.Clv_FacturaMaestro;
+    ticket.Ticket = FacturaMaestro.Ticket;
+    ticket.op = 'CAN';
+    ticket.tipo = 'M';
+    ticket.ContratoMaestro = FacturaMaestro.ContratoMaestro;
+    var modalInstance = $uibModal.open({
+      animation: true,
+      ariaLabelledBy: 'modal-title',
+      ariaDescribedBy: 'modal-body',
+      templateUrl: 'views/corporativa/ModalDetalleContratosPrefacturas.html',
+      controller: 'ModalDetalleContratosPrefacturasCtrl',
+      controllerAs: '$ctrl',
+      backdrop: 'static',
+      keyboard: false,
+      class: 'modal-backdrop fade',
+      size: 'md',
+      resolve: {
+        ticket: function () {
+          return ticket;
+        }
+      }
+    });
+  }
+
  $rootScope.$on('actualizar_listado', function (e, clave) {   
     buscar(1);
   });
@@ -85,4 +112,5 @@ function prefacturasCtrl($state, ContratoMaestroFactory, ngNotify, $filter, $uib
   vm.buscar = buscar;
   vm.Conceptos = Conceptos;
   vm.CancelarFacturaPreliminar = CancelarFacturaPreliminar;
+  vm.DetalleContratos = DetalleContratos;
 }

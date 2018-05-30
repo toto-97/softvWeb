@@ -1,0 +1,37 @@
+<form name="contratoForm" novalidate angular-validator>
+    <div class="modal-header">
+        <button class="close" aria-label="Close" type="button" ng-click="$ctrl.cancel()">×</button>
+        <h4 class="modal-title">
+            <i class="fa fa-thumb-tack"></i> Detalle de Contratos de Factura Preliminar #{{$ctrl.Ticket.Clv_FacturaMaestro}} </h4>
+    </div>
+    <div class="modal-body" style="overflow-y: scroll; max-height: 400px;">
+
+        <div class="col-md-12">
+            <div class="col-md-10 ">
+                <table class="table">
+                    <thead>
+                        <th style="vertical-align: middle; width:33%;">Contrato</th>
+                        <th style="vertical-align: middle; width:33%">Paquete</th>
+                        <th style="vertical-align: middle; width:33%">Importe Total</th>
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="x in $ctrl.DetallesFactura|itemsPerPage:8">
+                            <td>{{x.Contrato}}</td>
+                            <td>{{x.Servicio}}</td>
+                            <td>{{x.ImporteTotal | currency}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <h4 class="text-danger text-left ">Total: {{$ctrl.Total | currency}}</h4>
+        <button class="btn btn-info btn-sm" type="button" >
+            <a  csv-column-order="$ctrl.csvorder"  
+                    csv-header="$ctrl.csvheader"
+                    ng-csv="$ctrl.DetallesFactura" filename="DetalleFacturaPreliminar.csv" field-separator="," decimal-separator="."  add-bom="true"><i class="fa fa-file-excel-o"></i> Exportar</a>
+        </button>
+        <button class="btn btn-default btn-sm" type="button" ng-click="$ctrl.cancel()">Cerrar</button>
+    </div>
+</form>

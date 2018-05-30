@@ -74,15 +74,6 @@
     }
 
     function ok() {
-     
-
-    
-
-    
-
-
-
-
       var array_ = [];
       vm.conceptos.forEach(function (item) {
         var obj = {};

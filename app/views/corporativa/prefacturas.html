@@ -3,7 +3,9 @@
   <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
     <header>
       <strong style="font-weight:bold; border:none; margin-left:10px; font-size: 16px;">Facturas Preliminares Fiscales</strong>
-      <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Facturas Preliminares Fiscales</small>
+      <br />
+      <small class="text-muted" style="font-size:14px; margin-left:10px;">
+        <i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Facturas Preliminares Fiscales</small>
     </header>
     <div class="tools">
 
@@ -15,9 +17,12 @@
       <div class="card panel">
         <div class="card-head card-head-xs style-primary-light collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1"
           aria-expanded="false">
-          <header><i class="fa fa-search"></i> Buscar factura</header>
+          <header>
+            <i class="fa fa-search"></i> Buscar factura</header>
           <div class="tools">
-            <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+            <a class="btn btn-icon-toggle">
+              <i class="fa fa-angle-down"></i>
+            </a>
           </div>
         </div>
         <div id="accordion3-1" class="collapse buscarContrato" aria-expanded="false" style="height: 0px;">
@@ -31,7 +36,8 @@
               </div>
               <div class="col-md-1">
                 <br>
-                <button class="btn btn-info btn-xs" ng-click="$ctrl.buscar(2);"><i class="fa fa-search"></i> Buscar</button>
+                <button class="btn btn-info btn-xs" ng-click="$ctrl.buscar(2);">
+                  <i class="fa fa-search"></i> Buscar</button>
               </div>
               <div class="col-md-2">
 
@@ -42,7 +48,8 @@
               </div>
               <div class="col-md-2">
                 <br>
-                <button class="btn btn-info btn-xs" ng-click="$ctrl.buscar(4);"><i class="fa fa-search"></i> Buscar</button>
+                <button class="btn btn-info btn-xs" ng-click="$ctrl.buscar(4);">
+                  <i class="fa fa-search"></i> Buscar</button>
 
               </div>
               <div class="col-md-2">
@@ -52,14 +59,16 @@
               </div>
               <div class="col-md-1">
                 <br>
-                <button class="btn btn-info btn-xs" ng-click="$ctrl.buscar(3);"><i class="fa fa-search"></i> Buscar</button>
+                <button class="btn btn-info btn-xs" ng-click="$ctrl.buscar(3);">
+                  <i class="fa fa-search"></i> Buscar</button>
 
               </div>
               <div class="col-md-2">
                 <br>
                 <label class="checkbox-inline checkbox-styled checkbox-danger">
-														<input type="checkbox"ng-model="$ctrl.todas" ng-change="$ctrl.buscar(1)"><span>Todos</span>
-													</label>
+                  <input type="checkbox" ng-model="$ctrl.todas" ng-change="$ctrl.buscar(1)">
+                  <span>Todos</span>
+                </label>
 
 
               </div>
@@ -101,9 +110,14 @@
             <td>
               <button ng-if="x.EstatusFactura==='Por Facturar'|| x.EstatusFactura=== 'Facturada'" class="btn ink-reaction  btn-xs btn-warning"
                 data-toggle="tooltip" data-placement="top" title="Editar conceptos de factura" data-original-title="Tooltip on top"
-                ng-click="$ctrl.Conceptos(x.Clv_FacturaMaestro,x.EstatusFactura);"><i class=" fa fa-edit"></i> Editar conceptos</button>
+                ng-click="$ctrl.Conceptos(x.Clv_FacturaMaestro,x.EstatusFactura);">
+                <i class=" fa fa-edit"></i> Editar conceptos</button>
               <!--Boton para cancelar factura preliminar-->
-              <button class="btn ink-reaction btn-xs btn-danger" ng-if="x.EstatusFactura != 'Facturada'" ng-click="$ctrl.CancelarFacturaPreliminar(x);"><i class="fa fa-ban"></i> Cancelar</button>
+              <button class="btn ink-reaction btn-xs btn-danger" ng-if="x.EstatusFactura != 'Facturada'" ng-click="$ctrl.CancelarFacturaPreliminar(x);">
+                <i class="fa fa-ban"></i> Cancelar</button>
+                <!--Boton para ver el detalle de los contratos de la factura preliminar-->
+              <button class="btn ink-reaction btn-xs btn-info" ng-click="$ctrl.DetalleContratos(x);">
+                <i class="fa fa-ban"></i> Detalle de Contratos</button>
             </td>
           </tr>
         </tbody>
