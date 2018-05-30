@@ -20,25 +20,36 @@ angular.module('softvApp').controller('reportesResumenContratoCtrl', reportesRes
 
 function reportesResumenContratoCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory, $timeout) {
 
-    function buscaContrato() {
+    function buscaContrato(opcion) {
         var parametros;
-        if (vm.ContratoMaestro == undefined || vm.ContratoMaestro == '') {
+        if ((vm.ContratoMaestro == undefined || vm.ContratoMaestro == '') && (vm.Contrato == undefined || vm.Contrato == '')) {
             ngNotify.set('Seleccione un contrato.', 'error');
         } else {
-            parametros = {
-                'ContratoMaestro': vm.ContratoMaestro
-            };
+            if (opcion == 1) {
+                parametros = {
+                    'ContratoMaestro': vm.ContratoMaestro,
+                    'Contrato': "",
+                    'Op': opcion
+                };
+            }
+            else if (opcion == 2) {
+                parametros = {
+                    'ContratoMaestro': 0,
+                    'Contrato': vm.Contrato,
+                    'Op': opcion
+                };
+            }
             pagosMaestrosFactory.ReporteResumenContratoMaestro(parametros).then(function (data) {
                 vm.contratos = data.GetResumenGeneraPorContratoMaestroListResult.List1;
                 vm.resumen = data.GetResumenGeneraPorContratoMaestroListResult.List2;
-                vm.displayCollection =data.GetResumenGeneraPorContratoMaestroListResult.List1;
-                vm.displayCollection2 =data.GetResumenGeneraPorContratoMaestroListResult.List2;
+                vm.displayCollection = data.GetResumenGeneraPorContratoMaestroListResult.List1;
+                vm.displayCollection2 = data.GetResumenGeneraPorContratoMaestroListResult.List2;
             });
-            
-            vm.predicates = ['Contrato', 'Status', 'Servicio', 'FechaInstalacion', 'UltimoMesPagado', 'MacCableModem'];
+
+            vm.predicates = ['ContratoMaestro', 'Contrato', 'Status', 'Servicio', 'FechaInstalacion', 'UltimoMesPagado', 'MacCableModem'];
             vm.selectedPredicate = vm.predicates[0];
         }
-        
+
     }
 
     function crearTodoAsCsv() {
@@ -60,8 +71,9 @@ function reportesResumenContratoCtrl($uibModal, ngNotify, inMenu, pagosMaestrosF
     }
 
     function initArray() {
-        vm.arrayReporte = [];
+        vm.arrayReporte = {};
         vm.arrayReporte = [{
+            'ContratoMaestro': 'ContratoMaestro',            
             'Contrato': 'Contrato',
             'Status': 'Status',
             'Servicio': 'Servicio',
@@ -72,23 +84,24 @@ function reportesResumenContratoCtrl($uibModal, ngNotify, inMenu, pagosMaestrosF
     }
 
     function createPdfTodo() {
-        var rows = [[0, 0, 0, 0, 0, 0,]];
+        var rows = [[0, 0, 0, 0, 0, 0, 0,]];
         var r = 1;
         var c = 0;
         var ro = 0;
         ro = vm.contratos.length;
         var cols = 21;
-        var columns = ['Contrato', 'Status', 'Servicio', 'Fecha Instalación', 'Último Mes Pagado', 'MAC Aparato'];
+        var columns = ['ContratoMaestro','Contrato', 'Status', 'Servicio', 'Fecha Instalación', 'Último Mes Pagado', 'MAC Aparato'];
         for (var i = r; i < ro; i++) {
             rows.push([]);
         }
         for (var i = 0; i < ro; i++) {
-            rows[i][0] = vm.contratos[i].Contrato;
-            rows[i][1] = vm.contratos[i].Status;
-            rows[i][2] = vm.contratos[i].Servicio;
-            rows[i][3] = vm.contratos[i].FechaInstalacion;
-            rows[i][4] = vm.contratos[i].UltimoMesPagado;
-            rows[i][5] = vm.contratos[i].MacCableModem;
+            rows[i][0] = vm.contratos[i].ContratoMaestro;
+            rows[i][1] = vm.contratos[i].Contrato;
+            rows[i][2] = vm.contratos[i].Status;
+            rows[i][3] = vm.contratos[i].Servicio;
+            rows[i][4] = vm.contratos[i].FechaInstalacion;
+            rows[i][5] = vm.contratos[i].UltimoMesPagado;
+            rows[i][6] = vm.contratos[i].MacCableModem;
         }
         var doc = new jsPDF({
             orientation: 'landscape',
@@ -118,9 +131,9 @@ function reportesResumenContratoCtrl($uibModal, ngNotify, inMenu, pagosMaestrosF
         doc.setPage(1);
         jsPDF.autoTableSetDefaults({
             headerStyles:
-            {
-                fontSize: 8.2
-            },
+                {
+                    fontSize: 8.2
+                },
             bodyStyles: {
                 fontSize: 7.4
             }
@@ -159,8 +172,38 @@ function reportesResumenContratoCtrl($uibModal, ngNotify, inMenu, pagosMaestrosF
 
     function enterContrato(event, opcion) {
         if (event.which === 13) {
-            buscaContrato();
+            buscaContrato(opcion);
         }
+    }
+
+    function ExportarTodosMaestros() {
+        vm.predicates = ['ContratoMaestro', 'Contrato', 'Status', 'Servicio', 'FechaInstalacion', 'UltimoMesPagado', 'MacCableModem'];
+        vm.selectedPredicate = vm.predicates[0];
+        var parametros = {
+            'ContratoMaestro': 0,
+            'Contrato': "",
+            'Op': 3
+        };
+        pagosMaestrosFactory.ReporteResumenContratoMaestro(parametros).then(function (data) {
+            vm.contratos = data.GetResumenGeneraPorContratoMaestroListResult.List1;
+            vm.resumen = data.GetResumenGeneraPorContratoMaestroListResult.List2;
+            $timeout(function () {
+                for (var i = 0; i < vm.contratos.length; i++) {
+                    delete vm.contratos[i].BaseIdUser;
+                    delete vm.contratos[i].BaseRemoteIp;
+                    delete vm.contratos[i].$$hashKey;
+                }
+    
+                initArray();
+    
+                for (var i = 0; i < vm.contratos.length; i++) {
+                    vm.arrayReporte.push(vm.contratos[i]);
+                }
+    
+                angular.element('#csvTodos').triggerHandler('click');
+            });
+            //vm.contratos = {};
+        });
     }
 
     // this.$onInit = function () {
@@ -171,10 +214,12 @@ function reportesResumenContratoCtrl($uibModal, ngNotify, inMenu, pagosMaestrosF
     vm.buscaContrato = buscaContrato;
     vm.crearTodoAsCsv = crearTodoAsCsv;
     vm.createPdfTodo = createPdfTodo;
-    vm.filename = 'Reporte_resumen_de_contrato_maestro';
+    vm.filename = 'ResumenContratoMaestro';
+    vm.filename2 = 'ResumenContratoMaestroTodos';
     var reportHeaderPdf = "Reporte Resumen General por Contrato Maestro";
     vm.csvDosHide = true;
     var img = new Image();
     img.crossOrigin = "";
     vm.enterContrato = enterContrato;
+    vm.ExportarTodosMaestros = ExportarTodosMaestros;
 }

@@ -54,7 +54,7 @@ function BuscaContratoLCtrl($uibModalInstance, atencionFactory, $rootScope, corp
 
 
 	function Seleccionar(contrato) {	
-		corporativoFactory.validaContrato(contrato.ContratoBueno).then(function(data) {			
+		corporativoFactory.validaContrato(contrato.ContratoBueno, contratos.ContratoMaestro).then(function(data) {			
 			if (data.GetValidaSiContratoExiste_CMResult.Bandera) {
 				ngNotify.set(data.GetValidaSiContratoExiste_CMResult.Msg, 'error');
 			

@@ -174,7 +174,14 @@
 
         vm.cp = vm.contratoMaestro.CodigoPostal;
         getEstadoCiudadPais(true);
+        if(vm.contratoMaestro.lstCliS.length > 0){
+          vm.HabilitaCheckDolares = false;
+        }
+        else{
+          vm.HabilitaCheckDolares = true;
+        }
       });
+
     };
 
     function buscarCP() {

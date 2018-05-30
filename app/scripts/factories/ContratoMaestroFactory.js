@@ -71,8 +71,52 @@ angular.module('softvApp')
       GetValidaCoordenadasCAMDO: '/CAMDOFAC/GetValidaCoordenadasCAMDO',
       GetNUECAMDOFACnoInt: '/CAMDOFAC/GetNUECAMDOFACnoInt',
       GetUsoCFDI:'/ContratoMaestroFac/GetUsoCFDI', 
-      GetDetallePagos:'/RelacionIngresosMaestro/GetDetallePagos' 
+      GetDetallePagos:'/RelacionIngresosMaestro/GetDetallePagos',
+      GetDetalleContratoPrefactura:'/BuscaFacturasFisca/GetDetalleContratoPrefactura',
+      GetDetalleContratoPrefacturaExcel:'/BuscaFacturasFisca/GetDetalleContratoPrefacturaExcel' 
     };
+
+    factory.GetDetalleContratoPrefacturaExcel = function (Clv_FacturaMaestro) { 
+      var deferred = $q.defer(); 
+      var config = { 
+        headers: { 
+          'Authorization': $localStorage.currentUser.token 
+        } 
+      }; 
+      var parametros = { 
+        'Clv_FacturaMaestro': Clv_FacturaMaestro
+      }; 
+ 
+      $http.post(globalService.getUrl() + paths.GetDetalleContratoPrefacturaExcel, JSON.stringify(parametros), config).then(function (response) { 
+ 
+        deferred.resolve(response.data); 
+      }).catch(function (response) { 
+        deferred.reject(response); 
+      }); 
+      return deferred.promise; 
+ 
+    }; 
+
+    factory.GetDetalleContratoPrefactura = function (Clv_FacturaMaestro) { 
+      var deferred = $q.defer(); 
+      var config = { 
+        headers: { 
+          'Authorization': $localStorage.currentUser.token 
+        } 
+      }; 
+      var parametros = { 
+        'Clv_FacturaMaestro': Clv_FacturaMaestro
+      }; 
+ 
+      $http.post(globalService.getUrl() + paths.GetDetalleContratoPrefactura, JSON.stringify(parametros), config).then(function (response) { 
+ 
+        deferred.resolve(response.data); 
+      }).catch(function (response) { 
+        deferred.reject(response); 
+      }); 
+      return deferred.promise; 
+ 
+    }; 
 
 
     factory.GetDetallePagos = function (Distribuidores, FechaInicial,FechaFinal) { 
@@ -468,7 +512,10 @@ angular.module('softvApp')
           'Authorization': $localStorage.currentUser.token
         }
       };
-      $http.get(globalService.getUrl() + paths.GetCodigosPostalesMizar+'?query='+query, config).then(function (response) {
+      var parametros = {
+        query : query
+      };
+      $http.post(globalService.getUrl() + paths.GetCodigosPostalesMizar, JSON.stringify(parametros), config).then(function (response) {
 
         deferred.resolve(response.data);
       }).catch(function (response) {
