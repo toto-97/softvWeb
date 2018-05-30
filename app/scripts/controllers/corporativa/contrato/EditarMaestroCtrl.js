@@ -40,6 +40,7 @@
     vm.getEstadoCiudadPais = getEstadoCiudadPais;
     vm.buscarCP = buscarCP;
     vm.getCiudades = getCiudades;
+    console.log(vm.notificaciones,'notificaciones')
 
     this.$onInit = function() {
       corporativoFactory.singleContrato($stateParams.id).then(function(data) {
@@ -425,6 +426,7 @@
       };
       corporativoFactory.updateContrato(contrato).then(function(data) {
         ngNotify.set("Contrato maestro actualizado correctamente.", "success");
+        $rootScope.$broadcast('actualiza_notificaciones', 1);
       });
     }
 
