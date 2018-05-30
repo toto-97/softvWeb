@@ -11,6 +11,11 @@ angular
 					  .then(function (data) {
 						vm.notificaciones = data.GetNotificacionContratoPorVencerResult;
 						console.log(vm.notificaciones);
+						vm.notificaciones = data.GetNotificacionContratoPorVencerResult;
+						var notificacion=document.getElementById('notificacion');			 
+						notificacion.setAttribute('data-count', vm.notificaciones.length);
+						notificacion.classList.add('show-count');
+						notificacion.classList.add('notify');		
 					  });				  
 				//$state.go('home.dashboard');
 			} else {
@@ -22,7 +27,10 @@ angular
 			ContratoMaestroFactory.GetNotificacionContratoPorVencer()
 			.then(function (data) {
 			  vm.notificaciones = data.GetNotificacionContratoPorVencerResult;
-			  console.log(vm.notificaciones);
+			  var notificacion=document.getElementById('notificacion');			 
+			  notificacion.setAttribute('data-count', vm.notificaciones.length);
+			  notificacion.classList.add('show-count');
+			  notificacion.classList.add('notify');			 
 			});		
 		});
 
@@ -36,4 +44,8 @@ angular
 		var vm = this;
 		vm.logout = logout;
 		initialData();
+		var notificacion=document.getElementById('notificacion');
+		notificacion.addEventListener('animationend',function () {
+			notificacion.classList.remove('notify');
+		});		 
 	});

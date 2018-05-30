@@ -1,3 +1,89 @@
+
+<style>
+
+.notificacion{
+        color:rgb(177, 172, 172);
+        width: 50px;
+        height: inherit;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+       
+    }
+   
+    .notificacion::before{
+        content: "\f0f3";
+        font-family: "FontAwesome";
+        display: block;
+       
+    }
+    
+    .notificacion.notify::before{
+        animation-name:bell;
+        animation-duration: 1s;        
+        animation-timing-function: ease-out;
+        transform-origin: center top;
+    }
+
+    .notificacion::after{        
+        content:"1" ;
+        font-size: 11px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 14px;
+        height: 14px;
+        background: #ff4600;
+        border-radius: 50%;
+        font-family: Arial;
+        position: absolute;
+        top:7px;;
+        right:5px;
+        content:attr(data-count);
+        transition: .3s;
+        transform: scale(.5);
+        opacity: 0;
+        color: white;
+        
+    }
+    .notificacion.show-count::after{
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    @keyframes bell {
+        0%{
+            transform: rotate(35deg);
+        }
+        12.5%{
+            transform: rotate(-30deg);
+        }
+        25%{
+            transform: rotate(25deg);
+        }
+        37.5%{
+            transform: rotate(-20deg);
+        }
+        50%{
+            transform: rotate(15deg);
+        }
+        62%{
+            transform: rotate(-10deg);
+        }
+        75%{
+            transform: rotate(5deg);
+        }
+        100%{
+            transform: rotate(0deg);
+        }
+    }
+
+       
+
+</style>
+
 <header id="header">
   <div class="headerbar">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -23,8 +109,10 @@
         <ul class="header-nav header-nav-options">
 				{{notificaciones | json}}
 						<li class="dropdown hidden-xs">
-							<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">
-								<i class="fa fa-bell"></i><sup class="badge style-danger">{{$ctrl.notificaciones.length}}</sup>
+							<a href="javascript:void(0);" class="btn btn-icon-toggle btn-default" data-toggle="dropdown">                  
+                  <div class="notificacion" id="notificacion" >
+                </div>
+							<!-- 	<i class="fa fa-bell"></i><sup class="badge style-danger">{{$ctrl.notificaciones.length}}</sup> -->
 							</a>
 							<ul class="dropdown-menu animation-expand" style="width: 300px; height: 350px; overflow: auto">
 								<li class="dropdown-header">Contratos por vencer</li>
