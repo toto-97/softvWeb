@@ -23,6 +23,10 @@ function agregaListaPagoCtrl($uibModal, $state, $rootScope, cajasFactory, corpor
   function Init() {
     vm.contratosLigados = Contratos.lstCliS;
     vm.displayCollection = Contratos.lstCliS;
+    vm.displayCollection.forEach(function(element) {
+      element.selected=false;
+    });
+    
   }
 
   function cancel() {
