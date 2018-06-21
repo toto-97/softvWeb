@@ -90,10 +90,38 @@
           ngNotify.set('La nota se ha refacturado correctamente.', 'success');
         });
 
-      } else if (opcion == 2) {
-        ContratoMaestroFactory.TblNotasMaestraOpciones(nota, 0, 0, 1).then(function (data) {
-          ngNotify.set('La nota se ha reimpreso correctamente.', 'success');
-        });
+      } else if (opcion === 2) {
+        
+
+        ContratoMaestroFactory.GetImprimeFacturaFiscalNotaMaestro().then(function (data) {
+          console.log(data);
+          if (data.GetImprimeFacturaFiscalNotaMaestroResult.IdResult === 0) {
+            ngNotify.set(data.GetImprimeFacturaFiscalNotaMaestroResult.Message, 'error');
+            return;
+          }
+         var url=data.GetImprimeFacturaFiscalNotaMaestroResult;
+        vm.animationsEnabled = true;
+        var modalInstance = $uibModal.open({
+          animation: vm.animationsEnabled,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'views/corporativa/ModalDetalleFactura.html',
+          controller: 'ModalDetalleFacturaCtrl',
+          controllerAs: '$ctrl',
+          backdrop: 'static',
+          keyboard: false,
+          size: 'lg',
+          resolve: {
+            url: function () {
+              return url;
+            }
+          }
+        });     
+      
+
+      ngNotify.set("Se ha reimpreso la factura correctamente");
+
+      });
 
       }
     }

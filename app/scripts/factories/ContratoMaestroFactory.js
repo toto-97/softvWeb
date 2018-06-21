@@ -76,7 +76,8 @@ angular.module('softvApp')
       GetDetalleContratoPrefacturaExcel:'/BuscaFacturasFisca/GetDetalleContratoPrefacturaExcel',
       GetObtieneContratosLigadosPorStatus: '/ContratoMaestroFac/GetObtieneContratosLigadosPorStatus',
       GetAgregaBitacoraMaestro: '/Bitacora/GetAgregaBitacoraMaestro',
-      GetBuscaBitacoraMaestro: '/Bitacora/GetBuscaBitacoraMaestro'
+      GetBuscaBitacoraMaestro: '/Bitacora/GetBuscaBitacoraMaestro',
+      GetImprimeFacturaFiscalNotaMaestro:'/FacturacionSoftv/GetImprimeFacturaFiscalNotaMaestro'
     };
 
     factory.GetBuscaBitacoraMaestro = function (Clv_Usuario, Modulo, Descripcion, Op) { 
@@ -260,6 +261,31 @@ angular.module('softvApp')
       };
 
       $http.post(globalService.getUrl() + paths.GetValidaCoordenadasCAMDO, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+
+
+    
+
+
+    factory.GetImprimeFacturaFiscalNotaMaestro = function (oClv_Nota) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'oClv_Nota': oClv_Nota        
+      };
+      $http.post(globalService.getUrlMizar() + paths.GetImprimeFacturaFiscalNotaMaestro, JSON.stringify(parametros), config).then(function (response) {
 
         deferred.resolve(response.data);
       }).catch(function (response) {
