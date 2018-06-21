@@ -1,6 +1,6 @@
 'use strict';
 angular.module('softvApp')
-	.factory('corporativoFactory', function($http, $q, globalService, $localStorage) {
+	.factory('corporativoFactory', function ($http, $q, globalService, $localStorage) {
 		var factory = {};
 		var paths = {
 			getDistribuidores: '/DomicilioFiscal/GetDistribuidores',
@@ -20,21 +20,22 @@ angular.module('softvApp')
 			buscarCliente: '/uspBuscaContratoSeparado2/GetBuscaByIdDisList',
 			GetObtienePolizasMaestro: '/PolizaMaestro/GetObtienePolizasMaestro',
 			EliminaPoliza: '/PolizaMaestro/GetEliminaPoliza',
-			GetDetallesPolizaMaestro : '/PolizaMaestro/GetDetallesPolizaMaestro',
+			GetDetallesPolizaMaestro: '/PolizaMaestro/GetDetallesPolizaMaestro',
 			GetGeneraNuevaPolizaMaestro: '/PolizaMaestro/GetGeneraNuevaPolizaMaestro',
-			GetPolizaTxt: '/PolizaMaestro/GetPolizaTxt'
+			GetPolizaTxt: '/PolizaMaestro/GetPolizaTxt',
+			EliminaContratosLigados: '/ContratoMaestroFac/GetEliminaContratosLigados'
 		};
 
-		factory.updateContrato = function(contrato) {
+		factory.updateContrato = function (contrato) {
 			var deferred = $q.defer();
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.post(globalService.getUrl() + paths.updateContrato, JSON.stringify(contrato), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.updateContrato, JSON.stringify(contrato), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 
@@ -42,7 +43,7 @@ angular.module('softvApp')
 		};
 
 
-		factory.singleContrato = function(contrato) {
+		factory.singleContrato = function (contrato) {
 			var deferred = $q.defer();
 			var config = {
 				headers: {
@@ -53,16 +54,16 @@ angular.module('softvApp')
 				'IdContratoMaestro': contrato
 
 			};
-			$http.post(globalService.getUrl() + paths.singleContrato, JSON.stringify(Parametros), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.singleContrato, JSON.stringify(Parametros), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 
 			return deferred.promise;
 		};
 
-		factory.UpdateRelContrato = function(contrato, lista, distribuidor) {
+		factory.UpdateRelContrato = function (contrato, lista, distribuidor) {
 			console.log(contrato);
 			console.log(distribuidor);
 			var deferred = $q.defer();
@@ -81,17 +82,89 @@ angular.module('softvApp')
 			};
 
 			console.log(Parametros);
-			$http.post(globalService.getUrl() + paths.UpdateRelContrato, JSON.stringify(Parametros), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.UpdateRelContrato, JSON.stringify(Parametros), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 
 			return deferred.promise;
 		};
 
+		factory.EliminaContratosLigados = function (contrato, lista, distribuidor) {
+			var deferred = $q.defer();
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			var Parametros = {
+				'objCM': {
+					'IdContratoMaestro': contrato,
+					'Distribuidor': distribuidor
+				},
+				'Contratos': lista
 
-		factory.ligarContratos = function(contrato, lista) {
+			};
+
+			console.log(Parametros);
+			$http.post(globalService.getUrl() + paths.EliminaContratosLigados, JSON.stringify(Parametros), config).then(function (response) {
+				deferred.resolve(response.data);
+			}).catch(function (response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
+		factory.UpdateRelContratoMultiple = function (contrato, arrContratos, distribuidor) {
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+
+			// Mark which request we're currently doing
+			var currentRequest = 0;
+			// Make this promise based.
+			var deferred = $q.defer();
+			// Set up a result array
+			var results = [];
+			
+			function makeNextRequest() {
+				// Do whatever you need with the array item.
+				var Parametros = {
+					'objCM': {
+						'IdContratoMaestro': contrato,
+						'Distribuidor': distribuidor
+					},
+					'Contratos': arrContratos[currentRequest]
+
+				};
+				$http.post(globalService.getUrl() + paths.UpdateRelContrato, JSON.stringify(Parametros), config)
+					.then(function (response) {
+						// Save the result.
+						results.push(response);
+						// Increment progress.
+						currentRequest++;
+						// Continue if there are more items.
+						if (currentRequest < arrContratos.length) {
+							makeNextRequest();
+						}
+						// Resolve the promise otherwise.
+						else {
+							deferred.resolve(response.data);
+						}
+					});
+				// TODO handle errors appropriately.
+			}
+			makeNextRequest();
+			// return a promise for the completed requests
+			return deferred.promise;
+		};
+
+
+		factory.ligarContratos = function (contrato, lista) {
 			var deferred = $q.defer();
 			var config = {
 				headers: {
@@ -105,16 +178,60 @@ angular.module('softvApp')
 				'lstRel': lista
 
 			};
-			$http.post(globalService.getUrl() + paths.ligarContratos, JSON.stringify(Parametros), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.ligarContratos, JSON.stringify(Parametros), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 
 			return deferred.promise;
 		};
 
-		factory.validaContrato = function(contrato, ContratoMaestro) {
+		factory.ligarContratosMultiple = function (contrato, arrContratos) {
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+
+			// Mark which request we're currently doing
+			var currentRequest = 0;
+			// Make this promise based.
+			var deferred = $q.defer();
+			// Set up a result array
+			var results = [];
+			
+			function makeNextRequest() {
+				// Do whatever you need with the array item.
+				var Parametros = {
+					'objRep': {
+						'IdContratoMaestro': contrato
+					},
+					'lstRel': arrContratos[currentRequest]
+				};
+				$http.post(globalService.getUrl() + paths.ligarContratos, JSON.stringify(Parametros), config)
+					.then(function (response) {
+						// Save the result.
+						results.push(response);
+						// Increment progress.
+						currentRequest++;
+						// Continue if there are more items.
+						if (currentRequest < arrContratos.length) {
+							makeNextRequest();
+						}
+						// Resolve the promise otherwise.
+						else {
+							deferred.resolve(response.data);
+						}
+					});
+				// TODO handle errors appropriately.
+			}
+			makeNextRequest();
+			// return a promise for the completed requests
+			return deferred.promise;
+		};
+
+		factory.validaContrato = function (contrato, ContratoMaestro) {
 			var deferred = $q.defer();
 			var config = {
 				headers: {
@@ -125,80 +242,80 @@ angular.module('softvApp')
 				'ContratoBueno': contrato,
 				'ContratoMaestro': ContratoMaestro
 			};
-			$http.post(globalService.getUrl() + paths.validaContrato, JSON.stringify(Parametros), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.validaContrato, JSON.stringify(Parametros), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 
 			return deferred.promise;
 		};
 
-		factory.addMaestro = function(contrato) {
+		factory.addMaestro = function (contrato) {
 			var deferred = $q.defer();
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.post(globalService.getUrl() + paths.addMaestro, JSON.stringify(contrato), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.addMaestro, JSON.stringify(contrato), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 
 			return deferred.promise;
 		};
 
-		factory.getTipoPagos = function() {
+		factory.getTipoPagos = function () {
 			var deferred = $q.defer();
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.get(globalService.getUrl() + paths.getTipoPagos, config).then(function(response) {
+			$http.get(globalService.getUrl() + paths.getTipoPagos, config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 
 			return deferred.promise;
 		};
 
-		factory.getCortes = function() {
+		factory.getCortes = function () {
 			var deferred = $q.defer();
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.get(globalService.getUrl() + paths.getCortes, config).then(function(response) {
+			$http.get(globalService.getUrl() + paths.getCortes, config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 
 			return deferred.promise;
 		};
 
-		factory.getDistribuidores = function() {
+		factory.getDistribuidores = function () {
 			var deferred = $q.defer();
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.get(globalService.getUrl() + paths.getDistribuidores, config).then(function(response) {
+			$http.get(globalService.getUrl() + paths.getDistribuidores, config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 
 			return deferred.promise;
 		};
 
-		factory.getCalles = function(colonia, localidad) {
+		factory.getCalles = function (colonia, localidad) {
 			var deferred = $q.defer();
 			var Parametros = {
 				'ClvColonia': colonia,
@@ -209,16 +326,16 @@ angular.module('softvApp')
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.post(globalService.getUrl() + paths.getCalles, JSON.stringify(Parametros), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.getCalles, JSON.stringify(Parametros), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 
 			return deferred.promise;
 		};
 
-		factory.getColonias = function(id) {
+		factory.getColonias = function (id) {
 			var deferred = $q.defer();
 			var Parametros = {
 				'ClvLocalidad': id
@@ -228,9 +345,9 @@ angular.module('softvApp')
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.post(globalService.getUrl() + paths.getColonias, JSON.stringify(Parametros), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.getColonias, JSON.stringify(Parametros), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 
@@ -238,7 +355,7 @@ angular.module('softvApp')
 		};
 
 
-		factory.getLocalidades = function(id) {
+		factory.getLocalidades = function (id) {
 			var deferred = $q.defer();
 			var Parametros = {
 				'ClvCiudad': id
@@ -248,16 +365,16 @@ angular.module('softvApp')
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.post(globalService.getUrl() + paths.getLocalidades, JSON.stringify(Parametros), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.getLocalidades, JSON.stringify(Parametros), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 
 			return deferred.promise;
 		};
 
-		factory.getCiudades = function(id) {
+		factory.getCiudades = function (id) {
 			var deferred = $q.defer();
 			var Parametros = {
 				'ClvEstado': id
@@ -267,25 +384,25 @@ angular.module('softvApp')
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.post(globalService.getUrl() + paths.getCiudades, JSON.stringify(Parametros), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.getCiudades, JSON.stringify(Parametros), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 
 			return deferred.promise;
 		};
 
-		factory.getEstados = function() {
+		factory.getEstados = function () {
 			var deferred = $q.defer();
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.get(globalService.getUrl() + paths.getEstados, config).then(function(response) {
+			$http.get(globalService.getUrl() + paths.getEstados, config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 
@@ -293,7 +410,7 @@ angular.module('softvApp')
 		};
 
 
-		factory.buscarCliente = function(obje) {
+		factory.buscarCliente = function (obje) {
 			var deferred = $q.defer();
 			var Parametros = {
 				'ContratoCom': obje.contrato,
@@ -316,16 +433,16 @@ angular.module('softvApp')
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.post(globalService.getUrl() + paths.buscarCliente, JSON.stringify(Parametros), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.buscarCliente, JSON.stringify(Parametros), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 
 			return deferred.promise;
 		};
 
-		factory.GetObtienePolizasMaestro = function(obj) {
+		factory.GetObtienePolizasMaestro = function (obj) {
 			var deferred = $q.defer();
 			//console.log(JSON.stringify(obj));
 			var config = {
@@ -333,16 +450,16 @@ angular.module('softvApp')
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.post(globalService.getUrl() + paths.GetObtienePolizasMaestro, JSON.stringify(obj), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.GetObtienePolizasMaestro, JSON.stringify(obj), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 
 			return deferred.promise;
 		};
 
-		factory.EliminaPoliza = function(obj) {
+		factory.EliminaPoliza = function (obj) {
 			var deferred = $q.defer();
 			//console.log(JSON.stringify(obj));
 			var config = {
@@ -350,16 +467,16 @@ angular.module('softvApp')
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.post(globalService.getUrl() + paths.EliminaPoliza, JSON.stringify(obj), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.EliminaPoliza, JSON.stringify(obj), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 
 			return deferred.promise;
 		};
 
-		factory.GetDetallesPolizaMaestro = function(obj) {
+		factory.GetDetallesPolizaMaestro = function (obj) {
 			var deferred = $q.defer();
 			//console.log(JSON.stringify(obj));
 			var config = {
@@ -367,16 +484,16 @@ angular.module('softvApp')
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.post(globalService.getUrl() + paths.GetDetallesPolizaMaestro, JSON.stringify(obj), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.GetDetallesPolizaMaestro, JSON.stringify(obj), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 
 			return deferred.promise;
 		};
 
-		factory.GetGeneraNuevaPolizaMaestro = function(obj) {
+		factory.GetGeneraNuevaPolizaMaestro = function (obj) {
 			var deferred = $q.defer();
 			//console.log(JSON.stringify(obj));
 			var config = {
@@ -384,16 +501,16 @@ angular.module('softvApp')
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.post(globalService.getUrl() + paths.GetGeneraNuevaPolizaMaestro, JSON.stringify(obj), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.GetGeneraNuevaPolizaMaestro, JSON.stringify(obj), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 
 			return deferred.promise;
 		};
 
-		factory.GetPolizaTxt = function(obj) {
+		factory.GetPolizaTxt = function (obj) {
 			var deferred = $q.defer();
 			//console.log(JSON.stringify(obj));
 			var config = {
@@ -401,9 +518,9 @@ angular.module('softvApp')
 					'Authorization': $localStorage.currentUser.token
 				}
 			};
-			$http.post(globalService.getUrl() + paths.GetPolizaTxt, JSON.stringify(obj), config).then(function(response) {
+			$http.post(globalService.getUrl() + paths.GetPolizaTxt, JSON.stringify(obj), config).then(function (response) {
 				deferred.resolve(response.data);
-			}).catch(function(response) {
+			}).catch(function (response) {
 				deferred.reject(response.data);
 			});
 

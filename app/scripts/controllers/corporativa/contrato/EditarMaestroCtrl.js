@@ -8,11 +8,12 @@
     "$rootScope",
     "corporativoFactory",
     "cajasFactory",
-    " $filter",
+    "$filter",
     "ngNotify",
     "$state",
     "$stateParams",
-    "ContratoMaestroFactory"
+    "ContratoMaestroFactory",
+    "$localStorage"
   ];
 
   function EditarMaestroCtrl(
@@ -24,7 +25,8 @@
     ngNotify,
     $state,
     $stateParams,
-    ContratoMaestroFactory
+    ContratoMaestroFactory,
+    $localStorage
   ) {
     var vm = this;
     var vm = this;
@@ -40,7 +42,6 @@
     vm.getEstadoCiudadPais = getEstadoCiudadPais;
     vm.buscarCP = buscarCP;
     vm.getCiudades = getCiudades;
-    console.log(vm.notificaciones,'notificaciones')
 
     this.$onInit = function() {
       corporativoFactory.singleContrato($stateParams.id).then(function(data) {
@@ -175,11 +176,12 @@
         vm.cp = vm.contratoMaestro.CodigoPostal;
         getEstadoCiudadPais(true);
         if(vm.contratoMaestro.lstCliS.length > 0){
-          vm.HabilitaCheckDolares = false;
-        }
-        else{
           vm.HabilitaCheckDolares = true;
         }
+        else{
+          vm.HabilitaCheckDolares = false;
+        }
+        console.log('HabilitaCheckDolares',vm.HabilitaCheckDolares);
       });
 
     };
@@ -317,7 +319,7 @@
         controllerAs: "$ctrl",
         backdrop: "static",
         keyboard: false,
-        size: "md",
+        size: "lg",
         resolve: {
           detalle: function() {
             return detalle;
@@ -469,7 +471,9 @@
       ContratoMaestroFactory.GetGeneraFacturaMaestroPrueba(contrato).then(
         function(data) {
           if (data.GetGeneraFacturaMaestroPruebaResult.Error == 0) {
-            ngNotify.set("Se ha generado la factura con éxito.", "info");
+            ContratoMaestroFactory.GetAgregaBitacoraMaestro($localStorage.currentUser.usuario, 'Contrato Maestro', data.GetGeneraFacturaMaestroPruebaResult.Msg).then(function (result) {
+              ngNotify.set("Se ha generado la factura con éxito.", "info");
+            });
           } else {
             ngNotify.set("No se generó la factura.", "error");
           }

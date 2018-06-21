@@ -6,6 +6,7 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope, $rootScope, 
     vm.contratos = [];
     vm.Distribuidor = detalle.Distribuidor;
     vm.ContratoMaestro = detalle.IdContratoMaestro;
+    vm.ContratosEliminados = [];
     if (detalle.Action == "EDIT") {
       vm.showokbtn = false;
       vm.showeditbtn = true;
@@ -111,14 +112,22 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope, $rootScope, 
   function ok() {
     if (vm.contratos.length > 0) {
       var contratos = [];
+      var arrContratos = [];
       vm.contratos.forEach(function (item, index) {
         contratos.push({
           Contrato: item.ContratoBueno,
           Nivel: index + 1,
           Proporcional: item.Proporcional
         });
+        if ((index % 1000) == 0 && index != 0) {
+          arrContratos.push(contratos);
+          contratos = [];
+        }
       });
-      corporativoFactory.ligarContratos(detalle.IdContratoMaestro, contratos).then(function (data) {
+      if (contratos.length > 0) {
+        arrContratos.push(contratos);
+      }
+      corporativoFactory.ligarContratosMultiple(detalle.IdContratoMaestro, arrContratos).then(function (data) {
         ngNotify.set('Los Contratos fueron ligados correctamente al contrato maestro.', 'success');
         $state.go('home.corporativa.maestro');
         $uibModalInstance.dismiss('cancel');
@@ -130,33 +139,57 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope, $rootScope, 
   }
 
   function edit() {
+    //Primero editamos los contratos existentes
     if (vm.contratos.length > 0) {
       var contratos = [];
+      var arrContratos = [];
       vm.contratos.forEach(function (item, index) {
-
         contratos.push({
           Contrato: item.CONTRATO,
           Nivel: index + 1,
           Proporcional: item.Proporcional
-
         });
+        if ((index % 1000) == 0 && index != 0) {
+          arrContratos.push(contratos);
+          contratos = [];
+        }
       });
-
-
-      corporativoFactory.UpdateRelContrato(detalle.IdContratoMaestro, contratos, vm.Distribuidor.Clv_Plaza).then(function (data) {
-
+      if (contratos.length > 0) {
+        arrContratos.push(contratos);
+      }
+      corporativoFactory.UpdateRelContratoMultiple(detalle.IdContratoMaestro, arrContratos, vm.Distribuidor.Clv_Plaza).then(function (data) {
+        //Después eliminamos los que quitaron
+        if (vm.ContratosEliminados.length > 0) {
+          corporativoFactory.EliminaContratosLigados(detalle.IdContratoMaestro, vm.ContratosEliminados, vm.Distribuidor.Clv_Plaza).then(function (data) {
+          });
+        }
         ngNotify.set('Los Contratos fueron ligados correctamente al contrato maestro.', 'success');
         $state.go('home.corporativa.maestro');
         $uibModalInstance.dismiss('cancel');
       });
+
     } else {
       ngNotify.set('Introduce al menos un contrato.', 'error');
     }
-
   }
 
-  function eliminarContrato(index) {
-    vm.contratos.splice(index, 1);
+  function eliminarContrato(indexE) {
+    if (detalle.Action == "EDIT") {
+      vm.contratos.forEach(function (item, index) {
+        if (index == indexE) {
+          vm.ContratosEliminados.push({
+            Contrato: item.CONTRATO,
+            Nivel: index + 1,
+            Proporcional: item.Proporcional
+          });
+        }
+      });
+      vm.contratos.splice(indexE, 1);
+    }
+    else if (detalle.Action == "ADD") {
+      vm.contratos.splice(indexE, 1);
+    }
+
   }
 
   function ValidaArchivo() {

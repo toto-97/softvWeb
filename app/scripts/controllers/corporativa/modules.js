@@ -343,6 +343,22 @@ function corporativaConf($stateProvider) {
 		templateUrl: 'views/corporativa/reporte.detallepago.html',
 		controller: 'reporteDetallePagoCtrl',
 		controllerAs: '$ctrl'
+	},
+	{
+		name: 'home.configuracion.bitacora',
+		data: {
+			pageTitle: 'SOFTV | BITÁCORA DE MOVIMIENTOS',
+			permissions: {
+				only: ['bitacoraSelect'],
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/bitacora',
+		templateUrl: 'views/corporativa/Bitacora.html',
+		controller: 'BitacoraCtrl',
+		controllerAs: '$ctrl'
 	}
 
 

@@ -15,17 +15,28 @@
         vm.deseleTodo = deseleTodo;
         vm.ok = ok;
         vm.ValidaArchivo = ValidaArchivo;
+        vm.ContratosOriginales = [];
 
         this.$onInit = function () {
+            vm.ContratosOriginales = vm.contrato.lstCliS;
             if (contrato.tipo == 'desconexion') {
                 vm.titulo = 'Desconexión';
                 vm.proceso = 1;
+                ContratoMaestroFactory.GetObtieneContratosLigadosPorStatus(vm.contrato.IdContratoMaestro, 'I').then(function (data) {
+                    vm.contrato.lstCliS = data.GetObtieneContratosLigadosPorStatusResult;
+                });
             } else if (contrato.tipo == 'reconexion') {
                 vm.titulo = 'Reconexión';
-                 vm.proceso = 2;
+                vm.proceso = 2;
+                ContratoMaestroFactory.GetObtieneContratosLigadosPorStatus(vm.contrato.IdContratoMaestro, 'D').then(function (data) {
+                    vm.contrato.lstCliS = data.GetObtieneContratosLigadosPorStatusResult;
+                });
             } else {
                 vm.titulo = 'Generar Ordenes';
-                 vm.proceso = 3;
+                vm.proceso = 3;
+                ContratoMaestroFactory.GetObtieneContratosLigadosPorStatus(vm.contrato.IdContratoMaestro, 'C').then(function (data) {
+                    vm.contrato.lstCliS = data.GetObtieneContratosLigadosPorStatusResult;
+                });
             }
         }
 
@@ -37,8 +48,8 @@
             }
 
             ContratoMaestroFactory.UploadFileDesconexion(files, vm.contrato.IdContratoMaestro).then(function (data) {
-              
-                if (data.contratosValidos.length == 0 || data.contratosValidos==null) {
+
+                if (data.contratosValidos.length == 0 || data.contratosValidos == null) {
                     ngNotify.set('No se encontraron contratos válidos en el archivo.', 'error');
                 } else {
                     data.contratosValidos.forEach(function (item) {
@@ -89,16 +100,23 @@
                     contratos_enviar.objprocesa.Contratos.push(_contrato);
                 }
             });
-           
-            ContratoMaestroFactory.ProcesaDesconexion(contratos_enviar).then(function (data){              
-                ngNotify.set('El proceso se ejecuto correctamente', 'success');
-               
-            });
+            if (contratos_enviar.objprocesa.Contratos.length > 0) {
+                ContratoMaestroFactory.ProcesaDesconexion(contratos_enviar).then(function (data) {
+                    ngNotify.set('El proceso se ejecuto correctamente', 'success');
+                    vm.contrato.lstCliS = vm.ContratosOriginales;
+                    $uibModalInstance.dismiss('cancel');
+                    deseleTodo();
+                });
+            }
+            else{
+                ngNotify.set('No hay contratos por procesar', 'info');
+            }
         }
 
         function cancel() {
             $uibModalInstance.dismiss('cancel');
             deseleTodo();
+            vm.contrato.lstCliS = vm.ContratosOriginales;
         }
     }
 })();

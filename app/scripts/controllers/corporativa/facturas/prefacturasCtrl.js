@@ -51,6 +51,7 @@ function prefacturasCtrl($state, ContratoMaestroFactory, ngNotify, $filter, $uib
     ticket.Ticket = FacturaMaestro.Ticket;
     ticket.op = 'CAN';
     ticket.tipo = 'M';
+    ticket.Modulo = 'Preliminar';
     ticket.ContratoMaestro = FacturaMaestro.ContratoMaestro;
     var modalInstance = $uibModal.open({
       animation: true,

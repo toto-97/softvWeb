@@ -21,8 +21,8 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 	vm.CambioTipo = CambioTipo;
 	vm.dolares = false;
 	vm.fechaVigencia = "";
-	vm.getEstadoCiudadPais=getEstadoCiudadPais;
-	vm.buscarCP=buscarCP;
+	vm.getEstadoCiudadPais = getEstadoCiudadPais;
+	vm.buscarCP = buscarCP;
 
 	this.$onInit = function () {
 		corporativoFactory.getDistribuidores().then(function (data) {
@@ -41,23 +41,23 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 			vm.bancos = data.GetMuestraBancosListResult;
 		});
 		ContratoMaestroFactory.GetCuentaCableMaestro().then(function (data) {
-          vm.Clabes = data.GetCuentaCableMaestroResult;
-        
+			vm.Clabes = data.GetCuentaCableMaestroResult;
+
 		});
 
-		ContratoMaestroFactory.GetUsoCFDI().then(function(data){
-		vm.listaCDFI=data.GetUsoCFDIResult;
+		ContratoMaestroFactory.GetUsoCFDI().then(function (data) {
+			vm.listaCDFI = data.GetUsoCFDIResult;
 		});
 
-		
-	/* 	ContratoMaestroFactory.GetCodigosPostalesMizar().then(function(data){
-			vm.codigospostales=data.GetCodigosPostalesMizarResult;	
-		}); */
+
+		/* 	ContratoMaestroFactory.GetCodigosPostalesMizar().then(function(data){
+				vm.codigospostales=data.GetCodigosPostalesMizarResult;	
+			}); */
 	}
 
 
-	function buscarCP(){
-      
+	function buscarCP() {
+
 		var modalInstance = $uibModal.open({
 			animation: true,
 			ariaLabelledBy: 'modal-title',
@@ -69,41 +69,43 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 			keyboard: false,
 			size: "sm",
 			resolve: {
-				
+
 			}
 		});
 		modalInstance.result.then(function (item) {
-			console.log(item);
-			vm.cp=item.id_CodigoPostal;
+			vm.cp = item.id_CodigoPostal;
 			getEstadoCiudadPais();
-		  }, function () {
-		  });             
+		}, function () {
+		});
 
 
 	}
 
-	function getEstadoCiudadPais(){
-		ContratoMaestroFactory.GetPaisesMizar(vm.cp).then(function(data){
-			vm.paises=data.GetPaisesMizarResult;
-			vm.Pais=vm.paises[0];
-				
-			ContratoMaestroFactory.GetEstadosMizar(vm.cp).then(function(result){
-					vm.estados=result.GetEstadosMizarResult;
-					vm.estado=vm.estados[0];					
-      
-			ContratoMaestroFactory.GetMunicipiosMizar(vm.cp,vm.estado.id_Estado).then(function(data){
-			
-					vm.ciudades=data.GetMunicipiosMizarResult;
-					vm.ciudad=vm.ciudades[0];
-			
-					ContratoMaestroFactory.GetColoniasMizar(vm.cp).then(function(data){
-						vm.colonias=data.GetColoniasMizarResult;
-						vm.colonia=vm.colonias[0];
-					
-				    });
-				
+	function getEstadoCiudadPais() {
+		ContratoMaestroFactory.GetPaisesMizar(vm.cp).then(function (data) {
+			console.log("GetPaisesMizar", data);
+			vm.paises = data.GetPaisesMizarResult;
+			vm.Pais = vm.paises[0];
+
+			ContratoMaestroFactory.GetEstadosMizar(vm.cp).then(function (result) {
+				console.log("GetEstadosMizar", result);
+				vm.estados = result.GetEstadosMizarResult;
+				vm.estado = vm.estados[0];
+
+				ContratoMaestroFactory.GetMunicipiosMizar(vm.cp, vm.estado.id_Estado).then(function (data) {
+					console.log("GetMunicipiosMizar", data);
+					vm.ciudades = data.GetMunicipiosMizarResult;
+					vm.ciudad = vm.ciudades[0];
+
+					ContratoMaestroFactory.GetColoniasMizar(vm.cp).then(function (data) {
+						console.log("GetColoniasMizar", data);
+						vm.colonias = data.GetColoniasMizarResult;
+						vm.colonia = vm.colonias[0];
+
+					});
+
+				});
 			});
-		});
 		});
 	}
 
@@ -128,7 +130,7 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 			controllerAs: '$ctrl',
 			backdrop: 'static',
 			keyboard: false,
-			size: "md",
+			size: "lg",
 			resolve: {
 				detalle: function () {
 					return detalle;
@@ -189,42 +191,42 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 			vm.FacturacionDolaresAux = 0;
 		}
 		var IdClabe = 0;
-		if (vm.selectedClabe != undefined){
+		if (vm.selectedClabe != undefined) {
 			IdClabe = vm.selectedClabe.Id;
 		}
-		if (vm.EntreCalles === undefined){
-	        vm.EntreCalles = '';
-	    }
+		if (vm.EntreCalles === undefined) {
+			vm.EntreCalles = '';
+		}
 
 		var auxFecha = $filter('date')(vm.fecha, 'dd/MM/yyyy');
 		var fechaHoy = new Date();
 		fechaHoy = $filter('date')(fechaHoy, 'dd/MM/yyyy');
 		var fechaVigenciaAux = $filter('date')(vm.fechaVigencia, 'dd/MM/yyyy');
-		if(fechaVigenciaAux <= fechaHoy){
+		/*if (fechaVigenciaAux <= fechaHoy) {
 			ngNotify.set('La fecha de vigencia debe ser mayor a la fecha actual', 'error');
 			return;
-		}
-			
+		}*/
+
 		var contrato = {
 			'objContratoMaestroFac': {
 				'RazonSocial': vm.razon,
 				'NombreComercial': vm.nombrecomercial,
 				'Distribuidor': vm.distribuidor.Clv_Plaza,
-				'Estado': (vm.estado)?vm.estado.Descripcion:'',
-				'Ciudad': (vm.ciudad)? vm.ciudad.Descripcion:'',
+				'Estado': (vm.estado) ? vm.estado.Descripcion : '',
+				'Ciudad': (vm.ciudad) ? vm.ciudad.Descripcion : '',
 				'Localidad': vm.localidad,
-				'Colonia': (vm.colonia)?vm.colonia.Descripcion:'',
+				'Colonia': (vm.colonia) ? vm.colonia.Descripcion : '',
 				'Calle': vm.calle,
 				'NumExt': vm.numeroexterior,
 				'NumInt': vm.numerointerior,
-				'CodigoPostal': (vm.cp)?vm.cp:'',
+				'CodigoPostal': (vm.cp) ? vm.cp : '',
 				'RFC': vm.rfc,
 				'Prepago': vm.prep,
 				'PostPago': vm.posp,
 				'DiasCredito': vm.diascredito,
 				'DiasGracia': vm.diasgracia,
 				'LimiteCredito': vm.limitecredito,
-				'FechaFac': vm.fecha+'/01/2000',
+				'FechaFac': vm.fecha + '/01/2000',
 				'PagoEdoCuetna': vm.pagEdo,
 				'PagoFac': vm.pagFac,
 				'TipoCorteCli': vm.tipocorte.Id,
@@ -235,17 +237,17 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 				'Referencia2': vm.Referencia2,
 				'ClvBanco': vm.clvBanco,
 				'FacturacionDolares': vm.FacturacionDolaresAux,
-				'EntreCalles':vm.EntreCalles,
-				'Pais':(vm.Pais)?vm.Pais.Descripcion:'',
-				'Fax':vm.Fax,
-				'Tel':vm.Telefono,
-				'Email':vm.Email,
-				'FechaVencimiento':$filter('date')(vm.fechaVigencia, 'dd/MM/yyyy'),
+				'EntreCalles': vm.EntreCalles,
+				'Pais': (vm.Pais) ? vm.Pais.Descripcion : '',
+				'Fax': vm.Fax,
+				'Tel': vm.Telefono,
+				'Email': vm.Email,
+				'FechaVencimiento': $filter('date')(vm.fechaVigencia, 'dd/MM/yyyy'),
 				'IdClabe': IdClabe,
-				'id_UsoCFDI':(vm.CDFI)?vm.CDFI.id_UsoCFDI:''
+				'id_UsoCFDI': (vm.CDFI) ? vm.CDFI.id_UsoCFDI : ''
 			}
 		};
-		
+
 		corporativoFactory.addMaestro(contrato).then(function (data) {
 			vm.contratoMaestro = data.AddContratoMaestroFacResult;
 			ngNotify.set('Contrato maestro agregado correctamente, ahora puedes ligar contratos.', 'success');

@@ -176,7 +176,7 @@ angular
 
     var vm = this;
     vm.cancel = cancel;
-    vm.titulo = 'Pagos referenciados a factura ' + factura.Ticket;
+    vm.titulo = 'Pagos referenciados a ticket ' + factura.Ticket;
     vm.opcionTicket=opcionTicket;
  /*    vm.ImprimeFacturaFiscalpago = ImprimeFacturaFiscalpago;
     vm.EnviaFacturaFiscalpago = EnviaFacturaFiscalpago; */

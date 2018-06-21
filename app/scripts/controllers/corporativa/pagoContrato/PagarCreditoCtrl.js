@@ -221,8 +221,6 @@ function PagarCreditoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu,Contra
 											ngNotify.set('Pago grabado correctamente', 'success');
 											$state.reload(); 
 
-											
-
 											}); */
 											$uibModalInstance.dismiss('cancel');
 											ngNotify.set('Pago grabado correctamente', 'success');
