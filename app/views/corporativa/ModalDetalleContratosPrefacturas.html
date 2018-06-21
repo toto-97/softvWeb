@@ -12,16 +12,22 @@
                     <thead>
                         <th style="vertical-align: middle; width:33%;">Contrato</th>
                         <th style="vertical-align: middle; width:33%">Paquete</th>
+                        <th style="vertical-align: middle; width:33%">Mes Cobrado</th>
                         <th style="vertical-align: middle; width:33%">Importe Total</th>
                     </thead>
                     <tbody>
-                        <tr dir-paginate="x in $ctrl.DetallesFactura|itemsPerPage:8">
+                        <tr dir-paginate="x in $ctrl.DetallesFactura|itemsPerPage:8" pagination-id="detalleContratosPaginador">
                             <td>{{x.Contrato}}</td>
                             <td>{{x.Servicio}}</td>
+                            <td>{{x.PeriodoFactura}}</td>
                             <td>{{x.ImporteTotal | currency}}</td>
                         </tr>
                     </tbody>
                 </table>
+                <div style="padding-left: 20px;">
+                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="detalleContratosPaginador">
+                    </dir-pagination-controls>
+                  </div>
             </div>
         </div>
     </div>

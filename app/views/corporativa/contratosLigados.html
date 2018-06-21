@@ -32,7 +32,7 @@
 
   <br>
   <div class="col-md-12 scrollDiv">
-    <table class="table">
+    <table class="table" style="table-layout: fixed">
       <thead>
         <tr>
           <td>Prioridad</td>
@@ -94,7 +94,7 @@
       <div class="col-md-12" style="max-height: 150px; overflow-y:scroll; font-size: 10px; color:red; ">
         <br>
         <p class="text-danger text-center" ng-if="$ctrl.FileErrors.length > 0">Errores de proceso:</p>
-        <p ng-repeat="x in $ctrl.FileErrors">*{{x.ContratoCom}}--{{x.Referencia}}</p>
+        <p ng-repeat="x in $ctrl.FileErrors">*{{x.ContratoCom}} -- {{x.Referencia}}</p>
       </div>
     </form>
   </div>

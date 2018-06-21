@@ -12,8 +12,8 @@
         vm.cancel = cancel;
         vm.ok = ok;
         vm.DescargarExcel = DescargarExcel;
-        vm.csvheader=['Contrato','Servicio','ImporteTotal'];
-        vm.csvorder=['Contrato','Servicio','ImporteTotal'];
+        vm.csvheader=['Contrato','Servicio','PeriodoFactura','ImporteTotal'];
+        vm.csvorder=['Contrato','Servicio','PeriodoFactura','ImporteTotal'];
         this.$onInit = function () {
             vm.Ticket = ticket;
             ContratoMaestroFactory.GetDetalleContratoPrefactura(ticket.Clv_FacturaMaestro).then(function (data) {
@@ -26,7 +26,6 @@
         function cancel() {
             $uibModalInstance.dismiss('cancel');
         }
-
 
         function ok() {
 

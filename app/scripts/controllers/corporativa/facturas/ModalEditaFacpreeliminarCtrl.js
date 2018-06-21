@@ -5,9 +5,9 @@
     .module('softvApp')
     .controller('ModalEditaFacpreeliminarCtrl', ModalEditaFacpreeliminarCtrl);
 
-  ModalEditaFacpreeliminarCtrl.inject = ['$uibModalInstance', '$uibModal', '$rootScope', 'ngNotify', 'ContratoMaestroFactory', 'obj'];
+  ModalEditaFacpreeliminarCtrl.inject = ['$uibModalInstance', '$uibModal', '$rootScope', 'ngNotify', 'ContratoMaestroFactory', 'obj', 'globalService', '$localStorage'];
 
-  function ModalEditaFacpreeliminarCtrl($uibModalInstance, $uibModal, $rootScope, ngNotify, ContratoMaestroFactory, obj) {
+  function ModalEditaFacpreeliminarCtrl($uibModalInstance, $uibModal, $rootScope, ngNotify, ContratoMaestroFactory, obj, globalService, $localStorage) {
     var vm = this;
     vm.cancel = cancel;
     vm.ok = ok;
@@ -94,41 +94,37 @@
 
         ContratoMaestroFactory.GetAddDetalleFacFiscal(vm.clave, array_).then(function (data) {
           ContratoMaestroFactory.ActualizaFacturaGeneraFiscal(vm.clave, tipo).then(function (response) {
+              ContratoMaestroFactory.GetGraba_Factura_DigitalMaestrotvzac(vm.clave).then(function (result) {
+                console.log(result.GetGraba_Factura_DigitalMaestrotvzacResult);
+                var url = result.GetGraba_Factura_DigitalMaestrotvzacResult.urlReporte;
+                $uibModalInstance.dismiss('cancel');
+                $rootScope.$broadcast('actualizar_listado', vm.clave);
 
-            ContratoMaestroFactory.GetGraba_Factura_DigitalMaestrotvzac(vm.clave).then(function (result) {
-              console.log(result.GetGraba_Factura_DigitalMaestrotvzacResult);
-              var url = result.GetGraba_Factura_DigitalMaestrotvzacResult.urlReporte;
-              $uibModalInstance.dismiss('cancel');
-              $rootScope.$broadcast('actualizar_listado', vm.clave);
+                ContratoMaestroFactory.GetAgregaBitacoraMaestro($localStorage.currentUser.usuario, 'Facturas Preliminares Facturo', vm.clave).then(function (result) {
+                  
+                });
 
-  
-              vm.animationsEnabled = true;
-              var modalInstance = $uibModal.open({
-                animation: vm.animationsEnabled,
-                ariaLabelledBy: 'modal-title',
-                ariaDescribedBy: 'modal-body',
-                templateUrl: 'views/corporativa/ModalDetalleFactura.html',
-                controller: 'ModalDetalleFacturaCtrl',
-                controllerAs: '$ctrl',
-                backdrop: 'static',
-                keyboard: false,
-                size: 'lg',
-                resolve: {
-                  url: function () {
-                    return url;
+                vm.animationsEnabled = true;
+                var modalInstance = $uibModal.open({
+                  animation: vm.animationsEnabled,
+                  ariaLabelledBy: 'modal-title',
+                  ariaDescribedBy: 'modal-body',
+                  templateUrl: 'views/corporativa/ModalDetalleFactura.html',
+                  controller: 'ModalDetalleFacturaCtrl',
+                  controllerAs: '$ctrl',
+                  backdrop: 'static',
+                  keyboard: false,
+                  size: 'lg',
+                  resolve: {
+                    url: function () {
+                      return url;
+                    }
                   }
-                }
+                });
               });
-
-
-            });
-
-
           });
         });
-
-      } 
+      }
     }
-
   }
 })();

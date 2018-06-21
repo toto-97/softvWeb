@@ -73,8 +73,80 @@ angular.module('softvApp')
       GetUsoCFDI:'/ContratoMaestroFac/GetUsoCFDI', 
       GetDetallePagos:'/RelacionIngresosMaestro/GetDetallePagos',
       GetDetalleContratoPrefactura:'/BuscaFacturasFisca/GetDetalleContratoPrefactura',
-      GetDetalleContratoPrefacturaExcel:'/BuscaFacturasFisca/GetDetalleContratoPrefacturaExcel' 
+      GetDetalleContratoPrefacturaExcel:'/BuscaFacturasFisca/GetDetalleContratoPrefacturaExcel',
+      GetObtieneContratosLigadosPorStatus: '/ContratoMaestroFac/GetObtieneContratosLigadosPorStatus',
+      GetAgregaBitacoraMaestro: '/Bitacora/GetAgregaBitacoraMaestro',
+      GetBuscaBitacoraMaestro: '/Bitacora/GetBuscaBitacoraMaestro'
     };
+
+    factory.GetBuscaBitacoraMaestro = function (Clv_Usuario, Modulo, Descripcion, Op) { 
+      var deferred = $q.defer(); 
+      var config = { 
+        headers: { 
+          'Authorization': $localStorage.currentUser.token 
+        } 
+      }; 
+      var parametros = { 
+        'Clv_Usuario': Clv_Usuario,
+        'Modulo': Modulo,
+        'Descripcion': Descripcion,
+        'Op': Op
+      }; 
+ 
+      $http.post(globalService.getUrl() + paths.GetBuscaBitacoraMaestro, JSON.stringify(parametros), config).then(function (response) { 
+ 
+        deferred.resolve(response.data); 
+      }).catch(function (response) { 
+        deferred.reject(response); 
+      }); 
+      return deferred.promise; 
+ 
+    }; 
+    
+    factory.GetAgregaBitacoraMaestro = function (Clv_Usuario, Modulo, Descripcion) { 
+      var deferred = $q.defer(); 
+      var config = { 
+        headers: { 
+          'Authorization': $localStorage.currentUser.token 
+        } 
+      }; 
+      var parametros = { 
+        'Clv_Usuario': Clv_Usuario,
+        'Modulo': Modulo,
+        'Descripcion': Descripcion
+      }; 
+ 
+      $http.post(globalService.getUrl() + paths.GetAgregaBitacoraMaestro, JSON.stringify(parametros), config).then(function (response) { 
+ 
+        deferred.resolve(response.data); 
+      }).catch(function (response) { 
+        deferred.reject(response); 
+      }); 
+      return deferred.promise; 
+ 
+    }; 
+
+    factory.GetObtieneContratosLigadosPorStatus = function (IdContratoMaestro, Status) { 
+      var deferred = $q.defer(); 
+      var config = { 
+        headers: { 
+          'Authorization': $localStorage.currentUser.token 
+        } 
+      }; 
+      var parametros = { 
+        'IdContratoMaestro': IdContratoMaestro,
+        'Status': Status
+      }; 
+ 
+      $http.post(globalService.getUrl() + paths.GetObtieneContratosLigadosPorStatus, JSON.stringify(parametros), config).then(function (response) { 
+ 
+        deferred.resolve(response.data); 
+      }).catch(function (response) { 
+        deferred.reject(response); 
+      }); 
+      return deferred.promise; 
+ 
+    }; 
 
     factory.GetDetalleContratoPrefacturaExcel = function (Clv_FacturaMaestro) { 
       var deferred = $q.defer(); 

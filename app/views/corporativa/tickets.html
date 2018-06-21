@@ -82,8 +82,8 @@
       <thead>
         <tr>
           <th>Contrato Maestro</th>
-
-          <th>Factura original</th>
+          <th>Factura</th>
+          <th>Ticket</th>
           <th>Status</th>
           <th>Fecha</th>
           <th>Importe</th>
@@ -96,7 +96,7 @@
 
         <tr dir-paginate="x in $ctrl.Tickets|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:8">
           <td>{{x.ContratoMaestro}}</td>
-
+          <td>{{x.Factura}}</td>
           <td>{{x.Ticket}}</td>
           <td>{{x.Status}}</td>
           <td>{{x.Fecha}}</td>
@@ -107,7 +107,7 @@
             <button class="btn ink-reaction ink-reaction btn-flat btn-xs btn-info" ng-click="$ctrl.historial(x);"  ><i class="fa fa-plus"></i>  Pagos</button></td>
           
           <td>
-           <!--  <button class="btn ink-reaction  btn-xs btn-default-bright" ng-click="$ctrl.opcionTicket(1,x);"  ><i class="fa fa-print"></i> Imprimir</button> -->
+            <button class="btn ink-reaction  btn-xs btn-default-bright" ng-click="$ctrl.opcionTicket(1,x);"  ><i class="fa fa-print"></i> Imprimir</button>
             <button class="btn ink-reaction  btn-xs btn-default-bright" ng-click="$ctrl.opcionTicket(3,x);" ><i class="fa fa-envelope-o"></i> Enviar</button>
             <button class="btn ink-reaction btn-xs btn-danger" ng-if="x.Status!='Cancelada'" ng-click="$ctrl.opcionTicket(2,x)"><i class="fa fa-ban"></i> Cancelar</button>
             

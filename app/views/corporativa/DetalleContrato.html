@@ -72,7 +72,7 @@
       <div class="col-md-3">
         <p> <b>Días de crédito:</b>{{ctrl.contrato.DiasCredito}} </p>
         <p> <b>Días de gracia:</b>{{ctrl.contrato.DiasGracia}} </p>
-        <p> <b>Limite de Crédito:</b>{{ctrl.contrato.LimiteCredito}} </p>
+        <p> <b>Limite de Crédito:</b>{{ctrl.contrato.LimiteCredito | currency}} </p>
         <p ng-if="ctrl.contrato.FacturacionDolares"><b>Pago en Dolares:  </b> <span class="badge">Si</span></p>
         <p ng-if="!ctrl.contrato.FacturacionDolares"><b>Pago en Dolares:  </b> <span class="badge">No</span></p>
 

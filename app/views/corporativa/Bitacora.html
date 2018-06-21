@@ -1,0 +1,118 @@
+<style>
+    .body {
+        font-size: 10px;
+    }
+
+    .table>thead>tr>th,
+    .table>tbody>tr>th,
+    .table>tfoot>tr>th,
+    .table>thead>tr>td,
+    .table>tbody>tr>td,
+    .table>tfoot>tr>td {
+        padding: 7px 8px;
+        line-height: 1.846153846;
+        vertical-align: top;
+        border-top: 1px solid rgba(189, 193, 193, 0.2);
+    }
+</style>
+
+<div class="row animated fadeIn" style="margin-top:10px;">
+    <div class="card" style="margin-top:20px;">
+        <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
+            <header>
+                <strong style="font-weight:bold; border:none; margin-left:10px; font-size: 16px;">Bitácora de Movimientos</strong>
+                <br />
+                <small class="text-muted" style="font-size:14px; margin-left:10px;">
+                    <i class="fa fa-home" aria-hidden="true"></i> Configuración>Bitácora</small>
+            </header>
+        </div>
+        <div class="card-body">
+            <div class="panel-group" id="accordion3">
+                <div class="card panel">
+                    <div class="card-head card-head-xs style-primary-light collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1"
+                        aria-expanded="false">
+                        <header>
+                            <i class="fa fa-search"></i> Filtrar resultados</header>
+                        <div class="tools">
+                            <a class="btn btn-icon-toggle">
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="accordion3-1" class="collapse buscarContrato" aria-expanded="false" style="height: 0px;">
+                        <div class="panel-body">
+
+                            <div class="row">
+                                <br>
+                                <div class="col-md-3">
+
+                                    <input type="number" placeholder="Usuario" class="form-control input-sm" ng-model="$ctrl.Usuario">
+
+                                </div>
+                                <div class="col-md-1">
+
+                                    <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscarResultados(1);">
+                                        <i class="fa fa-search"></i> Buscar</button>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" placeholder="Módulo" class="form-control input-sm" ng-model="$ctrl.Modulo">
+
+                                </div>
+                                <div class="col-md-1">
+                                    <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscarResultados(2);">
+                                        <i class="fa fa-search"></i> Buscar</button>
+
+                                </div>
+                                <div class="col-md-3">
+
+                                    <input type="text" placeholder="Descripción" class="form-control input-sm" ng-model="$ctrl.Descripcion">
+
+                                </div>
+                                <div class="col-md-1">
+
+                                    <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscarResultados(3);">
+                                        <i class="fa fa-search"></i> Buscar</button>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- panel body -->
+                </div>
+            </div>
+            <!--end .panel -->
+
+            <div class="col-md-12 table-responsive">
+
+                <table class="table" style="font-size:13px;">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Fecha</th>
+                            <th>Módulo</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr ng-show="$ctrl.Resultados.length>0" dir-paginate="x in $ctrl.Resultados|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:15"
+                            ng-class="{danger: x.status=='V', warning:  x.status=='PV'}">
+                            <td>{{x.Clv_Usuario}}</td>
+                            <td>{{x.Fecha}}</td>
+                            <td>{{x.Modulo}}</td>
+                            <td>{{x.Descripcion}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="padding-left: 20px;">
+                    <dir-pagination-controls max-size="8" direction-links="true" boundary-links="true">
+                    </dir-pagination-controls>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</div>

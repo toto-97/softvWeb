@@ -27,6 +27,7 @@
 
     function opcionTicket(opc, ticket) {
       ticket.tipo='M';
+      ticket.Modulo = 'Facturas';
       console.log( ticket.tipo);
       if (opc == 1) {
         ticket.op = 'PRINT';
