@@ -6,6 +6,7 @@ angular
 
 
 		//rutas locales
+
 		svc.getUrl = function () {
 			//return 'http://172.16.126.44:8000/SoftvWCFService.svc';
 			return 'http://192.168.50.200/SoftvWCFService.svc';
@@ -28,6 +29,7 @@ angular
 			//return 'http://172.16.126.44:8001';
 			return 'http://192.168.50.200:85';
 			//return 'http://localhost:64481';
+
 		};
 
 		return svc;
