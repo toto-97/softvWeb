@@ -101,6 +101,7 @@
                 }
             });
             if (contratos_enviar.objprocesa.Contratos.length > 0) {
+                console.log('contratos_enviar',contratos_enviar);
                 ContratoMaestroFactory.ProcesaDesconexion(contratos_enviar).then(function (data) {
                     ngNotify.set('El proceso se ejecuto correctamente', 'success');
                     vm.contrato.lstCliS = vm.ContratosOriginales;
