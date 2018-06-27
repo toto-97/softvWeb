@@ -93,13 +93,13 @@
       } else if (opcion === 2) {
         
 
-        ContratoMaestroFactory.GetImprimeFacturaFiscalNotaMaestro().then(function (data) {
+        ContratoMaestroFactory.GetImprimeFacturaFiscalNotaMaestro(nota).then(function (data) {
           console.log(data);
           if (data.GetImprimeFacturaFiscalNotaMaestroResult.IdResult === 0) {
             ngNotify.set(data.GetImprimeFacturaFiscalNotaMaestroResult.Message, 'error');
             return;
           }
-         var url=data.GetImprimeFacturaFiscalNotaMaestroResult;
+         var url=data.GetImprimeFacturaFiscalNotaMaestroResult.urlReporte;
         vm.animationsEnabled = true;
         var modalInstance = $uibModal.open({
           animation: vm.animationsEnabled,
