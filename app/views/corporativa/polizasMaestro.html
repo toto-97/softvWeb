@@ -1,23 +1,33 @@
 <style>
-.body{font-size: 10px;}
-.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+  .body {
+    font-size: 10px;
+  }
+
+  .table>thead>tr>th,
+  .table>tbody>tr>th,
+  .table>tfoot>tr>th,
+  .table>thead>tr>td,
+  .table>tbody>tr>td,
+  .table>tfoot>tr>td {
     padding: 7px 8px;
     line-height: 1.846153846;
     vertical-align: top;
     border-top: 1px solid rgba(189, 193, 193, 0.2);
-}
-
+  }
 </style>
 
 <div class="row animated fadeIn" style="margin-top:10px;">
   <div class="card" style="margin-top:20px;">
     <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
       <header>
-        <strong style="font-weight:bold; border:none; margin-left:10px; font-size: 16px;">Póliza Facturación Corporativa</strong>
-        <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Póliza Facturación Corporativa</small>
+        <strong style="font-weight:bold; border:none; margin-left:10px; font-size: 16px;">Pólizas Facturas Expedidas</strong>
+        <br />
+        <small class="text-muted" style="font-size:14px; margin-left:10px;">
+          <i class="fa fa-home" aria-hidden="true"></i> Pólizas>Pólizas Facturas Expedidas</small>
       </header>
       <div class="tools">
-        <button class="btn btn-primary btn-sm" type="button" ng-click="$ctrl.NuevaPoliza();" permission permission-only="'contratomaestroAdd'"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo</button>
+        <button class="btn btn-primary btn-sm" type="button" ng-click="$ctrl.NuevaPoliza();" permission permission-only="'contratomaestroAdd'">
+          <i class="fa fa-plus" aria-hidden="true"></i> Nuevo</button>
       </div>
     </div>
 
@@ -26,9 +36,12 @@
         <div class="card panel">
           <div class="card-head card-head-xs style-primary-light collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1"
             aria-expanded="false">
-            <header><i class="fa fa-search"></i> Buscar Póliza</header>
+            <header>
+              <i class="fa fa-search"></i> Buscar Póliza</header>
             <div class="tools">
-              <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+              <a class="btn btn-icon-toggle">
+                <i class="fa fa-angle-down"></i>
+              </a>
             </div>
           </div>
           <div id="accordion3-1" class="collapse buscarContrato" aria-expanded="false" style="height: 0px;">
@@ -44,17 +57,22 @@
                   <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaPoliza(2);"><i class="fa fa-search"></i> Buscar</button>
                 </div>-->
                 <div class="col-md-3">
-                  <p>Fecha Póliza:</p>                     
+                  <p>Fecha Póliza:</p>
                   <input type="date" ng-model="$ctrl.Fecha" class="form-control input-sm" ng-keypress="$ctrl.enterContrato($event, 1)">
 
                 </div>
-                <div class="col-md-1">                     
-                  <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaPoliza(1);"><i class="fa fa-search"></i> Buscar</button>
-                </div>     
+                <div class="col-md-1">
+                  <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaPoliza(1);">
+                    <i class="fa fa-search"></i> Buscar</button>
+                </div>
                 <div class="col-md-3">
-                  <p>Tipo:</p>                     
-                  <label class="text-left checkbox-inline checkbox-styled"><input type="checkbox" name="dolares" ng-model="$ctrl.DolaresCheck" ng-change="$ctrl.CambiaDolares()"><span>Dólares</span></label>
-                </div>                  
+                  <p>Contrato Maestro:</p>
+                  <input type="text" ng-model="$ctrl.ContratoMaestro" class="form-control input-sm">
+                </div>
+                <div class="col-md-1">
+                  <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaPoliza(2);">
+                    <i class="fa fa-search"></i> Buscar</button>
+                </div>
               </div>
             </div>
           </div>
@@ -64,11 +82,12 @@
       <!--end .panel -->
 
       <div class="col-md-8 table-responsive" ng-if="$ctrl.Detalle === 0">
-        <table class="table" >
+        <table class="table">
           <thead>
             <tr>
               <th># Póliza</th>
-              <!--<th>Distribuidor</th>-->
+              <th>Contrato Maestro</th>
+              <th>Nombre Comercial</th>
               <th>Fecha de Generación</th>
               <th>Fecha de Póliza</th>
               <th></th>
@@ -78,12 +97,17 @@
 
             <tr ng-show="$ctrl.Polizas.length>0" dir-paginate="x in $ctrl.Polizas|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:8">
               <td>{{x.Clv_Poliza}}</td>
-              <!--<td>{{x.Plaza}}</td>-->
+              <td>{{x.ContratoMaestro}}</td>
+              <td>{{x.Nombre}}</td>
               <td>{{x.FechaGeneracion}}</td>
               <td>{{x.FechaPoliza}}</td>
               <td>
-                <button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.VerDetalles(x);"><i class="fa fa-eye"></i></button>
-                <button class="btn ink-reaction btn-floating-action btn-xs btn-warning"  ng-click="$ctrl.EliminaPoliza(x.Clv_Poliza);"><i class="fa fa-times"></i></button>
+                <button class="btn ink-reaction btn-floating-action btn-xs btn-info" ui-sref="home.corporativa.polizasConsulta({id:x.Clv_Poliza})">
+                  <i class="fa fa-eye"></i>
+                </button>
+                <button class="btn ink-reaction btn-floating-action btn-xs btn-warning" ng-click="$ctrl.EliminaPoliza(x.Clv_Poliza);">
+                  <i class="fa fa-times"></i>
+                </button>
               </td>
             </tr>
           </tbody>
@@ -93,44 +117,6 @@
           </dir-pagination-controls>
         </div>
       </div>
-
-      <div class="col-md-12 table-responsive" ng-if="$ctrl.Detalle === 1" >
-        <div class="row">
-          <div class="col-md-8">
-            <h4 ># Póliza: {{ $ctrl.SelectedPoliza.Clv_Poliza }}</h4>
-            <!--<h4 >Distribuidor: {{ $ctrl.SelectedPoliza.Plaza }}</h4>-->
-            <h4 >Fecha de Generación: {{ $ctrl.SelectedPoliza.FechaGeneracion }}</h4>
-            <h4 >Fecha de Póliza: {{ $ctrl.SelectedPoliza.FechaPoliza }}</h4>
-            <h4 >Tipo: {{ $ctrl.SelectedPoliza.Dolares }}</h4>
-          </div>
-          <div class="col-md-2">
-            <button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.QuitarDetalles();"><i class="fa fa-eye"></i></button>
-            <button class="btn ink-reaction btn-floating-action btn-xs btn-warning"  ng-click="$ctrl.EliminaPoliza($ctrl.SelectedPoliza.Clv_Poliza);"><i class="fa fa-times"></i></button>
-            <button class="btn btn-primary btn-sm" type="button" ng-click="$ctrl.Exportar($ctrl.SelectedPoliza.Clv_Poliza);"><i class="fa fa-file-text-o" aria-hidden="true"></i> Descargar Txt</button>
-          </div>
-        </div>
-        <br>
-        <table class="table" >
-          <thead>
-            <tr>
-              <th>Cuenta</th>
-              <th>Descripción</th>
-              <th>Debe</th>
-              <th>Haber</th>
-            </tr>
-          </thead>
-          <tbody>
-
-            <tr ng-show="$ctrl.DetallePoliza.length>0" dir-paginate="x in $ctrl.DetallePoliza|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:800">
-              <td>{{x.Cuenta}}</td>
-              <td>{{x.Descripcion}}</td>
-              <td>{{x.Debe}}</td>
-              <td>{{x.Haber}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
     </div>
   </div>
 

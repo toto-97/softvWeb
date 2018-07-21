@@ -1,7 +1,7 @@
 <form angular-validator-submit="$ctrl.Generar()" name="contratoForm" novalidate angular-validator>
   <div class="modal-header">
     <button class="close" aria-label="Close" type="button" ng-click="$ctrl.cancel()">×</button>
-    <h4 class="modal-title"><i class="fa fa-thumb-tack"></i> Nueva Póliza Facturación Corporativa </h4>
+    <h4 class="modal-title"><i class="fa fa-thumb-tack"></i> Nueva Póliza Facturas Expedidas </h4>
   </div>
   <div class="modal-body" >
     <!--<div class="row">
@@ -23,9 +23,9 @@
     <div class="row">
       <br>
       <div class="col-md-7">
-        <p>Tipo:</p>                     
-        <label class="text-left checkbox-inline checkbox-styled"><input type="checkbox" name="dolares" ng-model="$ctrl.DolaresCheck" ng-change="$ctrl.CambiaDolares()"><span>Dólares</span></label>
-
+        <p>Contrato Maestro:</p>                     
+        <input type="text" name="ContratoMaestro" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.ContratoMaestro" required-message="'Este campo es obligatorio.'"
+              required>
       </div>                  
     </div>
   </div>

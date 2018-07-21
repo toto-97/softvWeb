@@ -1,7 +1,7 @@
 'use strict';
-angular.module('softvApp').controller('polizaMaestroCtrl', polizaMaestroCtrl);
+angular.module('softvApp').controller('polizasMaestroCobrosCtrl', polizasMaestroCobrosCtrl);
 
-function polizaMaestroCtrl($uibModal, ContratoMaestroFactory,ngNotify, corporativoFactory, $filter, globalService, $state) {
+function polizasMaestroCobrosCtrl($uibModal, ContratoMaestroFactory,ngNotify, corporativoFactory, $filter, globalService, $state) {
   var vm = this;
   vm.BuscaPoliza = BuscaPoliza;
   vm.EliminaPoliza = EliminaPoliza;
@@ -24,9 +24,9 @@ function polizaMaestroCtrl($uibModal, ContratoMaestroFactory,ngNotify, corporati
       'Clv_Poliza':0,
       'ContratoMaestro': 0
     };
-    corporativoFactory.GetObtienePolizasMaestro(params).then(function (data) {
+    corporativoFactory.GetObtienePolizasMaestroCobros(params).then(function (data) {
       console.log(data);
-      vm.Polizas = data.GetObtienePolizasMaestroResult;
+      vm.Polizas = data.GetObtienePolizasMaestroCobrosResult;
       /*ContratoMaestroFactory.GetDistribuidores().then(function (data) {
         vm.Distribuidores = data.GetDistribuidoresResult;
       });*/
@@ -58,8 +58,8 @@ function polizaMaestroCtrl($uibModal, ContratoMaestroFactory,ngNotify, corporati
     }
     console.log(vm.Dolares);
     vm.Detalle=0;
-    corporativoFactory.GetObtienePolizasMaestro(params).then(function (data) {
-      vm.Polizas = data.GetObtienePolizasMaestroResult;
+    corporativoFactory.GetObtienePolizasMaestroCobros(params).then(function (data) {
+      vm.Polizas = data.GetObtienePolizasMaestroCobrosResult;
     });
   }
 
@@ -82,8 +82,8 @@ function polizaMaestroCtrl($uibModal, ContratoMaestroFactory,ngNotify, corporati
         'Clv_Poliza':0,
         'Dolares': vm.Dolares
       };
-      corporativoFactory.GetObtienePolizasMaestro(params).then(function (data) {
-        vm.Polizas = data.GetObtienePolizasMaestroResult;
+      corporativoFactory.GetObtienePolizasMaestroCobros(params).then(function (data) {
+        vm.Polizas = data.GetObtienePolizasMaestroCobrosResult;
         ngNotify.set('La póliza se ha eliminado correctamente','success');
       });
     });
@@ -100,8 +100,8 @@ function polizaMaestroCtrl($uibModal, ContratoMaestroFactory,ngNotify, corporati
     };
     vm.Detalle=1;
     vm.SelectedPoliza = Poliza;
-    corporativoFactory.GetDetallesPolizaMaestro(params).then(function (data) {
-      vm.DetallePoliza = data.GetDetallesPolizaMaestroResult;
+    corporativoFactory.GetDetallesPolizaMaestroCobros(params).then(function (data) {
+      vm.DetallePoliza = data.GetDetallesPolizaMaestroCobrosResult;
       console.log(vm.DetallePoliza);
     });
   }
@@ -116,8 +116,8 @@ function polizaMaestroCtrl($uibModal, ContratoMaestroFactory,ngNotify, corporati
       animation: vm.animationsEnabled,
       ariaLabelledBy: 'modal-title',
       ariaDescribedBy: 'modal-body',
-      templateUrl: 'views/corporativa/modalNuevoPolizaMaestro.html',
-      controller: 'modalNuevoPolizaMaestroCtrl',
+      templateUrl: 'views/corporativa/modalNuevoPolizaMaestroCobro.html',
+      controller: 'modalNuevoPolizaMaestroCobroCtrl',
       controllerAs: '$ctrl',
       backdrop: 'static',
       keyboard: false,
@@ -129,7 +129,7 @@ function polizaMaestroCtrl($uibModal, ContratoMaestroFactory,ngNotify, corporati
       }
     });
     vm.modalInstanceNuevoPoliza.result.then(function (poliza) {
-      $state.go('home.corporativa.polizasConsulta', {id: poliza.Clv_Poliza});
+      $state.go('home.corporativa.polizasPagosConsulta', {id: poliza.Clv_Poliza});
     }, function () {
         //alert('Modal dismissed');
     });
@@ -145,8 +145,8 @@ function polizaMaestroCtrl($uibModal, ContratoMaestroFactory,ngNotify, corporati
       'Dolares': vm.Dolares
     };
     vm.url = '';
-    corporativoFactory.GetPolizaTxt(params).then(function (data) {
-      vm.url = globalService.getUrlReportes() + '/' + data.GetPolizaTxtResult;
+    corporativoFactory.GetPolizaTxtCobros(params).then(function (data) {
+      vm.url = globalService.getUrlReportes() + '/' + data.GetPolizaTxtCobrosResult;
       //$window.open(vm.url, '_self');
 
       var isChrome = !!window.chrome && !!window.chrome.webstore;

@@ -1,0 +1,80 @@
+<style>
+    .body {
+        font-size: 10px;
+    }
+
+    .table>thead>tr>th,
+    .table>tbody>tr>th,
+    .table>tfoot>tr>th,
+    .table>thead>tr>td,
+    .table>tbody>tr>td,
+    .table>tfoot>tr>td {
+        padding: 7px 8px;
+        line-height: 1.846153846;
+        vertical-align: top;
+        border-top: 1px solid rgba(189, 193, 193, 0.2);
+    }
+</style>
+
+<div class="row animated fadeIn" style="margin-top:10px;">
+    <div class="card" style="margin-top:20px;">
+        <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
+            <header>
+                <strong style="font-weight:bold; border:none; margin-left:10px; font-size: 16px;">Detalles de Póliza Cobros Recibidos</strong>
+                <br />
+                <small class="text-muted" style="font-size:14px; margin-left:10px;">
+                    <i class="fa fa-home" aria-hidden="true"></i> Pólizas>Detalles de Póliza Cobros Recibidos</small>
+            </header>
+            <div class="tools">
+                <button class="btn btn-primary btn-sm" type="button" ui-sref="home.corporativa.polizasPagos">
+                    <i class="fa fa-mail-reply" aria-hidden="true"></i> Regresar</button>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="col-md-12 table-responsive">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h4># Póliza: {{ $ctrl.Poliza.Clv_Poliza }}</h4>
+                        <h4 >Contrato Maestro: {{ $ctrl.Poliza.ContratoMaestro }}</h4>
+                        <h4 >Nombre: {{ $ctrl.Poliza.Nombre }}</h4>
+                        <h4>Fecha de Generación: {{ $ctrl.Poliza.FechaGeneracion }}</h4>
+                        <h4>Fecha de Póliza: {{ $ctrl.Poliza.FechaPoliza }}</h4>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-info btn-sm" type="button" ng-click="$ctrl.Exportar();">
+                            <i class="fa fa-times-circle-o" aria-hidden="true"></i> Eliminar</button>
+                        <button class="btn btn-info btn-sm" type="button" ng-click="$ctrl.Exportar();">
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i> Descargar Txt</button>
+                    </div>
+                </div>
+                <br>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Cuenta</th>
+                            <th>Descripción</th>
+                            <th>Referencia</th>
+                            <th>Debe</th>
+                            <th>Haber</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr ng-show="$ctrl.DetallePoliza.length>0" dir-paginate="x in $ctrl.DetallePoliza|orderBy:$ctrl.sortKey|filter:$ctrl.search|itemsPerPage:800">
+                            <td>{{x.Cuenta}}</td>
+                            <td>{{x.Descripcion}}</td>
+                            <td>{{x.Referencia}}</td>
+                            <td>{{x.Debe | currency}}</td>
+                            <td>{{x.Haber | currency}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</div>

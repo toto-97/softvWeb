@@ -1,7 +1,7 @@
 'use strict';
 angular
 .module('softvApp')
-.controller('modalNuevoPolizaMaestroCtrl', function($uibModalInstance, $uibModal, corporativoFactory, $rootScope, ngNotify, $filter) {
+.controller('modalNuevoPolizaMaestroCobroCtrl', function($uibModalInstance, $uibModal, corporativoFactory, $rootScope, ngNotify, $filter) {
 	
 	this.$onInit = function() {
 	}
@@ -20,8 +20,8 @@ angular
 			'Clv_Poliza': 0,
 			'ContratoMaestro': vm.ContratoMaestro
 		};
-		corporativoFactory.GetGeneraNuevaPolizaMaestro(params).then(function (data) {
-			vm.Poliza = data.GetGeneraNuevaPolizaMaestroResult;
+		corporativoFactory.GetGeneraNuevaPolizaMaestroCobros(params).then(function (data) {
+			vm.Poliza = data.GetGeneraNuevaPolizaMaestroCobrosResult;
 			ngNotify.set('Póliza generada exitosamente.', 'success');
 			$uibModalInstance.close(vm.Poliza);
 		});

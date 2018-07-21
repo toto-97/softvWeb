@@ -297,9 +297,25 @@ function corporativaConf($stateProvider) {
     
 	},
 	{
-		name: 'home.corporativa.polizas',
+		name: 'home.corporativa.polizasFacturas',
 		data: {
-			pageTitle: 'SOFTV | PÓLIZAS',
+			pageTitle: 'SOFTV | PÓLIZAS FACTURAS',
+			/*permissions: {
+				only: ['polizasfacturasexpedidasSelect'],
+				options: {
+					reload: false
+				}
+			}*/
+		},
+		url: '/corporativa/polizas',
+		templateUrl: 'views/corporativa/polizasMaestro.html',
+		controller: 'polizaMaestroCtrl',
+		controllerAs: '$ctrl'
+	},
+	{
+		name: 'home.corporativa.polizasConsulta',
+		data: {
+			pageTitle: 'SOFTV | DETALLE PÓLIZAS',
 			permissions: {
 				only: ['polizasSelect'],
 				options: {
@@ -307,9 +323,41 @@ function corporativaConf($stateProvider) {
 				}
 			}
 		},
-		url: '/corporativa/polizas',
-		templateUrl: 'views/corporativa/polizasMaestro.html',
-		controller: 'polizaMaestroCtrl',
+		url: '/corporativa/polizas/consulta/:id',
+		templateUrl: 'views/corporativa/consultaPoliza.html',
+		controller: 'consultaPolizaCtrl',
+		controllerAs: '$ctrl'
+	},
+	{
+		name: 'home.corporativa.polizasPagos',
+		data: {
+			pageTitle: 'SOFTV | PÓLIZAS FACTURAS',
+			/*permissions: {
+				only: ['polizasfacturasexpedidasSelect'],
+				options: {
+					reload: false
+				}
+			}*/
+		},
+		url: '/corporativa/polizasCobro',
+		templateUrl: 'views/corporativa/polizaMaestroCobro.html',
+		controller: 'polizasMaestroCobrosCtrl',
+		controllerAs: '$ctrl'
+	},
+	{
+		name: 'home.corporativa.polizasPagosConsulta',
+		data: {
+			pageTitle: 'SOFTV | DETALLE PÓLIZAS',
+			permissions: {
+				only: ['polizasSelect'],
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/polizasCobros/consulta/:id',
+		templateUrl: 'views/corporativa/consultaPolizaCobro.html',
+		controller: 'consultaPolizaCobroCtrl',
 		controllerAs: '$ctrl'
 	},
 	{

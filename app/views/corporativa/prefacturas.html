@@ -89,6 +89,7 @@
           <tr>
             <th>No.Factura</th>
             <th>Contrato Maestro</th>
+            <th>Razón Social</th>
             <th>Fecha Generación</th>
             <th>Status</th>
             <th>Ticket</th>
@@ -103,6 +104,7 @@
           <tr dir-paginate="x in $ctrl.facturas|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:8" pagination-id="facturasPaginador">
             <td>{{x.Clv_FacturaMaestro}}</td>
             <td>{{x.ContratoMaestro}}</td>
+            <td>{{x.RazonSocial}}</td>
             <td>{{x.Fecha}}</td>
             <td>{{x.EstatusFactura}}</td>
             <td>{{x.Ticket}}</td>
