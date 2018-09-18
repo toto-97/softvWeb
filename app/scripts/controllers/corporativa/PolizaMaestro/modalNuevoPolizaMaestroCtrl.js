@@ -18,7 +18,8 @@ angular
 			'Clv_Plaza': 0,
 			'FechaPoliza': fechaAux,
 			'Clv_Poliza': 0,
-			'ContratoMaestro': vm.ContratoMaestro
+			'ContratoMaestro': 0,
+			'Dolares': vm.Dolares
 		};
 		corporativoFactory.GetGeneraNuevaPolizaMaestro(params).then(function (data) {
 			vm.Poliza = data.GetGeneraNuevaPolizaMaestroResult;
@@ -30,4 +31,5 @@ angular
 	var vm = this;
 	vm.cancel = cancel;
 	vm.Generar = Generar;
+	vm.Dolares = false;
 });

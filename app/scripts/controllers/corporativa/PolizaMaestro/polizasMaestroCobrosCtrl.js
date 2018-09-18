@@ -12,9 +12,8 @@ function polizasMaestroCobrosCtrl($uibModal, ContratoMaestroFactory,ngNotify, co
   vm.NuevaPoliza = NuevaPoliza;
   vm.Exportar = Exportar;
   vm.DolaresCheck = 0;
-  vm.Dolares = 0;
   vm.CambiaDolares = CambiaDolares;
-
+  vm.Dolares = false;
   this.$onInit = function () {
     var params = {};
     params.filtros = {
@@ -22,7 +21,8 @@ function polizasMaestroCobrosCtrl($uibModal, ContratoMaestroFactory,ngNotify, co
       'Clv_Plaza': 0,
       'FechaPoliza': '19000101',
       'Clv_Poliza':0,
-      'ContratoMaestro': 0
+      'ContratoMaestro': 0,
+      'Dolares': vm.Dolares
     };
     corporativoFactory.GetObtienePolizasMaestroCobros(params).then(function (data) {
       console.log(data);
@@ -42,7 +42,8 @@ function polizasMaestroCobrosCtrl($uibModal, ContratoMaestroFactory,ngNotify, co
         'Clv_Plaza': 0,
         'FechaPoliza': '19000101',
         'Clv_Poliza':0,
-        'ContratoMaestro': vm.ContratoMaestro
+        'ContratoMaestro': 0,
+        'Dolares': vm.Dolares
       };
     }
     else{
@@ -53,7 +54,8 @@ function polizasMaestroCobrosCtrl($uibModal, ContratoMaestroFactory,ngNotify, co
         'Clv_Plaza': 0,
         'FechaPoliza': fechaAux,
         'Clv_Poliza':0,
-        'ContratoMaestro': 0
+        'ContratoMaestro': 0,
+        'Dolares': vm.Dolares
       };
     }
     console.log(vm.Dolares);
@@ -71,9 +73,10 @@ function polizasMaestroCobrosCtrl($uibModal, ContratoMaestroFactory,ngNotify, co
       'Clv_Plaza': 0,
       'FechaPoliza': '19000101',
       'Clv_Poliza': Clv_Poliza,
+      'ContratoMaestro': 0,
       'Dolares': vm.Dolares
     };
-    corporativoFactory.EliminaPoliza(params).then(function (data) {
+    corporativoFactory.EliminaPolizaCobros(params).then(function (data) {
       //Volvemos a llenar las pólizas desde el inicio
       params.filtros = {
         'Op': 0,
@@ -102,7 +105,6 @@ function polizasMaestroCobrosCtrl($uibModal, ContratoMaestroFactory,ngNotify, co
     vm.SelectedPoliza = Poliza;
     corporativoFactory.GetDetallesPolizaMaestroCobros(params).then(function (data) {
       vm.DetallePoliza = data.GetDetallesPolizaMaestroCobrosResult;
-      console.log(vm.DetallePoliza);
     });
   }
 

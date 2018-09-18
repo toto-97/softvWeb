@@ -257,7 +257,71 @@ angular.module('softvApp')
                 if (reporteSeleccionado == 1 || reporteSeleccionado == 2) {
                     showReporte();
                 }
-                else if (reporteSeleccionado == 3){
+                else if (reporteSeleccionado == 3) {
+                    showSucursales();
+                }
+            }
+        }
+
+        function filtroDistribuidoresExcel() {
+
+            if (Distribuidores.length == 0) {
+                ngNotify.set('Seleccione al menos un distribuidor', {
+                    type: 'error'
+                });
+            } else {
+                if (reporteSeleccionado == 1 || reporteSeleccionado == 2) {
+                    vm.search = "";
+                    vm.preporte = true;
+                    vm.pdistribuidores = true;
+                    vm.psucursales = true;
+                    crearObjParametros();
+                    reportesCortesCorporativaFactory.getXml(reporteSeleccionado, objPrincipal, Distribuidores, Sucursales).then(function (data) {
+                        OtrosFiltrosXml = data.GetCreateXmlBeforeReporteCorporativaResult[0];
+                        distribuidoresXML = data.GetCreateXmlBeforeReporteCorporativaResult[1];
+                        sucursalesXml = data.GetCreateXmlBeforeReporteCorporativaResult[2];
+                        reportesCortesCorporativaFactory.creaReporteExcel(clv_usuario, reporteSeleccionado, OtrosFiltrosXml, distribuidoresXML, sucursalesXml).then(function (data) {
+
+                            var urlReporte = '';
+
+                            if (reporteSeleccionado == 1) {
+                                urlReporte = data.GetReporte_GeneralExcelResult;
+                            }
+                            else if (reporteSeleccionado == 2) {
+
+                                urlReporte = data.GetReporte_GeneralDeVentasExcelResult;
+                            }
+                            else if (reporteSeleccionado == 3) {
+                                urlReporte = data.GetReporte_ResumenIngresoSucursalResult;
+                            }
+
+                            vm.url = globalService.getUrlReportes() + '/Reportes/' + urlReporte;
+                            //$window.open(vm.url, '_self');
+
+                            var isChrome = !!window.chrome && !!window.chrome.webstore;
+                            var isIE = /*@cc_on!@*/ false || !!document.documentMode;
+                            var isEdge = !isIE && !!window.StyleMedia;
+
+
+                            if (isChrome) {
+                                var url = window.URL || window.webkitURL;
+
+                                var downloadLink = angular.element('<a></a>');
+                                downloadLink.attr('href', vm.url);
+                                downloadLink.attr('target', '_self');
+                                downloadLink.attr('download', 'CorteFacturacionCorporativa.xlsx');
+                                downloadLink[0].click();
+                            } else if (isEdge || isIE) {
+                                window.navigator.msSaveOrOpenBlob(vm.url, 'CorteFacturacionCorporativa.xlsx');
+
+                            } else {
+                                var fileURL = vm.url;
+                                window.open(fileURL);
+                            }
+                        });
+                    });
+                }
+                else if (reporteSeleccionado == 3) {
                     showSucursales();
                 }
             }
@@ -315,11 +379,11 @@ angular.module('softvApp')
                 objPrincipal.fecha_ini = fechaInicialYMD;
                 objPrincipal.fecha_fin = fechaFinalYMD;
 
-                if (vm.dolares == undefined || vm.dolares == false){
-                    objPrincipal.dolares=0;
+                if (vm.dolares == undefined || vm.dolares == false) {
+                    objPrincipal.dolares = 0;
                 }
-                else{
-                    objPrincipal.dolares=1
+                else {
+                    objPrincipal.dolares = 1
                 }
                 //objPrincipal.clv_reporte = 2;
 
@@ -359,17 +423,17 @@ angular.module('softvApp')
         function realizaReporte() {
 
             reportesCortesCorporativaFactory.creaReporte(clv_usuario, reporteSeleccionado, OtrosFiltrosXml, distribuidoresXML, sucursalesXml).then(function (data) {
-            
+
                 var urlReporte = '';
 
                 if (reporteSeleccionado == 1) {
                     urlReporte = data.GetReporte_GeneralResult;
                 }
-                else if (reporteSeleccionado == 2){
+                else if (reporteSeleccionado == 2) {
 
                     urlReporte = data.GetReporte_GeneralDeVentasResult;
                 }
-                else if (reporteSeleccionado == 3){
+                else if (reporteSeleccionado == 3) {
                     urlReporte = data.GetReporte_ResumenIngresoSucursalResult;
                 }
 
@@ -436,5 +500,5 @@ angular.module('softvApp')
         vm.crearObjParametros = crearObjParametros;
         vm.status = status;
         vm.crearXml = crearXml;
-
+        vm.filtroDistribuidoresExcel = filtroDistribuidoresExcel;
     });

@@ -175,8 +175,9 @@ function AbrirDetalleCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
     }
 
     function cancel() {
-        $uibModalInstance.dismiss('cancel');
+        //$uibModalInstance.dismiss('cancel');
         $rootScope.$emit('table', {});
+        $uibModalInstance.close();
     }
 
     var vm = this;

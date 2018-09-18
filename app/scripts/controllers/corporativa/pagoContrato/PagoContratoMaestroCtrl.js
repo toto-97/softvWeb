@@ -343,9 +343,35 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
                 }
             }
         });
+        modalInstance.result.then(function () {
+            pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
+                vm.detallePago = detallePago.GetDetalleContratosMaestrosListResult.lista.filter(function(value) { return value.Importe >= 0 });
+                vm.detallePagoTodo = detallePago.GetDetalleContratosMaestrosListResult.lista;
+                vm.sumaPagos = detallePago.GetDetalleContratosMaestrosListResult.datosdetalle;
+                vm.detallePagoAux = vm.detallePago;
+                 
+                if (detallePago.GetDetalleContratosMaestrosListResult.lista.length === 0) {
+                    vm.blockedocta = true;
+                    vm.blockPagar = true;
+                    vm.color = '#f3f3f3';
+                    ngNotify.set('No hay conceptos para facturar', 'warn');
+                } else {
+                    vm.blockedocta = false;
+                    vm.blockPagar = false;
+                    vm.color = 'white';
+                }
+                
+
+
+            });
+            DetalleFactura(vm.saldo.Clv_SessionPadre);
+        }, function () {
+            //alert('Modal dismissed');
+        });
     }
 
-    function agregarListaGeneral(){        
+    function agregarListaGeneral(){    
+        console.log('vm.detallePagoTodo',vm.detallePagoTodo);    
         vm.animationsEnabled = true;
         vm.modalInstanceLista = $uibModal.open({
             animation: vm.animationsEnabled,

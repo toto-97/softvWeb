@@ -17,12 +17,12 @@
       <div class="col-md-12">
 
         <div class="col-md-8">
-            <div class="row">
-                <div class="col-md-12">
-                  <multi-select options="$ctrl.options">
-                  </multi-select>
-                </div>    
-              </div>
+          <div class="row">
+            <div class="col-md-12">
+              <multi-select options="$ctrl.options">
+              </multi-select>
+            </div>
+          </div>
         </div>
 
         <div class="col-md-4">
@@ -32,22 +32,28 @@
             </div>
           </div>
           <div class="row">
-         
-              <div class="col-md-12">
-                <label>Fecha Inicial:</label>
-                <input type="date" ng-model="$ctrl.fechainicio" validate-on="dirty" required required-message="'Este campo es obligatorio.'"
-                  class="form-control">
 
-              </div>
-              <div class="col-md-12">
-                <label>Fecha Final:</label>
-                <input type="date" ng-model="$ctrl.fechafin" validate-on="dirty" required required-message="'Este campo es obligatorio.'"
-                  class="form-control">
+            <div class="col-md-12">
+              <label>Fecha Inicial:</label>
+              <input type="date" ng-model="$ctrl.fechainicio" validate-on="dirty" required required-message="'Este campo es obligatorio.'"
+                class="form-control">
 
-              </div>
-              
+            </div>
+            <div class="col-md-12">
+              <label>Fecha Final:</label>
+              <input type="date" ng-model="$ctrl.fechafin" validate-on="dirty" required required-message="'Este campo es obligatorio.'"
+                class="form-control">
+
+            </div>
+            <div class="checkbox checkbox-styled col-md-12" style="margin-top: 19px">
+              <label>
+                <input type="checkbox" value="" ng-model="$ctrl.dolares">
+                <span>Dólares</span>
+              </label>
+
+            </div>
           </div>
-         
+
 
           <div class="col-md-12 text-right">
             <br>

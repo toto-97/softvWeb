@@ -40,7 +40,7 @@ function reporteDetallePagoCtrl(
         dis.push(item.Clv_Plaza);
       });
 
-      ContratoMaestroFactory.GetDetallePagos(dis, fechainicio, fechafin).then(
+      ContratoMaestroFactory.GetDetallePagos(dis, fechainicio, fechafin, vm.dolares).then(
         function(result) {
            
           console.log(globalService.getUrlReportes()+"/Reportes/"+result.GetDetallePagosResult);
@@ -51,5 +51,6 @@ function reporteDetallePagoCtrl(
 
     var vm = this;
     vm.guardar = guardar;
+    vm.dolares = false;
   };
 }

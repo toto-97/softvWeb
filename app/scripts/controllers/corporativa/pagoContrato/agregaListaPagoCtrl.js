@@ -1,32 +1,32 @@
 'use strict';
 angular.module('softvApp').controller('agregaListaPagoCtrl', agregaListaPagoCtrl)
-.filter('myStrictFilter', function ($filter, $rootScope) {
-  return function (input, predicate) {
+  .filter('myStrictFilter', function ($filter, $rootScope) {
+    return function (input, predicate) {
       return $filter('filter')(input, predicate, true);
-  }
-})
-.filter('unique', function () {
-  return function (arr, field) {
+    }
+  })
+  .filter('unique', function () {
+    return function (arr, field) {
       var o = {}, i, l = arr.length, r = [];
       for (i = 0; i < l; i += 1) {
-          o[arr[i][field]] = arr[i];
+        o[arr[i][field]] = arr[i];
       }
       for (i in o) {
-          r.push(o[i]);
+        r.push(o[i]);
       }
       return r;
-  };
-});
+    };
+  });
 
-function agregaListaPagoCtrl($uibModal, $state, $rootScope, cajasFactory, corporativoFactory, ngNotify, inMenu, $uibModalInstance , $filter, Contratos, Clv_SessionPadre, detallePagoTodo) {
+function agregaListaPagoCtrl($uibModal, $state, $rootScope, cajasFactory, pagosMaestrosFactory , ngNotify, $uibModalInstance, Clv_SessionPadre, $filter, Contratos, detallePagoTodo) {
 
   function Init() {
     vm.contratosLigados = Contratos.lstCliS;
     vm.displayCollection = Contratos.lstCliS;
-    vm.displayCollection.forEach(function(element) {
-      element.selected=false;
+    vm.displayCollection.forEach(function (element) {
+      element.selected = false;
     });
-    
+
   }
 
   function cancel() {
@@ -41,26 +41,57 @@ function agregaListaPagoCtrl($uibModal, $state, $rootScope, cajasFactory, corpor
     });
   }
   //Nos traemos los servicios por contrato que se le puedan aplicar
-  function cambiaSeleccion(contratoSeleccionado){
-  
+  function cambiaSeleccion(contratoSeleccionado) {
     vm.ContratoSeleccionado = contratoSeleccionado.ContratoReal;
-    vm.Clv_Session = detallePagoTodo.filter(function(value) { return value.Contrato == contratoSeleccionado.ContratoReal });
-    vm.Clv_Session = vm.Clv_Session[0].Clv_Session;
-    cajasFactory.muestraServicios(contratoSeleccionado.ContratoReal).then(function (data) {
-        data.GetMuestraServiciosFACListResult.unshift({
+    if (detallePagoTodo.length > 0) {
+      vm.Clv_Session = detallePagoTodo.filter(function (value) { return value.Contrato == contratoSeleccionado.ContratoReal });
+      if (vm.Clv_Session.length > 0) {
+        vm.Clv_Session = vm.Clv_Session[0].Clv_Session; 
+      }
+      else{
+        pagosMaestrosFactory.GetObtieneClvSessionAgregarLista(contratoSeleccionado.ContratoReal, Clv_SessionPadre).then(function (data) {
+          vm.Clv_Session = data.GetObtieneClvSessionAgregarListaResult[0].Clv_Session;
+          cajasFactory.muestraServicios(contratoSeleccionado.ContratoReal).then(function (data) {
+            data.GetMuestraServiciosFACListResult.unshift({
+              'DescripcionFac': '----------------',
+              'Clv_Servicio': 0
+            });
+            vm.servicios = data.GetMuestraServiciosFACListResult;
+            vm.selectedService = data.GetMuestraServiciosFACListResult[0];
+          });
+        });
+      }
+    }
+    if (vm.Clv_Session == undefined) {
+      pagosMaestrosFactory.GetObtieneClvSessionAgregarLista(contratoSeleccionado.ContratoReal, Clv_SessionPadre).then(function (data) {
+        vm.Clv_Session = data.GetObtieneClvSessionAgregarListaResult[0].Clv_Session;
+        cajasFactory.muestraServicios(contratoSeleccionado.ContratoReal).then(function (data) {
+          data.GetMuestraServiciosFACListResult.unshift({
             'DescripcionFac': '----------------',
             'Clv_Servicio': 0
+          });
+          vm.servicios = data.GetMuestraServiciosFACListResult;
+          vm.selectedService = data.GetMuestraServiciosFACListResult[0];
+        });
+      });
+    }
+    else {
+      cajasFactory.muestraServicios(contratoSeleccionado.ContratoReal).then(function (data) {
+        data.GetMuestraServiciosFACListResult.unshift({
+          'DescripcionFac': '----------------',
+          'Clv_Servicio': 0
         });
         vm.servicios = data.GetMuestraServiciosFACListResult;
         vm.selectedService = data.GetMuestraServiciosFACListResult[0];
-    });
+      });
+    }
   }
 
-  function agregarLista(){
+  function agregarLista() {
     cajasFactory.dameSuscriptor(vm.ContratoSeleccionado).then(function (suscriptor) {
       vm.Suscriptor = suscriptor.GetDameTiposClientesListResult[0];
       if (vm.selectedService.Clv_Servicio == 0) {
-              ngNotify.set('Selecciona un servicio por favor.', 'error');
+        ngNotify.set('Selecciona un servicio por favor.', 'error');
       } else {
         if (vm.selectedService.Clv_Txt == 'CADIG' || vm.selectedService.Clv_Txt == 'CADI2' || vm.selectedService.Clv_Txt == 'CADI3') {
           cajasFactory.consultaCamdo(vm.Clv_Session, vm.ContratoSeleccionado).then(function (data) {
@@ -82,9 +113,9 @@ function agregaListaPagoCtrl($uibModal, $state, $rootScope, cajasFactory, corpor
                 keyboard: false,
                 size: 'md',
                 resolve: {
-                    items: function () {
-                        return items;
-                    }
+                  items: function () {
+                    return items;
+                  }
                 }
               });
               modalInstance.result.then(function () {
@@ -95,11 +126,11 @@ function agregaListaPagoCtrl($uibModal, $state, $rootScope, cajasFactory, corpor
                 //alert('Modal dismissed');
               });
             } else {
-                ngNotify.set('El cliente tiene un cambio de domicilio pendiente.', 'error');
+              ngNotify.set('El cliente tiene un cambio de domicilio pendiente.', 'error');
             }
           });
-        } 
-        else if (vm.selectedService.Clv_Txt == 'CANET'){
+        }
+        else if (vm.selectedService.Clv_Txt == 'CANET') {
           cajasFactory.consultaCamdo(vm.Clv_Session, vm.ContratoSeleccionado).then(function (data) {
             if (data.GetCAMDOFACResult.Existe == false) {
               var items = {};
@@ -119,9 +150,9 @@ function agregaListaPagoCtrl($uibModal, $state, $rootScope, cajasFactory, corpor
                 keyboard: false,
                 size: 'md',
                 resolve: {
-                    items: function () {
-                        return items;
-                    }
+                  items: function () {
+                    return items;
+                  }
                 }
               });
               modalInstance.result.then(function () {
@@ -132,14 +163,14 @@ function agregaListaPagoCtrl($uibModal, $state, $rootScope, cajasFactory, corpor
                 //alert('Modal dismissed');
               });
             } else {
-                ngNotify.set('El cliente tiene un cambio de domicilio pendiente.', 'error');
+              ngNotify.set('El cliente tiene un cambio de domicilio pendiente.', 'error');
             }
           });
         }
         else {
           cajasFactory.addAdicionales(vm.Clv_Session, vm.selectedService.Clv_Txt, vm.ContratoSeleccionado, vm.Suscriptor.Clv_TipoCliente).then(function (data) {
-              //$uibModalInstance.dismiss('cancel');
-              $uibModalInstance.close();
+            //$uibModalInstance.dismiss('cancel');
+            $uibModalInstance.close();
           });
         }
       }

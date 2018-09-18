@@ -1,0 +1,105 @@
+<style>
+    .table>thead>tr>th,
+    .table>tbody>tr>th,
+    .table>tfoot>tr>th,
+    .table>thead>tr>td,
+    .table>tbody>tr>td,
+    .table>tfoot>tr>td {
+        padding: 8px 8px;
+        line-height: 1.846153846;
+        vertical-align: top;
+        border-top: 1px solid rgba(189, 193, 193, 0.2);
+    }
+</style>
+
+<div class="row animated fadeIn fast" style="margin-top:10px;">
+    <div class="card" style="margin-top:20px;">
+        <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
+            <header>
+                <strong style="font-weight:bold; border:none; margin-left:10px;">Reporte Ordenes Facturación Corporativa</strong>
+                <br />
+                <small class="text-muted" style="font-size:14px; margin-left:10px;">
+                    <i class="fa fa-home" aria-hidden="true"></i> Reportes Corporativa > Reporte Ordenes Facturación Corporativa</small>
+            </header>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <p>Contrato Maestro</p>
+                    <input type="number" class="form-control input-sm" ng-model="$ctrl.ContratoMaestro">
+                </div>
+                <div class="col-md-2">
+                    <p>Contrato</p>
+                    <input type="text" class="form-control input-sm" ng-model="$ctrl.ContratoCliente">
+                </div>
+
+                <div class="col-md-2">
+                    <p>Fecha Inicial:</p>
+                    <input type="date" ng-model="$ctrl.FechaIni" class="form-control input-sm">
+                </div>
+                <div class="col-md-2">
+                    <p>Fecha Final:</p>
+                    <input type="date" ng-model="$ctrl.FechaFin" class="form-control input-sm">
+                </div>
+                <div class="col-md-1">
+                    <br>
+                    <button class="btn btn-info btn-xs" ng-click="$ctrl.Genera()">Buscar</button>
+                </div>
+            </div>
+            <div class="col-md-12">
+
+                <div class="table-responsive" style="padding-left: 25px; padding-right: 25px; font-size:12px;">
+                    <table st-safe-src="$ctrl.ordenes" st-table="$ctrl.displayCollection" class="table table-striped table-hover table-condensed">
+                        <thead>
+                            <!--ContratoMaestro,Clabe,Cliente,Plaza,Id,Email,FechaAsignacion-->
+                            <tr>
+                                <th st-sort="Clv_Orden">#Orden</th>
+                                <th st-sort="ContratoCli">Contrato</th>
+                                <th st-sort="ContratoMaestro">Contrato Maestro</th>
+                                <th st-sort="Trabajo">Trabajo</th>
+                                <th st-sort="Descripcion">Descripción</th>
+                                <th st-sort="Fecha">Fecha</th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <input st-search="Clv_Orden" placeholder="#Orden" class="input-sm form-control" type="search" />
+                                </th>
+                                <th>
+                                    <input st-search="ContratoCli" placeholder="Contrato" class="input-sm form-control" type="search" />
+                                </th>
+                                <th>
+                                    <input st-search="ContratoMaestro" placeholder="Contrato Maestro" class="input-sm form-control" type="search" />
+                                </th>
+                                <th>
+                                    <input st-search="Trabajo" placeholder="Trabajo" class="input-sm form-control" type="search" />
+                                </th>
+                                <th>
+                                    <input st-search="Descripcion" placeholder="Descripción" class="input-sm form-control" type="search" />
+                                </th>
+                                <th>
+                                    <input st-search="Fecha" placeholder="Fecha" class="input-sm form-control" type="search" />
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="x in $ctrl.displayCollection|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:15">
+                                <td>{{x.Clv_Orden}}</td>
+                                <td>{{x.ContratoCli}}</td>
+                                <td>{{x.ContratoMaestro}}</td>
+                                <td>{{x.Trabajo}}</td>
+                                <td>{{x.Descripcion}}</td>
+                                <td>{{x.Fecha}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="padding-left: 20px;">
+                        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                        </dir-pagination-controls>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,9 +1,9 @@
 'use strict';
 angular.module('softvApp').controller('consultaPolizaCobroCtrl', consultaPolizaCobroCtrl);
 
-function consultaPolizaCobroCtrl($uibModal, ContratoMaestroFactory, ngNotify, corporativoFactory, $filter, globalService, $stateParams) {
+function consultaPolizaCobroCtrl($uibModal, ContratoMaestroFactory, ngNotify, corporativoFactory, $filter, globalService, $stateParams, $state) {
   var vm = this;
-  vm.sortKey = 'Orden';
+  vm.sortKey = 'Referencia';
   vm.EliminaPoliza = EliminaPoliza;
   vm.Exportar = Exportar;
 
@@ -14,13 +14,13 @@ function consultaPolizaCobroCtrl($uibModal, ContratoMaestroFactory, ngNotify, co
       'Clv_Plaza': 0,
       'FechaPoliza': '19000101',
       'Clv_Poliza': $stateParams.id,
-      'ContratoMaestro': 0
+      'ContratoMaestro': 0,
+      'Dolares': false
     };
     corporativoFactory.GetDetallesPolizaMaestroCobros(params).then(function (data) {
       vm.DetallePoliza = data.GetDetallesPolizaMaestroCobrosResult;
       corporativoFactory.GetObtieneGeneralesPolizaMaestroCobros($stateParams.id).then(function (data2){
         vm.Poliza = data2.GetObtieneGeneralesPolizaMaestroCobrosResult;
-        console.log('Poliza',vm.Poliza);
       });
     });
   }
@@ -33,10 +33,12 @@ function consultaPolizaCobroCtrl($uibModal, ContratoMaestroFactory, ngNotify, co
       'Clv_Plaza': 0,
       'FechaPoliza': '19000101',
       'Clv_Poliza': $stateParams.id,
-      'ContratoMaestro': 0
+      'ContratoMaestro': 0,
+      'Dolares': false
     };
     corporativoFactory.EliminaPolizaCobros(params).then(function (data) {
-      
+      $state.go('home.corporativa.polizasPagos');
+      ngNotify.set('Póliza eliminada exitosamente.', 'success');
     });
   }
 
@@ -47,7 +49,8 @@ function consultaPolizaCobroCtrl($uibModal, ContratoMaestroFactory, ngNotify, co
       'Clv_Plaza': 0,
       'FechaPoliza': '19000101',
       'Clv_Poliza': $stateParams.id,
-      'ContratoMaestro': 0
+      'ContratoMaestro': 0,
+      'Dolares': false
     };
     vm.url = '';
     corporativoFactory.GetPolizaTxtCobros(params).then(function (data) {

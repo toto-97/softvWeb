@@ -12,8 +12,8 @@
         vm.cancel = cancel;
         vm.ok = ok;
         vm.DescargarExcel = DescargarExcel;
-        vm.csvheader=['Contrato','Servicio','PeriodoFactura','ImporteTotal'];
-        vm.csvorder=['Contrato','Servicio','PeriodoFactura','ImporteTotal'];
+        vm.csvheader=['Contrato','Servicio','PeriodoFactura','ImporteTotal','Contratacion','Mensualidad','CambioPaquete','IP','Token','Diferencia'];
+        vm.csvorder=['Contrato','Servicio','PeriodoFactura','ImporteTotal','Contratacion','Mensualidad','CambioServicio','IP','Token','Diferencia'];
         this.$onInit = function () {
             vm.Ticket = ticket;
             ContratoMaestroFactory.GetDetalleContratoPrefactura(ticket.Clv_FacturaMaestro).then(function (data) {

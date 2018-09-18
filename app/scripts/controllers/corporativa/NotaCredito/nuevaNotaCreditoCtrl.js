@@ -27,6 +27,7 @@
     vm.Detallefactura = Detallefactura;
     vm.MarcarContratos = MarcarContratos;
     vm.marcar = true;
+    vm.AplicadaAFactura = false;
 
     this.$onInit = function () {
       ContratoMaestroFactory.StatusNotadeCredito().then(function (data) {
@@ -269,7 +270,7 @@
 
 
     function cambioFactura() {
-      if (vm.factura.Saldada == 1) {
+      //if (vm.factura.Saldada == 1) {
         vm.TicketValido = true;
         ContratoMaestroFactory.GetObtieneDatosTicketList(vm.factura.CLV_FACTURA).then(function (data) {
           vm.Caja = data.GetObtieneDatosTicketListResult.Caja[0].NOMBRE;
@@ -290,11 +291,11 @@
             });
           });
         });
-      }
+      /*}
       else {
         ngNotify.set('El ticket seleccionado no se ha saldado, no se le puede aplicar una nota de crédito ', 'warn');
         vm.TicketValido = false;
-      }
+      }*/
     }
 
     function guardar() {
@@ -302,7 +303,6 @@
         ngNotify.set('No puede guardar una nota de crédito con un monto $0.00 ', 'error');
         return;
       }
-
       var obj = {
         'ContratoMaestro': vm.Contrato,
         'Factura': vm.factura.CLV_FACTURA,
@@ -315,11 +315,15 @@
         'Observaciones': vm.Observaciones,
         'Clv_Sucursal': $localStorage.currentUser.sucursal,
         'Clv_suc_aplica': $localStorage.currentUser.sucursal,
-        'Tipo': 0,
         'Caja': vm.clvcaja,
         'Contrato_Aplicar': 0,
       }
-
+      if(vm.AplicadaAFactura){
+        obj.Tipo = 1;
+      }
+      else{
+        obj.Tipo = 0;
+      }
 
       ContratoMaestroFactory.GetAddNotaCredito(obj).then(function (data) {
         vm.Clv_NotadeCredito = data.GetAddNotaCreditoResult[0].Clv_NotadeCredito;
@@ -337,15 +341,7 @@
             });
 
           });
-
-
-
         });
-
-
-
-
-
       });
 
     }

@@ -15,11 +15,12 @@ function PagarContadoCtrl(
   $localStorage,
   pagosMaestrosFactory,
   cajasFactory,
-  proceso
+  proceso,
+  $filter
 ) {
   function initialData() {
     vm.monto = elem1;
-    pagosMaestrosFactory.getMedios().then(function(data) {
+    pagosMaestrosFactory.getMedios().then(function (data) {
       data.GetObtieneMediosPagoListResult.unshift({
         Nombre: "----------------",
         IdMedioPago: 0
@@ -27,7 +28,7 @@ function PagarContadoCtrl(
       vm.medios = data.GetObtieneMediosPagoListResult;
       vm.selectedMedio = data.GetObtieneMediosPagoListResult[0];
     });
-    cajasFactory.dameBancos().then(function(data) {
+    cajasFactory.dameBancos().then(function (data) {
       data.GetMuestraBancosListResult.unshift({
         nombre: "----------------",
         Clave: 0
@@ -80,6 +81,25 @@ function PagarContadoCtrl(
     vm.dineroTransferencia = "";
   }
 
+  function cambioNota() {
+    vm.cambio = '';
+    vm.TotalAbonado = '';
+    if (vm.dineroNota > vm.monto) {
+      vm.dineroNota = vm.monto;
+    }
+    vm.TotalAbonado = vm.dineroNota;
+    if (vm.TotalAbonado > vm.monto) {
+      vm.TotalAbonado = vm.monto;
+    }
+    vm.efectivo = '';
+    vm.casePago = 4;
+    vm.cuentaTransferencia = '';
+    vm.autorizacionTransferencia = '';
+    vm.dineroCredito = '';
+    vm.pagoNota = '';
+    vm.dineroTransferencia = '';
+  }
+
   function cambioTransferencia() {
     vm.cambio = "";
     vm.TotalAbonado = "";
@@ -111,7 +131,7 @@ function PagarContadoCtrl(
       keyboard: false,
       size: "lg",
       resolve: {
-        url: function() {
+        url: function () {
           return url;
         }
       }
@@ -119,6 +139,17 @@ function PagarContadoCtrl(
   }
 
   function ok() {
+
+    if(vm.FechaPago == undefined){
+      vm.FechaPago = new Date();
+    }
+    if(vm.HoraPago == undefined){
+      vm.HoraPago = '00:00'
+    }
+
+    if(vm.numeroCheque == undefined){
+      vm.numeroCheque = '';
+    }
     var obj = {
       ContratoMaestro: x.ContratoMaestro,
       Credito: metodo,
@@ -148,7 +179,7 @@ function PagarContadoCtrl(
       switch (vm.casePago) {
         case 1:
           if (x.tipo == "pagos") {
-            pagosMaestrosFactory.generaFactura(obj).then(function(data) {
+            pagosMaestrosFactory.generaFactura(obj).then(function (data) {
               vm.r1 = data.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro;
               x.Clv_FacturaMaestro = vm.r1;
               objact.ClvFacturaMaestro = x.Clv_FacturaMaestro;
@@ -172,42 +203,36 @@ function PagarContadoCtrl(
                   GLONOTA3: 0,
                   IdMedioPago: vm.selectedMedio.IdMedioPago,
                   IdCompania: x.IdCompania,
-                  IdDistribuidor: x.IdDistribuidor
+                  IdDistribuidor: x.IdDistribuidor,
+                  FechaPago: $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago
                 };
-                pagosMaestrosFactory.actFactura(objact).then(function(dataAct) {
-                  pagosMaestrosFactory
-                    .grabaFactura(objPagar)
-                    .then(function(dataGraba) {
+                pagosMaestrosFactory.actFactura(objact).then(function (dataAct) {
+                  pagosMaestrosFactory.grabaFactura(objPagar)
+                    .then(function (dataGraba) {
                       vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
-                    
+
                       pagosMaestrosFactory
                         .nuePagoEfectivoMaestro(vm.pago, vm.efectivo, vm.cambio)
-                        .then(function(dataNuevo) {});
+                        .then(function (dataNuevo) { });
                       if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
                         ngNotify.set("Pago grabado correctamente", "error");
                       } else {
                         if (vm.proceso === "RP") {
-                       /*    ContratoMaestroFactory.GetGraba_Factura_DigitalPago(
-                            vm.pago
-                          ).then(function(result) {
-                            var url =
-                              result.GetGraba_Factura_DigitalPagoResult
-                                .urlReporte;
+                          ContratoMaestroFactory.GetGraba_Factura_DigitalPago(vm.pago).then(function (result) {
+                            var url = result.GetGraba_Factura_DigitalPagoResult.urlReporte;
                             muestraFactura(url);
-                           
+
                             $uibModalInstance.dismiss("cancel");
-                            ngNotify.set(
-                              "Pago grabado correctamente",
-                              "success"
-                            );
+                            ngNotify.set("Pago grabado correctamente", "success");
                             $rootScope.$emit("realoadBrowse", {});
-                          }); */
-                          $uibModalInstance.dismiss("cancel");
+                          });
+                          console.log('Pago Contado', 1);
+                          /*$uibModalInstance.dismiss("cancel");
                           ngNotify.set(
                             "Pago grabado correctamente",
                             "success"
                           );
-                          $rootScope.$emit("realoadBrowse", {});
+                          $rootScope.$emit("realoadBrowse", {});*/
                         } else {
                           $uibModalInstance.dismiss("cancel");
                           ngNotify.set("Pago grabado correctamente", "success");
@@ -241,35 +266,36 @@ function PagarContadoCtrl(
                 GLONOTA3: 0,
                 IdMedioPago: vm.selectedMedio.IdMedioPago,
                 IdCompania: x.IdCompania,
-                IdDistribuidor: x.IdDistribuidor
+                IdDistribuidor: x.IdDistribuidor,
+                FechaPago: $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago
               };
-              pagosMaestrosFactory.actFactura(objact).then(function(dataAct) {
-                pagosMaestrosFactory
-                  .grabaFactura(objPagar)
-                  .then(function(dataGraba) {
-                    vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;                  
+              pagosMaestrosFactory.actFactura(objact).then(function (dataAct) {
+                pagosMaestrosFactory.grabaFactura(objPagar)
+                  .then(function (dataGraba) {
+                    vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
                     pagosMaestrosFactory
                       .nuePagoEfectivoMaestro(vm.pago, vm.efectivo, vm.cambio)
-                      .then(function(dataNuevo) {});
+                      .then(function (dataNuevo) { });
                     if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
                       ngNotify.set("Pago grabado correctamente", "error");
                     } else {
                       if (vm.proceso === "RP") {
-                    /*     ContratoMaestroFactory.GetGraba_Factura_DigitalPago(
+                        ContratoMaestroFactory.GetGraba_Factura_DigitalPago(
                           vm.pago
-                        ).then(function(result) {
+                        ).then(function (result) {
                           var url =
                             result.GetGraba_Factura_DigitalPagoResult
                               .urlReporte;
                           muestraFactura(url);
-                         
+
                           $uibModalInstance.dismiss("cancel");
                           ngNotify.set("Pago grabado correctamente", "success");
                           $rootScope.$emit("realoadBrowse", {});
-                        }); */
-                        $uibModalInstance.dismiss("cancel");
+                        });
+                        console.log('Pago Contado', 2);
+                        /*$uibModalInstance.dismiss("cancel");
                         ngNotify.set("Pago grabado correctamente", "success");
-                        $rootScope.$emit("realoadBrowse", {});
+                        $rootScope.$emit("realoadBrowse", {});*/
                       } else {
                         $uibModalInstance.dismiss("cancel");
                         ngNotify.set("Pago grabado correctamente", "success");
@@ -285,18 +311,12 @@ function PagarContadoCtrl(
           break;
         case 2:
           if (x.tipo == "pagos") {
-            pagosMaestrosFactory.generaFactura(obj).then(function(data) {
+            pagosMaestrosFactory.generaFactura(obj).then(function (data) {
               vm.r1 = data.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro;
               x.Clv_FacturaMaestro = vm.r1;
               objact.ClvFacturaMaestro = x.Clv_FacturaMaestro;
-
               if (vm.selectedBancoCheque.Clave == 0) {
                 ngNotify.set("Selecciona un banco.", "error");
-              } else if (
-                vm.numeroCheque == "" ||
-                vm.numeroCheque == undefined
-              ) {
-                ngNotify.set("Digita el número del cheque.", "error");
               } else {
                 if (vm.dineroCheque == vm.monto) {
                   var objPagar = {
@@ -318,14 +338,14 @@ function PagarContadoCtrl(
                     GLONOTA3: 0,
                     IdMedioPago: vm.selectedMedio.IdMedioPago,
                     IdCompania: x.IdCompania,
-                    IdDistribuidor: x.IdDistribuidor
+                    IdDistribuidor: x.IdDistribuidor,
+                    FechaPago: $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago
                   };
                   pagosMaestrosFactory
                     .actFactura(objact)
-                    .then(function(dataAct) {
-                      pagosMaestrosFactory
-                        .grabaFactura(objPagar)
-                        .then(function(dataGraba) {
+                    .then(function (dataAct) {
+                      pagosMaestrosFactory.grabaFactura(objPagar)
+                        .then(function (dataGraba) {
                           vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
 
                           if (
@@ -334,9 +354,9 @@ function PagarContadoCtrl(
                             ngNotify.set("Pago grabado correctamente", "error");
                           } else {
                             if (vm.proceso === "RP") {
-                              /* ContratoMaestroFactory.GetGraba_Factura_DigitalPago(
+                              ContratoMaestroFactory.GetGraba_Factura_DigitalPago(
                                 vm.pago
-                              ).then(function(result) {
+                              ).then(function (result) {
                                 var url =
                                   result.GetGraba_Factura_DigitalPagoResult
                                     .urlReporte;
@@ -348,14 +368,14 @@ function PagarContadoCtrl(
                                   "success"
                                 );
                                 $rootScope.$emit("realoadBrowse", {});
-                              }); */
-
-                              $uibModalInstance.dismiss("cancel");
+                              });
+                              console.log('Pago Contado', 3);
+                              /*$uibModalInstance.dismiss("cancel");
                               ngNotify.set(
                                 "Pago grabado correctamente",
                                 "success"
                               );
-                              $rootScope.$emit("realoadBrowse", {});
+                              $rootScope.$emit("realoadBrowse", {});*/
                             } else {
                               $uibModalInstance.dismiss("cancel");
                               ngNotify.set(
@@ -375,9 +395,7 @@ function PagarContadoCtrl(
           } else {
             if (vm.selectedBancoCheque.Clave == 0) {
               ngNotify.set("Selecciona un banco.", "error");
-            } else if (vm.numeroCheque == "" || vm.numeroCheque == undefined) {
-              ngNotify.set("Digita el número del cheque.", "error");
-            } else {
+            }  else {
               if (vm.dineroCheque == vm.monto) {
                 var objPagar = {
                   Clv_FacturaMaestro: x.Clv_FacturaMaestro,
@@ -398,37 +416,37 @@ function PagarContadoCtrl(
                   GLONOTA3: 0,
                   IdMedioPago: vm.selectedMedio.IdMedioPago,
                   IdCompania: x.IdCompania,
-                  IdDistribuidor: x.IdDistribuidor
+                  IdDistribuidor: x.IdDistribuidor,
+                  FechaPago: $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago
                 };
-                pagosMaestrosFactory.actFactura(objact).then(function(dataAct) {
-                  pagosMaestrosFactory
-                    .grabaFactura(objPagar)
-                    .then(function(dataGraba) {
+                pagosMaestrosFactory.actFactura(objact).then(function (dataAct) {
+                  pagosMaestrosFactory.grabaFactura(objPagar)
+                    .then(function (dataGraba) {
                       vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
 
                       if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
                         ngNotify.set("Pago grabado correctamente", "error");
                       } else {
                         if (vm.proceso === "RP") {
-                          /*  ContratoMaestroFactory.GetGraba_Factura_DigitalPago(
+                          ContratoMaestroFactory.GetGraba_Factura_DigitalPago(
                             vm.pago
-                          ).then(function(result) {
+                          ).then(function (result) {
                             var url =
                               result.GetGraba_Factura_DigitalPagoResult
                                 .urlReporte;
                             muestraFactura(url);
-                          
+
                             $uibModalInstance.dismiss("cancel");
                             ngNotify.set(
                               "Pago grabado correctamente",
                               "success"
                             );
                             $rootScope.$emit("realoadBrowse", {});
-                          }); */
-
-                          $uibModalInstance.dismiss("cancel");
+                          });
+                          console.log('Pago Contado', 4);
+                          /*$uibModalInstance.dismiss("cancel");
                           ngNotify.set("Pago grabado correctamente", "success");
-                          $rootScope.$emit("realoadBrowse", {});
+                          $rootScope.$emit("realoadBrowse", {});*/
                         } else {
                           $uibModalInstance.dismiss("cancel");
                           ngNotify.set("Pago grabado correctamente", "success");
@@ -445,7 +463,7 @@ function PagarContadoCtrl(
           break;
         case 3:
           if (x.tipo == "pagos") {
-            pagosMaestrosFactory.generaFactura(obj).then(function(data) {
+            pagosMaestrosFactory.generaFactura(obj).then(function (data) {
               vm.r1 = data.GetGrabaFacturaCMaestroResult.ClvFacturaMaestro;
               x.Clv_FacturaMaestro = vm.r1;
               objact.ClvFacturaMaestro = x.Clv_FacturaMaestro;
@@ -483,14 +501,14 @@ function PagarContadoCtrl(
                     GLONOTA3: 0,
                     IdMedioPago: vm.selectedMedio.IdMedioPago,
                     IdCompania: x.IdCompania,
-                    IdDistribuidor: x.IdDistribuidor
+                    IdDistribuidor: x.IdDistribuidor,
+                    FechaPago: $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago
                   };
                   pagosMaestrosFactory
                     .actFactura(objact)
-                    .then(function(dataAct) {
-                      pagosMaestrosFactory
-                        .grabaFactura(objPagar)
-                        .then(function(dataGraba) {
+                    .then(function (dataAct) {
+                      pagosMaestrosFactory.grabaFactura(objPagar)
+                        .then(function (dataGraba) {
                           vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
                           if (
                             dataGraba.AddGuardaPagoFacturaMaestroResult == 0
@@ -498,28 +516,28 @@ function PagarContadoCtrl(
                             ngNotify.set("Pago grabado correctamente", "error");
                           } else {
                             if (vm.proceso === "RP") {
-                              /*   ContratoMaestroFactory.GetGraba_Factura_DigitalPago(
+                              ContratoMaestroFactory.GetGraba_Factura_DigitalPago(
                                 vm.pago
-                              ).then(function(result) {
+                              ).then(function (result) {
                                 var url =
                                   result.GetGraba_Factura_DigitalPagoResult
                                     .urlReporte;
                                 muestraFactura(url);
-                                
+
                                 $uibModalInstance.dismiss("cancel");
                                 ngNotify.set(
                                   "Pago grabado correctamente",
                                   "success"
                                 );
                                 $rootScope.$emit("realoadBrowse", {});
-                              }); */
-
-                              $uibModalInstance.dismiss("cancel");
+                              });
+                              console.log('Pago Contado', 5);
+                              /*$uibModalInstance.dismiss("cancel");
                               ngNotify.set(
                                 "Pago grabado correctamente",
                                 "success"
                               );
-                              $rootScope.$emit("realoadBrowse", {});
+                              $rootScope.$emit("realoadBrowse", {});*/
                             } else {
                               $uibModalInstance.dismiss("cancel");
                               ngNotify.set(
@@ -570,37 +588,37 @@ function PagarContadoCtrl(
                   GLONOTA3: 0,
                   IdMedioPago: vm.selectedMedio.IdMedioPago,
                   IdCompania: x.IdCompania,
-                  IdDistribuidor: x.IdDistribuidor
+                  IdDistribuidor: x.IdDistribuidor,
+                  FechaPago: $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago
                 };
-                pagosMaestrosFactory.actFactura(objact).then(function(dataAct) {
-                  pagosMaestrosFactory
-                    .grabaFactura(objPagar)
-                    .then(function(dataGraba) {
+                pagosMaestrosFactory.actFactura(objact).then(function (dataAct) {
+                  pagosMaestrosFactory.grabaFactura(objPagar)
+                    .then(function (dataGraba) {
                       vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
 
                       if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
                         ngNotify.set("Pago grabado correctamente", "error");
                       } else {
                         if (vm.proceso === "RP") {
-                          /*  ContratoMaestroFactory.GetGraba_Factura_DigitalPago(
+                          ContratoMaestroFactory.GetGraba_Factura_DigitalPago(
                             vm.pago
-                          ).then(function(result) {
+                          ).then(function (result) {
                             var url =
                               result.GetGraba_Factura_DigitalPagoResult
                                 .urlReporte;
                             muestraFactura(url);
-                          
+
                             $uibModalInstance.dismiss("cancel");
                             ngNotify.set(
                               "Pago grabado correctamente",
                               "success"
                             );
                             $rootScope.$emit("realoadBrowse", {});
-                          }); */
-
-                          $uibModalInstance.dismiss("cancel");
+                          });
+                          console.log('Pago Contado',6 );
+                          /*$uibModalInstance.dismiss("cancel");
                           ngNotify.set("Pago grabado correctamente", "success");
-                          $rootScope.$emit("realoadBrowse", {});
+                          $rootScope.$emit("realoadBrowse", {});*/
                         } else {
                           $uibModalInstance.dismiss("cancel");
                           ngNotify.set("Pago grabado correctamente", "success");
@@ -631,6 +649,7 @@ function PagarContadoCtrl(
   vm.cambioCheque = cambioCheque;
   vm.cambioTransferencia = cambioTransferencia;
   vm.ok = ok;
+  vm.cambioNota = cambioNota;
   vm.proceso = proceso;
   initialData();
 }

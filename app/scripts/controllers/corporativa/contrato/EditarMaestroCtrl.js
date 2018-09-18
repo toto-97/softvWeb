@@ -292,8 +292,10 @@
     function abrirContratos() {
       var auxFecha = $filter("date")(vm.fecha, "dd/MM/yyyy");
       var fechaHoy = new Date();
-      fechaHoy = $filter("date")(fechaHoy, "dd/MM/yyyy");
-      var fechaVigenciaAux = $filter("date")(vm.fechaVigencia, "dd/MM/yyyy");
+      //fechaHoy = $filter("date")(fechaHoy, "dd/MM/yyyy");
+      var fechaVigenciaAux = new Date($filter("date")(vm.fechaVigencia, "dd/MM/yyyy"));
+      console.log('fechaHoy',fechaHoy);
+      console.log('fechaVigenciaAux',fechaVigenciaAux);
       if (fechaVigenciaAux <= fechaHoy) {
         ngNotify.set(
           "El contrato maestro se encuentra vencido, los contratos que se agreguen no se verán afectados",
@@ -326,6 +328,14 @@
           }
         }
       });
+      modalInstance.result.then(function () {
+        corporativoFactory.singleContrato($stateParams.id).then(function(data) {
+          var contratoMaestro = data.GetRelContratosResult[0];
+          vm.contratoMaestro.lstCliS = contratoMaestro.lstCliS;
+        });
+    }, function () {
+        //alert('Modal dismissed');
+    });
     }
 
     function guardarContrato() {

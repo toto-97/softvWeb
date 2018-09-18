@@ -32,7 +32,7 @@
 
   <br>
   <div class="col-md-12 scrollDiv">
-    <table class="table" style="table-layout: fixed">
+    <!--<table class="table" style="table-layout: fixed">
       <thead>
         <tr>
           <td>Prioridad</td>
@@ -63,7 +63,71 @@
           </td>
         </tr>
       </tbody>
+    </table>-->
+    <table st-safe-src="$ctrl.contratos" st-table="$ctrl.displayCollection" class="table table-striped table-hover table-condensed">
+      <thead>
+        <tr>
+          <th st-sort="Nivel">Prioridad</th>
+          <th st-sort="CONTRATO">Contrato</th>
+          <th st-sort="Nombre">Nombre</th>
+          <th st-sort="Proporcional">Proporcional</th>
+          <th st-sort="Parcialidades">Contrataciones por Separado</th>
+          <th st-sort="Eliminar">Eliminar</th>
+        </tr>
+        <tr>
+          <th>
+            <input st-search="Nivel" placeholder="Prioridad" class="input-sm form-control" type="search" />
+          </th>
+          <th>
+            <input st-search="CONTRATO" placeholder="Contrato" class="input-sm form-control" type="search" />
+          </th>
+          <th>
+            <input st-search="Nombre" placeholder="Nombre" class="input-sm form-control" type="search" />
+          </th>
+          <th>
+            
+          </th>
+          <th>
+            
+          </th>
+          <th>
+            
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr dir-paginate="item in $ctrl.displayCollection|orderBy:$ctrl.sortKey|filter:$ctrl.search|itemsPerPage:10"
+        dnd-draggable="item" dnd-moved="$ctrl.displayCollection.splice($index, 1)" dnd-effect-allowed="move"
+          dnd-selected="models.selected = item" ng-class="{'selected': models.selected === item}">
+          <td>
+            <span class="label label-danger">{{ item.Nivel }}</span>
+          </td>
+          <td>{{item.CONTRATO}}</td>
+          <td>{{item.Nombre }} {{ item.Apellido_Paterno }} {{ item.Apellido_Materno}}</td>
+          <td class="text-center">
+            <label class="checkbox-inline checkbox-styled checkbox-primary">
+              <input type="checkbox" ng-model="item.Proporcional" value="{{ item.CONTRATO }}" ng-checked="item.Proporcional">
+              <span></span>
+            </label>
+          </td>
+          <td class="text-center">
+            <label class="checkbox-inline checkbox-styled checkbox-primary">
+              <input type="checkbox" ng-model="item.Parcialidades" value="{{ item.CONTRATO }}" ng-checked="item.Parcialidades">
+              <span></span>
+            </label>
+          </td>
+          <td>
+            <button type="button" class="btn ink-reaction btn-icon-toggle btn-danger" ng-click="$ctrl.eliminarContrato(item.CONTRATO)">
+              <i class="fa fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
     </table>
+    <div style="padding-left: 20px;">
+      <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+      </dir-pagination-controls>
+    </div>
   </div>
 
   <hr>
@@ -105,4 +169,5 @@
   <button class="btn btn-default btn-sm" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
   <button class="btn btn-primary btn-sm" type="button" ng-show="$ctrl.showokbtn" ng-click="$ctrl.ok()">Aceptar</button>
   <button class="btn btn-primary btn-sm" type="button" ng-show="$ctrl.showeditbtn" ng-click="$ctrl.edit()">Aceptar</button>
+  <!--<button class="btn btn-primary btn-sm" type="button" ng-click="$ctrl.Prueba()">Prueba</button>-->
 </div>

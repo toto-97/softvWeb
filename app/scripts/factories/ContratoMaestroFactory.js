@@ -77,8 +77,46 @@ angular.module('softvApp')
       GetObtieneContratosLigadosPorStatus: '/ContratoMaestroFac/GetObtieneContratosLigadosPorStatus',
       GetAgregaBitacoraMaestro: '/Bitacora/GetAgregaBitacoraMaestro',
       GetBuscaBitacoraMaestro: '/Bitacora/GetBuscaBitacoraMaestro',
-      GetImprimeFacturaFiscalNotaMaestro:'/FacturacionSoftv/GetImprimeFacturaFiscalNotaMaestro'
+      GetImprimeFacturaFiscalNotaMaestro:'/FacturacionSoftv/GetImprimeFacturaFiscalNotaMaestro',
+      GetOrdenesGeneradasContratoMaestro:'/ReporteCortesFac/GetOrdenesGeneradasContratoMaestro',
+      GetGuardarCalleNuevaCAMDO: '/CobraContratoMaestro/GetGuardarCalleNuevaCAMDO'
     };
+
+    factory.GetGuardarCalleNuevaCAMDO = function (parametros) { 
+      var deferred = $q.defer(); 
+      var config = { 
+        headers: { 
+          'Authorization': $localStorage.currentUser.token 
+        } 
+      }; 
+ 
+      $http.post(globalService.getUrl() + paths.GetGuardarCalleNuevaCAMDO, JSON.stringify(parametros), config).then(function (response) { 
+ 
+        deferred.resolve(response.data); 
+      }).catch(function (response) { 
+        deferred.reject(response); 
+      }); 
+      return deferred.promise; 
+ 
+    }; 
+
+    factory.GetOrdenesGeneradasContratoMaestro = function (parametros) { 
+      var deferred = $q.defer(); 
+      var config = { 
+        headers: { 
+          'Authorization': $localStorage.currentUser.token 
+        } 
+      }; 
+ 
+      $http.post(globalService.getUrl() + paths.GetOrdenesGeneradasContratoMaestro, JSON.stringify(parametros), config).then(function (response) { 
+ 
+        deferred.resolve(response.data); 
+      }).catch(function (response) { 
+        deferred.reject(response); 
+      }); 
+      return deferred.promise; 
+ 
+    }; 
 
     factory.GetBuscaBitacoraMaestro = function (Clv_Usuario, Modulo, Descripcion, Op) { 
       var deferred = $q.defer(); 
@@ -192,7 +230,7 @@ angular.module('softvApp')
     }; 
 
 
-    factory.GetDetallePagos = function (Distribuidores, FechaInicial,FechaFinal) { 
+    factory.GetDetallePagos = function (Distribuidores, FechaInicial,FechaFinal,Dolares) { 
       var deferred = $q.defer(); 
       var config = { 
         headers: { 
@@ -202,7 +240,8 @@ angular.module('softvApp')
       var parametros = { 
         'Distribuidores': Distribuidores, 
         'FechaInicial': FechaInicial, 
-        'FechaFinal':FechaFinal 
+        'FechaFinal':FechaFinal,
+        'Dolares':Dolares
       }; 
  
  
@@ -781,7 +820,11 @@ angular.module('softvApp')
           'Authorization': $localStorage.currentUser.token
         }
       };
-      $http.post(globalService.getUrl() + paths.ProcesaDesconexion, JSON.stringify(contratos), config).then(function (response) {
+      var parametros = {
+        objprocesa: contratos.objprocesa,
+        Usuario: $localStorage.currentUser.usuario
+      }
+      $http.post(globalService.getUrl() + paths.ProcesaDesconexion, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
         deferred.reject(response);

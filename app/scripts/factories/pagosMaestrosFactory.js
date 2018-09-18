@@ -23,7 +23,28 @@ angular
 			ReporteResumenContratoMaestro: '/ResumenGeneraPorContratoMaestro/GetResumenGeneraPorContratoMaestroList',
 			ReporteServiciosInstalados: '/ReporteServiciosInstalados/GetReporteServiciosInstaladosList',
 			ReporteServiciosPorInstalar: '/ReporteServiciosPorInstalar/GetReporteServiciosPorInstalarList',
-			ReporteFacturasVencidas: '/ReporteFacturasMaestrasVencidas/GetReporteFacturasMaestrasVencidasList'
+			ReporteFacturasVencidas: '/ReporteFacturasMaestrasVencidas/GetReporteFacturasMaestrasVencidasList',
+			GetObtieneClvSessionAgregarLista: '/CobraContratoMaestro/GetObtieneClvSessionAgregarLista'
+		};
+
+		factory.GetObtieneClvSessionAgregarLista = function(Contrato, Clv_SessionPadre) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Contrato':Contrato,
+				'Clv_SessionPadre': Clv_SessionPadre
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.GetObtieneClvSessionAgregarLista, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+
+			return deferred.promise;
 		};
 
 		factory.cobraSaldoMaestro = function(contrato) {
@@ -88,7 +109,8 @@ angular
 					'GLONOTA3': objPagar.GLONOTA3,
 					'IdMedioPago': objPagar.IdMedioPago,
 					'IdCompania': objPagar.IdCompania,
-					'IdDistribuidor': objPagar.IdDistribuidor
+					'IdDistribuidor': objPagar.IdDistribuidor,
+					'FechaPago': objPagar.FechaPago
 				}
 			};
 			console.log(Parametros);

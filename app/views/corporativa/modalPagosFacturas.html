@@ -31,7 +31,7 @@
                             <td>{{z.Hora}}</td>
                             <td>{{z.StatusPago}}</td>
                             <td>
-                           <!--  <button class="btn ink-reaction   btn-xs btn-default-bright"  ng-if="z.StatusPago=='Activa'" ng-click="$ctrl.opcionTicket(1,z);"  ><i class="fa fa-print"></i> Imprimir</button> -->
+                            <button class="btn ink-reaction   btn-xs btn-default-bright"  ng-if="z.StatusPago=='Activa'" ng-click="$ctrl.opcionTicket(1,z);"  ><i class="fa fa-print"></i> Imprimir</button>
                             <button class="btn ink-reaction  btn-xs btn-default-bright"  ng-if="z.StatusPago=='Activa'" ng-click="$ctrl.opcionTicket(3,z);" ><i class="fa fa-envelope-o"></i> Enviar</button>
                             <button class="btn ink-reaction btn-xs btn-danger"   ng-if="z.StatusPago=='Activa'"  ng-click="$ctrl.opcionTicket(2,z);" ><i class="fa fa-ban"></i> Cancelar</button>
                            <!--  ng-if="!z.StatusPago=='Cancelada'" -->

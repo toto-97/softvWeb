@@ -10,9 +10,28 @@ angular.module('softvApp')
 			//----------- Reportes Resumen	
 			ReporteGeneral: '/ContratoMaestroFac/GetReporte_General',
 			ReporteGeneralDeVentas: '/ContratoMaestroFac/GetReporte_GeneralDeVentas',
-			Reporte_ResIngresoSucursal: '/ContratoMaestroFac/GetReporte_ResumenIngresoSucursal'
+			Reporte_ResIngresoSucursal: '/ContratoMaestroFac/GetReporte_ResumenIngresoSucursal',
+			GetReporteClabeMaestro: '/ReporteCortesFac/GetReporteClabeMaestro',
+			ReporteGeneralDeVentasExcel: '/ContratoMaestroFac/GetReporte_GeneralDeVentasExcel',
+			ReporteGeneralExcel: '/ContratoMaestroFac/GetReporte_GeneralExcel'
 		};
 
+
+		factory.GetReporteClabeMaestro = function () {
+			var deferred = $q.defer();
+			
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.get(globalService.getUrl() + paths.GetReporteClabeMaestro, config).then(function (response) {
+				deferred.resolve(response.data);
+			}).catch(function (response) {
+				deferred.reject(response.data);
+			});
+			return deferred.promise;
+		};
 
 		factory.mostrarDistribuidorByUsuario = function (clv_usuario) {
 			var deferred = $q.defer();
@@ -80,6 +99,42 @@ angular.module('softvApp')
 			}
 			else if (reporteSeleccionado === 2 ) {				
 				rutaServicio = paths.ReporteGeneralDeVentas;
+			}
+			else if (reporteSeleccionado === 3) {
+				rutaServicio = paths.Reporte_ResIngresoSucursal;
+			}
+
+			var deferred = $q.defer();
+			var Parametros = {
+				'reportData': {
+					//	'clv_usuario': clv_usuario, 
+					'clv_reporte': reporteSeleccionado,
+					'OtrosFiltrosXml': OtrosFiltrosXml,
+					'distribuidoresXML': distribuidoresXML,
+					'sucursalesXml': sucursalesXml
+				}
+			};
+
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + rutaServicio, JSON.stringify(Parametros), config).then(function (response) {
+				deferred.resolve(response.data);
+			}).catch(function (response) {
+				deferred.reject(response.data);
+			});
+			return deferred.promise;
+		};
+
+		factory.creaReporteExcel = function (clv_usuario, reporteSeleccionado, OtrosFiltrosXml, distribuidoresXML, sucursalesXml) {
+			var rutaServicio;			
+			if (reporteSeleccionado === 1) {
+				rutaServicio = paths.ReporteGeneralExcel;
+			}
+			else if (reporteSeleccionado === 2 ) {				
+				rutaServicio = paths.ReporteGeneralDeVentasExcel;
 			}
 			else if (reporteSeleccionado === 3) {
 				rutaServicio = paths.Reporte_ResIngresoSucursal;

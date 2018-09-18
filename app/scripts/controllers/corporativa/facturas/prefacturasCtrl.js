@@ -90,7 +90,7 @@ function prefacturasCtrl($state, ContratoMaestroFactory, ngNotify, $filter, $uib
       backdrop: 'static',
       keyboard: false,
       class: 'modal-backdrop fade',
-      size: 'md',
+      size: 'lg',
       resolve: {
         ticket: function () {
           return ticket;

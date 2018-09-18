@@ -14,6 +14,7 @@ function polizaMaestroCtrl($uibModal, ContratoMaestroFactory,ngNotify, corporati
   vm.DolaresCheck = 0;
   vm.Dolares = 0;
   vm.CambiaDolares = CambiaDolares;
+  vm.Dolares = false;
 
   this.$onInit = function () {
     var params = {};
@@ -42,7 +43,8 @@ function polizaMaestroCtrl($uibModal, ContratoMaestroFactory,ngNotify, corporati
         'Clv_Plaza': 0,
         'FechaPoliza': '19000101',
         'Clv_Poliza':0,
-        'ContratoMaestro': vm.ContratoMaestro
+        'ContratoMaestro': 0,
+        'Dolares':vm.Dolares
       };
     }
     else{
@@ -53,7 +55,8 @@ function polizaMaestroCtrl($uibModal, ContratoMaestroFactory,ngNotify, corporati
         'Clv_Plaza': 0,
         'FechaPoliza': fechaAux,
         'Clv_Poliza':0,
-        'ContratoMaestro': 0
+        'ContratoMaestro': 0,
+        'Dolares': vm.Dolares
       };
     }
     console.log(vm.Dolares);
@@ -71,7 +74,7 @@ function polizaMaestroCtrl($uibModal, ContratoMaestroFactory,ngNotify, corporati
       'Clv_Plaza': 0,
       'FechaPoliza': '19000101',
       'Clv_Poliza': Clv_Poliza,
-      'Dolares': vm.Dolares
+      'ContratoMaestro': 0
     };
     corporativoFactory.EliminaPoliza(params).then(function (data) {
       //Volvemos a llenar las pólizas desde el inicio
@@ -80,7 +83,7 @@ function polizaMaestroCtrl($uibModal, ContratoMaestroFactory,ngNotify, corporati
         'Clv_Plaza': 0,
         'FechaPoliza': '19000101',
         'Clv_Poliza':0,
-        'Dolares': vm.Dolares
+        'ContratoMaestro': 0
       };
       corporativoFactory.GetObtienePolizasMaestro(params).then(function (data) {
         vm.Polizas = data.GetObtienePolizasMaestroResult;

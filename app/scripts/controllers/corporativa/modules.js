@@ -136,6 +136,38 @@ function corporativaConf($stateProvider) {
 		controllerAs: '$ctrl'
 	},
 	{
+		name: 'home.corporativa.reportesClabes',
+		data: {
+			pageTitle: 'SAC | CUENTAS CLABE',
+			/*permissions: {
+				only: ['cuentasclabeSelect'],
+				options: {
+					reload: false
+				}
+			}*/
+		},
+		url: '/corporativa/reportes/cuentasClabe',
+		templateUrl: 'views/corporativa/reporteCuentaClabe.html',
+		controller: 'reporteCuentaClabeCtrl',
+		controllerAs: '$ctrl'
+	},
+	{
+		name: 'home.corporativa.ordenesMaestro',
+		data: {
+			pageTitle: 'SAC | ORDENES FACTURACIÓN CORPORATIVA',
+			/*permissions: {
+				only: ['cuentasclabeSelect'],
+				options: {
+					reload: false
+				}
+			}*/
+		},
+		url: '/corporativa/reportes/ordenesCorporativa',
+		templateUrl: 'views/corporativa/reporteOrdenesMaestro.html',
+		controller: 'reporteOrdenesMaestroCtrl',
+		controllerAs: '$ctrl'
+	},
+	{
 		name: 'home.corporativa.tickets',
 		data: {
 			pageTitle: 'SAC | FACTURAS',

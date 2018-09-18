@@ -23,7 +23,7 @@ function BitacoraCtrl($uibModal, ContratoMaestroFactory, moment) {
     else if(Op == 3){
         Descripcion = vm.Descripcion;
     }
-    ContratoMaestroFactory.GetBuscaBitacoraMaestro(Clv_Usuario, Modulo, Descripcion, 0).then(function (data) {
+    ContratoMaestroFactory.GetBuscaBitacoraMaestro(Clv_Usuario, Modulo, Descripcion, Op).then(function (data) {
         vm.Resultados = data.GetBuscaBitacoraMaestroResult;
       });
   }

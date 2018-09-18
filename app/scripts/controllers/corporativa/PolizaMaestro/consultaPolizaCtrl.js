@@ -1,9 +1,9 @@
 'use strict';
 angular.module('softvApp').controller('consultaPolizaCtrl', consultaPolizaCtrl);
 
-function consultaPolizaCtrl($uibModal, ContratoMaestroFactory, ngNotify, corporativoFactory, $filter, globalService, $stateParams) {
+function consultaPolizaCtrl($uibModal, ContratoMaestroFactory, ngNotify, corporativoFactory, $filter, globalService, $stateParams, $state) {
   var vm = this;
-  vm.sortKey = 'Orden';
+  vm.sortKey = 'Referencia';
   vm.EliminaPoliza = EliminaPoliza;
   vm.Exportar = Exportar;
 
@@ -18,14 +18,13 @@ function consultaPolizaCtrl($uibModal, ContratoMaestroFactory, ngNotify, corpora
     };
     corporativoFactory.GetDetallesPolizaMaestro(params).then(function (data) {
       vm.DetallePoliza = data.GetDetallesPolizaMaestroResult;
-      corporativoFactory.GetObtieneGeneralesPolizaMaestro($stateParams.id).then(function (data2){
+      corporativoFactory.GetObtieneGeneralesPolizaMaestro($stateParams.id).then(function (data2) {
         vm.Poliza = data2.GetObtieneGeneralesPolizaMaestroResult;
-        console.log('Poliza',vm.Poliza);
       });
     });
   }
 
-  function EliminaPoliza(){
+  function EliminaPoliza() {
     //Eliminamos la póliza seleccionada
     var params = {};
     params.filtros = {
@@ -33,21 +32,24 @@ function consultaPolizaCtrl($uibModal, ContratoMaestroFactory, ngNotify, corpora
       'Clv_Plaza': 0,
       'FechaPoliza': '19000101',
       'Clv_Poliza': $stateParams.id,
-      'ContratoMaestro': 0
+      'ContratoMaestro': 0,
+      'Dolares': false
     };
     corporativoFactory.EliminaPoliza(params).then(function (data) {
-      
+      $state.go('home.corporativa.polizasFacturas');
+      ngNotify.set('Póliza eliminada exitosamente.', 'success');
     });
   }
 
-  function Exportar(){
+  function Exportar() {
     var params = {};
     params.filtros = {
       'Op': 0,
       'Clv_Plaza': 0,
       'FechaPoliza': '19000101',
       'Clv_Poliza': $stateParams.id,
-      'ContratoMaestro': 0
+      'ContratoMaestro': 0,
+      'Dolares': false
     };
     vm.url = '';
     corporativoFactory.GetPolizaTxt(params).then(function (data) {
