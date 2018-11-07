@@ -22,12 +22,12 @@ angular
 		svc.getUrlMizar = function () {
 			return 'http://172.16.126.44:8001/SoftvWCFService.svc';
 			//return 'http://localhost:64481/SoftvWCFService.svc';	
-			//return 'http://192.168.50.102:8000/SoftvWCFService.svc';
+			//return 'http://192.168.50.122:8000/SoftvWCFService.svc';
 		};
 
 		svc.getReporteUrlMizar = function () {
 			return 'http://172.16.126.44:8001';
-			//return 'http://192.168.50.102:8000';
+			//return 'http://192.168.50.122:8000';
 			//return 'http://localhost:64481';
 
 		};

@@ -7,6 +7,7 @@
 			<!-- Text input-->
 			<div class="form-group">
 				<br>
+				<!--Método de Pago-->
 				<div class="row">
 					<label class="col-md-5 control-label" for="">
 						<span style="color:red">Medio de Pago</span>
@@ -16,6 +17,8 @@
 						</select>
 					</div>
 				</div>
+				<legend></legend>
+				<!--Fecha de Pago-->
 				<div class="row">
 					<label class="col-md-4 control-label" for="textinput">Fecha de Pago</label>
 					<div class="col-md-3">
@@ -27,6 +30,20 @@
 					</div>
 				</div>
 				<legend></legend>
+				<!--Moneda y Tipo de cambio-->
+				<!--<div class="row">
+					<label class="col-md-2 control-label" for="textinput">Moneda</label>
+					<div class="col-md-3">
+						<select class="form-control input-sm" ng-model="$ctrl.Moneda" ng-options="v.Moneda for v in $ctrl.Monedas track by v.IdMoneda">
+						</select>
+					</div>
+					<label class="col-md-2 control-label" for="textinput">Tipo de Cambio</label>
+					<div class="col-md-3">
+						<input type="number" step="any" class="form-control input-sm" ng-model="$ctrl.TipoCambio" >
+					</div>
+				</div>
+				<legend></legend>-->
+				<!--Forma de Pago-->
 				<div class="row">
 					<label class="col-md-5 control-label" for="textinput">Pago en Efectivo</label>
 					<div class="col-md-3">

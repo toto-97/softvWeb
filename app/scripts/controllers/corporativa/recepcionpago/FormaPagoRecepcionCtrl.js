@@ -1,8 +1,9 @@
 'use strict';
-angular.module('softvApp').controller('PagarCreditoCtrl', PagarCreditoCtrl);
+angular.module('softvApp').controller('FormaPagoRecepcionCtrl', FormaPagoRecepcionCtrl);
 
-function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMenu, ContratoMaestroFactory, $uibModalInstance, x, $localStorage, pagosMaestrosFactory, elem, cajasFactory) {
+function FormaPagoRecepcionCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMenu, ContratoMaestroFactory, $uibModalInstance, x, $localStorage, pagosMaestrosFactory, elem, cajasFactory) {
 	function initialData() {
+		console.log('elem',elem);
 		vm.monto = elem.PagoInicial;
 		pagosMaestrosFactory.getMedios().then(function (data) {
 			data.GetObtieneMediosPagoListResult.unshift({
@@ -182,7 +183,7 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 			vm.FechaPago = new Date();
 		}
 		if (vm.HoraPago == undefined) {
-			vm.HoraPago = '00:00'
+			vm.HoraPago = '00:00:00'
 		}
 		var obj = {
 			'ContratoMaestro': x.ContratoMaestro,
@@ -230,8 +231,13 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 										'IdMedioPago': vm.selectedMedio.IdMedioPago,
 										'IdCompania': x.IdCompania,
 										'IdDistribuidor': x.IdDistribuidor,
-										'FechaPago': $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago
+										'FechaPago': $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago,
+										'MonedaP': x.MonedaP == undefined ? '' : x.MonedaP,
+										'TipoCambioDR': x.TipoCambioDR == undefined ? 0 : x.TipoCambioDR,
+										'PagoMonedaP': x.PagoMonedaP == undefined ? 0 : x.PagoMonedaP,
+										'Moneda': x.Moneda == undefined ? '' : x.Moneda
 									};
+									console.log('objPagar',objPagar);
 									pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
 
 										vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
@@ -283,8 +289,13 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 									'IdMedioPago': vm.selectedMedio.IdMedioPago,
 									'IdCompania': x.IdCompania,
 									'IdDistribuidor': x.IdDistribuidor,
-									'FechaPago': $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago
+									'FechaPago': $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago,
+									'MonedaP': x.MonedaP == undefined ? '' : x.MonedaP,
+									'TipoCambioDR': x.TipoCambioDR == undefined ? 0 : x.TipoCambioDR,
+									'PagoMonedaP': x.PagoMonedaP == undefined ? 0 : x.PagoMonedaP,
+									'Moneda': x.Moneda == undefined ? '' : x.Moneda
 								};
+								console.log('objPagar',objPagar);
 								pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
 									vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
 
@@ -346,8 +357,13 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 											'IdMedioPago': vm.selectedMedio.IdMedioPago,
 											'IdCompania': x.IdCompania,
 											'IdDistribuidor': x.IdDistribuidor,
-											'FechaPago': $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago
+											'FechaPago': $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago,
+											'MonedaP': x.MonedaP == undefined ? '' : x.MonedaP,
+											'TipoCambioDR': x.TipoCambioDR == undefined ? 0 : x.TipoCambioDR,
+											'PagoMonedaP': x.PagoMonedaP == undefined ? 0 : x.PagoMonedaP,
+											'Moneda': x.Moneda == undefined ? '' : x.Moneda
 										};
+										console.log('objPagar',objPagar);
 										pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
 											vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
 
@@ -401,8 +417,13 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 										'IdMedioPago': vm.selectedMedio.IdMedioPago,
 										'IdCompania': x.IdCompania,
 										'IdDistribuidor': x.IdDistribuidor,
-										'FechaPago': $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago
+										'FechaPago': $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago,
+										'MonedaP': x.MonedaP == undefined ? '' : x.MonedaP,
+										'TipoCambioDR': x.TipoCambioDR == undefined ? 0 : x.TipoCambioDR,
+										'PagoMonedaP': x.PagoMonedaP == undefined ? 0 : x.PagoMonedaP,
+										'Moneda': x.Moneda == undefined ? '' : x.Moneda
 									};
+									console.log('objPagar',objPagar);
 									pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
 
 										vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
@@ -464,8 +485,13 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 											'IdMedioPago': vm.selectedMedio.IdMedioPago,
 											'IdCompania': x.IdCompania,
 											'IdDistribuidor': x.IdDistribuidor,
-											'FechaPago': $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago
+											'FechaPago': $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago,
+											'MonedaP': x.MonedaP == undefined ? '' : x.MonedaP,
+											'TipoCambioDR': x.TipoCambioDR == undefined ? 0 : x.TipoCambioDR,
+											'PagoMonedaP': x.PagoMonedaP == undefined ? 0 : x.PagoMonedaP,
+											'Moneda': x.Moneda == undefined ? '' : x.Moneda
 										};
+										console.log('objPagar',objPagar);
 										pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
 											console.log(dataGraba, 'dataGraba c 5');
 											vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
@@ -522,8 +548,13 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 										'IdMedioPago': vm.selectedMedio.IdMedioPago,
 										'IdCompania': x.IdCompania,
 										'IdDistribuidor': x.IdDistribuidor,
-										'FechaPago': $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago
+										'FechaPago': $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago,
+										'MonedaP': x.MonedaP == undefined ? '' : x.MonedaP,
+										'TipoCambioDR': x.TipoCambioDR == undefined ? 0 : x.TipoCambioDR,
+										'PagoMonedaP': x.PagoMonedaP == undefined ? 0 : x.PagoMonedaP,
+										'Moneda': x.Moneda == undefined ? '' : x.Moneda
 									};
+									console.log('objPagar',objPagar);
 									pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
 										console.log(dataGraba, 'dataGraba c 6');
 										vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
@@ -585,8 +616,13 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 											'IdMedioPago': vm.selectedMedio.IdMedioPago,
 											'IdCompania': x.IdCompania,
 											'IdDistribuidor': x.IdDistribuidor,
-											'FechaPago': $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago
+											'FechaPago': $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago,
+											'MonedaP': x.MonedaP == undefined ? '' : x.MonedaP,
+											'TipoCambioDR': x.TipoCambioDR == undefined ? 0 : x.TipoCambioDR,
+											'PagoMonedaP': x.PagoMonedaP == undefined ? 0 : x.PagoMonedaP,
+											'Moneda': x.Moneda == undefined ? '' : x.Moneda
 										};
+										console.log('objPagar',objPagar);
 										pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
 											console.log(dataGraba, 'dataGraba c 5');
 											vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
@@ -643,8 +679,13 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 										'IdMedioPago': vm.selectedMedio.IdMedioPago,
 										'IdCompania': x.IdCompania,
 										'IdDistribuidor': x.IdDistribuidor,
-										'FechaPago': $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago
+										'FechaPago': $filter('date')(vm.FechaPago, 'yyyyMMdd') + ' ' + vm.HoraPago,
+										'MonedaP': x.MonedaP == undefined ? '' : x.MonedaP,
+										'TipoCambioDR': x.TipoCambioDR == undefined ? 0 : x.TipoCambioDR,
+										'PagoMonedaP': x.PagoMonedaP == undefined ? 0 : x.PagoMonedaP,
+										'Moneda': x.Moneda == undefined ? '' : x.Moneda
 									};
+									console.log('objPagar',objPagar);
 									pagosMaestrosFactory.grabaFactura(objPagar).then(function (dataGraba) {
 										console.log(dataGraba, 'dataGraba c 6');
 										vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;

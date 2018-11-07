@@ -118,18 +118,16 @@
                             <thead>
                                 <tr>
                                     <th st-sort="ContratoMaestro">Contrato maestro</th>
-                                    <th st-sort="Ticket">Factura</th>
+                                    <th st-sort="Ticket">Ticket</th>
                                     <th st-sort="Cliente">Nombre Comercial</th>
                                     <th st-sort="Tipo">Tipo</th>
                                     <th st-sort="FechaFacturacion">Fecha de Facturación</th>
                                     <th st-sort="ImporteFactura">Importe</th>
-                                    <th st-sort="PagoInicial">Pago Inicial</th>
-                                    <th st-sort="ACuantosPagos">Pagos</th>
                                     <th st-sort="TotalAbonado">Total Abonado</th>
+                                    <th st-sort="TotalNotas">Total Notas de Crédito</th>
                                     <th st-sort="pendiente">Saldo Pendiente</th>
                                     <th st-sort="Sucursal">Sucursal</th>
                                     <th st-sort="Cajera">Cajera</th>
-                                    <th st-sort="Caja">Caja</th>
                                     <th st-sort="MedioPago">Medio Pago</th>
                                     <th st-sort="ImportePago">Importe</th>
                                     <th st-sort="FechaPago">Fecha</th>
@@ -159,13 +157,10 @@
                                         <input st-search="ImporteFactura" placeholder="Importe" class="input-sm form-control media" type="search" />
                                     </th>
                                     <th>
-                                        <input st-search="PagoInicial" placeholder="Pago Inicial" class="input-sm form-control" type="search"/ >
-                                    </th>
-                                    <th>
-                                        <input st-search="ACuantosPagos" placeholder="Pagos" class="input-sm form-control" type="search"/>
-                                    </th>
-                                    <th>
                                         <input st-search="TotalAbonado" placeholder="Total Abonado" class="input-sm form-control" type="search"/>
+                                    </th>
+                                    <th>
+                                        <input st-search="TotalNotas" placeholder="Total NC" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
                                         <input st-search="pendiente" placeholder="Saldo Pendiente" class="input-sm form-control" type="search"/>
@@ -175,9 +170,6 @@
                                     </th>
                                     <th>
                                         <input st-search="Cajera" placeholder="Cajera" class="input-sm form-control media" type="search"/>
-                                    </th>
-                                    <th>
-                                        <input st-search="Caja" placeholder="Caja" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
                                         <input st-search="MedioPago" placeholder="Medio Pago" class="input-sm form-control media" type="search" />
@@ -213,13 +205,11 @@
                                     <td>{{x.Tipo}}</td>
                                     <td>{{x.FechaFacturacion}}</td>
                                     <td>{{x.ImporteFactura | currency}}</td>
-                                    <td>{{x.PagoInicial | currency}}</td>
-                                    <td>{{x.ACuantosPagos}}</td>
                                     <td>{{x.TotalAbonado | currency}}</td>
-                                    <td>{{x.ImporteFactura - x.TotalAbonado | currency}}</td>
+                                    <td>{{x.TotalNotas | currency}}</td>
+                                    <td>{{x.ImporteFactura - (x.TotalAbonado + x.TotalNotas) | currency}}</td>
                                     <td>{{x.Sucursal}}</td>
                                     <td>{{x.Cajera}}</td>
-                                    <td>{{x.Caja}}</td>
                                     <td>{{x.MedioPago}}</td>
                                     <td>{{x.ImportePago | currency}}</td>
                                     <td>{{x.FechaPago}}</td>
@@ -227,7 +217,7 @@
                                     <td>{{x.ImporteFacCliente | currency}}</td>
                                     <td>{{x.MontoAbono | currency}}</td>
                                     <td>{{x.PorPagar | currency}}</td>
-                                    <td><input type="checkbox" name="" ng-checked="{{x.Saldada2}}" ng-disabled="true"></td>
+                                    <td><input type="checkbox" name="" ng-checked="{{x.Saldada}}" ng-disabled="true"></td>
                                 </tr>
                             </tbody>
                         </table>

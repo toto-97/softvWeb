@@ -98,15 +98,16 @@
                                     <th st-sort="Tipo">Tipo</th>
                                     <th st-sort="FechaFacturacion">Fecha de Facturación</th>
                                     <th st-sort="ImporteFactura">Importe</th>
-                                    <th st-sort="PagoInicial">Pago Inicial</th>
+                                    <!--<th st-sort="PagoInicial">Pago Inicial</th>-->
                                     <th st-sort="ACuantosPagos">Pagos</th>
                                     <th st-sort="TotalAbonado">Total Abonado</th>
+                                    <th st-sort="TotalNotas">Total Notas de Crédito</th>
                                     <th st-sort="pendiente">Saldo Pendiente</th>
                                     <th st-sort="Status">Status</th>
                                     <th st-sort="FechaPago">Contrato</th>
                                     <th st-sort="ImporteFacCliente">Importe</th>
-                                    <th st-sort="MontoAbono">Monto</th>
-                                    <th st-sort="PorPagar">Saldo Pendiente</th>
+                                    <th st-sort="MontoAbono">Total Abonado</th>
+                                    <th st-sort="PorPagar">Saldo Pendiente Contrato</th>
                                     <th st-sort="Saldada2">Saldada</th>
                                 </tr>
                                 <tr>
@@ -128,14 +129,17 @@
                                     <th>
                                         <input st-search="ImporteFactura" placeholder="Importe" class="input-sm form-control media" type="search" />
                                     </th>
-                                    <th>
+                                    <!--<th>
                                         <input st-search="PagoInicial" placeholder="Pago Inicial" class="input-sm form-control" type="search"/ >
-                                    </th>
+                                    </th>-->
                                     <th>
                                         <input st-search="ACuantosPagos" placeholder="Pagos" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
                                         <input st-search="TotalAbonado" placeholder="Total Abonado" class="input-sm form-control" type="search"/>
+                                    </th>
+                                    <th>
+                                        <input st-search="TotalNotas" placeholder="Total NC" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
                                         <input st-search="pendiente" placeholder="Saldo Pendiente" class="input-sm form-control" type="search"/>
@@ -150,9 +154,9 @@
                                         <input st-search="ImporteFacCliente" placeholder="Importe" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
-                                        <input st-search="MontoAbono" placeholder="Monto" class="input-sm form-control" type="search"/>
+                                        <input st-search="MontoAbono" placeholder="Total Abonado" class="input-sm form-control" type="search"/>
                                     </th>
-                                     <th>
+                                    <th>
                                         <input st-search="PorPagar" placeholder="Saldo Pendiente" class="input-sm form-control" type="search"/>
                                     </th>
                                     <th>
@@ -168,10 +172,11 @@
                                     <td>{{x.Tipo}}</td>
                                     <td>{{x.FechaFacturacion}}</td>
                                     <td>{{x.ImporteFactura | currency}}</td>
-                                    <td>{{x.PagoInicial | currency}}</td>
+                                    <!--<td>{{x.PagoInicial | currency}}</td>-->
                                     <td>{{x.ACuantosPagos}}</td>
                                     <td>{{x.TotalAbonado | currency}}</td>
-                                    <td>{{x.ImporteFactura - x.TotalAbonado | currency}}</td>
+                                    <td>{{x.TotalNotas | currency}}</td>
+                                    <td>{{x.ImporteFactura - (x.TotalAbonado + x.TotalNotas) | currency}}</td>
                                     <td>{{x.Status}}</td>
                                     <td>{{x.Contrato}}</td>
                                     <td>{{x.ImporteFacCliente | currency}}</td>

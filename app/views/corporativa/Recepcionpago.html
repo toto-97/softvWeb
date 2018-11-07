@@ -281,6 +281,7 @@
                     <th>Fecha de <br> Facturación</th>
                     <th>Importe</th>
                     <th>Total Abonado</th>
+                    <th>Total Nota de Crédito</th>
                     <th>Saldo Pendiente</th>
                     <th>Status</th>
                     <th></th>
@@ -298,7 +299,8 @@
                     <td>{{x.Fecha}}</td>
                     <td>{{x.Importe | currency}}</td>
                     <td>{{x.TotalAbonado | currency}}</td>
-                    <td>{{x.Importe - x.TotalAbonado | currency}}</td>
+                    <td>{{x.TotalNotas | currency}}</td>
+                    <td>{{x.Importe - x.TotalAbonado - x.TotalNotas | currency}}</td>
                     <td>{{x.Status}}</td>
                     <td>
                       <button ng-if="x.Status=='Activa'" class="btn ink-reaction btn-icon-toggle btn-xs  btn-success" ng-disabled="$ctrl.pagar"
@@ -359,7 +361,7 @@
                       <td>{{z.Hora}}</td>
                       <td>{{z.StatusPago}}</td>
                       <td>
-                        <button class="btn ink-reaction btn-icon-toggle btn-xs btn-success" ng-click="$ctrl.verFactura(z.Clv_Pago)" data-toggle="tooltip"
+                        <button class="btn ink-reaction btn-icon-toggle btn-xs btn-success" ng-click="$ctrl.verFactura(z.Clv_Pago,z.MedioPago)" data-toggle="tooltip"
                           data-placement="top" title="Ver Facturas" data-original-title="Ver Detalle">
                           <i class="fa fa-plus"></i>
                         </button>

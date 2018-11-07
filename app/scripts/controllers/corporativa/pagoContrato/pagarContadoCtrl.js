@@ -215,7 +215,7 @@ function PagarContadoCtrl(
                         .nuePagoEfectivoMaestro(vm.pago, vm.efectivo, vm.cambio)
                         .then(function (dataNuevo) { });
                       if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
-                        ngNotify.set("Pago grabado correctamente", "error");
+                        ngNotify.set("Factura preliminar generada exitosamente", "error");
                       } else {
                         if (vm.proceso === "RP") {
                           ContratoMaestroFactory.GetGraba_Factura_DigitalPago(vm.pago).then(function (result) {
@@ -223,19 +223,19 @@ function PagarContadoCtrl(
                             muestraFactura(url);
 
                             $uibModalInstance.dismiss("cancel");
-                            ngNotify.set("Pago grabado correctamente", "success");
+                            ngNotify.set("Factura preliminar generada exitosamente", "success");
                             $rootScope.$emit("realoadBrowse", {});
                           });
                           console.log('Pago Contado', 1);
                           /*$uibModalInstance.dismiss("cancel");
                           ngNotify.set(
-                            "Pago grabado correctamente",
+                            "Factura preliminar generada exitosamente",
                             "success"
                           );
                           $rootScope.$emit("realoadBrowse", {});*/
                         } else {
                           $uibModalInstance.dismiss("cancel");
-                          ngNotify.set("Pago grabado correctamente", "success");
+                          ngNotify.set("Factura preliminar generada exitosamente", "success");
                           $rootScope.$emit("realoadBrowse", {});
                         }
                       }
@@ -277,7 +277,7 @@ function PagarContadoCtrl(
                       .nuePagoEfectivoMaestro(vm.pago, vm.efectivo, vm.cambio)
                       .then(function (dataNuevo) { });
                     if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
-                      ngNotify.set("Pago grabado correctamente", "error");
+                      ngNotify.set("Factura preliminar generada exitosamente", "error");
                     } else {
                       if (vm.proceso === "RP") {
                         ContratoMaestroFactory.GetGraba_Factura_DigitalPago(
@@ -289,16 +289,16 @@ function PagarContadoCtrl(
                           muestraFactura(url);
 
                           $uibModalInstance.dismiss("cancel");
-                          ngNotify.set("Pago grabado correctamente", "success");
+                          ngNotify.set("Factura preliminar generada exitosamente", "success");
                           $rootScope.$emit("realoadBrowse", {});
                         });
                         console.log('Pago Contado', 2);
                         /*$uibModalInstance.dismiss("cancel");
-                        ngNotify.set("Pago grabado correctamente", "success");
+                        ngNotify.set("Factura preliminar generada exitosamente", "success");
                         $rootScope.$emit("realoadBrowse", {});*/
                       } else {
                         $uibModalInstance.dismiss("cancel");
-                        ngNotify.set("Pago grabado correctamente", "success");
+                        ngNotify.set("Factura preliminar generada exitosamente", "success");
                         $rootScope.$emit("realoadBrowse", {});
                       }
                     }
@@ -351,7 +351,7 @@ function PagarContadoCtrl(
                           if (
                             dataGraba.AddGuardaPagoFacturaMaestroResult == 0
                           ) {
-                            ngNotify.set("Pago grabado correctamente", "error");
+                            ngNotify.set("Factura preliminar generada exitosamente", "error");
                           } else {
                             if (vm.proceso === "RP") {
                               ContratoMaestroFactory.GetGraba_Factura_DigitalPago(
@@ -364,7 +364,7 @@ function PagarContadoCtrl(
 
                                 $uibModalInstance.dismiss("cancel");
                                 ngNotify.set(
-                                  "Pago grabado correctamente",
+                                  "Factura preliminar generada exitosamente",
                                   "success"
                                 );
                                 $rootScope.$emit("realoadBrowse", {});
@@ -372,14 +372,14 @@ function PagarContadoCtrl(
                               console.log('Pago Contado', 3);
                               /*$uibModalInstance.dismiss("cancel");
                               ngNotify.set(
-                                "Pago grabado correctamente",
+                                "Factura preliminar generada exitosamente",
                                 "success"
                               );
                               $rootScope.$emit("realoadBrowse", {});*/
                             } else {
                               $uibModalInstance.dismiss("cancel");
                               ngNotify.set(
-                                "Pago grabado correctamente",
+                                "Factura preliminar generada exitosamente",
                                 "success"
                               );
                               $rootScope.$emit("realoadBrowse", {});
@@ -425,7 +425,7 @@ function PagarContadoCtrl(
                       vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
 
                       if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
-                        ngNotify.set("Pago grabado correctamente", "error");
+                        ngNotify.set("Factura preliminar generada exitosamente", "error");
                       } else {
                         if (vm.proceso === "RP") {
                           ContratoMaestroFactory.GetGraba_Factura_DigitalPago(
@@ -438,18 +438,18 @@ function PagarContadoCtrl(
 
                             $uibModalInstance.dismiss("cancel");
                             ngNotify.set(
-                              "Pago grabado correctamente",
+                              "Factura preliminar generada exitosamente",
                               "success"
                             );
                             $rootScope.$emit("realoadBrowse", {});
                           });
                           console.log('Pago Contado', 4);
                           /*$uibModalInstance.dismiss("cancel");
-                          ngNotify.set("Pago grabado correctamente", "success");
+                          ngNotify.set("Factura preliminar generada exitosamente", "success");
                           $rootScope.$emit("realoadBrowse", {});*/
                         } else {
                           $uibModalInstance.dismiss("cancel");
-                          ngNotify.set("Pago grabado correctamente", "success");
+                          ngNotify.set("Factura preliminar generada exitosamente", "success");
                           $rootScope.$emit("realoadBrowse", {});
                         }
                       }
@@ -513,7 +513,7 @@ function PagarContadoCtrl(
                           if (
                             dataGraba.AddGuardaPagoFacturaMaestroResult == 0
                           ) {
-                            ngNotify.set("Pago grabado correctamente", "error");
+                            ngNotify.set("Factura preliminar generada exitosamente", "error");
                           } else {
                             if (vm.proceso === "RP") {
                               ContratoMaestroFactory.GetGraba_Factura_DigitalPago(
@@ -526,7 +526,7 @@ function PagarContadoCtrl(
 
                                 $uibModalInstance.dismiss("cancel");
                                 ngNotify.set(
-                                  "Pago grabado correctamente",
+                                  "Factura preliminar generada exitosamente",
                                   "success"
                                 );
                                 $rootScope.$emit("realoadBrowse", {});
@@ -534,14 +534,14 @@ function PagarContadoCtrl(
                               console.log('Pago Contado', 5);
                               /*$uibModalInstance.dismiss("cancel");
                               ngNotify.set(
-                                "Pago grabado correctamente",
+                                "Factura preliminar generada exitosamente",
                                 "success"
                               );
                               $rootScope.$emit("realoadBrowse", {});*/
                             } else {
                               $uibModalInstance.dismiss("cancel");
                               ngNotify.set(
-                                "Pago grabado correctamente",
+                                "Factura preliminar generada exitosamente",
                                 "success"
                               );
                               $rootScope.$emit("realoadBrowse", {});
@@ -597,7 +597,7 @@ function PagarContadoCtrl(
                       vm.pago = dataGraba.AddGuardaPagoFacturaMaestroResult;
 
                       if (dataGraba.AddGuardaPagoFacturaMaestroResult == 0) {
-                        ngNotify.set("Pago grabado correctamente", "error");
+                        ngNotify.set("Factura preliminar generada exitosamente", "error");
                       } else {
                         if (vm.proceso === "RP") {
                           ContratoMaestroFactory.GetGraba_Factura_DigitalPago(
@@ -610,18 +610,18 @@ function PagarContadoCtrl(
 
                             $uibModalInstance.dismiss("cancel");
                             ngNotify.set(
-                              "Pago grabado correctamente",
+                              "Factura preliminar generada exitosamente",
                               "success"
                             );
                             $rootScope.$emit("realoadBrowse", {});
                           });
                           console.log('Pago Contado',6 );
                           /*$uibModalInstance.dismiss("cancel");
-                          ngNotify.set("Pago grabado correctamente", "success");
+                          ngNotify.set("Factura preliminar generada exitosamente", "success");
                           $rootScope.$emit("realoadBrowse", {});*/
                         } else {
                           $uibModalInstance.dismiss("cancel");
-                          ngNotify.set("Pago grabado correctamente", "success");
+                          ngNotify.set("Factura preliminar generada exitosamente", "success");
                           $rootScope.$emit("realoadBrowse", {});
                         }
                       }
@@ -652,4 +652,11 @@ function PagarContadoCtrl(
   vm.cambioNota = cambioNota;
   vm.proceso = proceso;
   initialData();
+  vm.Monedas = [{
+    IdMoneda: 'MXN',
+    Moneda: 'MXN'
+  },{
+    IdMoneda: 'USD',
+    Moneda: 'USD'
+  }];
 }

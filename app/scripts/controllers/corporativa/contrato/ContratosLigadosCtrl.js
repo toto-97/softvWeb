@@ -1,6 +1,6 @@
 'use strict';
 
-function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope, $rootScope, corporativoFactory, detalle, $state, ngNotify, ContratoMaestroFactory, $timeout) {
+function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope, $rootScope, corporativoFactory, detalle, $state, ngNotify, ContratoMaestroFactory, $timeout, $localStorage) {
 
   function Init() {
     vm.contratos = [];
@@ -19,7 +19,6 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope, $rootScope, 
       vm.showeditbtn = false;
     }
     for (var a = 0; a < detalle.ContratosSoftv.length; a++) {
-
       var contrato = {};
       contrato.CONTRATO = detalle.ContratosSoftv[a].ContratoCom;
       contrato.Nombre = detalle.ContratosSoftv[a].NombreCli;
@@ -42,8 +41,16 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope, $rootScope, 
   }
 
   function cancel() {
-    //$uibModalInstance.dismiss('cancel');
-    $uibModalInstance.close();
+    if (detalle.Action == 'ADD') {
+      $state.go('home.corporativa.maestroEditar', {id: detalle.IdContratoMaestro});
+      $uibModalInstance.dismiss('cancel');
+      //$uibModalInstance.close();
+    }
+    else {
+      //$uibModalInstance.close();
+      $uibModalInstance.dismiss('cancel');
+    }
+    
   }
   $rootScope.$on('contrato_proporcional', function (e, contrato) {
     var max = 0;
@@ -149,9 +156,10 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope, $rootScope, 
       }
       corporativoFactory.ligarContratosMultiple(detalle.IdContratoMaestro, arrContratos).then(function (data) {
         ngNotify.set('Los Contratos fueron ligados correctamente al contrato maestro.', 'success');
-        //$state.go('home.corporativa.maestro');
+
         //$uibModalInstance.dismiss('cancel');
       });
+      detalle.BndGuardo = true;
     } else {
       ngNotify.set('Introduce al menos un contrato.', 'error');
     }
@@ -200,7 +208,7 @@ function ContratosLigadosCtrl($uibModalInstance, $uibModal, $scope, $rootScope, 
 
   function eliminarContrato(Contrato) {
     var indexE = 0;
-    console.log('Contrato',Contrato);
+    //console.log('Contrato', Contrato);
     vm.contratos.forEach(function (item, index) {
       if (item.CONTRATO == Contrato) {
         indexE = index;

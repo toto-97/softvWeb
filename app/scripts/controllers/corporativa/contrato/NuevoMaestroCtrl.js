@@ -113,13 +113,13 @@ function NuevoMaestroCtrl($uibModal, $rootScope, corporativoFactory, cajasFactor
 		var detalle = {};
 		detalle.ContratosSoftv = vm.contratos;
 		detalle.IdContratoMaestro = vm.contratoMaestro;
-		detalle.Action = "ADD";
+		
 		if (vm.distribuidor == null) {
 			ngNotify.set('Selecciona una distribuidor', 'error');
 			return;
 		}
 		detalle.Distribuidor = vm.distribuidor;
-
+		detalle.Action = 'ADD';
 
 		var modalInstance = $uibModal.open({
 			animation: true,

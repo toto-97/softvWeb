@@ -1,0 +1,50 @@
+<div class="modal-header">
+    <button class="close" aria-label="Close" type="button" ng-click="$ctrl.cancel()">×</button>
+    <h5 class="modal-title">Cantidad a abonar a la factura <span style="color:red">{{$ctrl.factura}}</span></h5>
+</div>
+<div class="modal-body" style="padding-top:20px;">
+    <div class="row" ng-show="$ctrl.minimo">
+        <h4 class="text-center">¡Su mensualidad es de {{ $ctrl.monto | currency : "$" : 4 }}!</h4>
+    </div>
+    <div class="row" style="padding-top: 15px;">
+        <!--Moneda y Tipo de cambio-->
+        <div class="col-md-12" ng-if="$ctrl.MonedaFacturaOriginal == 'USD'">
+            <label class="col-md-2 control-label" for="textinput">Moneda</label>
+            <div class="col-md-4">
+                <select class="form-control input-sm" ng-model="$ctrl.Moneda" ng-change="$ctrl.CambioMoneda()" ng-options="v.Moneda for v in $ctrl.Monedas track by v.IdMoneda">
+                </select>
+            </div>
+            <label class="col-md-2 control-label" for="textinput" ng-if="$ctrl.MonedaFacturaOriginal == 'USD' && $ctrl.Moneda.IdMoneda == 'MXN'">Tipo
+                de Cambio</label>
+            <div class="col-md-4" ng-if="$ctrl.MonedaFacturaOriginal == 'USD' && $ctrl.Moneda.IdMoneda == 'MXN'">
+                <input type="number" class="form-control input-sm" ng-model="$ctrl.TipoCambio" ng-change="$ctrl.CambioMoneda()">
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-offset-1 col-md-5 form-group">
+                <label class="label-control">Abono</label>
+                <input type="number" class="form-control" min="0" ng-change="$ctrl.abonoTotal()" ng-model="$ctrl.abono">
+            </div>
+            <div class="col-md-offset-1 col-md-5 form-group" ng-if="$ctrl.MonedaFacturaOriginal == 'USD' && $ctrl.Moneda.IdMoneda == 'MXN'" >
+                <label class="label-control">Abono (Conversión)</label>
+                <input type="text" class="form-control" min="0" ng-model="$ctrl.abonoConversion">
+            </div>
+        </div>
+        <div class="col-md-12" ng-if="$ctrl.MonedaFacturaOriginal == 'USD' && $ctrl.Moneda.IdMoneda == 'MXN'">
+            <div class="col-md-offset-1 col-md-5 text-center">
+                <label class="label-control text-danger text-lg">{{$ctrl.MonedaCapturada}}</label>
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn ink-reaction btn-flat btn-xs btn-primary" ng-click="$ctrl.CambiaMonedaCapturar()">
+                    <i class="md md-swap-horiz"></i></button>
+            </div>
+            <div class="col-md-5 text-center">
+                <label class="label-control text-danger text-lg">{{$ctrl.MonedaConvertir}}</label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default btn-sm" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
+    <button class="btn btn-primary btn-sm" type="button" ng-click="$ctrl.ok()">Aceptar</button>
+</div>

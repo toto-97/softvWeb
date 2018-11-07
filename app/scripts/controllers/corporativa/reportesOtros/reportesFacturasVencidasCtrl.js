@@ -22,8 +22,8 @@ function reportesFacturasVencidasCtrl($uibModal, ngNotify, inMenu, pagosMaestros
 
     function buscaContrato() {
         var parametros;
-        if (vm.Fecha == undefined || vm.Fecha == '') {
-            ngNotify.set('Seleccione una fecha válida.', 'error');
+        if (vm.FechaInicio == undefined || vm.FechaInicio == '' || vm.FechaFin == undefined || vm.FechaFin == '') {
+            ngNotify.set('Seleccione fechas válidas.', 'error');
         } else {
             if (vm.Vencidas == undefined || vm.Vencidas == false){
                 vm.Vencidas=0;
@@ -35,17 +35,24 @@ function reportesFacturasVencidasCtrl($uibModal, ngNotify, inMenu, pagosMaestros
             }else{
                 vm.PorVencer=1
             }
+            if (vm.Pagadas == undefined || vm.Pagadas == false){
+                vm.Pagadas=0;
+            }else{
+                vm.Pagadas=1
+            }
             parametros = {
-                'Fecha': $filter('date')(vm.Fecha, 'dd/MM/yyyy HH:mm:ss'),
+                'FechaInicio': $filter('date')(vm.FechaInicio, 'dd/MM/yyyy HH:mm:ss'),
+                'FechaFin': $filter('date')(vm.FechaFin, 'dd/MM/yyyy HH:mm:ss'),
                 'Vencidas': vm.Vencidas,
-                'PorVencer': vm.PorVencer
+                'PorVencer': vm.PorVencer,
+                'Pagadas': vm.Pagadas
             };
             pagosMaestrosFactory.ReporteFacturasVencidas(parametros).then(function (data) {
                 vm.contratos = data.GetReporteFacturasMaestrasVencidasListResult;
                 vm.displayCollection =data.GetReporteServiciosPorInstalarListResult;
             });
             
-            vm.predicates = ['Contrato', 'Servicio', 'Direccion', 'OrdenGenerada', 'FechaOrden', 'Clv_Orden'];
+            vm.predicates = ['ContratoMaestro','Factura','Ticket','Contacto', 'Telefono', 'SaldoVencido', 'FechaVencimiento', 'FechaEmision', 'DiasCredito','ImporteFactura','TotalAbonado','TotalNotas'];
             vm.selectedPredicate = vm.predicates[0];
         }
         
@@ -72,12 +79,18 @@ function reportesFacturasVencidasCtrl($uibModal, ngNotify, inMenu, pagosMaestros
     function initArray() {
         vm.arrayReporte = [];
         vm.arrayReporte = [{
-            'Contrato': 'Contrato',
-            'Servicio': 'Servicio',
-            'Direccion': 'Dirección',
-            'OrdenGenerada': 'Orden Generada',
-            'FechaOrden': 'Fecha Orden',
-            'Clv_Orden': '# Orden'
+            'ContratoMaestro':'ContratoMaestro',
+            'Factura':'Factura',
+            'Ticket':'Ticket',
+            'Contacto':'Contacto', 
+            'Telefono':'Telefono', 
+            'SaldoVencido':'SaldoVencido', 
+            'FechaVencimiento':'FechaVencimiento', 
+            'FechaEmision':'FechaEmision', 
+            'DiasCredito':'DiasCredito',
+            'ImporteFactura':'ImporteFactura',
+            'TotalAbonado':'TotalAbonado',
+            'TotalNotas':'TotalNotas'
         }];
     }
 
@@ -88,17 +101,23 @@ function reportesFacturasVencidasCtrl($uibModal, ngNotify, inMenu, pagosMaestros
         var ro = 0;
         ro = vm.contratos.length;
         var cols = 21;
-        var columns = ['Contrato', 'Servicio', 'Dirección', 'Orden Generada', 'Fecha Orden', '# Orden'];
+        var columns = ['Contrato Maestro','Factura','Ticket','Contácto', 'Teléfono', 'Saldo Vencido', 'Fecha Vencimiento', 'Fecha Emisión', 'Dias Credito','Importe Factura','Total Abonado','Total Notas de Crédito'];
         for (var i = r; i < ro; i++) {
             rows.push([]);
         }
         for (var i = 0; i < ro; i++) {
-            rows[i][0] = vm.contratos[i].Contrato;
-            rows[i][1] = vm.contratos[i].Servicio;
-            rows[i][2] = vm.contratos[i].Direccion;
-            rows[i][3] = vm.contratos[i].OrdenGenerada;
-            rows[i][4] = vm.contratos[i].FechaOrden;
-            rows[i][5] = vm.contratos[i].Clv_Orden;
+            rows[i][0] = vm.contratos[i].ContratoMaestro;
+            rows[i][1] = vm.contratos[i].Factura;
+            rows[i][2] = vm.contratos[i].Ticket;
+            rows[i][3] = vm.contratos[i].Contacto;
+            rows[i][4] = vm.contratos[i].Telefono;
+            rows[i][5] = vm.contratos[i].SaldoVencido;
+            rows[i][6] = vm.contratos[i].FechaVencimiento;
+            rows[i][7] = vm.contratos[i].FechaEmision;
+            rows[i][8] = vm.contratos[i].DiasCredito;
+            rows[i][9] = vm.contratos[i].ImporteFactura;
+            rows[i][10] = vm.contratos[i].TotalAbonado;
+            rows[i][11] = vm.contratos[i].TotalNotas;
         }
         var doc = new jsPDF({
             orientation: 'landscape',
@@ -177,14 +196,30 @@ function reportesFacturasVencidasCtrl($uibModal, ngNotify, inMenu, pagosMaestros
     //     getImageDataURL();
     // }
 
+    function CambiaSeleccion(Opcion){
+        if(vm.Vencidas && Opcion == 1 ){
+            vm.PorVencer = false;
+            vm.Pagadas = false;
+        }
+        if(vm.PorVencer && Opcion == 2){
+            vm.Vencidas = false;
+            vm.Pagadas = false;
+        }
+        if(vm.Pagadas && Opcion == 3){
+            vm.PorVencer = false;
+            vm.Vencidas = false;
+        }
+    }
+
     var vm = this;
     vm.buscaContrato = buscaContrato;
     vm.crearTodoAsCsv = crearTodoAsCsv;
     vm.createPdfTodo = createPdfTodo;
-    vm.filename = 'Reporte_servicios_por_instalar';
-    var reportHeaderPdf = "Reporte Servicios Por Instalar";
+    vm.filename = 'ReporteFacturasVencidas';
+    var reportHeaderPdf = "Reporte Facturas Vencidas / Por Vencer";
     vm.csvDosHide = true;
     var img = new Image();
     img.crossOrigin = "";
     vm.enterContrato = enterContrato;
+    vm.CambiaSeleccion = CambiaSeleccion;
 }

@@ -40,7 +40,7 @@ function ReportesPendientesCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactor
                 });
                 vm.displayCollection = [].concat(vm.pagos);
 
-                vm.predicates = ['ContratoMaestro', 'Ticket', 'Cliente', 'Tipo', 'FechaFacturacion', 'FechaVencimiento', 'ImporteFactura', 'PagoInicial', 'ACuantosPagos', 'TotalAbonado', 'pendiente', 'Status', 'Contrato', 'ImporteFacCliente', 'MontoAbono', 'PorPagar', 'Saldada2'];
+                vm.predicates = ['ContratoMaestro', 'Ticket', 'Cliente', 'Tipo', 'FechaFacturacion', 'FechaVencimiento', 'ImporteFactura', 'ACuantosPagos', 'TotalAbonado','TotalNotas', 'pendiente', 'Status', 'Contrato', 'ImporteFacCliente', 'MontoAbono', 'PorPagar', 'Saldada2'];
                 vm.selectedPredicate = vm.predicates[0];
             }
         } else if (opcion == 3) {
@@ -61,7 +61,7 @@ function ReportesPendientesCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactor
                 });
                 vm.displayCollection = [].concat(vm.pagos);
 
-                vm.predicates = ['ContratoMaestro', 'Ticket', 'Cliente', 'Tipo', 'FechaFacturacion', 'FechaVencimiento', 'ImporteFactura', 'PagoInicial', 'ACuantosPagos', 'TotalAbonado', 'pendiente', 'Status', 'Contrato', 'ImporteFacCliente', 'MontoAbono', 'PorPagar', 'Saldada2'];
+                vm.predicates = ['ContratoMaestro', 'Ticket', 'Cliente', 'Tipo', 'FechaFacturacion', 'FechaVencimiento', 'ImporteFactura', 'ACuantosPagos', 'TotalAbonado','TotalNotas', 'pendiente', 'Status', 'Contrato', 'ImporteFacCliente', 'MontoAbono', 'PorPagar', 'Saldada2'];
                 vm.selectedPredicate = vm.predicates[0];
             }
         } else if (opcion == 4) {
@@ -81,7 +81,7 @@ function ReportesPendientesCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactor
                 });
                 vm.displayCollection = [].concat(vm.pagos);
 
-                vm.predicates = ['ContratoMaestro', 'Ticket', 'Cliente', 'Tipo', 'FechaFacturacion', 'FechaVencimiento', 'ImporteFactura', 'PagoInicial', 'ACuantosPagos', 'TotalAbonado', 'pendiente', 'Status', 'Contrato', 'ImporteFacCliente', 'MontoAbono', 'PorPagar', 'Saldada2'];
+                vm.predicates = ['ContratoMaestro', 'Ticket', 'Cliente', 'Tipo', 'FechaFacturacion', 'FechaVencimiento', 'ImporteFactura', 'ACuantosPagos', 'TotalAbonado','TotalNotas', 'pendiente', 'Status', 'Contrato', 'ImporteFacCliente', 'MontoAbono', 'PorPagar', 'Saldada2'];
                 vm.selectedPredicate = vm.predicates[0];
             }
         } else if (opcion == 1) {
@@ -102,7 +102,7 @@ function ReportesPendientesCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactor
                 });
                 vm.displayCollection = [].concat(vm.pagos);
 
-                vm.predicates = ['ContratoMaestro', 'Ticket', 'Cliente', 'Tipo', 'FechaFacturacion', 'FechaVencimiento', 'ImporteFactura', 'PagoInicial', 'ACuantosPagos', 'TotalAbonado', 'pendiente', 'Status', 'Contrato', 'ImporteFacCliente', 'MontoAbono', 'PorPagar', 'Saldada2'];
+                vm.predicates = ['ContratoMaestro', 'Ticket', 'Cliente', 'Tipo', 'FechaFacturacion', 'FechaVencimiento', 'ImporteFactura', 'ACuantosPagos', 'TotalAbonado','TotalNotas', 'pendiente', 'Status', 'Contrato', 'ImporteFacCliente', 'MontoAbono', 'PorPagar', 'Saldada2'];
                 vm.selectedPredicate = vm.predicates[0];
             }
         } else if (opcion == 7) {
@@ -122,7 +122,7 @@ function ReportesPendientesCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactor
                 });
                 vm.displayCollection = [].concat(vm.pagos);
 
-                vm.predicates = ['ContratoMaestro', 'Ticket', 'Cliente', 'Tipo', 'FechaFacturacion', 'FechaVencimiento', 'ImporteFactura', 'PagoInicial', 'ACuantosPagos', 'TotalAbonado', 'pendiente', 'Status', 'Contrato', 'ImporteFacCliente', 'MontoAbono', 'PorPagar', 'Saldada2'];
+                vm.predicates = ['ContratoMaestro', 'Ticket', 'Cliente', 'Tipo', 'FechaFacturacion', 'FechaVencimiento', 'ImporteFactura', 'ACuantosPagos', 'TotalAbonado','TotalNotas', 'pendiente', 'Status', 'Contrato', 'ImporteFacCliente', 'MontoAbono', 'PorPagar', 'Saldada2'];
                 vm.selectedPredicate = vm.predicates[0];
             }
         }
@@ -160,10 +160,10 @@ function ReportesPendientesCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactor
             'FechaFacturacion': 'Fecha de Facturacion',
             'FechaVencimiento': 'Fecha de Vencimiento',
             'ImporteFactura': 'Importe de la Factura',
-            'PagoInicial': 'Pago Inicial',
             'ACuantosPagos': 'Pagos',
             'TotalAbonado': 'Total Abonado',
-            'pendiente': 'pendiente',
+            'TotalNotas': 'Total Notas de Crédito',
+            'Saldo Pendiente': 'pendiente',
             'Status': 'Status',
             'FechaPago': 'Fecha de Pago',
             'ImporteFacCliente': 'Importe de Facactura Cliente',
@@ -180,7 +180,7 @@ function ReportesPendientesCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactor
         var ro = 0;
         ro = vm.pagos.length;
         var cols = 21;
-        var columns = ['Contrato Maestro', 'Ticket', 'Cliente', 'Tipo', 'Fecha de Facturacion', 'Fecha de Vencimiento', 'Importe Factura', 'Pago Inicial', 'Pagos', 'Total Abonado', 'Pendiente', 'Status', 'Contrato', 'Importe de la Fac. Cliente', 'Monto del Abono', 'Por Pagar', 'Saldada'];
+        var columns = ['Contrato Maestro', 'Ticket', 'Cliente', 'Tipo', 'Fecha de Facturacion', 'Fecha de Vencimiento', 'Importe Factura', 'Pagos', 'Total Abonado','Total Notas de Crédito', 'Saldo Pendiente', 'Status', 'Contrato', 'Importe de la Fac. Cliente', 'Monto Abonado', 'Por Pagar', 'Saldada'];
         for (var i = r; i < ro; i++) {
             rows.push([]);
         }
@@ -192,9 +192,9 @@ function ReportesPendientesCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactor
             rows[i][4] = vm.pagos[i].FechaFacturacion;
             rows[i][5] = vm.pagos[i].FechaVencimiento;
             rows[i][6] = vm.pagos[i].ImporteFactura;
-            rows[i][7] = vm.pagos[i].PagoInicial;
-            rows[i][8] = vm.pagos[i].ACuantosPagos;
-            rows[i][9] = vm.pagos[i].TotalAbonado;
+            rows[i][7] = vm.pagos[i].ACuantosPagos;
+            rows[i][8] = vm.pagos[i].TotalAbonado;
+            rows[i][9] = vm.pagos[i].TotalNotas;
             rows[i][10] = vm.pagos[i].pendiente;
             rows[i][11] = vm.pagos[i].Status;
             rows[i][12] = vm.pagos[i].ImporteFacCliente;

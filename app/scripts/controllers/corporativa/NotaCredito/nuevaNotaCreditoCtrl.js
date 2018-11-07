@@ -271,26 +271,26 @@
 
     function cambioFactura() {
       //if (vm.factura.Saldada == 1) {
-        vm.TicketValido = true;
-        ContratoMaestroFactory.GetObtieneDatosTicketList(vm.factura.CLV_FACTURA).then(function (data) {
-          vm.Caja = data.GetObtieneDatosTicketListResult.Caja[0].NOMBRE;
-          vm.clvcaja = data.GetObtieneDatosTicketListResult.Caja[0].CLV_USUARIO
-          vm.Sucursal = data.GetObtieneDatosTicketListResult.Sucursal[0];
-          vm.NSucursal = data.GetObtieneDatosTicketListResult.Sucursal[0].NOMBRE;
-          vm.Cajero = data.GetObtieneDatosTicketListResult.Cajero;
-          vm.usuario = $localStorage.currentUser.usuario
-          ContratoMaestroFactory.DetalleContratosFM(vm.factura.CLV_FACTURA).then(function (result) {
-            vm.clv_session = result.GetDetalleContratosFMListResult.ListaDos[0].Clv_Session;
-            vm.contratos = result.GetDetalleContratosFMListResult.ListaUno;
-            ContratoMaestroFactory.GetDetalle_NotasdeCreditoList(vm.clv_session).then(function (data) {
-              vm.DetalleNota = data.GetDetalle_NotasdeCreditoListResult;
-              calcular();
-            });
-            ContratoMaestroFactory.GetCalcula_monto(vm.factura.CLV_FACTURA).then(function (data) {
-              vm.Monto = data.GetCalcula_montoResult.Monto;
-            });
+      vm.TicketValido = true;
+      ContratoMaestroFactory.GetObtieneDatosTicketList(vm.factura.CLV_FACTURA).then(function (data) {
+        vm.Caja = data.GetObtieneDatosTicketListResult.Caja[0].NOMBRE;
+        vm.clvcaja = data.GetObtieneDatosTicketListResult.Caja[0].CLV_USUARIO
+        vm.Sucursal = data.GetObtieneDatosTicketListResult.Sucursal[0];
+        vm.NSucursal = data.GetObtieneDatosTicketListResult.Sucursal[0].NOMBRE;
+        vm.Cajero = data.GetObtieneDatosTicketListResult.Cajero;
+        vm.usuario = $localStorage.currentUser.usuario
+        ContratoMaestroFactory.DetalleContratosFM(vm.factura.CLV_FACTURA).then(function (result) {
+          vm.clv_session = result.GetDetalleContratosFMListResult.ListaDos[0].Clv_Session;
+          vm.contratos = result.GetDetalleContratosFMListResult.ListaUno;
+          ContratoMaestroFactory.GetDetalle_NotasdeCreditoList(vm.clv_session).then(function (data) {
+            vm.DetalleNota = data.GetDetalle_NotasdeCreditoListResult;
+            calcular();
+          });
+          ContratoMaestroFactory.GetCalcula_monto(vm.factura.CLV_FACTURA).then(function (data) {
+            vm.Monto = data.GetCalcula_montoResult.Monto;
           });
         });
+      });
       /*}
       else {
         ngNotify.set('El ticket seleccionado no se ha saldado, no se le puede aplicar una nota de crédito ', 'warn');
@@ -301,6 +301,10 @@
     function guardar() {
       if (vm.sumatotal === 0) {
         ngNotify.set('No puede guardar una nota de crédito con un monto $0.00 ', 'error');
+        return;
+      }
+      if (vm.sumatotal > (vm.factura.Monto - vm.factura.TotalAbonado)){
+        ngNotify.set('El total de la nota de crédito no puede exceder del saldo pendiente de la factura seleccionada.', 'error');
         return;
       }
       var obj = {
@@ -318,10 +322,10 @@
         'Caja': vm.clvcaja,
         'Contrato_Aplicar': 0,
       }
-      if(vm.AplicadaAFactura){
+      if (vm.AplicadaAFactura) {
         obj.Tipo = 1;
       }
-      else{
+      else {
         obj.Tipo = 0;
       }
 

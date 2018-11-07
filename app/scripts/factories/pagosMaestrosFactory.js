@@ -110,7 +110,11 @@ angular
 					'IdMedioPago': objPagar.IdMedioPago,
 					'IdCompania': objPagar.IdCompania,
 					'IdDistribuidor': objPagar.IdDistribuidor,
-					'FechaPago': objPagar.FechaPago
+					'FechaPago': objPagar.FechaPago,
+					'MonedaP': objPagar.MonedaP,
+					'TipoCambioDR': objPagar.TipoCambioDR,
+					'PagoMonedaP': objPagar.PagoMonedaP,
+					'Moneda': objPagar.Moneda
 				}
 			};
 			console.log(Parametros);
@@ -301,10 +305,11 @@ angular
 			return deferred.promise;
 		};
 
-		factory.verFacturas = function(clvPago) {
+		factory.verFacturas = function(clvPago, Medio) {
 			var deferred = $q.defer();
 			var Parametros = {
-				'Clv_Pago': clvPago
+				'Clv_Pago': clvPago,
+				'Medio' : Medio
 			};
 			var config = {
 				headers: {

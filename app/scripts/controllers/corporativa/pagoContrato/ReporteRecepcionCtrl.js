@@ -35,12 +35,32 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
             };
             pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                 vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
-            });
-            vm.pagar = true;
-            vm.displayCollection = [].concat(vm.pagos);
+                vm.pagar = true;
+                vm.displayCollection = [].concat(vm.pagos);
 
-            vm.predicates = ['ContratoMaestro', 'Ticket', 'Cliente', 'Tipo', 'FechaFacturacion', 'FechaVencimiento', 'ImporteFactura', 'PagoInicial', 'ACuantosPagos', 'TotalAbonado', 'pendiente', 'Sucursal', 'Cajera', 'Caja', 'MedioPago', 'ImportePago', 'FechaPago', 'ImporteFacCliente', 'MontoAbono', 'PorPagar', 'Saldada2'];
-            vm.selectedPredicate = vm.predicates[0];
+                vm.predicates = ['ContratoMaestro', 
+                    'Ticket', 
+                    'Cliente', 
+                    'Tipo', 
+                    'FechaFacturacion', 
+                    'FechaVencimiento', 
+                    'ImporteFactura', 
+                    'TotalAbonado', 
+                    'TotalNotas', 
+                    'pendiente', 
+                    'Sucursal', 
+                    'Cajera', 
+                    'MedioPago', 
+                    'ImportePago', 
+                    'FechaPago', 
+                    'Contrato',
+                    'ImporteFacCliente', 
+                    'MontoAbono', 
+                    'PorPagar', 
+                    'Saldada'];
+                vm.selectedPredicate = vm.predicates[0];
+            });
+
         } else if (vm.pendientes == 2) {
             parametros = {
                 'Fecha': '',
@@ -54,12 +74,32 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
             };
             pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                 vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
-            });
-            vm.pagar = false;
-            vm.displayCollection = [].concat(vm.pagos);
+                vm.pagar = false;
+                vm.displayCollection = [].concat(vm.pagos);
 
-            vm.predicates = ['ContratoMaestro', 'Ticket', 'Cliente', 'Tipo', 'FechaFacturacion', 'FechaVencimiento', 'ImporteFactura', 'PagoInicial', 'ACuantosPagos', 'TotalAbonado', 'pendiente', 'Sucursal', 'Cajera', 'Caja', 'MedioPago', 'ImportePago', 'FechaPago', 'ImporteFacCliente', 'MontoAbono', 'PorPagar', 'Saldada2'];
-            vm.selectedPredicate = vm.predicates[0];
+                vm.predicates = ['ContratoMaestro', 
+                    'Ticket', 
+                    'Cliente', 
+                    'Tipo', 
+                    'FechaFacturacion', 
+                    'FechaVencimiento', 
+                    'ImporteFactura', 
+                    'TotalAbonado', 
+                    'TotalNotas', 
+                    'pendiente', 
+                    'Sucursal', 
+                    'Cajera', 
+                    'MedioPago', 
+                    'ImportePago', 
+                    'FechaPago', 
+                    'Contrato',
+                    'ImporteFacCliente', 
+                    'MontoAbono', 
+                    'PorPagar', 
+                    'Saldada'];
+                vm.selectedPredicate = vm.predicates[0];
+            });
+
         }
     }
 
@@ -81,11 +121,32 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                 };
                 pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
-                });
-                vm.displayCollection = [].concat(vm.pagos);
+                    vm.displayCollection = [].concat(vm.pagos);
 
-                vm.predicates = ['ContratoMaestro', 'Ticket', 'Cliente', 'Tipo', 'FechaFacturacion', 'FechaVencimiento', 'ImporteFactura', 'PagoInicial', 'ACuantosPagos', 'TotalAbonado', 'pendiente', 'Sucursal', 'Cajera', 'Caja', 'MedioPago', 'ImportePago', 'FechaPago', 'ImporteFacCliente', 'MontoAbono', 'PorPagar', 'Saldada2'];
-                vm.selectedPredicate = vm.predicates[0];
+                    vm.predicates = ['ContratoMaestro', 
+                    'Ticket', 
+                    'Cliente', 
+                    'Tipo', 
+                    'FechaFacturacion', 
+                    'FechaVencimiento', 
+                    'ImporteFactura', 
+                    'TotalAbonado', 
+                    'TotalNotas', 
+                    'pendiente', 
+                    'Sucursal', 
+                    'Cajera', 
+                    'MedioPago', 
+                    'ImportePago', 
+                    'FechaPago', 
+                    'Contrato',
+                    'ImporteFacCliente', 
+                    'MontoAbono', 
+                    'PorPagar', 
+                    'Saldada'];
+                    vm.selectedPredicate = vm.predicates[0];
+                    console.log('vm.pagos',vm.pagos);
+                });
+
             }
         } else if (opcion == 3) {
             if (vm.ContratoMaestro == undefined || vm.ContratoMaestro == '') {
@@ -103,11 +164,31 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                 };
                 pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
-                });
-                vm.displayCollection = [].concat(vm.pagos);
+                    vm.displayCollection = [].concat(vm.pagos);
 
-                vm.predicates = ['ContratoMaestro', 'Ticket', 'Cliente', 'Tipo', 'FechaFacturacion', 'FechaVencimiento', 'ImporteFactura', 'PagoInicial', 'ACuantosPagos', 'TotalAbonado', 'pendiente', 'Sucursal', 'Cajera', 'Caja', 'MedioPago', 'ImportePago', 'FechaPago', 'ImporteFacCliente', 'MontoAbono', 'PorPagar', 'Saldada2'];
-                vm.selectedPredicate = vm.predicates[0];
+                    vm.predicates = ['ContratoMaestro', 
+                    'Ticket', 
+                    'Cliente', 
+                    'Tipo', 
+                    'FechaFacturacion', 
+                    'FechaVencimiento', 
+                    'ImporteFactura', 
+                    'TotalAbonado', 
+                    'TotalNotas', 
+                    'pendiente', 
+                    'Sucursal', 
+                    'Cajera', 
+                    'MedioPago', 
+                    'ImportePago', 
+                    'FechaPago', 
+                    'Contrato',
+                    'ImporteFacCliente', 
+                    'MontoAbono', 
+                    'PorPagar', 
+                    'Saldada'];
+                    vm.selectedPredicate = vm.predicates[0];
+                });
+
             }
         } else if (opcion == 4) {
             if (vm.Cliente == undefined || vm.Cliente == '') {
@@ -125,11 +206,31 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                 };
                 pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
-                });
-                vm.displayCollection = [].concat(vm.pagos);
+                    vm.displayCollection = [].concat(vm.pagos);
 
-                vm.predicates = ['ContratoMaestro', 'Ticket', 'Cliente', 'Tipo', 'FechaFacturacion', 'FechaVencimiento', 'ImporteFactura', 'PagoInicial', 'ACuantosPagos', 'TotalAbonado', 'pendiente', 'Sucursal', 'Cajera', 'Caja', 'MedioPago', 'ImportePago', 'FechaPago', 'ImporteFacCliente', 'MontoAbono', 'PorPagar', 'Saldada2'];
-                vm.selectedPredicate = vm.predicates[0];
+                    vm.predicates = ['ContratoMaestro', 
+                    'Ticket', 
+                    'Cliente', 
+                    'Tipo', 
+                    'FechaFacturacion', 
+                    'FechaVencimiento', 
+                    'ImporteFactura', 
+                    'TotalAbonado', 
+                    'TotalNotas', 
+                    'pendiente', 
+                    'Sucursal', 
+                    'Cajera', 
+                    'MedioPago', 
+                    'ImportePago', 
+                    'FechaPago', 
+                    'Contrato',
+                    'ImporteFacCliente', 
+                    'MontoAbono', 
+                    'PorPagar', 
+                    'Saldada'];
+                    vm.selectedPredicate = vm.predicates[0];
+                });
+
             }
         } else if (opcion == 1) {
             if (vm.Fecha == undefined || vm.Fecha == '') {
@@ -148,11 +249,31 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                 };
                 pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
-                });
-                vm.displayCollection = [].concat(vm.pagos);
+                    vm.displayCollection = [].concat(vm.pagos);
 
-                vm.predicates = ['ContratoMaestro', 'Ticket', 'Cliente', 'Tipo', 'FechaFacturacion', 'FechaVencimiento', 'ImporteFactura', 'PagoInicial', 'ACuantosPagos', 'TotalAbonado', 'pendiente', 'Sucursal', 'Cajera', 'Caja', 'MedioPago', 'ImportePago', 'FechaPago', 'ImporteFacCliente', 'MontoAbono', 'PorPagar', 'Saldada2'];
-                vm.selectedPredicate = vm.predicates[0];
+                    vm.predicates = ['ContratoMaestro', 
+                    'Ticket', 
+                    'Cliente', 
+                    'Tipo', 
+                    'FechaFacturacion', 
+                    'FechaVencimiento', 
+                    'ImporteFactura', 
+                    'TotalAbonado', 
+                    'TotalNotas', 
+                    'pendiente', 
+                    'Sucursal', 
+                    'Cajera', 
+                    'MedioPago', 
+                    'ImportePago', 
+                    'FechaPago', 
+                    'Contrato',
+                    'ImporteFacCliente', 
+                    'MontoAbono', 
+                    'PorPagar', 
+                    'Saldada'];
+                    vm.selectedPredicate = vm.predicates[0];
+                });
+
             }
         } else if (opcion == 6) {
             if (vm.FechaPago == undefined || vm.Fecha == '') {
@@ -171,11 +292,31 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                 };
                 pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
-                });
-                vm.displayCollection = [].concat(vm.pagos);
+                    vm.displayCollection = [].concat(vm.pagos);
 
-                vm.predicates = ['ContratoMaestro', 'Ticket', 'Cliente', 'Tipo', 'FechaFacturacion', 'FechaVencimiento', 'ImporteFactura', 'PagoInicial', 'ACuantosPagos', 'TotalAbonado', 'pendiente', 'Sucursal', 'Cajera', 'Caja', 'MedioPago', 'ImportePago', 'FechaPago', 'ImporteFacCliente', 'MontoAbono', 'PorPagar', 'Saldada2'];
-                vm.selectedPredicate = vm.predicates[0];
+                    vm.predicates = ['ContratoMaestro', 
+                    'Ticket', 
+                    'Cliente', 
+                    'Tipo', 
+                    'FechaFacturacion', 
+                    'FechaVencimiento', 
+                    'ImporteFactura', 
+                    'TotalAbonado', 
+                    'TotalNotas', 
+                    'pendiente', 
+                    'Sucursal', 
+                    'Cajera', 
+                    'MedioPago', 
+                    'ImportePago', 
+                    'FechaPago', 
+                    'Contrato',
+                    'ImporteFacCliente', 
+                    'MontoAbono', 
+                    'PorPagar', 
+                    'Saldada'];
+                    vm.selectedPredicate = vm.predicates[0];
+                });
+
             }
         } else if (opcion == 7) {
             if (vm.ContratoCliente == undefined || vm.Fecha == '') {
@@ -193,11 +334,30 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                 };
                 pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
-                });
-                vm.displayCollection = [].concat(vm.pagos);
+                    vm.displayCollection = [].concat(vm.pagos);
 
-                vm.predicates = ['ContratoMaestro', 'Ticket', 'Cliente', 'Tipo', 'FechaFacturacion', 'FechaVencimiento', 'ImporteFactura', 'PagoInicial', 'ACuantosPagos', 'TotalAbonado', 'pendiente', 'Sucursal', 'Cajera', 'Caja', 'MedioPago', 'ImportePago', 'FechaPago', 'ImporteFacCliente', 'MontoAbono', 'PorPagar', 'Saldada2'];
-                vm.selectedPredicate = vm.predicates[0];
+                    vm.predicates = ['ContratoMaestro', 
+                    'Ticket', 
+                    'Cliente', 
+                    'Tipo', 
+                    'FechaFacturacion', 
+                    'FechaVencimiento', 
+                    'ImporteFactura', 
+                    'TotalAbonado', 
+                    'TotalNotas', 
+                    'pendiente', 
+                    'Sucursal', 
+                    'Cajera', 
+                    'MedioPago', 
+                    'ImportePago', 
+                    'FechaPago', 
+                    'Contrato',
+                    'ImporteFacCliente', 
+                    'MontoAbono', 
+                    'PorPagar', 
+                    'Saldada'];
+                    vm.selectedPredicate = vm.predicates[0];
+                });
             }
         }
         vm.Ticket = '';
@@ -212,6 +372,7 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                 delete vm.pagos[i].BaseIdUser;
                 delete vm.pagos[i].BaseRemoteIp;
                 delete vm.pagos[i].$$hashKey;
+                vm.pagos[i].pendiente = vm.pagos[i].ImporteFactura - (vm.pagos[i].TotalAbonado + vm.pagos[i].TotalNotas);
             }
 
             initArray();
@@ -234,20 +395,19 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
             'FechaFacturacion': 'Fecha de Facturacion',
             'FechaVencimiento': 'Fecha de Vencimiento',
             'ImporteFactura': 'Importe de la Factura',
-            'PagoInicial': 'Pago Inicial',
-            'ACuantosPagos': 'Pagos',
             'TotalAbonado': 'Total Abonado',
-            'pendiente': 'pendiente',
+            'TotalNotas': 'Total Notas de Crédito',
+            'pendiente': 'Saldo Pendiente',
             'Sucursal': 'Sucursal',
             'Cajera': 'Cajera',
-            'Caja': 'Caja',
             'MedioPago': 'Medio de Pago',
             'ImportePago': 'Importe de Pago',
             'FechaPago': 'Fecha de Pago',
+            'Contrato': 'Contrato',
             'ImporteFacCliente': 'Importe de Facactura Cliente',
             'MontoAbono': 'Monto Abono',
             'PorPagar': 'Por Pagar',
-            'Saldada2': 'Saldada'
+            'Saldada': 'Saldada'
         }];
     }
 
@@ -258,7 +418,7 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
         var ro = 0;
         ro = vm.pagos.length;
         var cols = 21;
-        var columns = ['Contrato Maestro', 'Ticket', 'Cliente', 'Tipo', 'Fecha de Facturacion', 'Fecha de Vencimiento', 'Importe Factura', 'Pago Inicial', 'Pagos', 'Total Abonado', 'Pendiente', 'Sucursal', 'Cajera', 'Caja', 'Medio de Pago', 'Importe Pago', 'Fecha de Pago', 'Importe de la Fac. Cliente', 'Monto del Abono', 'Por Pagar', 'Saldada'];
+        var columns = ['Contrato Maestro', 'Ticket', 'Cliente', 'Tipo', 'Fecha de Facturacion', 'Fecha de Vencimiento', 'Importe Factura', 'Pago Inicial', 'Pagos', 'Total Abonado','Total Notas de Crédito', 'Pendiente', 'Sucursal', 'Cajera', 'Medio de Pago', 'Importe Pago', 'Fecha de Pago', 'Importe de la Fac. Cliente', 'Monto del Abono', 'Por Pagar', 'Saldada'];
         for (var i = r; i < ro; i++) {
             rows.push([]);
         }
@@ -273,10 +433,10 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
             rows[i][7] = vm.pagos[i].PagoInicial;
             rows[i][8] = vm.pagos[i].ACuantosPagos;
             rows[i][9] = vm.pagos[i].TotalAbonado;
-            rows[i][10] = vm.pagos[i].pendiente;
-            rows[i][11] = vm.pagos[i].Sucursal;
-            rows[i][12] = vm.pagos[i].Cajera;
-            rows[i][13] = vm.pagos[i].Caja;
+            rows[i][10] = vm.pagos[i].TotalNotas;
+            rows[i][11] = vm.pagos[i].pendiente;
+            rows[i][12] = vm.pagos[i].Sucursal;
+            rows[i][13] = vm.pagos[i].Cajera;
             rows[i][14] = vm.pagos[i].MedioPago;
             rows[i][15] = vm.pagos[i].ImportePago;
             rows[i][16] = vm.pagos[i].FechaPago;

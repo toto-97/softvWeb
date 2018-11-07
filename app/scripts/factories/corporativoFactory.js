@@ -149,8 +149,8 @@ angular.module('softvApp')
 					'IdContratoMaestro': contrato,
 					'Distribuidor': distribuidor
 				},
-				'Contratos': lista
-
+				'Contratos': lista,
+				'Usuario': $localStorage.currentUser.usuario
 			};
 
 			console.log(Parametros);
@@ -184,8 +184,8 @@ angular.module('softvApp')
 						'IdContratoMaestro': contrato,
 						'Distribuidor': distribuidor
 					},
-					'Contratos': arrContratos[currentRequest]
-
+					'Contratos': arrContratos[currentRequest],
+					'Usuario': $localStorage.currentUser.usuario
 				};
 				$http.post(globalService.getUrl() + paths.UpdateRelContrato, JSON.stringify(Parametros), config)
 					.then(function (response) {
@@ -253,7 +253,8 @@ angular.module('softvApp')
 					'objRep': {
 						'IdContratoMaestro': contrato
 					},
-					'lstRel': arrContratos[currentRequest]
+					'lstRel': arrContratos[currentRequest],
+					'Usuario': $localStorage.currentUser.usuario
 				};
 				$http.post(globalService.getUrl() + paths.ligarContratos, JSON.stringify(Parametros), config)
 					.then(function (response) {

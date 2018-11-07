@@ -133,7 +133,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
  
     ContratoMaestroFactory.GetValidaSipuedohacerPagoc(x.ContratoMaestro, x.Clv_FacturaMaestro).then(function (response) {
   
-      if (x.Importe <= x.TotalAbonado) {
+      if (x.Importe <= (x.TotalAbonado + x.TotalNotas)) {
         ngNotify.set('Ya se saldo el adeudo.', 'error');
         return;
       }
@@ -153,6 +153,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
           ngNotify.set('No es posible ingresar un pago. No tiene folio Fiscal', 'error');
           return;
         }
+        console.log('sd');
         if (x.ACuantosPagos === 'N/A') {
           var items = {
             Modo: 'n'
@@ -162,8 +163,8 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
             animation: vm.animationsEnabled,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
-            templateUrl: 'views/corporativa/abrirPago.html',
-            controller: 'AbrirPagoCtrl',
+            templateUrl: 'views/corporativa/TipoPagoRecepcion.html',
+            controller: 'TipoPagoRecepcionCtrl',
             controllerAs: '$ctrl',
             backdrop: 'static',
             keyboard: false,
@@ -185,7 +186,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
           });
         } else if (x.ACuantosPagos == 'Variables') {
           var monto = (x.Importe - x.PagoInicial) / x.ACuantosPagos;
-          var restante = (x.Importe - x.TotalAbonado);
+          var restante = (x.Importe - (x.TotalAbonado + x.TotalNotas));
           if (restante < monto) {
             monto = restante;
           }
@@ -197,12 +198,12 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
             animation: vm.animationsEnabled,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
-            templateUrl: 'views/corporativa/montoAbono.html',
-            controller: 'MontoAbonoCtrl',
+            templateUrl: 'views/corporativa/CantidadPagoRecepcion.html',
+            controller: 'CantidadPagoRecepcionCtrl',
             controllerAs: '$ctrl',
             backdrop: 'static',
             keyboard: false,
-            size: 'sm',
+            size: 'md',
             resolve: {
               items: function () {
                 return items;
@@ -215,12 +216,15 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
               },
               proceso: function () {
                 return 'RP';
+              },
+              metodo: function() {
+                return '';
               }
             }
           });
         } else {
           var monto = (x.Importe - x.PagoInicial) / x.ACuantosPagos;
-          var restante = (x.Importe - x.TotalAbonado);
+          var restante = (x.Importe - (x.TotalAbonado + x.TotalNotas));
           if (restante < monto) {
             monto = restante;
           }
@@ -232,12 +236,12 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
             animation: vm.animationsEnabled,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
-            templateUrl: 'views/corporativa/montoAbono.html',
-            controller: 'MontoAbonoCtrl',
+            templateUrl: 'views/corporativa/CantidadPagoRecepcion.html',
+            controller: 'CantidadPagoRecepcionCtrl',
             controllerAs: '$ctrl',
             backdrop: 'static',
             keyboard: false,
-            size: 'sm',
+            size: 'md',
             resolve: {
               items: function () {
                 return items;
@@ -272,11 +276,17 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     });
   }
 
-  function verFactura(clvPago) {
-
-    pagosMaestrosFactory.verFacturas(clvPago).then(function (data) {
+  function verFactura(clvPago, Medio) {
+    var MedioAux = '';
+    if(Medio == 'Nota de Crédito'){
+      MedioAux = 'Nota';
+    }
+    else{
+      MedioAux = 'Pago';
+    }
+    pagosMaestrosFactory.verFacturas(clvPago, MedioAux).then(function (data) {
+      console.log('data',data);
       vm.facturas = data.GetFacturasPorCliDePagoResult;
-
     });
   }
 
