@@ -15,8 +15,25 @@ angular.module('softvApp')
 			addBitacora: '/Bitacora/AddBitacoraTickets',
 			validaEspecial: '/ValidaFacturaFiscal/GetValidaFacturaFiscal',
 			canEspeceiales: '/CANCELACIONFACTURAS/GetCANCELACIONFACTURASList',
-			getOptionsTickets: '/TblFacturasOpciones/AddTblFacturasOpciones'
+			getOptionsTickets: '/TblFacturasOpciones/AddTblFacturasOpciones',
+			GetFacturaXML: '/DescargaFacturas/GetFacturaXML'
 
+		};
+
+		factory.GetFacturaXML = function(params) {
+			var deferred = $q.defer();
+			
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.GetFacturaXML, JSON.stringify(params), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response);
+			});
+			return deferred.promise;
 		};
 
 		factory.getPlazas = function() {

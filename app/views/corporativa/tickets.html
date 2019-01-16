@@ -4,22 +4,28 @@
     overflow: auto;
     overflow-x: hidden;
   }
-
 </style>
 <div class="card animated fadeIn" style="margin-top:20px;">
   <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
     <header>
-      <strong style="font-weight:bold; border:none; margin-left:10px; font-size: 16px;">Cancelación y Reimpresión de facturas</strong>
-      <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Facturas</small>
+      <strong style="font-weight:bold; border:none; margin-left:10px; font-size: 16px;">Cancelación y Reimpresión de
+        Facturas</strong>
+      <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"><i class="fa fa-home" aria-hidden="true"></i>
+        Facturación Corporativa>Facturas</small>
 
     </header>
+    <div class="tools">
+        <button class="btn btn-success btn-sm" type="button"> <a  csv-column-order="$ctrl.csvorder"  
+          csv-header="$ctrl.csvheader"
+          ng-csv="$ctrl.Tickets" filename="ListadoFacturas.csv" field-separator="," decimal-separator="."  add-bom="true"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Descargar Listado</button>
+      </div>
   </div>
 
   <div class="card-body">
     <div class="panel-group" id="accordion3">
       <div class="card panel">
-        <div class="card-head card-head-xs style-primary-light collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1"
-          aria-expanded="false">
+        <div class="card-head card-head-xs style-primary-light collapsed" data-toggle="collapse" data-parent="#accordion3"
+          data-target="#accordion3-1" aria-expanded="false">
           <header><i class="fa fa-search"></i> Buscar factura</header>
           <div class="tools">
             <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
@@ -29,7 +35,7 @@
           <div class="panel-body">
 
             <div class="row">
-              <br/>
+              <br />
               <div class="col-md-2">
 
 
@@ -100,18 +106,24 @@
           <td>{{x.Ticket}}</td>
           <td>{{x.Status}}</td>
           <td>{{x.Fecha}}</td>
-
           <td>{{x.Importe | currency}}</td>
           <td>{{x.Cliente}}</td>
-          <td> 
-            <button class="btn ink-reaction ink-reaction btn-flat btn-xs btn-info" ng-click="$ctrl.historial(x);"  ><i class="fa fa-plus"></i>  Pagos</button></td>
-          
           <td>
-            <button class="btn ink-reaction  btn-xs btn-default-bright" ng-click="$ctrl.opcionTicket(1,x);"  ><i class="fa fa-print"></i> Imprimir</button>
-            <button class="btn ink-reaction  btn-xs btn-default-bright" ng-click="$ctrl.opcionTicket(3,x);" ><i class="fa fa-envelope-o"></i> Enviar</button>
-            <button class="btn ink-reaction btn-xs btn-danger" ng-if="x.Status!='Cancelada'" ng-click="$ctrl.opcionTicket(2,x)"><i class="fa fa-ban"></i> Cancelar</button>
-            
-
+            <button class="btn ink-reaction ink-reaction btn-flat btn-xs btn-info" ng-click="$ctrl.historial(x);"><i
+                class="fa fa-plus"></i> Pagos</button>
+          </td>
+          <td>
+            <button class="btn ink-reaction  btn-xs btn-default-bright" ng-click="$ctrl.opcionTicket(1,x);"><i class="fa fa-print"></i>
+              Imprimir</button>
+            <button class="btn ink-reaction  btn-xs btn-default-bright" ng-click="$ctrl.opcionTicket(3,x);"><i class="fa fa-envelope-o"></i>
+              Enviar</button>
+            <button class="btn ink-reaction btn-xs btn-danger" ng-if="x.Status!='Cancelada'" ng-click="$ctrl.opcionTicket(2,x)"><i
+                class="fa fa-ban"></i> Cancelar</button>
+            <button class="btn ink-reaction btn-xs btn-info" ng-click="$ctrl.DescargarPDF(x)"><i class="fa fa-file-pdf-o"></i>
+              PDF</button>
+            <button class="btn ink-reaction btn-xs btn-warning" ng-click="$ctrl.DescargarXML(x)"><i class="fa fa-file-code-o"></i>
+              XML</button>
+          </td>
         </tr>
       </tbody>
     </table>

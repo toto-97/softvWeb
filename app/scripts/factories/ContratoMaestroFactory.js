@@ -118,7 +118,7 @@ angular.module('softvApp')
  
     }; 
 
-    factory.GetBuscaBitacoraMaestro = function (Clv_Usuario, Modulo, Descripcion, Op) { 
+    factory.GetBuscaBitacoraMaestro = function (Clv_Usuario, Modulo, Descripcion, Op, Fecha) { 
       var deferred = $q.defer(); 
       var config = { 
         headers: { 
@@ -129,9 +129,10 @@ angular.module('softvApp')
         'Clv_Usuario': Clv_Usuario,
         'Modulo': Modulo,
         'Descripcion': Descripcion,
-        'Op': Op
+        'Op': Op,
+        'Fecha': Fecha
       }; 
- 
+      console.log(parametros);
       $http.post(globalService.getUrl() + paths.GetBuscaBitacoraMaestro, JSON.stringify(parametros), config).then(function (response) { 
  
         deferred.resolve(response.data); 
@@ -823,7 +824,7 @@ angular.module('softvApp')
       var parametros = {
         objprocesa: contratos.objprocesa,
         Usuario: $localStorage.currentUser.usuario
-      }
+      };
       $http.post(globalService.getUrl() + paths.ProcesaDesconexion, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {

@@ -34,6 +34,8 @@
                             <button class="btn ink-reaction   btn-xs btn-default-bright"  ng-if="z.StatusPago=='Activa'" ng-click="$ctrl.opcionTicket(1,z);"  ><i class="fa fa-print"></i> Imprimir</button>
                             <button class="btn ink-reaction  btn-xs btn-default-bright"  ng-if="z.StatusPago=='Activa'" ng-click="$ctrl.opcionTicket(3,z);" ><i class="fa fa-envelope-o"></i> Enviar</button>
                             <button class="btn ink-reaction btn-xs btn-danger"   ng-if="z.StatusPago=='Activa'"  ng-click="$ctrl.opcionTicket(2,z);" ><i class="fa fa-ban"></i> Cancelar</button>
+                            <button class="btn ink-reaction btn-xs btn-info" ng-click="$ctrl.DescargarPDF(z)"><i class="fa fa-file-pdf-o"></i> PDF</button>
+                            <button class="btn ink-reaction btn-xs btn-warning" ng-click="$ctrl.DescargarXML(z)"><i class="fa fa-file-code-o"></i> XML</button>
                            <!--  ng-if="!z.StatusPago=='Cancelada'" -->
                             </td>
                            

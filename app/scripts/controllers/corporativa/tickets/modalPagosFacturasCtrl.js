@@ -1,7 +1,7 @@
 'use strict';
 angular
   .module('softvApp')
-  .controller('modalPagosFacturasCtrl', function (pagosMaestrosFactory, $uibModalInstance, $uibModal, ContratoMaestroFactory, ngNotify, $rootScope, factura) {
+  .controller('modalPagosFacturasCtrl', function (pagosMaestrosFactory, $uibModalInstance, $uibModal, ContratoMaestroFactory, ngNotify, $rootScope, factura, globalService, ticketsFactory) {
     this.$onInit = function () {
       console.log(factura);
 
@@ -14,12 +14,12 @@ angular
         //Vamos a quitar manualmente los pagos que sean de notas de crédito, para modificar los servicios
         var historialPagosAux = [];
         vm.historialPagos.forEach(function (item, index) {
-          if(item.MedioPago != 'Nota de Crédito'){
+          if (item.MedioPago != 'Nota de Crédito') {
             historialPagosAux.push(item);
           }
         });
         vm.historialPagos = historialPagosAux;
-        console.log('vm.historialPagos',vm.historialPagos);
+        console.log('vm.historialPagos', vm.historialPagos);
       });
     }
 
@@ -181,12 +181,77 @@ angular
         });
       } */
 
+    function DescargarXML(Pago) {
+      var params = {
+        'Tipo': 'P',
+        'Clave': Pago.Clv_Pago
+      };
+      vm.url = '';
+      ticketsFactory.GetFacturaXML(params).then(function (data) {
+        console.log(data);
+        vm.url = globalService.getUrlReportes() + '/Reportes/' + data.GetFacturaXMLResult.Archivo;
+        //$window.open(vm.url, '_self');
 
+        var isChrome = !!window.chrome && !!window.chrome.webstore;
+        var isIE = /*@cc_on!@*/ false || !!document.documentMode;
+        var isEdge = !isIE && !!window.StyleMedia;
+
+
+        if (isChrome) {
+          var url = window.URL || window.webkitURL;
+
+          var downloadLink = angular.element('<a></a>');
+          downloadLink.attr('href', vm.url);
+          downloadLink.attr('target', '_self');
+          downloadLink.attr('download', 'Pago ' + ticket.Factura + '.xml');
+          downloadLink[0].click();
+        } else if (isEdge || isIE) {
+          window.navigator.msSaveOrOpenBlob(vm.url, 'Pago ' + ticket.Factura + '.xml');
+
+        } else {
+          var fileURL = vm.url;
+          window.open(fileURL);
+        }
+      });
+    }
+
+    function DescargarPDF(Pago) {
+      ContratoMaestroFactory.GetImprimeFacturaFiscalpago(Pago.Clv_Pago).then(function (result) {
+        if (result.GetImprimeFacturaFiscalpagoResult.IdResult === 0) {
+          ngNotify.set(result.GetImprimeFacturaFiscalpagoResult.Message, 'error');
+          return;
+        }
+
+        vm.url = globalService.getReporteUrlMizar() + '/Reportes/' + result.GetImprimeFacturaFiscalpagoResult.urlReporte;
+        var isChrome = !!window.chrome && !!window.chrome.webstore;
+        var isIE = /*@cc_on!@*/ false || !!document.documentMode;
+        var isEdge = !isIE && !!window.StyleMedia;
+
+
+        if (isChrome) {
+          var url = window.URL || window.webkitURL;
+
+          var downloadLink = angular.element('<a></a>');
+          downloadLink.attr('href', vm.url);
+          downloadLink.attr('target', '_self');
+          downloadLink.attr('download', 'Pago ' + ticket.Factura + '.pdf');
+          downloadLink[0].click();
+        } else if (isEdge || isIE) {
+          window.navigator.msSaveOrOpenBlob(vm.url, 'Pago ' + ticket.Factura + '.pdf');
+
+        } else {
+          var fileURL = vm.url;
+          window.open(fileURL);
+        }
+      });
+    }
 
     var vm = this;
     vm.cancel = cancel;
     vm.titulo = 'Pagos referenciados a ticket ' + factura.Ticket;
     vm.opcionTicket = opcionTicket;
+    vm.DescargarPDF = DescargarPDF;
+    vm.DescargarXML = DescargarXML;
     /*    vm.ImprimeFacturaFiscalpago = ImprimeFacturaFiscalpago;
        vm.EnviaFacturaFiscalpago = EnviaFacturaFiscalpago; */
   });

@@ -8,7 +8,11 @@
         <i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Notas de crédito</small>
     </header>
     <div class="tools">
-      <button class="btn btn-primary btn-sm" ui-sref="home.corporativa.nuevanota" type="button" permission permission-only="'notasdecreditoAdd'">
+      <button class="btn btn-success btn-sm" type="button"> <a  csv-column-order="$ctrl.csvorder"  
+        csv-header="$ctrl.csvheader"
+        ng-csv="$ctrl.Notas" filename="ListadoNotasDeCredito.csv" field-separator="," decimal-separator="."  add-bom="true"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Descargar Listado</button>
+      <button class="btn btn-primary btn-sm" ui-sref="home.corporativa.nuevanota" type="button" permission
+        permission-only="'notasdecreditoAdd'">
         <i class="fa fa-plus" aria-hidden="true"></i> Nueva Nota</button>
     </div>
   </div>
@@ -16,8 +20,8 @@
   <div class="card-body">
     <div class="panel-group" id="accordion3">
       <div class="card panel">
-        <div class="card-head card-head-xs style-primary-light collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1"
-          aria-expanded="false">
+        <div class="card-head card-head-xs style-primary-light collapsed" data-toggle="collapse" data-parent="#accordion3"
+          data-target="#accordion3-1" aria-expanded="false">
           <header>
             <i class="fa fa-search"></i> Buscar nota</header>
           <div class="tools">
@@ -80,9 +84,9 @@
         <thead>
           <tr>
             <th>No.Folio</th>
+            <th>Factura</th>
             <th>Contrato Maestro</th>
             <th>Fecha generación</th>
-
             <th>Status</th>
             <th>Ticket</th>
             <th>Monto</th>
@@ -94,9 +98,9 @@
 
           <tr dir-paginate="x in $ctrl.Notas|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:8">
             <td>{{x.NotaCredito}}</td>
+            <td>{{x.FacturaMizar}}</td>
             <td>{{x.ContratoMaestro}}</td>
             <td>{{x.FechaGeneracion}}</td>
-
             <td>{{x.Status}}</td>
             <td>{{x.Ticket}}</td>
             <td>{{x.Monto|currency}}</td>
@@ -105,15 +109,14 @@
                 <i class="fa fa-eye"></i> Detalle</button>
             </td>
             <td>
-              <button class="btn ink-reaction btn-xs btn-default-bright" data-toggle="tooltip" data-placement="top" title="Refacturar"
-                data-original-title="Tooltip on top" ng-click="$ctrl.opcionesNota(1,x.NotaCredito);">
-                <i class=" md md-repeat
-"></i> Refacturar</button>
-              <button class="btn ink-reaction btn-xs btn-default-bright" data-toggle="tooltip" data-placement="top" title="Reimprimir"
-                data-original-title="Tooltip on top" ng-click="$ctrl.opcionesNota(2,x.NotaCredito);">
-                <i class="md md-print
-"></i> Reimprimir</button>
-
+              <button class="btn ink-reaction btn-xs btn-default-bright" data-toggle="tooltip" data-placement="top"
+                title="Refacturar" data-original-title="Tooltip on top" ng-click="$ctrl.opcionesNota(1,x.NotaCredito);">
+                <i class=" md md-repeat"></i> Refacturar</button>
+              <button class="btn ink-reaction btn-xs btn-default-bright" data-toggle="tooltip" data-placement="top"
+                title="Reimprimir" data-original-title="Tooltip on top" ng-click="$ctrl.opcionesNota(2,x.NotaCredito);">
+                <i class="md md-print"></i> Reimprimir</button>
+              <button class="btn ink-reaction btn-xs btn-info" ng-click="$ctrl.DescargarPDF(x)"><i class="fa fa-file-pdf-o"></i> PDF</button>
+              <button class="btn ink-reaction btn-xs btn-warning" ng-click="$ctrl.DescargarXML(x)"><i class="fa fa-file-code-o"></i> XML</button>
             </td>
 
 

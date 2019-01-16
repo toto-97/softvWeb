@@ -18,7 +18,7 @@ angular.module('softvApp').controller('ReportesPendientesCtrl', ReportesPendient
         };
     });
 
-function ReportesPendientesCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory, $timeout) {
+function ReportesPendientesCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory, $timeout, $filter) {
 
 
     function buscaContrato(opcion) {

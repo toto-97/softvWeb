@@ -20,7 +20,8 @@
     <div class="card" style="margin-top:20px;">
         <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
             <header>
-                <strong style="font-weight:bold; border:none; margin-left:10px; font-size: 16px;">Bitácora de Movimientos</strong>
+                <strong style="font-weight:bold; border:none; margin-left:10px; font-size: 16px;">Bitácora de
+                    Movimientos</strong>
                 <br />
                 <small class="text-muted" style="font-size:14px; margin-left:10px;">
                     <i class="fa fa-home" aria-hidden="true"></i> Configuración>Bitácora</small>
@@ -29,8 +30,8 @@
         <div class="card-body">
             <div class="panel-group" id="accordion3">
                 <div class="card panel">
-                    <div class="card-head card-head-xs style-primary-light collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1"
-                        aria-expanded="false">
+                    <div class="card-head card-head-xs style-primary-light collapsed" data-toggle="collapse"
+                        data-parent="#accordion3" data-target="#accordion3-1" aria-expanded="false">
                         <header>
                             <i class="fa fa-search"></i> Filtrar resultados</header>
                         <div class="tools">
@@ -44,7 +45,7 @@
 
                             <div class="row">
                                 <br>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
 
                                     <input type="text" placeholder="Usuario" class="form-control input-sm" ng-model="$ctrl.Usuario">
 
@@ -54,7 +55,7 @@
                                     <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscarResultados(1);">
                                         <i class="fa fa-search"></i> Buscar</button>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <input type="text" placeholder="Módulo" class="form-control input-sm" ng-model="$ctrl.Modulo">
 
                                 </div>
@@ -63,7 +64,7 @@
                                         <i class="fa fa-search"></i> Buscar</button>
 
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
 
                                     <input type="text" placeholder="Descripción" class="form-control input-sm" ng-model="$ctrl.Descripcion">
 
@@ -71,6 +72,18 @@
                                 <div class="col-md-1">
 
                                     <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscarResultados(3);">
+                                        <i class="fa fa-search"></i> Buscar</button>
+
+                                </div>
+                                <div class="col-md-2">
+
+                                    <input class="form-control input-sm" ng-model="$ctrl.Fecha" type="date"
+                                        name="Fecha" />
+
+                                </div>
+                                <div class="col-md-1">
+
+                                    <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscarResultados(4);">
                                         <i class="fa fa-search"></i> Buscar</button>
 
                                 </div>
