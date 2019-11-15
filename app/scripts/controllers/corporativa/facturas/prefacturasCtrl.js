@@ -99,11 +99,37 @@ function prefacturasCtrl($state, ContratoMaestroFactory, ngNotify, $filter, $uib
     });
   }
 
- $rootScope.$on('actualizar_listado', function (e, clave) {   
+  function AgregarContratos(FacturaMaestro) {
+    var modalInstance = $uibModal.open({
+      animation: true,
+      ariaLabelledBy: 'modal-title',
+      ariaDescribedBy: 'modal-body',
+      templateUrl: 'views/corporativa/ModalAgregarContratos.html',
+      controller: 'ModalAgregarContratosCtrl',
+      controllerAs: '$ctrl',
+      backdrop: 'static',
+      keyboard: false,
+      class: 'modal-backdrop fade',
+      size: 'lg',
+      resolve: {
+        FacturaMaestro: function () {
+          return FacturaMaestro;
+        }
+      }
+    });
+    modalInstance.result.then(function () {
+      buscar(1);
+      //alert('si');
+    }, function () {
+      //alert('Modal dismissed');
+    });
+  }
+
+  $rootScope.$on('actualizar_listado', function (e, clave) {
     buscar(1);
   });
 
- $rootScope.$on('reload_tabla', function () {
+  $rootScope.$on('reload_tabla', function () {
     buscar(1);
   });
 
@@ -114,4 +140,5 @@ function prefacturasCtrl($state, ContratoMaestroFactory, ngNotify, $filter, $uib
   vm.Conceptos = Conceptos;
   vm.CancelarFacturaPreliminar = CancelarFacturaPreliminar;
   vm.DetalleContratos = DetalleContratos;
+  vm.AgregarContratos = AgregarContratos;
 }

@@ -5,20 +5,20 @@
     .module('softvApp')
     .controller('notaCreditoCtrl', notaCreditoCtrl);
 
-  notaCreditoCtrl.inject = ['$uibModal', '$state', '$rootScope', 'ngNotify', 'ContratoMaestroFactory', '$filter', 'globalService', 'ticketsFactory'];
-  function notaCreditoCtrl($uibModal, $state, $rootScope, ngNotify, ContratoMaestroFactory, $filter, globalService, ticketsFactory) {
+  notaCreditoCtrl.inject = ['$uibModal', '$state', '$rootScope', 'ngNotify', 'ContratoMaestroFactory', '$filter', 'globalService', 'ticketsFactory','$timeout'];
+  function notaCreditoCtrl($uibModal, $state, $rootScope, ngNotify, ContratoMaestroFactory, $filter, globalService, ticketsFactory, $timeout) {
     var vm = this;
     vm.buscar = buscar;
     vm.DetalleNota = DetalleNota;
     vm.opcionesNota = opcionesNota;
     vm.DescargarPDF = DescargarPDF;
     vm.DescargarXML = DescargarXML;
-
+    vm.Exportar = Exportar;
 
     this.$onInit = function () {
       buscar(0);
-      vm.csvheader = ['NotaCredito', 'Factura', 'ContratoMaestro', 'FechaGeneracion', 'Status', 'Ticket', 'Monto'];
-      vm.csvorder = ['NotaCredito', 'FacturaMizar', 'ContratoMaestro', 'FechaGeneracion', 'Status', 'Ticket', 'Monto'];
+      vm.csvheader = ['NotaCredito', 'Factura', 'ContratoMaestro', 'FechaGeneracion', 'Status', 'Ticket', 'Monto','Moneda'];
+      vm.csvorder = ['NotaCredito', 'FacturaMizar', 'ContratoMaestro', 'FechaGeneracion', 'Status', 'Ticket', 'Monto','Moneda'];
     }
 
     function buscar(id) {
@@ -28,6 +28,7 @@
           'Op': 1,
           'Clv_NotadeCredito': vm.folio,
           'Fecha': '',
+          'FechaFin': '',
           'ContratoMaestro': 0
         }
 
@@ -37,13 +38,15 @@
           'Op': 3,
           'Clv_NotadeCredito': 0,
           'Fecha': '',
+          'FechaFin': '',
           'ContratoMaestro': vm.contrato
         }
       } else if (id == 3) {
         var parametros = {
           'Op': 2,
           'Clv_NotadeCredito': 0,
-          'Fecha': vm.fecha = $filter('date')(vm.date, 'dd/MM/yyyy'),
+          'Fecha': $filter('date')(vm.fecha, 'dd/MM/yyyy'),
+          'FechaFin': '',
           'ContratoMaestro': 0
         }
 
@@ -53,13 +56,13 @@
           'Op': 0,
           'Clv_NotadeCredito': 0,
           'Fecha': '',
+          'FechaFin': '',
           'ContratoMaestro': 0
         }
       }
 
       ContratoMaestroFactory.FiltrosBusquedaNotasDeCredito(parametros).then(function (data) {
         vm.Notas = data.GetBusquedaNotasListResult;
-        console.log(vm.Notas);
       });
     }
 
@@ -174,6 +177,30 @@
         });
 
       }
+    }
+
+    function Exportar() {
+      var parametros = {};
+      if (vm.FechaInicial == undefined || vm.FechaFinal == undefined) {
+        parametros.Op = 0;
+        parametros.Clv_NotadeCredito = 0;
+        parametros.Fecha = '';
+        parametros.FechaFin = '';
+        parametros.ContratoMaestro = 0;
+      }
+      else{
+        parametros.Op = 4;
+        parametros.Clv_NotadeCredito = 0;
+        parametros.Fecha = $filter('date')(vm.FechaInicial, 'dd/MM/yyyy');
+        parametros.FechaFin = $filter('date')(vm.FechaFinal, 'dd/MM/yyyy');
+        parametros.ContratoMaestro = 0;
+      }
+      ContratoMaestroFactory.FiltrosBusquedaNotasDeCredito(parametros).then(function (data) {
+        vm.NotasDescarga = data.GetBusquedaNotasListResult;
+        $timeout(function () {
+          angular.element('#descarga').triggerHandler('click');
+        });
+      });
     }
 
   }

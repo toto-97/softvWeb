@@ -19,7 +19,7 @@ angular
           }
         });
         vm.historialPagos = historialPagosAux;
-        console.log('vm.historialPagos', vm.historialPagos);
+        //console.log('vm.historialPagos', vm.historialPagos);
       });
     }
 

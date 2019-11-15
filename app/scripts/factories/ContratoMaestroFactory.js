@@ -79,7 +79,83 @@ angular.module('softvApp')
       GetBuscaBitacoraMaestro: '/Bitacora/GetBuscaBitacoraMaestro',
       GetImprimeFacturaFiscalNotaMaestro:'/FacturacionSoftv/GetImprimeFacturaFiscalNotaMaestro',
       GetOrdenesGeneradasContratoMaestro:'/ReporteCortesFac/GetOrdenesGeneradasContratoMaestro',
-      GetGuardarCalleNuevaCAMDO: '/CobraContratoMaestro/GetGuardarCalleNuevaCAMDO'
+      GetGuardarCalleNuevaCAMDO: '/CobraContratoMaestro/GetGuardarCalleNuevaCAMDO',
+      GetObtieneContratosNoFacturaPreliminar: '/BuscaFacturasFisca/GetObtieneContratosNoFacturaPreliminar',
+      GetAgregaContratosFacturaPreliminar: '/BuscaFacturasFisca/GetAgregaContratosFacturaPreliminar',
+      GetObtieneContratosFacturaPreliminar: '/BuscaFacturasFisca/GetObtieneContratosFacturaPreliminar',
+      GetEliminaContratosFacturaPreliminar: '/BuscaFacturasFisca/GetEliminaContratosFacturaPreliminar'
+    };
+
+    factory.GetEliminaContratosFacturaPreliminar = function (parametros) { 
+      var deferred = $q.defer(); 
+      var config = { 
+        headers: { 
+          'Authorization': $localStorage.currentUser.token 
+        } 
+      }; 
+ 
+      $http.post(globalService.getUrl() + paths.GetEliminaContratosFacturaPreliminar, JSON.stringify(parametros), config).then(function (response) { 
+ 
+        deferred.resolve(response.data); 
+      }).catch(function (response) { 
+        deferred.reject(response); 
+      }); 
+      return deferred.promise; 
+ 
+    };
+
+    factory.GetObtieneContratosFacturaPreliminar = function (parametros) { 
+      var deferred = $q.defer(); 
+      var config = { 
+        headers: { 
+          'Authorization': $localStorage.currentUser.token 
+        } 
+      }; 
+ 
+      $http.post(globalService.getUrl() + paths.GetObtieneContratosFacturaPreliminar, JSON.stringify(parametros), config).then(function (response) { 
+ 
+        deferred.resolve(response.data); 
+      }).catch(function (response) { 
+        deferred.reject(response); 
+      }); 
+      return deferred.promise; 
+ 
+    };
+
+    factory.GetAgregaContratosFacturaPreliminar = function (parametros) { 
+      var deferred = $q.defer(); 
+      var config = { 
+        headers: { 
+          'Authorization': $localStorage.currentUser.token 
+        } 
+      }; 
+ 
+      $http.post(globalService.getUrl() + paths.GetAgregaContratosFacturaPreliminar, JSON.stringify(parametros), config).then(function (response) { 
+ 
+        deferred.resolve(response.data); 
+      }).catch(function (response) { 
+        deferred.reject(response); 
+      }); 
+      return deferred.promise; 
+ 
+    };
+
+    factory.GetObtieneContratosNoFacturaPreliminar = function (parametros) { 
+      var deferred = $q.defer(); 
+      var config = { 
+        headers: { 
+          'Authorization': $localStorage.currentUser.token 
+        } 
+      }; 
+ 
+      $http.post(globalService.getUrl() + paths.GetObtieneContratosNoFacturaPreliminar, JSON.stringify(parametros), config).then(function (response) { 
+ 
+        deferred.resolve(response.data); 
+      }).catch(function (response) { 
+        deferred.reject(response); 
+      }); 
+      return deferred.promise; 
+ 
     };
 
     factory.GetGuardarCalleNuevaCAMDO = function (parametros) { 
@@ -935,6 +1011,7 @@ angular.module('softvApp')
       };
       var parametros = {
         'Fecha': objeto.Fecha,
+        'FechaFinal': objeto.FechaFinal,
         'Ticket': objeto.Ticket,
         'ContratoMaestro': objeto.ContratoMaestro,
         'Cliente': objeto.Cliente,
@@ -1240,6 +1317,7 @@ angular.module('softvApp')
         'Op': data.Op,
         'Clv_NotadeCredito': data.Clv_NotadeCredito,
         'Fecha': data.Fecha,
+        'FechaFin': data.FechaFin,
         'ContratoMaestro': data.ContratoMaestro
       };
 

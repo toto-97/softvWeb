@@ -322,8 +322,8 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 							pagosMaestrosFactory.actFactura(elem).then(function (dataAct) {
 								if (vm.selectedBancoCheque.Clave == 0) {
 									ngNotify.set('Selecciona un banco.', 'error');
-								} else if (vm.numeroCheque == "" || vm.numeroCheque == undefined) {
-									ngNotify.set('Digita el número del cheque.', 'error');
+								//} else if (vm.numeroCheque == "" || vm.numeroCheque == undefined) {
+									//ngNotify.set('Digita el número del cheque.', 'error');
 								} else {
 									if (vm.dineroCheque == vm.monto) {
 										var objPagar = {
@@ -336,7 +336,7 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 											'GLOEFECTIVO2': 0,
 											'GLOCHEQUE2': vm.dineroCheque,
 											'GLOCLV_BANCOCHEQUE2': vm.selectedBancoCheque.Clave,
-											'NUMEROCHEQUE2': vm.numeroCheque,
+											'NUMEROCHEQUE2': vm.numeroCheque == undefined ? '' : vm.numeroCheque,
 											'GLOTARJETA2': 0,
 											'GLOCLV_BANCOTARJETA2': 0,
 											'NUMEROTARJETA2': '',
@@ -377,8 +377,8 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 						pagosMaestrosFactory.actFactura(elem).then(function (dataAct) {
 							if (vm.selectedBancoCheque.Clave == 0) {
 								ngNotify.set('Selecciona un banco.', 'error');
-							} else if (vm.numeroCheque == "" || vm.numeroCheque == undefined) {
-								ngNotify.set('Digita el número del cheque.', 'error');
+							//} else if (vm.numeroCheque == "" || vm.numeroCheque == undefined) {
+								//ngNotify.set('Digita el número del cheque.', 'error');
 							} else {
 								if (vm.dineroCheque == vm.monto) {
 									var objPagar = {
@@ -391,7 +391,7 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 										'GLOEFECTIVO2': 0,
 										'GLOCHEQUE2': vm.dineroCheque,
 										'GLOCLV_BANCOCHEQUE2': vm.selectedBancoCheque.Clave,
-										'NUMEROCHEQUE2': vm.numeroCheque,
+										'NUMEROCHEQUE2': vm.numeroCheque == undefined ? '' : vm.numeroCheque,
 										'GLOTARJETA2': 0,
 										'GLOCLV_BANCOTARJETA2': 0,
 										'NUMEROTARJETA2': '',

@@ -335,7 +335,8 @@ angular
 				'Op': obj.Op,
 				'Saldada2': obj.Saldada2,
 				'IdMedioPago': obj.IdMedioPago,
-				'ContratoCompania': obj.ContratoCompania
+				'ContratoCompania': obj.ContratoCompania,
+				'FechaFin': obj.FechaFin
 			};
 			var config = {
 				headers: {

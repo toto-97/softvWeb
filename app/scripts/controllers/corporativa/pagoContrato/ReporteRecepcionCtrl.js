@@ -31,7 +31,8 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                 'Op': 5,
                 'Saldada2': 1,
                 'IdMedioPago': 0,
-                'ContratoCompania': 0
+                'ContratoCompania': 0,
+                'FechaFin': ''
             };
             pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                 vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
@@ -45,13 +46,16 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'FechaFacturacion', 
                     'FechaVencimiento', 
                     'ImporteFactura', 
+                    'MonedaF', 
                     'TotalAbonado', 
                     'TotalNotas', 
                     'pendiente', 
+                    'Clv_Pago', 
                     'Sucursal', 
                     'Cajera', 
                     'MedioPago', 
                     'ImportePago', 
+                    'MonedaP', 
                     'FechaPago', 
                     'Contrato',
                     'ImporteFacCliente', 
@@ -70,7 +74,8 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                 'Op': 5,
                 'Saldada2': 0,
                 'IdMedioPago': 0,
-                'ContratoCompania': 0
+                'ContratoCompania': 0,
+                'FechaFin': ''
             };
             pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                 vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
@@ -84,13 +89,16 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'FechaFacturacion', 
                     'FechaVencimiento', 
                     'ImporteFactura', 
+                    'MonedaF', 
                     'TotalAbonado', 
                     'TotalNotas', 
                     'pendiente', 
+                    'Clv_Pago', 
                     'Sucursal', 
                     'Cajera', 
                     'MedioPago', 
                     'ImportePago', 
+                    'MonedaP', 
                     'FechaPago', 
                     'Contrato',
                     'ImporteFacCliente', 
@@ -117,7 +125,8 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'Op': opcion,
                     'Saldada2': 0,
                     'IdMedioPago': 0,
-                    'ContratoCompania': 0
+                    'ContratoCompania': 0,
+                    'FechaFin': ''
                 };
                 pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
@@ -130,13 +139,16 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'FechaFacturacion', 
                     'FechaVencimiento', 
                     'ImporteFactura', 
+                    'MonedaF', 
                     'TotalAbonado', 
                     'TotalNotas', 
                     'pendiente', 
+                    'Clv_Pago', 
                     'Sucursal', 
                     'Cajera', 
                     'MedioPago', 
                     'ImportePago', 
+                    'MonedaP', 
                     'FechaPago', 
                     'Contrato',
                     'ImporteFacCliente', 
@@ -160,7 +172,8 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'Op': opcion,
                     'Saldada2': 0,
                     'IdMedioPago': 0,
-                    'ContratoCompania': 0
+                    'ContratoCompania': 0,
+                    'FechaFin': ''
                 };
                 pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
@@ -173,13 +186,16 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'FechaFacturacion', 
                     'FechaVencimiento', 
                     'ImporteFactura', 
+                    'MonedaF', 
                     'TotalAbonado', 
                     'TotalNotas', 
                     'pendiente', 
+                    'Clv_Pago', 
                     'Sucursal', 
                     'Cajera', 
                     'MedioPago', 
                     'ImportePago', 
+                    'MonedaP', 
                     'FechaPago', 
                     'Contrato',
                     'ImporteFacCliente', 
@@ -202,7 +218,8 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'Op': opcion,
                     'Saldada2': 0,
                     'IdMedioPago': 0,
-                    'ContratoCompania': 0
+                    'ContratoCompania': 0,
+                    'FechaFin': ''
                 };
                 pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
@@ -214,14 +231,17 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'Tipo', 
                     'FechaFacturacion', 
                     'FechaVencimiento', 
-                    'ImporteFactura', 
+                    'ImporteFactura',
+                    'MonedaF',  
                     'TotalAbonado', 
                     'TotalNotas', 
                     'pendiente', 
+                    'Clv_Pago', 
                     'Sucursal', 
                     'Cajera', 
                     'MedioPago', 
                     'ImportePago', 
+                    'MonedaP', 
                     'FechaPago', 
                     'Contrato',
                     'ImporteFacCliente', 
@@ -237,6 +257,7 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                 ngNotify.set('Seleccione una fecha de facturación.', 'error');
             } else {
                 vm.auxFechaInicio = $filter('date')(vm.Fecha, 'dd/MM/yyyy');
+                vm.auxFechaFin = $filter('date')(vm.FechaFin, 'dd/MM/yyyy');
                 parametros = {
                     'Fecha': vm.auxFechaInicio,
                     'Ticket': '',
@@ -245,7 +266,8 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'Op': opcion,
                     'Saldada2': 0,
                     'IdMedioPago': 0,
-                    'ContratoCompania': 0
+                    'ContratoCompania': 0,
+                    'FechaFin': vm.auxFechaFin
                 };
                 pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
@@ -258,13 +280,16 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'FechaFacturacion', 
                     'FechaVencimiento', 
                     'ImporteFactura', 
+                    'MonedaF', 
                     'TotalAbonado', 
                     'TotalNotas', 
                     'pendiente', 
+                    'Clv_Pago', 
                     'Sucursal', 
                     'Cajera', 
                     'MedioPago', 
                     'ImportePago', 
+                    'MonedaP', 
                     'FechaPago', 
                     'Contrato',
                     'ImporteFacCliente', 
@@ -280,6 +305,7 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                 ngNotify.set('Seleccione una fecha de pago.', 'error');
             } else {
                 vm.auxFechaPago = $filter('date')(vm.FechaPago, 'dd/MM/yyyy');
+                vm.auxFechaPagoFin = $filter('date')(vm.FechaPagoFin, 'dd/MM/yyyy');
                 parametros = {
                     'Fecha': vm.auxFechaPago,
                     'Ticket': '',
@@ -288,7 +314,8 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'Op': opcion,
                     'Saldada2': 0,
                     'IdMedioPago': 0,
-                    'ContratoCompania': 0
+                    'ContratoCompania': 0,
+                    'FechaFin': vm.auxFechaPagoFin
                 };
                 pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
@@ -301,13 +328,16 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'FechaFacturacion', 
                     'FechaVencimiento', 
                     'ImporteFactura', 
+                    'MonedaF', 
                     'TotalAbonado', 
                     'TotalNotas', 
                     'pendiente', 
+                    'Clv_Pago', 
                     'Sucursal', 
                     'Cajera', 
                     'MedioPago', 
                     'ImportePago', 
+                    'MonedaP', 
                     'FechaPago', 
                     'Contrato',
                     'ImporteFacCliente', 
@@ -330,7 +360,8 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'Op': opcion,
                     'Saldada2': 0,
                     'IdMedioPago': 0,
-                    'ContratoCompania': vm.ContratoCliente
+                    'ContratoCompania': vm.ContratoCliente,
+                    'FechaFin': ''
                 };
                 pagosMaestrosFactory.buscarPagos(parametros).then(function (data) {
                     vm.pagos = data.GetBuscaFacturasMaestroConsultaListResult;
@@ -343,13 +374,16 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
                     'FechaFacturacion', 
                     'FechaVencimiento', 
                     'ImporteFactura', 
+                    'MonedaF', 
                     'TotalAbonado', 
                     'TotalNotas', 
                     'pendiente', 
+                    'Clv_Pago', 
                     'Sucursal', 
                     'Cajera', 
                     'MedioPago', 
                     'ImportePago', 
+                    'MonedaP', 
                     'FechaPago', 
                     'Contrato',
                     'ImporteFacCliente', 
@@ -395,13 +429,16 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
             'FechaFacturacion': 'Fecha de Facturacion',
             'FechaVencimiento': 'Fecha de Vencimiento',
             'ImporteFactura': 'Importe de la Factura',
+            'MonedaF': 'Moneda',
             'TotalAbonado': 'Total Abonado',
             'TotalNotas': 'Total Notas de Crédito',
             'pendiente': 'Saldo Pendiente',
+            'Clv_Pago' : 'Ticket Pago/Nota', 
             'Sucursal': 'Sucursal',
             'Cajera': 'Cajera',
             'MedioPago': 'Medio de Pago',
             'ImportePago': 'Importe de Pago',
+            'MonedaP': 'Moneda Pago',
             'FechaPago': 'Fecha de Pago',
             'Contrato': 'Contrato',
             'ImporteFacCliente': 'Importe de Facactura Cliente',
@@ -418,7 +455,7 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
         var ro = 0;
         ro = vm.pagos.length;
         var cols = 21;
-        var columns = ['Contrato Maestro', 'Ticket', 'Cliente', 'Tipo', 'Fecha de Facturacion', 'Fecha de Vencimiento', 'Importe Factura', 'Pago Inicial', 'Pagos', 'Total Abonado','Total Notas de Crédito', 'Pendiente', 'Sucursal', 'Cajera', 'Medio de Pago', 'Importe Pago', 'Fecha de Pago', 'Importe de la Fac. Cliente', 'Monto del Abono', 'Por Pagar', 'Saldada'];
+        var columns = ['Contrato Maestro', 'Ticket', 'Cliente', 'Tipo', 'Fecha de Facturacion', 'Fecha de Vencimiento', 'Importe Factura', 'Moneda', 'Total Abonado','Total Notas de Crédito', 'Pendiente', 'Ticket Pago/Nota', 'Sucursal', 'Cajera', 'Medio de Pago', 'Importe Pago', 'Moneda Pago', 'Fecha de Pago', 'Importe de la Fac. Cliente', 'Monto del Abono', 'Por Pagar', 'Saldada'];
         for (var i = r; i < ro; i++) {
             rows.push([]);
         }
@@ -430,20 +467,21 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
             rows[i][4] = vm.pagos[i].FechaFacturacion;
             rows[i][5] = vm.pagos[i].FechaVencimiento;
             rows[i][6] = vm.pagos[i].ImporteFactura;
-            rows[i][7] = vm.pagos[i].PagoInicial;
-            rows[i][8] = vm.pagos[i].ACuantosPagos;
+            rows[i][7] = vm.pagos[i].MonedaF;
             rows[i][9] = vm.pagos[i].TotalAbonado;
             rows[i][10] = vm.pagos[i].TotalNotas;
             rows[i][11] = vm.pagos[i].pendiente;
-            rows[i][12] = vm.pagos[i].Sucursal;
-            rows[i][13] = vm.pagos[i].Cajera;
-            rows[i][14] = vm.pagos[i].MedioPago;
-            rows[i][15] = vm.pagos[i].ImportePago;
-            rows[i][16] = vm.pagos[i].FechaPago;
-            rows[i][17] = vm.pagos[i].ImporteFacCliente;
-            rows[i][18] = vm.pagos[i].MontoAbono;
-            rows[i][19] = vm.pagos[i].PorPagar;
-            rows[i][20] = vm.pagos[i].Saldada2;
+            rows[i][12] = vm.pagos[i].Clv_Pago;
+            rows[i][13] = vm.pagos[i].Sucursal;
+            rows[i][14] = vm.pagos[i].Cajera;
+            rows[i][15] = vm.pagos[i].MedioPago;
+            rows[i][16] = vm.pagos[i].ImportePago;
+            rows[i][17] = vm.pagos[i].MonedaP;
+            rows[i][18] = vm.pagos[i].FechaPago;
+            rows[i][19] = vm.pagos[i].ImporteFacCliente;
+            rows[i][20] = vm.pagos[i].MontoAbono;
+            rows[i][21] = vm.pagos[i].PorPagar;
+            rows[i][22] = vm.pagos[i].Saldada2;
         }
         var doc = new jsPDF({
             orientation: 'landscape',

@@ -7,7 +7,7 @@
 
   ticketsCtrl.inject = [''];
 
-  function ticketsCtrl(ContratoMaestroFactory, $filter, $uibModal, ngNotify, $rootScope, pagosMaestrosFactory, ticketsFactory, globalService, $window) {
+  function ticketsCtrl(ContratoMaestroFactory, $filter, $uibModal, ngNotify, $rootScope, pagosMaestrosFactory, ticketsFactory, globalService, $window, $timeout) {
 
     /* 
         function GetEnviaFacturaFiscal(item) {
@@ -267,6 +267,40 @@
       });
     }
 
+    function Exportar() {
+      var parametros = {};
+      if (vm.FechaInicial == undefined || vm.FechaFinal == undefined) {
+        parametros = {
+          'Fecha': '',
+          'Ticket': '',
+          'ContratoMaestro': 0,
+          'Cliente': '',
+          'Op': 0,
+          'Saldada': 0
+        };
+
+      } else {
+
+        parametros = {
+          'Fecha': $filter('date')(vm.FechaInicial, 'dd/MM/yyyy'),
+          'FechaFinal': $filter('date')(vm.FechaFinal, 'dd/MM/yyyy'),
+          'Ticket': '',
+          'ContratoMaestro': 0,
+          'Cliente': '',
+          'Op': 6,
+          'Saldada': 0
+        };
+      }
+
+      ContratoMaestroFactory.BuscaFacturasMaestro(parametros).then(function (data) {
+        vm.TicketsDescarga = data.GetBuscaFacturasMaestroListResult;
+        //console.log('vm.TicketsDescarga',vm.TicketsDescarga);
+        $timeout(function () {
+          angular.element('#descarga').triggerHandler('click');
+        });
+      });
+    }
+
     var vm = this;
     vm.Buscar = Buscar;
     Buscar(0);
@@ -277,7 +311,8 @@
     //vm.GetCancelacion_Factura_CFDMaestro=GetCancelacion_Factura_CFDMaestro;
     vm.DescargarPDF = DescargarPDF;
     vm.DescargarXML = DescargarXML;
-    vm.csvheader = ['ContratoMaestro', 'Factura', 'Ticket', 'Status', 'Fecha', 'Importe', 'NombreComercial'];
-    vm.csvorder = ['ContratoMaestro', 'Factura', 'Ticket', 'Status', 'Fecha', 'Importe', 'Cliente'];
+    vm.Exportar = Exportar;
+    vm.csvheader = ['ContratoMaestro', 'Factura', 'Ticket', 'Status', 'Fecha', 'Importe', 'Moneda', 'NombreComercial'];
+    vm.csvorder = ['ContratoMaestro', 'Factura', 'Ticket', 'Status', 'Fecha', 'Importe', 'Moneda', 'Cliente'];
   }
 })();

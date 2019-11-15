@@ -27,7 +27,7 @@ function AbrirDetalleCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
         if (vm.selectedService.Clv_Servicio == 0) {
             ngNotify.set('Selecciona un servicio por favor.', 'error');
         } else {
-            if (vm.selectedService.Clv_Txt == 'CADIG' || vm.selectedService.Clv_Txt == 'CADI2' || vm.selectedService.Clv_Txt == 'CADI3' || vm.selectedService.Clv_Txt == 'CANET') {
+            if (vm.selectedService.Clv_Txt == 'CADIG' || vm.selectedService.Clv_Txt == 'CADI2' || vm.selectedService.Clv_Txt == 'CADI3' || vm.selectedService.Clv_Txt == 'CANET'  || vm.selectedService.Clv_Txt == 'CDUSD') {
                 cajasFactory.consultaCamdo(x.Clv_Session, x.Contrato).then(function (data) {
                     if (data.GetCAMDOFACResult.Existe == false) {
                         var items = {};
@@ -95,7 +95,8 @@ function AbrirDetalleCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
     function openDeleteList() {
         if (vm.selectAparato == undefined) {
             ngNotify.set('Selecciona un concepto.', 'error');
-        } else if (vm.selectAparato.CLAVE == 1 || vm.selectAparato.CLAVE == 3) {
+        } 
+        else if (vm.selectAparato.CLAVE == 1 || vm.selectAparato.CLAVE == 3) {
             if (vm.selectAparato.Pagos_Adelantados != 'Ext. Adicionales') {
                 if (vm.selectAparato.CLAVE == 1) {
                     ngNotify.set('No se puede quitar la Contratación.', 'error');
@@ -103,7 +104,8 @@ function AbrirDetalleCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify,
                     ngNotify.set('No se puede quitar la Reconexión.', 'error');
                 }
             }
-        } else {
+        } 
+        else {
             if (vm.selectAparato != '') {
                 cajasFactory.quitarDetalle(x.Contrato, x.Clv_Session, vm.selectAparato.CLV_DETALLE, vm.Suscriptor.Clv_TipoCliente).then(function (data) {
                     if (data.GetQuitarDetalleListResult[0].Error == 0) {

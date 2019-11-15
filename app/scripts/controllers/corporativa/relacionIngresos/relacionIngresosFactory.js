@@ -9,14 +9,15 @@ function relacionIngresosFactory($q,$http,$localStorage,globalService ) {
     GetRelacionIngresosMaestro: '/RelacionIngresosMaestro/GetRelacionIngresosMaestro'
   };
 
-  factory.GetRelacionIngresosMaestro = function(Distribuidores,FechaInicial,FechaFinal,Dolares) {
+  factory.GetRelacionIngresosMaestro = function(Distribuidores,FechaInicial,FechaFinal,Dolares,ExentoIVA) {
 			var deferred = $q.defer();
 			var user = $localStorage.currentUser.idUsuario;
 			var Parametros = {
 				'Distribuidores': Distribuidores,
 				'FechaInicial': FechaInicial,
                 'FechaFinal':FechaFinal,
-                'Dolares':Dolares
+				'Dolares':Dolares,
+				'ExentoIVA':ExentoIVA
 			};
 			var config = {
 				headers: {

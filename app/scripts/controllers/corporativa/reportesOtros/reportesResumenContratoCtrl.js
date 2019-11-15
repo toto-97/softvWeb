@@ -46,7 +46,7 @@ function reportesResumenContratoCtrl($uibModal, ngNotify, inMenu, pagosMaestrosF
                 vm.displayCollection2 = data.GetResumenGeneraPorContratoMaestroListResult.List2;
             });
 
-            vm.predicates = ['ContratoMaestro', 'Contrato', 'Status', 'Servicio', 'FechaInstalacion', 'UltimoMesPagado', 'MacCableModem'];
+            vm.predicates = ['ContratoMaestro', 'Contrato', 'Status', 'Servicio', 'FechaInstalacion', 'UltimoMesPagado', 'UltimoMesFacturado', 'MacCableModem'];
             vm.selectedPredicate = vm.predicates[0];
         }
 
@@ -79,6 +79,7 @@ function reportesResumenContratoCtrl($uibModal, ngNotify, inMenu, pagosMaestrosF
             'Servicio': 'Servicio',
             'FechaInstalacion': 'Fecha de Instalación',
             'UltimoMesPagado': 'Ultimo Mes Pagado',
+            'UltimoMesFacturado': 'Ultimo Mes Facturado',
             'MacCableModem': 'MAC Aparato'
         }];
     }
@@ -90,7 +91,7 @@ function reportesResumenContratoCtrl($uibModal, ngNotify, inMenu, pagosMaestrosF
         var ro = 0;
         ro = vm.contratos.length;
         var cols = 21;
-        var columns = ['ContratoMaestro','Contrato', 'Status', 'Servicio', 'Fecha Instalación', 'Último Mes Pagado', 'MAC Aparato'];
+        var columns = ['ContratoMaestro','Contrato', 'Status', 'Servicio', 'Fecha Instalación', 'Último Mes Pagado', 'Último Mes Facturado', 'MAC Aparato'];
         for (var i = r; i < ro; i++) {
             rows.push([]);
         }
@@ -101,7 +102,8 @@ function reportesResumenContratoCtrl($uibModal, ngNotify, inMenu, pagosMaestrosF
             rows[i][3] = vm.contratos[i].Servicio;
             rows[i][4] = vm.contratos[i].FechaInstalacion;
             rows[i][5] = vm.contratos[i].UltimoMesPagado;
-            rows[i][6] = vm.contratos[i].MacCableModem;
+            rows[i][6] = vm.contratos[i].UltimoMesFacturado;
+            rows[i][7] = vm.contratos[i].MacCableModem;
         }
         var doc = new jsPDF({
             orientation: 'landscape',
@@ -177,7 +179,7 @@ function reportesResumenContratoCtrl($uibModal, ngNotify, inMenu, pagosMaestrosF
     }
 
     function ExportarTodosMaestros() {
-        vm.predicates = ['ContratoMaestro', 'Contrato', 'Status', 'Servicio', 'FechaInstalacion', 'UltimoMesPagado', 'MacCableModem'];
+        vm.predicates = ['ContratoMaestro', 'Contrato', 'Status', 'Servicio', 'FechaInstalacion', 'UltimoMesPagado', 'UltimoMesFacturado', 'MacCableModem'];
         vm.selectedPredicate = vm.predicates[0];
         var parametros = {
             'ContratoMaestro': 0,

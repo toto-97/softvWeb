@@ -14,7 +14,9 @@
                             <th>Cajera</th>
                             <th>Medio Pago</th>
                             <th>Importe</th>
-                            <th>Fecha</th>
+                            <th>Moneda</th>
+                            <th>Fecha Registro</th>
+                            <th>Fecha Pago</th>
                             <th>Status</th>
                             <th>Opción</th>
                            
@@ -28,7 +30,9 @@
                             <td>{{z.Cajera}} </td>
                             <td>{{z.MedioPago}}</td>
                             <td>{{z.Importe | currency}}</td>     
+                            <td>{{z.Moneda}}</td>
                             <td>{{z.Hora}}</td>
+                            <td>{{z.FechaPago}}</td>
                             <td>{{z.StatusPago}}</td>
                             <td>
                             <button class="btn ink-reaction   btn-xs btn-default-bright"  ng-if="z.StatusPago=='Activa'" ng-click="$ctrl.opcionTicket(1,z);"  ><i class="fa fa-print"></i> Imprimir</button>

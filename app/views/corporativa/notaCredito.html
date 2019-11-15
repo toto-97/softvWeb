@@ -8,12 +8,11 @@
         <i class="fa fa-home" aria-hidden="true"></i> Facturación Corporativa>Notas de crédito</small>
     </header>
     <div class="tools">
-      <button class="btn btn-success btn-sm" type="button"> <a  csv-column-order="$ctrl.csvorder"  
-        csv-header="$ctrl.csvheader"
-        ng-csv="$ctrl.Notas" filename="ListadoNotasDeCredito.csv" field-separator="," decimal-separator="."  add-bom="true"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Descargar Listado</button>
+      <button ng-show="false" class="btn btn-success btn-sm" type="button" id="descarga" csv-column-order="$ctrl.csvorder" csv-header="$ctrl.csvheader"
+          ng-csv="$ctrl.NotasDescarga" filename="ListadoNotasDeCredito.csv" field-separator="," decimal-separator="." add-bom="true"></button>
       <button class="btn btn-primary btn-sm" ui-sref="home.corporativa.nuevanota" type="button" permission
         permission-only="'notasdecreditoAdd'">
-        <i class="fa fa-plus" aria-hidden="true"></i> Nueva Nota</button>
+        <i class="fa fa-plus" aria-hidden="true"></i> Nueva Nota</button> 
     </div>
   </div>
 
@@ -90,6 +89,7 @@
             <th>Status</th>
             <th>Ticket</th>
             <th>Monto</th>
+            <th>Moneda</th>
             <th>Opciones</th>
             <th>Operaciones</th>
           </tr>
@@ -104,19 +104,22 @@
             <td>{{x.Status}}</td>
             <td>{{x.Ticket}}</td>
             <td>{{x.Monto|currency}}</td>
+            <td>{{x.Moneda}}</td>
             <td>
               <button class="btn ink-reaction  btn-xs btn-info" ng-click="$ctrl.DetalleNota(x.NotaCredito);">
                 <i class="fa fa-eye"></i> Detalle</button>
             </td>
             <td>
-              <button class="btn ink-reaction btn-xs btn-default-bright" data-toggle="tooltip" data-placement="top"
+              <!--<button class="btn ink-reaction btn-xs btn-default-bright" data-toggle="tooltip" data-placement="top"
                 title="Refacturar" data-original-title="Tooltip on top" ng-click="$ctrl.opcionesNota(1,x.NotaCredito);">
-                <i class=" md md-repeat"></i> Refacturar</button>
+                <i class=" md md-repeat"></i> Refacturar</button>-->
               <button class="btn ink-reaction btn-xs btn-default-bright" data-toggle="tooltip" data-placement="top"
                 title="Reimprimir" data-original-title="Tooltip on top" ng-click="$ctrl.opcionesNota(2,x.NotaCredito);">
                 <i class="md md-print"></i> Reimprimir</button>
-              <button class="btn ink-reaction btn-xs btn-info" ng-click="$ctrl.DescargarPDF(x)"><i class="fa fa-file-pdf-o"></i> PDF</button>
-              <button class="btn ink-reaction btn-xs btn-warning" ng-click="$ctrl.DescargarXML(x)"><i class="fa fa-file-code-o"></i> XML</button>
+              <button class="btn ink-reaction btn-xs btn-info" ng-click="$ctrl.DescargarPDF(x)"><i class="fa fa-file-pdf-o"></i>
+                PDF</button>
+              <button class="btn ink-reaction btn-xs btn-warning" ng-click="$ctrl.DescargarXML(x)"><i class="fa fa-file-code-o"></i>
+                XML</button>
             </td>
 
 
@@ -129,7 +132,33 @@
         </dir-pagination-controls>
       </div>
     </div>
+    <div class="col-md-12">
+      <div class="card panel col-md-offset-6 col-md-6" >
+        <div class="card-head card-head-xs style-primary-light">
+          <header>
+            <i class="fa fa-file-excel-o"></i> Exportar Listado Notas de Crédito</header>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-4">
+              <p>Fecha Inicial:</p>
+              <input type="date" class="form-control input-sm" ng-model="$ctrl.FechaInicial">
+            </div>
+            <div class="col-md-4">
+              <p>Fecha Final:</p>
+              <input type="date" class="form-control input-sm" ng-model="$ctrl.FechaFinal">
+            </div>
+            <div class="col-md-2">
+              <br>
+              <button class="btn btn-success btn-sm" type="button" ng-click="$ctrl.Exportar();">
+                <i class="fa fa-file-excel-o" aria-hidden="true"></i> Descargar Listado
+              </button>
+            </div>
+          </div>
+        </div>
 
+      </div>
+    </div>
   </div>
 
 </div>

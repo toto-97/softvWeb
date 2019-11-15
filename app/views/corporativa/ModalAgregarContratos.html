@@ -1,0 +1,170 @@
+<style>
+    .wrapper {
+        height: 140px;
+        overflow: auto;
+    }
+
+    .esmeralda {
+        background-color: #DDEAE9;
+    }
+
+    .sizeTr {
+        height: 20px;
+    }
+
+    .sizeTd {
+        padding: 5px !important;
+    }
+</style>
+<div class="modal-header">
+    <button class="close" aria-label="Close" type="button" ng-click="$ctrl.cancel()">×</button>
+    <h4 class="modal-title">Edición de Contratos Factura Preliminar #{{$ctrl.Clv_FacturaMaestro}}</h4>
+</div>
+<div class="modal-body" style="padding-top:20px;">
+    <uib-tabset active="active">
+        <uib-tab index="0" heading="Agregar Contratos a Factura Preliminar">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="table-responsive" style="padding-left: 8px; width: 95%">
+                        <b>Contratos Ligados</b>
+                        <table class="table table-bordered" st-safe-src="$ctrl.contratosLigados"
+                            st-table="$ctrl.displayCollection">
+                            <thead>
+                                <tr style="background-color: #B5B6B6;">
+                                    <th style="font-size: 10px;">Contrato</th>
+                                    <th style="font-size: 10px;">Nombre</th>
+                                    <th style="font-size: 10px;">Opciones</th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <input st-search="ContratoC" placeholder="Contrato"
+                                            class="input-sm form-control" type="search" />
+                                    </th>
+                                    <th>
+                                        <input st-search="Nombre" placeholder="Nombre" class="input-sm form-control"
+                                            type="search" />
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!--<tr ng-repeat="x in $ctrl.contratosLigados" class="sizeTr" >-->
+                                <tr dir-paginate="x in $ctrl.displayCollection|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:10"
+                                    pagination-id="TablaAgregar">
+                                    <td>{{x.ContratoC}}</td>
+                                    <td>{{x.Nombre}}</td>
+                                    <td>
+                                        <button class="btn ink-reaction  btn-xs btn-info"
+                                            ng-click="$ctrl.AgregarContrato(x);"><i
+                                                class="fa fa-plus-square-o"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="padding-left: 20px;">
+                            <dir-pagination-controls pagination-id="TablaAgregar" max-size="5" direction-links="true"
+                                boundary-links="true">
+                            </dir-pagination-controls>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <form angular-validator-submit="$ctrl.Aceptar()" name="myForm" class="form-horizontal" novalidate
+                        angular-validator>
+                        <div class=row>
+                            <div class="col-md-12">
+                                <b>Contratos a Agregar</b>
+                                <br>
+                                <a style="margin:5px;" ng-repeat="x in $ctrl.ContratosSeleccionados"
+                                    class="btn btn-sm btn-success">{{x.ContratoC}}
+                                    <button class="btn ink-reaction btn-icon-toggle btn-xs btn-default-success"
+                                        ng-click="$ctrl.QuitarContrato(x);"><i class="fa fa-trash"></i></button></a>
+                            </div>
+
+                        </div>
+                        <div class=row style="margin-top: 25px;">
+                            <div class="col-md-12">
+                                <b>Meses a incluír:</b>
+                                <br>
+                                <input type="number" class="form-control input-md" min="1" max="99"
+                                    ng-model="$ctrl.Meses">
+                            </div>
+                            <div class="col-md-3" style="margin-top: 10px;">
+                                <button class="btn ink-reaction  btn-md btn-success" type="submit"><i
+                                        class="fa fa-check-square-o"></i> Aceptar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="1" heading="Quitar Contratos de Factura Preliminar">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="table-responsive" style="padding-left: 8px; width: 95%">
+                        <b>Contratos de Factura Preliminar</b>
+                        <table class="table table-bordered" st-safe-src="$ctrl.contratosFactura"
+                            st-table="$ctrl.displayCollection2">
+                            <thead>
+                                <tr style="background-color: #B5B6B6;">
+                                    <th style="font-size: 10px;">Contrato</th>
+                                    <th style="font-size: 10px;">Nombre</th>
+                                    <th style="font-size: 10px;">Opciones</th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <input st-search="ContratoC" placeholder="Contrato"
+                                            class="input-sm form-control" type="search" />
+                                    </th>
+                                    <th>
+                                        <input st-search="Nombre" placeholder="Nombre" class="input-sm form-control"
+                                            type="search" />
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!--<tr ng-repeat="x in $ctrl.contratosLigados" class="sizeTr" >-->
+                                <tr dir-paginate="x in $ctrl.displayCollection2|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:10"
+                                    pagination-id="TablaQuitar">
+                                    <td>{{x.ContratoC}}</td>
+                                    <td>{{x.Nombre}}</td>
+                                    <td>
+                                        <button class="btn ink-reaction  btn-xs btn-info"
+                                            ng-click="$ctrl.AgregarContrato2(x);"><i
+                                                class="fa fa-plus-square-o"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="padding-left: 20px;">
+                            <dir-pagination-controls pagination-id="TablaQuitar" max-size="5" direction-links="true"
+                                boundary-links="true">
+                            </dir-pagination-controls>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class=row>
+                        <div class="col-md-12">
+                            <b>Contratos a Eliminar</b>
+                            <br>
+                            <a style="margin:5px;" ng-repeat="x in $ctrl.ContratosSeleccionados2"
+                                class="btn btn-sm btn-danger">{{x.ContratoC}}
+                                <button class="btn ink-reaction btn-icon-toggle btn-xs btn-default-danger"
+                                    ng-click="$ctrl.QuitarContrato2(x);"><i class="fa fa-trash"></i></button></a>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn ink-reaction  btn-md btn-success" ng-click="$ctrl.Aceptar2();"><i
+                                    class="fa fa-check-square-o"></i> Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+
+    </uib-tabset>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default btn-sm" type="button" ng-click="$ctrl.cancel()">Cerrar</button>
+</div>

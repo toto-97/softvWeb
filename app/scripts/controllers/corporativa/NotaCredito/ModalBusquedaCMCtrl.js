@@ -50,7 +50,7 @@
         'NombreComercial': vm.NombreComer,
         'ClvCiudad': 0,
         "Op": 2
-      }
+      };
 
       ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
         vm.Contratos = data.GetBusquedaContratoMaestroFacResult;

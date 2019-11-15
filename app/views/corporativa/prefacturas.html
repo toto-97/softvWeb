@@ -121,7 +121,10 @@
                 <i class="fa fa-ban"></i> Cancelar</button>
                 <!--Boton para ver el detalle de los contratos de la factura preliminar-->
               <button class="btn ink-reaction btn-xs btn-info" ng-click="$ctrl.DetalleContratos(x);">
-                <i class="fa fa-ban"></i> Detalle de Contratos</button>
+                <i class="fa fa-bars"></i> Detalle de Contratos</button>
+                <!--Boton para agregar contratos a Factura Preliminar-->
+              <button ng-if="x.EstatusFactura==='Por Facturar'" class="btn ink-reaction btn-xs btn-primary" ng-click="$ctrl.AgregarContratos(x);">
+                <i class="fa fa-refresh"></i> Agregar y Quitar Contratos</button>
             </td>
           </tr>
         </tbody>

@@ -130,7 +130,7 @@ function agregaListaPagoCtrl($uibModal, $state, $rootScope, cajasFactory, pagosM
             }
           });
         }
-        else if (vm.selectedService.Clv_Txt == 'CANET') {
+        else if (vm.selectedService.Clv_Txt == 'CANET' || vm.selectedService.Clv_Txt == 'CDUSD') {
           cajasFactory.consultaCamdo(vm.Clv_Session, vm.ContratoSeleccionado).then(function (data) {
             if (data.GetCAMDOFACResult.Existe == false) {
               var items = {};

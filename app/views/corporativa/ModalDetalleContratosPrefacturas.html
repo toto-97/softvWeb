@@ -20,6 +20,7 @@
                         <th style="vertical-align: middle; width:33%">IP</th>
                         <th style="vertical-align: middle; width:33%">Token/LLave</th>
                         <th style="vertical-align: middle; width:33%">Diferencia</th>
+                        <th style="vertical-align: middle; width:33%">Bonificación</th>
                     </thead>
                     <tbody>
                         <tr dir-paginate="x in $ctrl.DetallesFactura|itemsPerPage:8" pagination-id="detalleContratosPaginador">
@@ -33,6 +34,7 @@
                             <td>{{x.IP | currency}}</td>
                             <td>{{x.Token | currency}}</td>
                             <td>{{x.Diferencia | currency}}</td>
+                            <td>{{x.Bonificacion | currency}}</td>
                         </tr>
                     </tbody>
                 </table>
