@@ -3,6 +3,7 @@ angular.module('softvApp').controller('AbrirPagoCtrl', AbrirPagoCtrl);
 
 function AbrirPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, $uibModalInstance, elem1, x,proceso) {
 
+	/// Abre las ventanas necesaias realizar los pagos
     function aceptar() {
 		var metodo = vm.tipo;
 		if (vm.tipo == null || vm.tipo === undefined) {
@@ -65,7 +66,8 @@ function AbrirPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, in
 			});
         }
     }
-
+ 
+	/// Cancela la operacion
     function cancel() {
 		$uibModalInstance.dismiss('cancel');
 	}

@@ -11,6 +11,7 @@
     vm.cancel = cancel;
     vm.printDiv = printDiv;
 
+    /// Busca la informacion de los ticket
     this.$onInit = function () {
       vm.cmaestro=object.contrato;
       ContratoMaestroFactory.GetCrearNotaCreditoCM(object.factura).then(function (response) {
@@ -30,6 +31,7 @@
       });
     }
 
+    /// Muestra en un aparatdo la informacion buscada
     function printDiv(divName) {
       var printContents = document.getElementById(divName).innerHTML;
       var popupWin = window.open('', '_blank', 'width=1000,height=700');
@@ -38,6 +40,7 @@
       popupWin.document.close();
     }
 
+    /// Cancela la busqueda
     function cancel() {
       $uibModalInstance.dismiss('cancel');
     }

@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular
+  angular 
     .module('softvApp')
     .controller('ModalBusquedaCMCtrl', ModalBusquedaCMCtrl);
 
@@ -15,7 +15,7 @@
     vm.BuscarNombrec = BuscarNombrec;
     vm.Buscarporcontrato = Buscarporcontrato;
 
-
+    /// Obtiene los contratos maestros
     this.$onInit = function () {
       ContratoMaestroFactory.GetContratoList().then(function (data) {
         vm.Contratos = data.GetContratos_CSResult;
@@ -28,6 +28,7 @@
       });
     }
 
+    /// Busca el contrato mestro
     function Buscarporcontrato() {
       if (vm.contratobusqueda == null) {
         return;
@@ -43,7 +44,7 @@
       });
     }
 
-
+    /// Busca un contrato maestro por nombre
     function BuscarNombrec() {
       var obj = {
         'RazonSocial': '',
@@ -57,6 +58,7 @@
       });
     }
 
+    /// Busca un contrato maestro por razon social
     function BuscarRazonS() {
       var obj = {
         'RazonSocial': vm.RazonS,
@@ -69,6 +71,7 @@
       });
     }
 
+    /// Busca un contrato maestro por ciudad
     function BuscarCiudad() {
       if (vm.Ciudad.Clv_Ciudad == null) {
         return;
@@ -84,11 +87,13 @@
       });
     }
 
+    /// Cancela la operacion
     function cancel() {
       $uibModalInstance.dismiss('cancel');
 
     }
 
+    /// Busca el contrato con los parametros puestos
     function ok(contrato) {
       $rootScope.$emit('contrato_nota', contrato);
       $uibModalInstance.dismiss('cancel');

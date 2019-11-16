@@ -2,6 +2,8 @@
 angular.module('softvApp').controller('PagarCreditoCtrl', PagarCreditoCtrl);
 
 function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMenu, ContratoMaestroFactory, $uibModalInstance, x, $localStorage, pagosMaestrosFactory, elem, cajasFactory) {
+	
+	/// Muestra los medios para pagar una cuenta
 	function initialData() {
 		vm.monto = elem.PagoInicial;
 		pagosMaestrosFactory.getMedios().then(function (data) {
@@ -23,6 +25,7 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 		});
 	}
 
+	/// Realiza los calculos de las cunetas en efectivo
 	function cambioEfectivo() {
 		console.log('maxmonto', vm.maxmonto);
 		console.log('monto', vm.monto);
@@ -51,6 +54,7 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 		vm.pagoNota = '';
 	}
 
+	/// Calcula el cambio en efectivo
 	function cambioNota() {
 		vm.cambio = '';
 		vm.TotalAbonado = '';
@@ -70,6 +74,7 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 		vm.dineroTransferencia = '';
 	}
 
+	/// Calcula el cambio en cheque
 	function cambioCheque() {
 		vm.cambio = '';
 		vm.TotalAbonado = '';
@@ -89,6 +94,7 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 		vm.dineroTransferencia = '';
 	}
 
+	/// Registra la transferencia para el pago
 	function cambioTransferencia() {
 		vm.cambio = '';
 		vm.TotalAbonado = '';
@@ -155,6 +161,7 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 	// }
 
 
+	/// Abre una pestaña con los detalles de la factura
 	function muestraFactura(url) {
 
 		vm.animationsEnabled = true;
@@ -176,7 +183,7 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 		});
 	}
 
-
+	/// Registra el pago 
 	function ok() {
 		if (vm.FechaPago == undefined) {
 			vm.FechaPago = new Date();
@@ -677,10 +684,12 @@ function PagarCreditoCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMe
 		}
 	}
 
+	/// Cancel ael pago
 	function cancel() {
 		$uibModalInstance.dismiss('cancel');
 	}
 
+	/// No se usa
 	function ValidarNotaCredito() {
 
 	}

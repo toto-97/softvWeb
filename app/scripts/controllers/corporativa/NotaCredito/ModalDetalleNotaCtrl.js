@@ -12,6 +12,7 @@
     vm.nota = nota;
     vm.cancel = cancel;
 
+    ///Busca la informacion de las notas
     this.$onInit = function () {
       ContratoMaestroFactory.GetNotasDeCredito_ContraMaeFacList(nota).then(function (data) {
         vm.detalle = data.GetNotasDeCredito_ContraMaeFacListResult[0];
@@ -42,6 +43,7 @@
       });
     }
 
+    /// Cancela la operacion
     function cancel() {
       $uibModalInstance.dismiss('cancel');
     }

@@ -2,6 +2,8 @@
 angular.module('softvApp').controller('MontoAbonoCtrl', MontoAbonoCtrl);
 
 function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStorage, elem1, x, pagosMaestrosFactory, ngNotify) {
+    
+    /// Calcula la desuda de la factura
     function init() {
         vm.monto = (x.Importe - x.PagoInicial) / x.ACuantosPagos;
         if(elem1 < vm.monto) {
@@ -12,6 +14,7 @@ function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStora
         }
     }
 
+    /// Calcula el abono
     function abonoTotal() {
     
         var pagar =parseFloat(x.Importe - x.TotalAbonado).toFixed(4);
@@ -27,6 +30,7 @@ function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStora
         }
     }
     
+    /// Realiza el abono 
     function ok() {
       
         if (vm.abono === undefined || vm.abono === null || vm.abono === 0 || vm.abono < 0) {
@@ -88,6 +92,7 @@ function MontoAbonoCtrl($uibModal, inMenu, $uibModalInstance, items, $localStora
         }
     }
 
+    /// Cancela la operacion
     function cancel() {
         $uibModalInstance.dismiss('cancel');
     }

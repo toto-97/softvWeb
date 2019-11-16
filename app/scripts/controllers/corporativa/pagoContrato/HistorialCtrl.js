@@ -2,12 +2,15 @@
 angular.module('softvApp').controller('HistorialCtrl', HistorialCtrl);
 
 function HistorialCtrl($uibModal, ngNotify, inMenu, $uibModalInstance, x, pagosMaestrosFactory) {
-	function initial() {
+    
+    /// Obtiene las facturas existentes
+    function initial() {
 		pagosMaestrosFactory.obtenFacturas(x.Clv_FacturaMaestro).then(function (data) {
 			vm.facturas = data.GetObtieneHistorialPagosFacturaMaestroListResult;
 		});
 	}
 
+    /// Abre una ventana con la informacion de las facturas
 	function verFactura(clvPago) {
 		vm.animationsEnabled = true;
         var modalInstance = $uibModal.open({
@@ -27,7 +30,8 @@ function HistorialCtrl($uibModal, ngNotify, inMenu, $uibModalInstance, x, pagosM
             }
         });
 	}
-	
+    
+    /// Cacela la operacion
 	function cancel() {
 		$uibModalInstance.dismiss('cancel');
 	}

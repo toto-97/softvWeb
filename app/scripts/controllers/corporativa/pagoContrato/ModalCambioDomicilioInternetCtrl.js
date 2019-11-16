@@ -3,31 +3,35 @@ angular
 	.module('softvApp')
 	.controller('ModalCambioDomicilioInternetCtrl', function ($uibModalInstance, cajasFactory, items, $rootScope, ngNotify, ContratoMaestroFactory) {
 
+		/// Muestra las ciudades desde el factory
 		function initialData() {
 			cajasFactory.dameCiudades(items.Contrato).then(function (data) {
 				vm.ciudades = data.GetCiudadCAMDOListResult;
 			});
 		}
 
-
+		/// Muestra las ciudades para su cambio
 		function changeCiudad() {
 			cajasFactory.dameLocalidades(items.Contrato, vm.selectedCiudad.Clv_Ciudad).then(function (data) {
 				vm.localidades = data.GetLocalidadCAMDOListResult;
 			});
 		}
 
+		/// Muestra las colonias para su cambio
 		function changeLocalidad() {
 			cajasFactory.dameColonias(items.Contrato, vm.selectedLocalidad.Clv_Localidad).then(function (data) {
 				vm.colonias = data.GetColoniaCAMDOListResult;
 			});
 		}
 
+		/// Muestra las calles para su cambio
 		function changeColonia() {
 			cajasFactory.dameCalles(items.Contrato, vm.selectedColonia.CLV_COLONIA).then(function (data) {
 				vm.calles = data.GetCalleCAMDOListResult;
 			});
 		}
 
+		/// Reliza los cambios hechos por el usuario
 		function ok() {
 			//Vamos a validar las coordenadas
 			if (vm.latitud != undefined && vm.longitud != undefined) {
@@ -124,6 +128,7 @@ angular
 			}
 		}
 
+		/// Cancela el moviemiento
 		function cancel() {
 			cajasFactory.cancelarDomicilio(items.Session, items.Contrato).then(function (data) {
 				$uibModalInstance.dismiss('cancel');
@@ -131,11 +136,13 @@ angular
 			});
 		}
 
+		/// Guarda la calle que capture el usuario
 		function CapturaCalle() {
 			vm.MuestraCapturaCalle = true;
 			console.log('CapturaCalle', vm.MuestraCapturaCalle);
 		}
 
+		/// Selecciona una calle para el cambio
 		function SeleccionaCalle() {
 			vm.MuestraCapturaCalle = false;
 			console.log('SeleccionaCalle', vm.MuestraCapturaCalle);

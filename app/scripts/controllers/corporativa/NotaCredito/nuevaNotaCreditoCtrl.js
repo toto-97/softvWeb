@@ -29,6 +29,7 @@
     vm.marcar = true;
     vm.AplicadaAFactura = false;
 
+    /// Busca el status inicial para una nueva nota
     this.$onInit = function () {
       ContratoMaestroFactory.StatusNotadeCredito().then(function (data) {
         vm.StatusList = data.GetStatusNotadeCreditoListResult;
@@ -36,6 +37,7 @@
       });
     }
 
+    /// Abre una ventana para ver la informacion de un ticket
     function abrirTicket(factura, contrato) {
       var object = {};
       object.factura = factura;
@@ -58,6 +60,7 @@
       });
     }
 
+    /// Abre una ventana para revertir el proceso de credito
     function revertir(clvnota) {
       var options = {};
       options.clvnota = clvnota;
@@ -79,8 +82,7 @@
       });
     }
 
-
-
+    /// Abre una ventana para buscar un contrato maestro
     function abrirContratos() {
 
       var modalInstance = $uibModal.open({
@@ -155,6 +157,8 @@
       facturas(vm.Contrato);
     });
 
+    /// Busca faturas de un cliente
+
     function facturas(contrato) {
       ContratoMaestroFactory.DAME_FACTURASDECLIENTE(contrato).then(function (data) {
         console.log("facturas", data.GetDAME_FACTURASDECLIENTEListResult);
@@ -162,6 +166,7 @@
       });
     }
 
+    /// Busca un contrato por una clave
     function enter(keyEvent) {
 
       if (keyEvent.which === 13) {
@@ -200,7 +205,7 @@
 
     }
 
-
+    /// Abre la ventana para 
     function Detallefactura(obj) {
       var options = {};
       options.clv_session = vm.clv_session;
@@ -224,6 +229,7 @@
       });
     }
 
+    /// Marca las notas de credito de los contratos maestros
     function MarcarContratos() {
 
       if (vm.marcar == true) {
@@ -268,7 +274,7 @@
       }
     }
 
-
+    /// Actualiza los datos de llas facturas
     function cambioFactura() {
       //if (vm.factura.Saldada == 1) {
       vm.TicketValido = true;
@@ -298,6 +304,7 @@
       }*/
     }
 
+    /// Guarda la nota de credito
     function guardar() {
       if (vm.sumatotal === 0) {
         ngNotify.set('No puede guardar una nota de crédito con un monto $0.00 ', 'error');
@@ -350,6 +357,7 @@
 
     }
 
+    /// Calcula los totales de las notas
     function calcular() {
       vm.sumatotal = 0;
       vm.DetalleNota.forEach(function (element) {
