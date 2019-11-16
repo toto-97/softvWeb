@@ -11,6 +11,8 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory, moment) {
   vm.Buscarporcontrato = Buscarporcontrato;
   vm.csvheader=['No.ContratoMaestro','Razon Social','Nombre Comercial','Distribuidor','RFC','Email','FechaVencimiento','Telefono','Calle','Entre Calles','NumExt','NumInt','Colonia','Codigo Postal','Localidad','Ciudad','Estado','Dias Credito','Dias Gracia','Facturacion Dolares','Fecha Facturacion','Limite Credito','Pago EdoCuetna','PagoFac','PostPago','Prepago']
   vm.csvorder=['IdContratoMaestro','RazonSocial','NombreComercial','DistribuidorDes','RFC','Email','FechaVencimiento','Tel','CalleDes','EntreCalles','NumExt','NumInt','ColoniaDes','CodigoPostal','LocalidadDes','CiudadDes','EstadoDes','DiasCredito','DiasGracia','FacturacionDolares','FechaFac','LimiteCredito','PagoEdoCuetna','PagoFac','PostPago','Prepago']
+  
+  /// Ontiene llos datos de los contratos maestros
   this.$onInit = function () {
     ContratoMaestroFactory.GetContratoList().then(function (data) {
       vm.Contratos = data.GetContratos_CSResult;
@@ -37,12 +39,14 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory, moment) {
     });
   }
 
+  /// Obtiene las ciudades de ciertas plazas
   function ObtenerCiudades(x) {
     ContratoMaestroFactory.GetCiudadList(x.Clv_Plaza).then(function (data) {
       vm.Ciudades = data.GetListaCiudadesPorPlazaResult;
     });
   }
 
+  /// Busca los contratos maestros por contratos
   function Buscarporcontrato() {
     if (vm.contratobusqueda == null) {
       return;
@@ -58,7 +62,7 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory, moment) {
     });
   }
 
-
+  /// Busca los contratos maestros por Nombre
   function BuscarNombrec() {
     var obj = {
       'RazonSocial': '',
@@ -72,6 +76,7 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory, moment) {
     });
   }
 
+  /// Busca los contratos maestros por Razon social
   function BuscarRazonS() {
     var obj = {
       'RazonSocial': vm.RazonS,
@@ -84,6 +89,7 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory, moment) {
     });
   }
 
+  /// Busca los contratos maestros por ciudad
   function BuscarCiudad() {
     if (vm.Ciudad.Clv_Ciudad == null) {
       return;
@@ -99,6 +105,7 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory, moment) {
     });
   }
 
+  /// Abre una ventana con los detalles de un contrato maestro
   function DetalleContrato(object) {
     vm.animationsEnabled = true;
     var modalInstance = $uibModal.open({

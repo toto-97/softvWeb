@@ -4,12 +4,15 @@ angular.module('softvApp').controller('BitacoraCtrl', BitacoraCtrl);
 function BitacoraCtrl($uibModal, ContratoMaestroFactory, moment) {
   var vm = this;
   vm.BuscarResultados = BuscarResultados;
+
+  /// Obtiene la bitacora de las facturas maestro
   this.$onInit = function () {
     ContratoMaestroFactory.GetBuscaBitacoraMaestro('', '', '', 0, '01/01/1900').then(function (data) {
       vm.Resultados = data.GetBuscaBitacoraMaestroResult;
     });
   }
 
+  /// Agrega en la ventana la informacion d ela bitacora
   function BuscarResultados(Op) {
     var Clv_Usuario = '';
     var Modulo = '';

@@ -43,6 +43,7 @@
     vm.buscarCP = buscarCP;
     vm.getCiudades = getCiudades;
 
+    /// Buca los contratos mestros y sus datos desde los factory
     this.$onInit = function () {
       corporativoFactory.singleContrato($stateParams.id).then(function (data) {
         vm.contratoMaestro = data.GetRelContratosResult[0];
@@ -186,6 +187,7 @@
 
     };
 
+    /// Abre una ventana para buscar los codigos postales
     function buscarCP() {
       var modalInstance = $uibModal.open({
         animation: true,
@@ -208,6 +210,7 @@
       );
     }
 
+    /// Obtiene las ciudades de mizar
     function getCiudades() {
       ContratoMaestroFactory.GetMunicipiosMizar(
         vm.cp,
@@ -217,6 +220,7 @@
       });
     }
 
+    /// Obtiene las direcciones almacendas en Mizar
     function getEstadoCiudadPais(onload) {
       ContratoMaestroFactory.GetPaisesMizar(vm.cp).then(function (data) {
         vm.paises = data.GetPaisesMizarResult;
@@ -269,6 +273,7 @@
       });
     }
 
+    /// Abre una ventana con un tipo de contrato para la desconexion
     function desconexion(tipo) {
       vm.contratoMaestro.tipo = tipo;
       var modalInstance = $uibModal.open({
@@ -289,6 +294,7 @@
       });
     }
 
+    /// Abre los datos de un contrato
     function abrirContratos() {
       var auxFecha = $filter("date")(vm.fecha, "dd/MM/yyyy");
       var fechaHoy = new Date();
@@ -342,6 +348,7 @@
       });
     }
 
+    /// Actualiza los datos de un contrato maestro
     function guardarContrato() {
       if (vm.MuestraBanco) {
         if (!vm.selectedBanco) {
@@ -453,6 +460,7 @@
       });
     }
 
+    /// Cambia el tipo de pago apra un contrato maestro
     function CambioTipoPago(x) {
       if (x == "postpago") {
         vm.DesReactiva = false;
@@ -463,6 +471,7 @@
       }
     }
 
+    /// Cambia el tipo de pago apra un contrato maestro
     function CambioTipo(x) {
       if (x.Cuenta == true) {
         vm.MuestraReferencia = true;
@@ -481,6 +490,7 @@
       }
     }
 
+    /// Genera una funcion preliminar ocn los datos del contrato
     function generarFacturaPrueba(contrato) {
       ContratoMaestroFactory.GetGeneraFacturaMaestroPrueba(contrato).then(
         function (data) {

@@ -17,6 +17,7 @@
         vm.ValidaArchivo = ValidaArchivo;
         vm.ContratosOriginales = [];
 
+        /// Especifica la utilidad de la ventana y la informacion que se mostrara
         this.$onInit = function () {
             vm.ContratosOriginales = vm.contrato.lstCliS;
             if (contrato.tipo == 'desconexion') {
@@ -46,6 +47,7 @@
             }
         }
 
+        /// Valida los contratos de un archivo importado por el usuario
         function ValidaArchivo() {
             var files = $('#inputFile2').get(0).files;
             if (files.length == 0) {
@@ -70,7 +72,7 @@
             });
         }
 
-
+        /// Selecciona todos los filtros para mostrar ciertos contratos desconectados
         function seleTodo() {
             vm.seleccionar = false;
             vm.contrato.lstCliS.forEach(function (item) {
@@ -78,6 +80,7 @@
             });
         }
 
+        /// Quita todos los filtros para mostrar ciertos contratos desconectados
         function deseleTodo() {
             vm.seleccionar = true;
             vm.contrato.lstCliS.forEach(function (item) {
@@ -85,6 +88,7 @@
             });
         }
 
+        /// Valida los contratos que se mostraran en la ventana
         function ok() {
             var contratos_enviar = {
                 'objprocesa': {
@@ -119,6 +123,7 @@
             }
         }
 
+        /// Cancela la operacion
         function cancel() {
             $uibModalInstance.dismiss('cancel');
             deseleTodo();

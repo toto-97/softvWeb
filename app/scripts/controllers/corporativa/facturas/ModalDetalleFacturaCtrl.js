@@ -11,10 +11,12 @@
       var vm = this;
       vm.cancel = cancel;
   
+      /// Muestra el boton hacia los reportes
       this.$onInit = function () {
         vm.url = $sce.trustAsResourceUrl(globalService.getReporteUrlMizar() + '/Reportes/' + url);
       };
   
+      /// Cancela la operacion
       function cancel() {
         $uibModalInstance.dismiss('cancel');
       }  

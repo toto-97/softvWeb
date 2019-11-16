@@ -1,14 +1,16 @@
 'use strict';
 
 function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, ngNotify, $state, ContratoMaestroFactory, pagosMaestrosFactory) {
+  
+  /// Muestra las facturas maestras
   this.$onInit = function () {
     ContratoMaestroFactory.GetMuestraFacturasMaestroList().then(function (data) {
-
       vm.pagos = data.GetMuestraFacturasMaestroListResult;
 
     });
   }
 
+  /// Muestra las facturas maestras
   function saldadas() {
     var parametros;
     if (vm.pendientes == 1) {
@@ -45,6 +47,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     }
   }
 
+  /// Busca una factura port un contrato
   function buscaContrato(opcion) {
     var parametros;
     if (opcion == 2) {
@@ -123,12 +126,14 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     reloadTables();
   });
 
+  /// Carga los datos de las facturas en una tabla
   function reloadTables() {
     ContratoMaestroFactory.GetMuestraFacturasMaestroList().then(function (data) {
       vm.pagos = data.GetMuestraFacturasMaestroListResult;
     });
   }
 
+  /// Valida y realiza los pagos con credito
   function PagarCredito(x) {
  
     ContratoMaestroFactory.GetValidaSipuedohacerPagoc(x.ContratoMaestro, x.Clv_FacturaMaestro).then(function (response) {
@@ -265,6 +270,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     });
   }
 
+  /// Obtiene el historial de las fucturas
   function historial(x) {
 
     pagosMaestrosFactory.obtenFacturas(x.Clv_FacturaMaestro).then(function (data) {
@@ -276,6 +282,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     });
   }
 
+  /// Muestra los datos de una factura para pagar
   function verFactura(clvPago, Medio) {
     var MedioAux = '';
     if(Medio == 'Nota de Crédito'){
@@ -290,6 +297,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     });
   }
 
+  /// Muestra los detalles de los pagos
   function detalle(x) {
     vm.animationsEnabled = true;
     var modalInstance = $uibModal.open({
@@ -310,12 +318,12 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     });
   }
 
+  /// Busca un contrato en especial
   function enterContrato(event, opcion) {
     if (event.which === 13) {
       buscaContrato(opcion);
     }
   }
-
 
   $rootScope.$on('reload', function (e, Clv_FacturaMaestro) {
     pagosMaestrosFactory.obtenFacturas(Clv_FacturaMaestro).then(function (data) {
@@ -327,8 +335,7 @@ function RecepcionPagoCtrl($uibModal, $rootScope, corporativoFactory, $filter, n
     });
   });
 
-
-
+  /// Abre una ventana par ala cancelacion de la factura
   function cancelarfactura(object) {
 
     ContratoMaestroFactory.GetValidaSipuedoCancelarPago(object.Clv_Pago).then(function (data) {

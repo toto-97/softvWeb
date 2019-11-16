@@ -3,10 +3,12 @@ angular.module('softvApp').controller('prefacturasCtrl', prefacturasCtrl);
 
 function prefacturasCtrl($state, ContratoMaestroFactory, ngNotify, $filter, $uibModal, $scope, $rootScope) {
 
+  /// Busca las prefacturas
   function Init() {
     buscar(1);
   }
 
+  /// Busca los datos de un prefactura
   var buscar = function (op) {
     var parametros = {
       'Factura': (op === 2 && (vm.factura !== null || vm.factura !== undefined)) ? vm.factura : 0,
@@ -22,6 +24,8 @@ function prefacturasCtrl($state, ContratoMaestroFactory, ngNotify, $filter, $uib
       });
 
   };
+  
+  /// Abre la ventana para editar una prefactura
   var Conceptos = function (clave, status) {
     var obj = {};
     obj.clave = clave;
@@ -44,7 +48,7 @@ function prefacturasCtrl($state, ContratoMaestroFactory, ngNotify, $filter, $uib
     });
   };
 
-  //Cancela una factura preliminar
+  /// Cancela una factura preliminar
   var CancelarFacturaPreliminar = function (FacturaMaestro) {
     var ticket = {};
     ticket.Clv_FacturaMaestro = FacturaMaestro.Clv_FacturaMaestro;
@@ -72,7 +76,7 @@ function prefacturasCtrl($state, ContratoMaestroFactory, ngNotify, $filter, $uib
     });
   }
 
-  //Ver detalles de los contratos de una factura preliminar
+  ///Ver detalles de los contratos de una factura preliminar
   var DetalleContratos = function (FacturaMaestro) {
     var ticket = {};
     ticket.Clv_FacturaMaestro = FacturaMaestro.Clv_FacturaMaestro;
@@ -99,6 +103,7 @@ function prefacturasCtrl($state, ContratoMaestroFactory, ngNotify, $filter, $uib
     });
   }
 
+  /// Abre una ventana para agregar contratos
   function AgregarContratos(FacturaMaestro) {
     var modalInstance = $uibModal.open({
       animation: true,
