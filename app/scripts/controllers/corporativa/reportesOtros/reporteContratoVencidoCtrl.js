@@ -10,6 +10,7 @@ function reporteContratoVencidoCtrl(ContratoMaestroFactory, relacionIngresosFact
   vm.predicates = ['Distribuidor', 'IdContratoMaestro', 'RazonSocial', 'FechaVencimiento'];  
   vm.buscar=buscar;
 
+  /// Obtiene los distribuidores
   this.$onInit = function () {
     ContratoMaestroFactory.GetDistribuidores().then(function (result) {
       vm.distribuidores = result.GetDistribuidoresResult;
@@ -17,6 +18,7 @@ function reporteContratoVencidoCtrl(ContratoMaestroFactory, relacionIngresosFact
     buscar(0);
   }
 
+  /// Busca los contratos vencidos
   function buscar(Op) {
 
     var parametros = {
@@ -34,6 +36,7 @@ function reporteContratoVencidoCtrl(ContratoMaestroFactory, relacionIngresosFact
       });
   }
 
+  /// Crea un PDF con los contratos vencidos
   function createpdf() {
 
     var columns = ['Distribuidor', 'IdContratoMaestro', 'RazonSocial', 'FechaVencimiento'];

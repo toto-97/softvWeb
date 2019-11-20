@@ -2,6 +2,8 @@
 angular.module('softvApp').controller('FormaPagoRecepcionCtrl', FormaPagoRecepcionCtrl);
 
 function FormaPagoRecepcionCtrl($uibModal, $state, $filter, $rootScope, ngNotify, inMenu, ContratoMaestroFactory, $uibModalInstance, x, $localStorage, pagosMaestrosFactory, elem, cajasFactory) {
+	
+	/// Inicia el pagoo del contrato maestro
 	function initialData() {
 		console.log('elem',elem);
 		vm.monto = elem.PagoInicial;
@@ -24,6 +26,7 @@ function FormaPagoRecepcionCtrl($uibModal, $state, $filter, $rootScope, ngNotify
 		});
 	}
 
+	/// Calcula los montos en monedas y billetes
 	function cambioEfectivo() {
 		console.log('maxmonto', vm.maxmonto);
 		console.log('monto', vm.monto);
@@ -52,6 +55,7 @@ function FormaPagoRecepcionCtrl($uibModal, $state, $filter, $rootScope, ngNotify
 		vm.pagoNota = '';
 	}
 
+	/// Verifica el metodo de pago
 	function cambioNota() {
 		vm.cambio = '';
 		vm.TotalAbonado = '';
@@ -71,6 +75,7 @@ function FormaPagoRecepcionCtrl($uibModal, $state, $filter, $rootScope, ngNotify
 		vm.dineroTransferencia = '';
 	}
 
+	/// Verifica el metodo de pago
 	function cambioCheque() {
 		vm.cambio = '';
 		vm.TotalAbonado = '';
@@ -90,6 +95,7 @@ function FormaPagoRecepcionCtrl($uibModal, $state, $filter, $rootScope, ngNotify
 		vm.dineroTransferencia = '';
 	}
 
+	/// Verifica el metodo de pago
 	function cambioTransferencia() {
 		vm.cambio = '';
 		vm.TotalAbonado = '';
@@ -156,6 +162,7 @@ function FormaPagoRecepcionCtrl($uibModal, $state, $filter, $rootScope, ngNotify
 	// }
 
 
+	/// Abre una ventana con los detallesd el contrato
 	function muestraFactura(url) {
 
 		vm.animationsEnabled = true;
@@ -177,7 +184,7 @@ function FormaPagoRecepcionCtrl($uibModal, $state, $filter, $rootScope, ngNotify
 		});
 	}
 
-
+	/// Verifica el contrato y su pago
 	function ok() {
 		if (vm.FechaPago == undefined) {
 			vm.FechaPago = new Date();
@@ -718,10 +725,12 @@ function FormaPagoRecepcionCtrl($uibModal, $state, $filter, $rootScope, ngNotify
 		}
 	}
 
+	/// Cancela el pago
 	function cancel() {
 		$uibModalInstance.dismiss('cancel');
 	}
 
+	/// Np se usa
 	function ValidarNotaCredito() {
 
 	}

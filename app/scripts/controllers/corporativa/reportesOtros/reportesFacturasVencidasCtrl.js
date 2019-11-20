@@ -20,6 +20,7 @@ angular.module('softvApp').controller('reportesFacturasVencidasCtrl', reportesFa
 
 function reportesFacturasVencidasCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory, $timeout, $filter) {
 
+    /// Busca los contratos de una fecha en especifico
     function buscaContrato() {
         var parametros;
         if (vm.FechaInicio == undefined || vm.FechaInicio == '' || vm.FechaFin == undefined || vm.FechaFin == '') {
@@ -58,6 +59,7 @@ function reportesFacturasVencidasCtrl($uibModal, ngNotify, inMenu, pagosMaestros
         
     }
 
+    /// Crea un CSV con la informacion de los contratos
     function crearTodoAsCsv() {
         $timeout(function () {
             for (var i = 0; i < vm.contratos.length; i++) {
@@ -76,6 +78,7 @@ function reportesFacturasVencidasCtrl($uibModal, ngNotify, inMenu, pagosMaestros
         });
     }
 
+    /// Da formato al reporte
     function initArray() {
         vm.arrayReporte = [];
         vm.arrayReporte = [{
@@ -94,6 +97,7 @@ function reportesFacturasVencidasCtrl($uibModal, ngNotify, inMenu, pagosMaestros
         }];
     }
 
+    /// Crea un PDF con la informacion de los contratos
     function createPdfTodo() {
         var rows = [[0, 0, 0, 0, 0, 0,]];
         var r = 1;
@@ -172,6 +176,7 @@ function reportesFacturasVencidasCtrl($uibModal, ngNotify, inMenu, pagosMaestros
         doc.save(vm.filename + '.pdf');
     }
 
+    /// Crea un vinculo para crea el PDF
     function getImageDataURL() {
         var url = document.getElementById("pdflogoimage").src;
         var data, canvas, ctx;
@@ -186,6 +191,7 @@ function reportesFacturasVencidasCtrl($uibModal, ngNotify, inMenu, pagosMaestros
         img.src = url;
     }
 
+    /// Busca los contratos
     function enterContrato(event, opcion) {
         if (event.which === 13) {
             buscaContrato();
@@ -196,6 +202,8 @@ function reportesFacturasVencidasCtrl($uibModal, ngNotify, inMenu, pagosMaestros
     //     getImageDataURL();
     // }
 
+
+    /// Valida las facturas vencidas
     function CambiaSeleccion(Opcion){
         if(vm.Vencidas && Opcion == 1 ){
             vm.PorVencer = false;

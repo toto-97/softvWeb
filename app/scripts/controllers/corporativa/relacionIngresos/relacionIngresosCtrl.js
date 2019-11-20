@@ -4,7 +4,7 @@ angular
 
 function relacionIngresosCtrl(ContratoMaestroFactory, relacionIngresosFactory,$filter, $sce,globalService,ngNotify) {
 
-
+  /// Relaciona los ingresos
   this.$onInit = function () {
     /*ContratoMaestroFactory.GetDistribuidores().then(function (result) {
       console.log(result);
@@ -20,7 +20,7 @@ function relacionIngresosCtrl(ContratoMaestroFactory, relacionIngresosFactory,$f
     });*/
 
 
-
+    /// Valida la fecha para el pago
     var guardar = function () {
         var dis=[];
         if($filter('date')(vm.fechafin, 'yyyy/MM/dd') < $filter('date')(vm.fechainicio, 'yyyy/MM/dd')){

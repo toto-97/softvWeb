@@ -2,6 +2,8 @@
 angular.module('softvApp').controller('CantidadPagoRecepcionCtrl', CantidadPagoRecepcionCtrl);
 
 function CantidadPagoRecepcionCtrl($uibModal, inMenu, $uibModalInstance, items, $localStorage, elem1, x, pagosMaestrosFactory, ngNotify, metodo) {
+  
+  /// Inicia la ventana para agregar el pago
   function init() {
     //console.log('items',items);
     //console.log('elem1',elem1);
@@ -28,6 +30,7 @@ function CantidadPagoRecepcionCtrl($uibModal, inMenu, $uibModalInstance, items, 
     }
   }
 
+  /// Verifica el tipo de moneda que se usara
   function CambioMoneda() {
     if (vm.MonedaFacturaOriginal == 'USD' && items.Modo == 'vT') {
       if (vm.Moneda.IdMoneda == 'USD') {
@@ -40,6 +43,7 @@ function CantidadPagoRecepcionCtrl($uibModal, inMenu, $uibModalInstance, items, 
     }
   }
 
+  /// Calcula el abono que se hara con la moneda
   function abonoTotal() {
     if (vm.abono != undefined && vm.abono != undefined) {
       if (vm.MonedaFacturaOriginal == 'USD' && vm.Moneda.IdMoneda == 'MXN') {
@@ -93,6 +97,7 @@ function CantidadPagoRecepcionCtrl($uibModal, inMenu, $uibModalInstance, items, 
     }
   }
 
+  /// Realiza el pago
   function ok() {
 
     if (vm.abono === undefined || vm.abono === null || vm.abono === 0 || vm.abono < 0) {
@@ -212,10 +217,12 @@ function CantidadPagoRecepcionCtrl($uibModal, inMenu, $uibModalInstance, items, 
     }
   }
 
+  /// Cancela la operacion
   function cancel() {
     $uibModalInstance.dismiss('cancel');
   }
 
+  /// Verifica el cambio de moneda
   function CambiaMonedaCapturar() {
     if (vm.MonedaCapturada == 'USD') {
       vm.MonedaCapturada = 'MXN';

@@ -20,6 +20,7 @@ angular.module('softvApp').controller('reporteOrdenesMaestroCtrl', reporteOrdene
 
 function reporteOrdenesMaestroCtrl($uibModal, ngNotify, inMenu, ContratoMaestroFactory, $timeout) {
 
+    /// Da el formato inicial al reporte
     this.$onInit = function () {
         vm.csvheader = ['Clabe', 'ContratoMaestro', 'NombreComercial', 'Distribuidor', 'Email', 'FechaAsignacion'];
         vm.csvorder = ['Clabe', 'ContratoMaestro', 'Cliente', 'Plaza', 'Email', 'FechaAsignacion'];
@@ -35,6 +36,7 @@ function reporteOrdenesMaestroCtrl($uibModal, ngNotify, inMenu, ContratoMaestroF
 
     }
 
+    /// Genera el reporte de las ordenes maestras
     function Genera() {
         var parametros = {};
         parametros.ContratoCliente = vm.ContratoCliente;

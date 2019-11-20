@@ -2,6 +2,8 @@
 angular
   .module('softvApp')
   .controller('modalPagosFacturasCtrl', function (pagosMaestrosFactory, $uibModalInstance, $uibModal, ContratoMaestroFactory, ngNotify, $rootScope, factura, globalService, ticketsFactory) {
+    
+    /// Muestra las facturas a pagar
     this.$onInit = function () {
       console.log(factura);
 
@@ -23,13 +25,12 @@ angular
       });
     }
 
+    /// cancela la operacion
     function cancel() {
       $uibModalInstance.dismiss('cancel');
     }
 
-
-
-
+    /// Muetsra la ventana para describir las razaones de la cancelacion
     function opcionTicket(opc, ticket) {
       console.log('ticket', ticket);
       ticket.tipo = 'P';
@@ -138,8 +139,6 @@ angular
 
     }
 
-
-
     /*   function ImprimeFacturaFiscalpago(item) {
   
         ContratoMaestroFactory.GetImprimeFacturaFiscalpago(item.Clv_Pago).then(function (result) {
@@ -179,8 +178,10 @@ angular
           }
   
         });
+        
       } */
 
+    /// Descarga un reporte en XML
     function DescargarXML(Pago) {
       var params = {
         'Tipo': 'P',
@@ -215,6 +216,7 @@ angular
       });
     }
 
+    /// Descarga un reporte en PDF
     function DescargarPDF(Pago) {
       ContratoMaestroFactory.GetImprimeFacturaFiscalpago(Pago.Clv_Pago).then(function (result) {
         if (result.GetImprimeFacturaFiscalpagoResult.IdResult === 0) {

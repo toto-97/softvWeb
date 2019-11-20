@@ -10,6 +10,8 @@ function reporteDetallePagoCtrl(
   ngNotify,
   $window
 ) {
+  
+    /// Da formato al reporte
   this.$onInit = function() {
     ContratoMaestroFactory.GetDistribuidores().then(function(result) {
       console.log(result);
@@ -24,6 +26,7 @@ function reporteDetallePagoCtrl(
       };
     });
 
+    /// Genera un reporte de los pagos en un rango de fechas
     var guardar = function() {
       var dis = [];
       if (

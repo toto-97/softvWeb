@@ -20,7 +20,7 @@ angular.module('softvApp').controller('ReportesPendientesCtrl', ReportesPendient
 
 function ReportesPendientesCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory, $timeout, $filter) {
 
-
+    /// Busca un cierto tipo de contrato
     function buscaContrato(opcion) {
         var parametros;
         if (opcion == 2) {
@@ -132,6 +132,7 @@ function ReportesPendientesCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactor
         $('.buscarContrato').collapse('hide');
     }
 
+    /// Crea un reporte CSV con la informacion de los contratos
     function crearTodoAsCsv() {
         $timeout(function () {
             for (var i = 0; i < vm.pagos.length; i++) {
@@ -150,6 +151,7 @@ function ReportesPendientesCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactor
         });
     }
 
+    /// Crea un formato previo para los reportes
     function initArray() {
         vm.arrayReporte = [];
         vm.arrayReporte = [{
@@ -173,6 +175,7 @@ function ReportesPendientesCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactor
         }];
     }
 
+    /// Crea un reporte PDF con la informacion de los contratos
     function createPdfTodo() {
         var rows = [[0, 0, 0, 0, 0, 0,]];
         var r = 1;
@@ -256,6 +259,7 @@ function ReportesPendientesCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactor
         doc.save(vm.filename + '.pdf');
     }
 
+    /// Crea un link para crea un reporte
     function getImageDataURL() {
         var url = document.getElementById("pdflogoimage").src;
         var data, canvas, ctx;
@@ -270,13 +274,15 @@ function ReportesPendientesCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactor
         img.src = url;
     }
 
+    /// Busca la informacion de ciertos contratos
+
     function enterContrato(event, opcion) {
         if (event.which === 13) {
             buscaContrato(opcion);
         }
     }
 
-    // this.$onInit = function () {
+    /// this.$onInit = function () {
     //     getImageDataURL();
     // }
 

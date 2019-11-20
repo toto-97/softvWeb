@@ -22,6 +22,7 @@ angular.module('softvApp').controller('PagoContratoMaestroCtrl', PagoContratoMae
 
 function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, inMenu, pagosMaestrosFactory, ContratoMaestroFactory, $filter) {
 
+    /// Muestra los contratos de una ciudad y un distribuidor
     function initialData() {
         ContratoMaestroFactory.GetContratoList().then(function (data) {
             vm.Contratos = data.GetContratos_CSResult;
@@ -37,6 +38,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         vm.displayCollection = [].concat(vm.Contratos);
     }
 
+    /// Carga la informacion de los contratos en una tabla en la pagina
     function reloadTable() {
         pagosMaestrosFactory.dameDetalle(vm.saldo.Clv_SessionPadre).then(function (detallePago) {
             if (detallePago.GetDetalleContratosMaestrosListResult.length == 0) {
@@ -65,7 +67,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         DetalleFactura(obj.clv_session);
     });
 
-
+    /// Busca las ciudades con contratos maestros
     function ObtenerCiudades(x) {
         ContratoMaestroFactory.GetCiudadList(x.Clv_Plaza).then(function (data) {
             vm.Ciudades = data.GetListaCiudadesPorPlazaResult;
@@ -73,6 +75,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
 
     }
 
+    /// Carga la informacion de los contratos en una tabla en la pagina 
     function tablaContrato(x) {
 
         $('.buscarContrato').collapse('hide');
@@ -107,6 +110,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         vm.displayCollection = [].concat(vm.Contratos);
     }
 
+    /// Obtiene los detalles de una factura maestra
     function DetalleFactura(clv_session) {
         ContratoMaestroFactory.Sp_DameDetalleFacturaMaestra(clv_session).then(function (result) {
 
@@ -114,9 +118,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         });
     }
 
-
-
-
+    /// Busca un contrato maestro
     function Buscarporcontrato(preguntar) {
         if (vm.contratobusqueda == null || vm.contratobusqueda == undefined || vm.contratobusqueda == '') {
             ngNotify.set('Ingrese el contrato', 'error');
@@ -178,10 +180,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         vm.displayCollection = [].concat(vm.Contratos);
     }
 
-
-
-
-
+    /// Busca un contrato maestro por el nombre
     function BuscarNombrec() {
         if (vm.NombreComer == null || vm.NombreComer == undefined || vm.NombreComer == '') {
             ngNotify.set('Ingrese el nombre comercial', 'error');
@@ -212,6 +211,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         vm.displayCollection = [].concat(vm.Contratos);
     }
 
+    /// Busca un contrato maestro por su razon social
     function BuscarRazonS() {
         if (vm.RazonS == null || vm.RazonS == undefined || vm.RazonS == '') {
             ngNotify.set('Ingrese la razon social', 'error');
@@ -241,6 +241,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         vm.displayCollection = [].concat(vm.Contratos);
     }
 
+    /// Busca un contrato maestro por la ciudad
     function BuscarCiudad() {
         if (vm.Ciudades.Clv_Ciudad === undefined) {
             ngNotify.set('Ingrese distribuidor y ciudad.', 'error');
@@ -287,6 +288,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         vm.displayCollection = [].concat(vm.Contratos);
     }
 
+    /// Limpia las entradas del usuario
     function reset() {
         vm.Contratos = '';
         vm.showConceptos = false;
@@ -295,6 +297,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         vm.muestraTablaCliente = false;
     }
 
+    /// Limpia las entradas del usuario
     function resetBusquedas() {
         vm.contratobusqueda = '';
         vm.NombreComer = '';
@@ -302,6 +305,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         vm.Ciudad = '';
     }
 
+    /// Abre una ventana para verificar el pago del contrato
     function abrirPago(x, y) {
         vm.animationsEnabled = true;
         var modalInstance = $uibModal.open({
@@ -325,6 +329,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         });
     }
 
+    /// Abre una ventana con los detalles del contrato
     function abrirDetalle(x) {
         vm.animationsEnabled = true;
         var modalInstance = $uibModal.open({
@@ -370,6 +375,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         });
     }
 
+    /// Abre una ventana para asgregar un contrato como pagado
     function agregarListaGeneral(){    
         console.log('vm.detallePagoTodo',vm.detallePagoTodo);    
         vm.animationsEnabled = true;
@@ -422,6 +428,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         });
     }
 
+    /// Abre una ventana para crear un estado de cuetna
     function edocta() {
 
         ContratoMaestroFactory.ReporteEstadoCuentaNuevo(vm.saldo.Clv_SessionPadre, vm.Contratos.IdContratoMaestro, "").then(function (data) {
@@ -452,24 +459,28 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         });
     }
 
+    /// Busca un contrato maestro
     function enterContrato(event) {
         if (event.which === 13) {
             Buscarporcontrato(true);
         }
     }
 
+    /// Busca un contrato maestro
     function enterNombre(event) {
         if (event.which === 13) {
             BuscarNombrec();
         }
     }
 
+    /// Busca un contrato maestro
     function enterRazon(event) {
         if (event.which === 13) {
             BuscarRazonS();
         }
     }
 
+    /// Abre una ventana para que el usuario pueda hacer una pregunta
     function HacerPregunta(clv_session, option) {
 
         ContratoMaestroFactory.uspHaz_Pregunta(vm.Contratos.IdContratoMaestro, 900).then(function (data) {
@@ -505,6 +516,7 @@ function PagoContratoMaestroCtrl($uibModal, $state, $rootScope, cajasFactory, ng
         });
     }
 
+    /// Abre una ventana para verificar el pago del contrato
     function PagarCredito(z, imp, y, tipo) {
         imp.forEach(function (element) {
             if (element.Posicion == 4) {

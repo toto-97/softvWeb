@@ -20,6 +20,7 @@ angular.module('softvApp').controller('reporteCuentaClabeCtrl', reporteCuentaCla
 
 function reporteCuentaClabeCtrl($uibModal, ngNotify, inMenu, reportesCortesCorporativaFactory, $timeout) {
 
+    /// Genera Un reporte con las cuentas Clabe
     this.$onInit = function () {
         vm.csvheader = ['Clabe', 'ContratoMaestro', 'NombreComercial', 'Distribuidor', 'Email', 'FechaAsignacion'];
         vm.csvorder = ['Clabe', 'ContratoMaestro', 'Cliente', 'Plaza', 'Email', 'FechaAsignacion'];

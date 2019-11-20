@@ -2,14 +2,18 @@
 angular
   .module('softvApp')
   .controller('modalCancelaTicketCtrl', function ($uibModalInstance, $uibModal, ContratoMaestroFactory, ngNotify, $rootScope, ticket) {
+    
+    /// Valida el folio del ticket
     this.$onInit = function () {
       vm.conFolio = ticket.Ticket;
     }
 
+    /// Cancela la operacion
     function cancel() {
       $uibModalInstance.dismiss('cancel');
     }
 
+    /// Abre la ventana para describir el motivo de cancelacion
     function ok() {
 
       ContratoMaestroFactory.ValidaCancelacionFactura(ticket.Clv_FacturaMaestro).then(function (data) {

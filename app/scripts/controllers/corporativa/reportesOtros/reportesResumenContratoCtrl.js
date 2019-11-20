@@ -20,6 +20,7 @@ angular.module('softvApp').controller('reportesResumenContratoCtrl', reportesRes
 
 function reportesResumenContratoCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory, $timeout) {
 
+    /// Busca un contrato dependiendo de los parametros
     function buscaContrato(opcion) {
         var parametros;
         if ((vm.ContratoMaestro == undefined || vm.ContratoMaestro == '') && (vm.Contrato == undefined || vm.Contrato == '')) {
@@ -52,6 +53,7 @@ function reportesResumenContratoCtrl($uibModal, ngNotify, inMenu, pagosMaestrosF
 
     }
 
+    /// Genera un CSV con la informaciond e los contratos
     function crearTodoAsCsv() {
         $timeout(function () {
             for (var i = 0; i < vm.contratos.length; i++) {
@@ -70,6 +72,7 @@ function reportesResumenContratoCtrl($uibModal, ngNotify, inMenu, pagosMaestrosF
         });
     }
 
+    /// Crea el formato del reporte
     function initArray() {
         vm.arrayReporte = {};
         vm.arrayReporte = [{
@@ -84,6 +87,7 @@ function reportesResumenContratoCtrl($uibModal, ngNotify, inMenu, pagosMaestrosF
         }];
     }
 
+    /// Genera un PDF con la informaciond e los contratos
     function createPdfTodo() {
         var rows = [[0, 0, 0, 0, 0, 0, 0,]];
         var r = 1;
@@ -158,6 +162,7 @@ function reportesResumenContratoCtrl($uibModal, ngNotify, inMenu, pagosMaestrosF
         doc.save(vm.filename + '.pdf');
     }
 
+    /// Genera un link para crear un PDF
     function getImageDataURL() {
         var url = document.getElementById("pdflogoimage").src;
         var data, canvas, ctx;
@@ -172,12 +177,14 @@ function reportesResumenContratoCtrl($uibModal, ngNotify, inMenu, pagosMaestrosF
         img.src = url;
     }
 
+    /// Busca un contrato
     function enterContrato(event, opcion) {
         if (event.which === 13) {
             buscaContrato(opcion);
         }
     }
 
+    /// Genera el reporte cont odos los contratos maestros
     function ExportarTodosMaestros() {
         vm.predicates = ['ContratoMaestro', 'Contrato', 'Status', 'Servicio', 'FechaInstalacion', 'UltimoMesPagado', 'UltimoMesFacturado', 'MacCableModem'];
         vm.selectedPredicate = vm.predicates[0];

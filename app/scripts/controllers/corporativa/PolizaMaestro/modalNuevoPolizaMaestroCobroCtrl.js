@@ -3,13 +3,16 @@ angular
 .module('softvApp')
 .controller('modalNuevoPolizaMaestroCobroCtrl', function($uibModalInstance, $uibModal, corporativoFactory, $rootScope, ngNotify, $filter) {
 	
+	/// No se usa
 	this.$onInit = function() {
 	}
 
+	/// Cancela la operacion
 	function cancel() {
 		$uibModalInstance.dismiss('cancel');
 	}
 
+	/// Genera una poliza
 	function Generar() {
 		var fechaAux = $filter('date')(vm.Fecha, 'yyyyMMdd');
 		var params = {};

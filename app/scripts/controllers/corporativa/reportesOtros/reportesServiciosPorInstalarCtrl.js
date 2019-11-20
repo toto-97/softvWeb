@@ -20,6 +20,7 @@ angular.module('softvApp').controller('reportesServiciosPorInstalarCtrl', report
 
 function reportesServiciosPorInstalarCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory, $timeout) {
 
+    /// Busca un contrato dependiendo de los parametros
     function buscaContrato() {
         var parametros;
         if (vm.ContratoMaestro == undefined || vm.ContratoMaestro == '') {
@@ -41,6 +42,7 @@ function reportesServiciosPorInstalarCtrl($uibModal, ngNotify, inMenu, pagosMaes
         
     }
 
+    /// Genera un CSV con la informaciond e los contratos
     function crearTodoAsCsv() {
         $timeout(function () {
             for (var i = 0; i < vm.contratos.length; i++) {
@@ -59,6 +61,7 @@ function reportesServiciosPorInstalarCtrl($uibModal, ngNotify, inMenu, pagosMaes
         });
     }
 
+    /// Crea el formato del reporte
     function initArray() {
         vm.arrayReporte = [];
         vm.arrayReporte = [{
@@ -71,6 +74,7 @@ function reportesServiciosPorInstalarCtrl($uibModal, ngNotify, inMenu, pagosMaes
         }];
     }
 
+    /// Genera un PDF con la informaciond e los contratos
     function createPdfTodo() {
         var rows = [[0, 0, 0, 0, 0, 0,]];
         var r = 1;
@@ -143,6 +147,7 @@ function reportesServiciosPorInstalarCtrl($uibModal, ngNotify, inMenu, pagosMaes
         doc.save(vm.filename + '.pdf');
     }
 
+    /// Genera un link para crear un PDF
     function getImageDataURL() {
         var url = document.getElementById("pdflogoimage").src;
         var data, canvas, ctx;
@@ -157,6 +162,7 @@ function reportesServiciosPorInstalarCtrl($uibModal, ngNotify, inMenu, pagosMaes
         img.src = url;
     }
 
+    /// Busca un contrato
     function enterContrato(event, opcion) {
         if (event.which === 13) {
             buscaContrato();
